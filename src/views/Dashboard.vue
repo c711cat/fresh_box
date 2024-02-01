@@ -13,6 +13,9 @@ export default {
     const api = `${process.env.VUE_APP_API}api/user/check`;
     this.$http.post(api).then((res) => {
       console.log(res);
+      if (!res.data.success) {
+        this.$router.push("/login");
+      }
     });
   },
 };
