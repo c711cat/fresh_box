@@ -1,38 +1,37 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="container mt-5">
-    <form @submit.prevent="signIn" class="row justify-content-center">
-      <div class="col-md-6">
-        <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
-        <div class="mb-2">
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input
-            type="email"
-            id="inputEmail"
-            class="form-control"
-            placeholder="Email address"
-            required
-            autofocus
-            v-model="user.username"
-          />
-        </div>
-        <div class="mb-2">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
-            placeholder="Password"
-            required
-            v-model="user.password"
-          />
-        </div>
-
-        <div class="text-end mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">
-            登入
-          </button>
-        </div>
+  <div class="container col-sm-8 col-md-7 col-lg-5 mt-5">
+    <form @submit.prevent="signIn" class="m-3">
+      <h3 class="mb-3 border-2 pb-2 border-bottom border-secondary">
+        請先登入
+      </h3>
+      <div class="mb-3">
+        <label for="inputEmail">Email</label>
+        <input
+          v-model="user.username"
+          type="email"
+          id="inputEmail"
+          class="form-control rounded-1"
+          placeholder="name@example.com"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="inputPassword">Password</label>
+        <input
+          v-model="user.password"
+          type="password"
+          id="inputPassword"
+          class="form-control rounded-1"
+          placeholder="Password"
+        />
+      </div>
+      <div class="d-grid gap-2">
+        <button
+          class="btn btn-lg btn-primary btn-block rounded-1"
+          type="submit"
+        >
+          登入
+        </button>
       </div>
     </form>
   </div>
