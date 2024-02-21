@@ -21,8 +21,8 @@ const routes = [
     component: () => import("../views/Dashboard.vue"),
     children: [
       {
-        path: "products",
-        component: () => import("../views/Products.vue"),
+        path: "admin's-products",
+        component: () => import("../views/Admin'sProducts.vue"),
       },
     ],
   },
