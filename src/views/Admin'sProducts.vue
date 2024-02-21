@@ -3,30 +3,38 @@
   <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
 
   <div class="container">
-    <div class="row align-items-center border-top py-4">
+    <div
+      v-for="item in products"
+      :key="item.id"
+      class="row align-items-center border-top py-4"
+    >
       <div class="text-center col-12 col-sm-2">
-        <img
-          class="img-fluid"
-          src="https://images.unsplash.com/photo-1576179636333-f13b174b3c9a?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-        />
+        <img :src="item.imageUrl" class="img-fluid" />
       </div>
       <div class="col-12 col-sm-10">
         <div class="row align-items-center">
           <div class="col-12 col-sm-6 col-lg-3">
-            <div>智利蜜蘋果</div>
-            <div>600克±5%/份</div>
+            <div>{{ item.title }}</div>
+            <div>{{ item.content }}</div>
           </div>
           <div class="col-4 col-sm-3 col-lg">
             <div>原價</div>
-            <div>NT$150</div>
+            <div>NT$ {{ item.origin_price }}</div>
           </div>
           <div class="col-4 col-sm-3 col-lg">
             <div>售價</div>
-            <div>NT$100</div>
+            <div>NT$ {{ item.price }}</div>
           </div>
-          <div class="col-4 col-sm-6 col-lg">數量10份</div>
-          <div class="col-8 col-sm-3 col-lg">販售中</div>
+          <div class="col-4 col-sm-6 col-lg">
+            數量：{{ item.num }}{{ item.unit }}
+          </div>
+          <div
+            v-if="item.is_enabled"
+            class="col-8 col-sm-3 col-lg text-success"
+          >
+            販售中
+          </div>
+          <div v-else class="col-8 col-sm-3 col-lg text-secondary">未販售</div>
           <div class="col-4 col-sm-3 col-lg-auto">
             <button
               type="button"
@@ -46,6 +54,27 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      products: [],
+    };
+  },
+  methods: {
+    getProducts() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
+      this.$http.get(api).then((res) => {
+        this.products = res.data.products;
+      });
+    },
+  },
+  created() {
+    this.getProducts();
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .titleStyle {
