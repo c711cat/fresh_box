@@ -60,7 +60,11 @@
                       id="inputUrl"
                       placeholder="請輸入連結"
                     />
-                    <button type="button" class="btn btn-outline-danger">
+                    <button
+                      @click="delImg(index)"
+                      type="button"
+                      class="btn btn-outline-danger"
+                    >
                       移除
                     </button>
                   </div>
@@ -261,6 +265,9 @@ export default {
           this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
         }
       });
+    },
+    delImg(index) {
+      this.tempProduct.images.splice(index, 1);
     },
     addImg() {
       if (!this.tempProduct.images) {
