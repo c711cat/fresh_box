@@ -24,7 +24,11 @@
                     id="inputUrl"
                     placeholder="請輸入連結"
                   />
-                  <button type="button" class="btn btn-outline-danger">
+                  <button
+                    @click="delCoverImg"
+                    type="button"
+                    class="btn btn-outline-danger"
+                  >
                     移除
                   </button>
                 </div>
@@ -265,6 +269,10 @@ export default {
           this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
         }
       });
+    },
+    delCoverImg() {
+      this.tempProduct.imageUrl = "";
+      this.$refs.fileInput.value = "";
     },
     delImg(index) {
       this.tempProduct.images.splice(index, 1);
