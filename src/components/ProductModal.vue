@@ -15,7 +15,9 @@
           <form class="row g-3">
             <div class="col-lg-4 row g-3 mx-0 flex-column">
               <div class="col-12">
-                <label for="inputUrl" class="form-label">輸入圖片網址</label>
+                <label for="inputUrl" class="form-label">
+                  輸入封面圖片網址
+                </label>
                 <div class="input-group">
                   <input
                     v-model="tempProduct.imageUrl"
@@ -35,7 +37,7 @@
               </div>
               <div class="col-12">
                 <label for="customFile" class="form-label"
-                  >或 上傳圖片檔案
+                  >或 上傳封面圖片檔案
                 </label>
                 <input
                   @change="uploadFile"
@@ -55,7 +57,9 @@
                   :key="index"
                   class="border-top pt-2"
                 >
-                  <label for="inputUrl" class="form-label">輸入圖片網址</label>
+                  <label for="inputUrl" class="form-label">
+                    輸入其他圖片網址
+                  </label>
                   <div class="input-group mb-3">
                     <input
                       v-model="tempProduct.images[index]"
@@ -74,7 +78,7 @@
                   </div>
                   <div class="col-12">
                     <label for="customFile" class="form-label"
-                      >或 上傳圖片檔案
+                      >或 上傳其他圖片檔案
                     </label>
                     <input
                       @change="uploadMultipleImgs"
