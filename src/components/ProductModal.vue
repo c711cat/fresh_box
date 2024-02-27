@@ -79,12 +79,14 @@
                   </div>
                 </div>
               </div>
-              <button
-                @click="addImg"
-                class="btn btn-outline-primary w-100 mt-2"
-              >
-                新增圖片
-              </button>
+              <div>
+                <button
+                  @click="addImg"
+                  class="btn btn-outline-primary w-100 mt-2"
+                >
+                  新增圖片
+                </button>
+              </div>
             </div>
 
             <div class="rightContainer col-lg-8 row g-3 mx-0">
