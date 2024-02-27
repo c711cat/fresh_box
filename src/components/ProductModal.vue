@@ -53,7 +53,7 @@
                 </button>
               </div>
             </div>
-            <div class="col-lg-8 row g-3 mx-0">
+            <div class="rightContainer col-lg-8 row g-3 mx-0">
               <div class="col-lg-6">
                 <label for="name" class="form-label">產品名稱</label>
                 <input
@@ -229,5 +229,9 @@ export default {
 <style lang="scss" scoped>
 * {
   // border: 1px solid black;
+}
+
+.rightContainer {
+  height: fit-content;
 }
 </style>
