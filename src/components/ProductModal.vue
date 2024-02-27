@@ -46,7 +46,11 @@
               </div>
 
               <div v-if="tempProduct.images" class="col-12">
-                <div v-for="(image, index) in tempProduct.images" :key="index">
+                <div
+                  v-for="(image, index) in tempProduct.images"
+                  :key="index"
+                  class="border-top pt-2"
+                >
                   <label for="inputUrl" class="form-label">輸入圖片網址</label>
                   <div class="input-group mb-3">
                     <input
@@ -79,10 +83,10 @@
                   </div>
                 </div>
               </div>
-              <div>
+              <div class="mt-2">
                 <button
                   @click="addImg"
-                  class="btn btn-outline-primary w-100 mt-2"
+                  class="btn btn-outline-primary btn-sm w-100"
                 >
                   新增圖片
                 </button>
