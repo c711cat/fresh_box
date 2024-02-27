@@ -52,6 +52,41 @@
                   新增圖片
                 </button>
               </div>
+              <div v-if="tempProduct.images" class="col-12">
+                <div v-for="(image, index) in tempProduct.images" :key="index">
+                  <label for="inputUrl" class="form-label">輸入圖片網址</label>
+                  <div class="input-group mb-3">
+                    <input
+                      v-model="tempProduct.images[index]"
+                      type="url"
+                      class="form-control"
+                      id="inputUrl"
+                      placeholder="請輸入連結"
+                    />
+                    <button type="button" class="btn btn-outline-danger">
+                      移除
+                    </button>
+                  </div>
+                  <div class="col-12">
+                    <label for="customFile" class="form-label"
+                      >或 上傳圖片檔案
+                    </label>
+                    <input
+                      @change="uploadMultipleImgs"
+                      :ref="index"
+                      type="file"
+                      id="customFile"
+                      class="form-control mb-3"
+                    />
+                    <img
+                      class="img-fluid mb-3"
+                      :src="tempProduct.images[index]"
+                      alt=""
+                    />
+                    {{ tempProduct.images[index] }}
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="rightContainer col-lg-8 row g-3 mx-0">
               <div class="col-lg-6">
@@ -204,11 +239,20 @@ export default {
       formData.append("file-to-upload", uploadFile);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
       this.$http.post(url, formData).then((res) => {
-        console.log(res);
-        console.log();
         if (res.data.success) {
           this.tempProduct.imageUrl = res.data.imageUrl;
-          console.log(this.tempProduct.imageUrl);
+        }
+      });
+    },
+    uploadMultipleImgs() {
+      const imgOfIndex = this.tempProduct.images.length - 1;
+      const multipleFile = this.$refs[imgOfIndex][0].files[0];
+      const formData = new FormData();
+      formData.append("file-to-upload", multipleFile);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
+      this.$http.post(url, formData).then((res) => {
+        if (res.data.success) {
+          this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
         }
       });
     },
