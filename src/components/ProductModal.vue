@@ -40,18 +40,11 @@
                   id="customFile"
                   class="form-control mb-3"
                 />
-                <img
-                  class="img-fluid mb-3"
-                  :src="tempProduct.imageUrl"
-                  alt=""
-                />
-                <button
-                  @click="addImg"
-                  class="btn btn-outline-primary btn-sm w-100"
-                >
-                  新增圖片
-                </button>
+                <div class="col-12">
+                  <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
+                </div>
               </div>
+
               <div v-if="tempProduct.images" class="col-12">
                 <div v-for="(image, index) in tempProduct.images" :key="index">
                   <label for="inputUrl" class="form-label">輸入圖片網址</label>
@@ -83,11 +76,17 @@
                       :src="tempProduct.images[index]"
                       alt=""
                     />
-                    {{ tempProduct.images[index] }}
                   </div>
                 </div>
               </div>
+              <button
+                @click="addImg"
+                class="btn btn-outline-primary w-100 mt-2"
+              >
+                新增圖片
+              </button>
             </div>
+
             <div class="rightContainer col-lg-8 row g-3 mx-0">
               <div class="col-lg-6">
                 <label for="name" class="form-label">產品名稱</label>
@@ -168,7 +167,8 @@
                   type="text"
                   class="form-control"
                   id="detailed_description"
-                ></textarea>
+                >
+                </textarea>
               </div>
               <div class="col-lg-12 form-check mx-1">
                 <input
