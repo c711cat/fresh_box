@@ -45,7 +45,10 @@
                   :src="tempProduct.imageUrl"
                   alt=""
                 />
-                <button class="btn btn-outline-primary btn-sm w-100">
+                <button
+                  @click="addImg"
+                  class="btn btn-outline-primary btn-sm w-100"
+                >
                   新增圖片
                 </button>
               </div>
@@ -208,6 +211,12 @@ export default {
           console.log(this.tempProduct.imageUrl);
         }
       });
+    },
+    addImg() {
+      if (!this.tempProduct.images) {
+        this.tempProduct.images = [];
+      }
+      this.tempProduct.images.push("");
     },
   },
   mounted() {
