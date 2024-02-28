@@ -100,7 +100,7 @@
                   @click="addImg"
                   class="btn btn-outline-primary btn-sm w-100"
                 >
-                  新增圖片
+                  新增其他圖片
                 </button>
               </div>
             </div>
