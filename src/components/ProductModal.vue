@@ -46,7 +46,7 @@
                   id="customFile"
                   class="form-control mb-3"
                 />
-                <div class="col-12">
+                <div class="col-12 mb-1">
                   <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
                 </div>
               </div>
