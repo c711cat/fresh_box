@@ -212,11 +212,20 @@
             關閉
           </button>
           <button
-            @click="$emit('update-product', tempProduct)"
+            v-if="tempProduct.id"
+            @click="$emit('edit-product', tempProduct)"
             type="button"
             class="btn btn-primary"
           >
-            確定
+            更新產品
+          </button>
+          <button
+            v-else
+            @click="$emit('add-product', tempProduct)"
+            type="button"
+            class="btn btn-primary"
+          >
+            新增產品
           </button>
         </div>
       </div>

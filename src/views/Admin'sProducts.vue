@@ -69,7 +69,8 @@
   <ProductModal
     ref="productModal"
     :product="tempProduct"
-    @update-product="updateProduct"
+    @edit-product="editProduct"
+    @add-product="addProduct"
   ></ProductModal>
 </template>
 
