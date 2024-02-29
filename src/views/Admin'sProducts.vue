@@ -1,6 +1,17 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
+  <div class="d-flex justify-content-between align-items-center">
+    <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
+    <div>
+      <button
+        @click="openModal(true)"
+        type="button"
+        class="btn btn-outline-primary me-5"
+      >
+        新增產品
+      </button>
+    </div>
+  </div>
 
   <div class="container">
     <div
@@ -26,7 +37,7 @@
             <div>NT$ {{ item.price }}</div>
           </div>
           <div class="col-4 col-sm-6 col-lg">
-            數量：{{ item.num }}{{ item.unit }}
+            數量：{{ item.num }} {{ item.unit }}
           </div>
           <div
             v-if="item.is_enabled"
@@ -39,6 +50,7 @@
             class="col-auto col-sm-3 col-lg-auto d-flex justify-content-start flex-wrap"
           >
             <button
+              @click="openModal(false, item)"
               type="button"
               class="btn btn-outline-primary rounded-1 me-1 my-1"
             >
@@ -55,20 +67,59 @@
       </div>
     </div>
   </div>
+  <ProductModal
+    ref="productModal"
+    :product="tempProduct"
+    @edit-product="editProduct"
+    @add-product="addProduct"
+  ></ProductModal>
 </template>
 
 <script>
+import ProductModal from "@/components/ProductModal.vue";
+
 export default {
   data() {
     return {
       products: [],
+      tempProduct: {},
+      isNew: false,
     };
   },
+  components: { ProductModal },
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
       this.$http.get(api).then((res) => {
         this.products = res.data.products;
+      });
+    },
+    openModal(isNew, item) {
+      if (isNew) {
+        this.tempProduct = {};
+      } else {
+        this.tempProduct = { ...item };
+      }
+      this.isNew = isNew;
+      this.$refs.productModal.showModal();
+    },
+    addProduct(item) {
+      this.tempProduct = item;
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
+      const productComponent = this.$refs.productModal;
+      this.$http.post(api, { data: this.tempProduct }).then((res) => {
+        productComponent.hideModal();
+        this.getProducts();
+        return res;
+      });
+    },
+    editProduct(item) {
+      this.tempProduct = item;
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.$http.put(api, { data: this.tempProduct }).then((res) => {
+        this.$refs.productModal.hideModal();
+        this.getProducts();
+        return res;
       });
     },
   },
