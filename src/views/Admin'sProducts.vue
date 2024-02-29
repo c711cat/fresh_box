@@ -57,6 +57,7 @@
               編輯
             </button>
             <button
+              @click="openDelModal"
               type="button"
               class="btn btn-outline-danger rounded-1 me-1 my-1"
             >
@@ -73,10 +74,12 @@
     @edit-product="editProduct"
     @add-product="addProduct"
   ></ProductModal>
+  <DelModal ref="delModal"></DelModal>
 </template>
 
 <script>
 import ProductModal from "@/components/ProductModal.vue";
+import DelModal from "@/components/DelModal.vue";
 
 export default {
   data() {
@@ -86,7 +89,7 @@ export default {
       isNew: false,
     };
   },
-  components: { ProductModal },
+  components: { ProductModal, DelModal },
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
@@ -121,6 +124,9 @@ export default {
         this.getProducts();
         return res;
       });
+    },
+    openDelModal() {
+      this.$refs.delModal.showModal();
     },
   },
   created() {
