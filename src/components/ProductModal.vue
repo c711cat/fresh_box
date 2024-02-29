@@ -308,10 +308,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  // border: 1px solid black;
-}
-
 .rightContainer {
   height: fit-content;
 }
