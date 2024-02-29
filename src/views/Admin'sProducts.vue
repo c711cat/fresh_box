@@ -35,7 +35,9 @@
             販售中
           </div>
           <div v-else class="col-8 col-sm-3 col-lg text-secondary">未販售</div>
-          <div class="col-4 col-sm-3 col-lg-auto">
+          <div
+            class="col-auto col-sm-3 col-lg-auto d-flex justify-content-start flex-wrap"
+          >
             <button
               type="button"
               class="btn btn-outline-primary rounded-1 me-1 my-1"
