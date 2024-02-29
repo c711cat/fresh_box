@@ -3,7 +3,8 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">新增產品</h5>
+          <h5 v-if="tempProduct.id" class="modal-title">編輯產品</h5>
+          <h5 v-else class="modal-title">新增產品</h5>
           <button
             type="button"
             class="btn-close"
@@ -213,7 +214,7 @@
             type="button"
             class="btn btn-primary"
           >
-            新增產品
+            確定
           </button>
         </div>
       </div>
