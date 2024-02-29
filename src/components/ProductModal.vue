@@ -194,9 +194,11 @@
                   v-model="tempProduct.is_enabled"
                   class="form-check-input"
                   type="checkbox"
-                  id="gridCheck"
+                  :true-value="1"
+                  :false-value="0"
+                  id="is_enabled"
                 />
-                <label class="form-check-label" for="gridCheck"> 販售 </label>
+                <label class="form-check-label" for="is_enabled"> 販售 </label>
               </div>
             </div>
           </form>
