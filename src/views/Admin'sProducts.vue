@@ -92,11 +92,9 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
       this.$http.get(api).then((res) => {
         this.products = res.data.products;
-        console.log(this.products);
       });
     },
     openModal(isNew, item) {
-      console.log(isNew, item);
       if (isNew) {
         this.tempProduct = {};
       } else {
@@ -110,18 +108,18 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
       const productComponent = this.$refs.productModal;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
-        console.log(res);
         productComponent.hideModal();
         this.getProducts();
+        return res;
       });
     },
     editProduct(item) {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
-        console.log(res);
         this.$refs.productModal.hideModal();
         this.getProducts();
+        return res;
       });
     },
   },
