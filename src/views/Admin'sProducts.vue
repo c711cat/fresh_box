@@ -4,7 +4,7 @@
     <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
     <div>
       <button
-        @click="openModal"
+        @click="openModal(true)"
         type="button"
         class="btn btn-outline-primary me-5"
       >
@@ -50,6 +50,7 @@
             class="col-auto col-sm-3 col-lg-auto d-flex justify-content-start flex-wrap"
           >
             <button
+              @click="openModal(false, item)"
               type="button"
               class="btn btn-outline-primary rounded-1 me-1 my-1"
             >
@@ -82,6 +83,7 @@ export default {
     return {
       products: [],
       tempProduct: {},
+      isNew: false,
     };
   },
   components: { ProductModal },
@@ -93,16 +95,32 @@ export default {
         console.log(this.products);
       });
     },
-    openModal() {
+    openModal(isNew, item) {
+      console.log(isNew, item);
+      if (isNew) {
+        this.tempProduct = {};
+      } else {
+        this.tempProduct = { ...item };
+      }
+      this.isNew = isNew;
       this.$refs.productModal.showModal();
     },
-    updateProduct(item) {
+    addProduct(item) {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
       const productComponent = this.$refs.productModal;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
         console.log(res);
         productComponent.hideModal();
+        this.getProducts();
+      });
+    },
+    editProduct(item) {
+      this.tempProduct = item;
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.$http.put(api, { data: this.tempProduct }).then((res) => {
+        console.log(res);
+        this.$refs.productModal.hideModal();
         this.getProducts();
       });
     },
