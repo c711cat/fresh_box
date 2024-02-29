@@ -302,7 +302,6 @@ export default {
   },
   mounted() {
     this.modal = new Modal(this.$refs.productModal);
-    this.showModal();
   },
 };
 </script>
