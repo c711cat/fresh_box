@@ -57,7 +57,7 @@
               編輯
             </button>
             <button
-              @click="openDelModal"
+              @click="openDelModal(item)"
               type="button"
               class="btn btn-outline-danger rounded-1 me-1 my-1"
             >
@@ -74,7 +74,7 @@
     @edit-product="editProduct"
     @add-product="addProduct"
   ></ProductModal>
-  <DelModal ref="delModal"></DelModal>
+  <DelModal ref="delModal" :product="tempProduct"></DelModal>
 </template>
 
 <script>
@@ -125,8 +125,9 @@ export default {
         return res;
       });
     },
-    openDelModal() {
+    openDelModal(item) {
       this.$refs.delModal.showModal();
+      this.tempProduct = { ...item };
     },
   },
   created() {

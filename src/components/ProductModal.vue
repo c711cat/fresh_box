@@ -206,10 +206,10 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
-            關閉
+            取消
           </button>
           <button
             v-if="tempProduct.id"

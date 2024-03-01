@@ -2,8 +2,8 @@
   <div ref="delModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
+        <div class="modal-header bg-danger">
+          <h5 class="modal-title text-white">刪除產品</h5>
           <button
             type="button"
             class="btn-close"
@@ -12,17 +12,23 @@
           ></button>
         </div>
         <div class="modal-body">
-          <p>Modal body text goes here.</p>
+          <span
+            >確定刪除
+            <span class="text-danger fw-bold fs-5">
+              {{ tempProduct.title }}
+            </span>
+            這個產品？
+          </span>
         </div>
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
-            Close
+            取消
           </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-danger">確定刪除</button>
         </div>
       </div>
     </div>
@@ -61,7 +67,6 @@ export default {
   },
   mounted() {
     this.modal = new Modal(this.$refs.delModal);
-    this.showModal();
   },
 };
 </script>
