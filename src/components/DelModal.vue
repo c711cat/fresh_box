@@ -1,5 +1,14 @@
 <template>
-  <div ref="delModal" class="modal" tabindex="-1">
+  <div
+    ref="delModal"
+    class="modal fade"
+    id="deleteModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-danger">
