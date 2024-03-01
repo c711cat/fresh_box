@@ -1,5 +1,14 @@
 <template>
-  <div ref="productModal" class="modal" tabindex="-1">
+  <div
+    ref="productModal"
+    class="modal fade"
+    id="admin'sProductModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
@@ -206,10 +215,10 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-outline-secondary"
             data-bs-dismiss="modal"
           >
-            關閉
+            取消
           </button>
           <button
             v-if="tempProduct.id"

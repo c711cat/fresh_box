@@ -57,6 +57,7 @@
               編輯
             </button>
             <button
+              @click="openDelModal(item)"
               type="button"
               class="btn btn-outline-danger rounded-1 me-1 my-1"
             >
@@ -72,11 +73,15 @@
     :product="tempProduct"
     @edit-product="editProduct"
     @add-product="addProduct"
-  ></ProductModal>
+  >
+  </ProductModal>
+  <DelModal ref="delModal" :product="tempProduct" @del-product="delProduct">
+  </DelModal>
 </template>
 
 <script>
 import ProductModal from "@/components/ProductModal.vue";
+import DelModal from "@/components/DelModal.vue";
 
 export default {
   data() {
@@ -86,7 +91,7 @@ export default {
       isNew: false,
     };
   },
-  components: { ProductModal },
+  components: { ProductModal, DelModal },
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
@@ -118,6 +123,18 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
         this.$refs.productModal.hideModal();
+        this.getProducts();
+        return res;
+      });
+    },
+    openDelModal(item) {
+      this.$refs.delModal.showModal();
+      this.tempProduct = { ...item };
+    },
+    delProduct(item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.$http.delete(api).then((res) => {
+        this.$refs.delModal.hideModal();
         this.getProducts();
         return res;
       });
