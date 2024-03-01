@@ -37,7 +37,13 @@
           >
             取消
           </button>
-          <button type="button" class="btn btn-danger">確定刪除</button>
+          <button
+            @click="$emit('del-product', tempProduct)"
+            type="button"
+            class="btn btn-danger"
+          >
+            確定刪除
+          </button>
         </div>
       </div>
     </div>

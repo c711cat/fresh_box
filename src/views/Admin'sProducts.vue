@@ -73,8 +73,10 @@
     :product="tempProduct"
     @edit-product="editProduct"
     @add-product="addProduct"
-  ></ProductModal>
-  <DelModal ref="delModal" :product="tempProduct"></DelModal>
+  >
+  </ProductModal>
+  <DelModal ref="delModal" :product="tempProduct" @del-product="delProduct">
+  </DelModal>
 </template>
 
 <script>
@@ -128,6 +130,14 @@ export default {
     openDelModal(item) {
       this.$refs.delModal.showModal();
       this.tempProduct = { ...item };
+    },
+    delProduct(item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.$http.delete(api).then((res) => {
+        this.$refs.delModal.hideModal();
+        this.getProducts();
+        return res;
+      });
     },
   },
   created() {
