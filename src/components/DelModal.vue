@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="delModal"
+    ref="Modal"
     class="modal fade"
     id="deleteModal"
     data-bs-backdrop="static"
@@ -50,7 +50,7 @@
   </div>
 </template>
 <script>
-import Modal from "bootstrap/js/dist/modal";
+import ModalMixin from "@/mixins/modalMixin";
 
 export default {
   data() {
@@ -72,16 +72,6 @@ export default {
       this.tempProduct = this.product;
     },
   },
-  methods: {
-    showModal() {
-      this.modal.show();
-    },
-    hideModal() {
-      this.modal.hide();
-    },
-  },
-  mounted() {
-    this.modal = new Modal(this.$refs.delModal);
-  },
+  mixins: [ModalMixin],
 };
 </script>

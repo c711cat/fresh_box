@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="productModal"
+    ref="Modal"
     class="modal fade"
     id="admin'sProductModal"
     data-bs-backdrop="static"
@@ -243,7 +243,7 @@
 </template>
 
 <script>
-import Modal from "bootstrap/js/dist/modal";
+import ModalMixin from "@/mixins/modalMixin";
 
 export default {
   data() {
@@ -265,13 +265,8 @@ export default {
       this.tempProduct = this.product;
     },
   },
+
   methods: {
-    showModal() {
-      this.modal.show();
-    },
-    hideModal() {
-      this.modal.hide();
-    },
     uploadFile() {
       const uploadFile = this.$refs.fileInput.files[0];
       const formData = new FormData();
@@ -309,9 +304,7 @@ export default {
       this.tempProduct.images.push("");
     },
   },
-  mounted() {
-    this.modal = new Modal(this.$refs.productModal);
-  },
+  mixins: [ModalMixin],
 };
 </script>
 
