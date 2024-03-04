@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Loading v-if="isLoading" />
+  <Loading v-if="isLoading"></Loading>
   <div v-else>
     <div class="d-flex justify-content-between align-items-center">
       <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
@@ -71,22 +71,22 @@
         </div>
       </div>
     </div>
-    <ProductModal
-      ref="productModal"
-      :product="tempProduct"
-      @edit-product="editProduct"
-      @add-product="addProduct"
-    >
-    </ProductModal>
-    <DelModal ref="delModal" :product="tempProduct" @del-product="delProduct">
-    </DelModal>
   </div>
+  <ProductModal
+    ref="productModal"
+    :product="tempProduct"
+    @edit-product="editProduct"
+    @add-product="addProduct"
+  >
+  </ProductModal>
+  <DelModal ref="delModal" :product="tempProduct" @del-product="delProduct">
+  </DelModal>
 </template>
 
 <script>
 import ProductModal from "@/components/ProductModal.vue";
 import DelModal from "@/components/DelModal.vue";
-import Loading from "@/components/Loading.vue";
+
 export default {
   data() {
     return {
@@ -96,7 +96,7 @@ export default {
       isLoading: false,
     };
   },
-  components: { ProductModal, DelModal, Loading },
+  components: { ProductModal, DelModal },
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
@@ -119,7 +119,9 @@ export default {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
       const productComponent = this.$refs.productModal;
+      this.isLoading = true;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
+        this.isLoading = false;
         productComponent.hideModal();
         this.getProducts();
         return res;
@@ -128,7 +130,9 @@ export default {
     editProduct(item) {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.isLoading = true;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
+        this.isLoading = false;
         this.$refs.productModal.hideModal();
         this.getProducts();
         return res;
@@ -140,7 +144,9 @@ export default {
     },
     delProduct(item) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      this.isLoading = true;
       this.$http.delete(api).then((res) => {
+        this.isLoading = false;
         this.$refs.delModal.hideModal();
         this.getProducts();
         return res;
