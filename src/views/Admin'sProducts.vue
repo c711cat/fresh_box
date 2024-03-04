@@ -1,5 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
+  <Loading v-if="isLoading" />
   <div class="d-flex justify-content-between align-items-center">
     <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
     <div>
@@ -12,7 +13,6 @@
       </button>
     </div>
   </div>
-
   <div class="container">
     <div
       v-for="item in products"
@@ -68,6 +68,7 @@
       </div>
     </div>
   </div>
+
   <ProductModal
     ref="productModal"
     :product="tempProduct"
@@ -82,20 +83,23 @@
 <script>
 import ProductModal from "@/components/ProductModal.vue";
 import DelModal from "@/components/DelModal.vue";
-
+import Loading from "@/components/Loading.vue";
 export default {
   data() {
     return {
       products: [],
       tempProduct: {},
       isNew: false,
+      isLoading: false,
     };
   },
-  components: { ProductModal, DelModal },
+  components: { ProductModal, DelModal, Loading },
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
+      this.isLoading = true;
       this.$http.get(api).then((res) => {
+        this.isLoading = false;
         this.products = res.data.products;
       });
     },
