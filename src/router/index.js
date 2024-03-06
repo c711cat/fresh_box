@@ -12,14 +12,15 @@ const routes = [
     name: "about",
     component: () => import("../views/AboutView.vue"),
   },
-  {
-    path: "/login",
-    component: () => import("../views/Login.vue"),
-  },
+
   {
     path: "/dashboard",
     component: () => import("../views/Dashboard.vue"),
     children: [
+      {
+        path: "/login",
+        component: () => import("../views/Login.vue"),
+      },
       {
         path: "admin's-products",
         component: () => import("../views/Admin'sProducts.vue"),
