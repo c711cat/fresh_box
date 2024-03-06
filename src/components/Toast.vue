@@ -20,7 +20,7 @@
       ></button>
     </div>
     <div v-if="msg.content" class="toast-body ms-2 text-danger">
-      {{ msg.content }}
+      <strong>必填欄位：</strong>{{ msg.content }}
     </div>
   </div>
 </template>

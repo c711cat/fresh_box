@@ -123,6 +123,12 @@ export default {
       this.isLoading = true;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
+        const msgContent = [...res.data.message];
+        msgContent[0] = "產品名稱";
+        msgContent[1] = "類別";
+        msgContent[2] = "單位";
+        msgContent[3] = "原價";
+        msgContent[4] = "售價";
         if (res.data.success) {
           this.getProducts();
           this.emitter.emit("push-message", {
@@ -134,7 +140,7 @@ export default {
           this.emitter.emit("push-message", {
             style: "failure",
             title: "新增失敗",
-            content: res.data.message.join("、"),
+            content: msgContent.join("、"),
           });
           this.getProducts();
         }
