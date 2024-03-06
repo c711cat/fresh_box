@@ -97,6 +97,7 @@ export default {
     };
   },
   components: { ProductModal, DelModal },
+  inject: ["emitter"],
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
@@ -122,9 +123,22 @@ export default {
       this.isLoading = true;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
-        productComponent.hideModal();
-        this.getProducts();
-        return res;
+        // productComponent.hideModal();
+        console.log(res);
+        if (res.data.success) {
+          this.getProducts();
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "新增成功",
+          });
+          productComponent.hideModal();
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "新增失敗",
+            content: res.data.message.join("、"),
+          });
+        }
       });
     },
     editProduct(item) {
