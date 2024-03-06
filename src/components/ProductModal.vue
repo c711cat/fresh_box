@@ -60,7 +60,6 @@
                   <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
                 </div>
               </div>
-
               <div v-if="tempProduct.images" class="col-12">
                 <div
                   v-for="(image, index) in tempProduct.images"
@@ -114,9 +113,9 @@
                 </button>
               </div>
             </div>
-
             <div class="rightContainer col-lg-8 row g-3 mx-0">
               <div class="col-lg-6">
+                <div class="d-inline text-danger">＊</div>
                 <label for="name" class="form-label">產品名稱</label>
                 <input
                   v-model="tempProduct.title"
@@ -126,6 +125,7 @@
                 />
               </div>
               <div class="col-lg-6">
+                <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">類別</label>
                 <input
                   v-model="tempProduct.category"
@@ -157,6 +157,7 @@
                 />
               </div>
               <div class="col-lg-4">
+                <div class="d-inline text-danger">＊</div>
                 <label for="unit" class="form-label">單位</label>
                 <input
                   v-model="tempProduct.unit"
@@ -167,6 +168,7 @@
                 />
               </div>
               <div class="col-lg-6">
+                <div class="d-inline text-danger">＊</div>
                 <label for="origin_price" class="form-label">原價</label>
                 <input
                   v-model.number="tempProduct.origin_price"
@@ -177,6 +179,7 @@
                 />
               </div>
               <div class="col-lg-6">
+                <div class="d-inline text-danger">＊</div>
                 <label for="price" class="form-label">售價</label>
                 <input
                   v-model.number="tempProduct.price"
