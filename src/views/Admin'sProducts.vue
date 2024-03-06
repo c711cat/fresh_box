@@ -97,6 +97,7 @@ export default {
     };
   },
   components: { ProductModal, DelModal },
+  inject: ["emitter"],
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
@@ -122,9 +123,27 @@ export default {
       this.isLoading = true;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
-        productComponent.hideModal();
-        this.getProducts();
-        return res;
+        const msgContent = [...res.data.message];
+        msgContent[0] = "產品名稱";
+        msgContent[1] = "類別";
+        msgContent[2] = "單位";
+        msgContent[3] = "原價";
+        msgContent[4] = "售價";
+        if (res.data.success) {
+          this.getProducts();
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "新增成功",
+          });
+          productComponent.hideModal();
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "新增失敗",
+            content: msgContent.join("、"),
+          });
+          this.getProducts();
+        }
       });
     },
     editProduct(item) {
@@ -133,9 +152,21 @@ export default {
       this.isLoading = true;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
-        this.$refs.productModal.hideModal();
-        this.getProducts();
-        return res;
+        if (res.data.success) {
+          this.getProducts();
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "更新成功",
+          });
+          this.$refs.productModal.hideModal();
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "更新失敗",
+            content: res.data.message.join("、"),
+          });
+          this.getProducts();
+        }
       });
     },
     openDelModal(item) {
@@ -147,9 +178,22 @@ export default {
       this.isLoading = true;
       this.$http.delete(api).then((res) => {
         this.isLoading = false;
-        this.$refs.delModal.hideModal();
-        this.getProducts();
-        return res;
+        if (res.data.success) {
+          this.getProducts();
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "刪除成功",
+          });
+          this.$refs.delModal.hideModal();
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "刪除失敗",
+            content: res.data.message.join("、"),
+          });
+          this.$refs.delModal.hideModal();
+          this.getProducts();
+        }
       });
     },
   },

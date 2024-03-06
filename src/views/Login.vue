@@ -49,6 +49,7 @@ export default {
       },
     };
   },
+  inject: ["emitter"],
   methods: {
     signIn() {
       const api = `${process.env.VUE_APP_API}admin/signin`;
@@ -58,7 +59,16 @@ export default {
           const expired = new Date(res.data.expired);
           Cookies.set("freshBoxToken", token, { expires: expired });
           this.$router.push("/dashboard");
-          return res;
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "登入成功",
+          });
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "登入失敗",
+            content: res.data.error.message,
+          });
         }
       });
     },
