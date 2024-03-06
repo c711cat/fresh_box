@@ -123,8 +123,6 @@ export default {
       this.isLoading = true;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
-        // productComponent.hideModal();
-        console.log(res);
         if (res.data.success) {
           this.getProducts();
           this.emitter.emit("push-message", {
@@ -138,6 +136,7 @@ export default {
             title: "新增失敗",
             content: res.data.message.join("、"),
           });
+          this.getProducts();
         }
       });
     },
@@ -147,9 +146,21 @@ export default {
       this.isLoading = true;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
-        this.$refs.productModal.hideModal();
-        this.getProducts();
-        return res;
+        if (res.data.success) {
+          this.getProducts();
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "更新成功",
+          });
+          this.$refs.productModal.hideModal();
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "更新失敗",
+            content: res.data.message.join("、"),
+          });
+          this.getProducts();
+        }
       });
     },
     openDelModal(item) {
@@ -161,9 +172,22 @@ export default {
       this.isLoading = true;
       this.$http.delete(api).then((res) => {
         this.isLoading = false;
-        this.$refs.delModal.hideModal();
-        this.getProducts();
-        return res;
+        if (res.data.success) {
+          this.getProducts();
+          this.emitter.emit("push-message", {
+            style: "success",
+            title: "刪除成功",
+          });
+          this.$refs.delModal.hideModal();
+        } else {
+          this.emitter.emit("push-message", {
+            style: "failure",
+            title: "刪除失敗",
+            content: res.data.message.join("、"),
+          });
+          this.$refs.delModal.hideModal();
+          this.getProducts();
+        }
       });
     },
   },
