@@ -5,6 +5,7 @@ import VueAxios from "vue-axios";
 import Loading from "@/components/Loading.vue";
 import App from "./App.vue";
 import router from "./router";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const app = createApp(App);
 app.use(VueAxios, axios);
