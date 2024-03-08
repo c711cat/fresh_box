@@ -72,6 +72,9 @@
       </div>
     </div>
   </div>
+
+  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+
   <ProductModal
     ref="productModal"
     :product="tempProduct"
@@ -86,6 +89,7 @@
 <script>
 import ProductModal from "@/components/ProductModal.vue";
 import DelModal from "@/components/DelModal.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   data() {
@@ -94,17 +98,20 @@ export default {
       tempProduct: {},
       isNew: false,
       isLoading: false,
+      pagination: {},
     };
   },
-  components: { ProductModal, DelModal },
+  components: { ProductModal, DelModal, Pagination },
   inject: ["emitter"],
   methods: {
-    getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
+    getProducts(page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
       this.isLoading = true;
       this.$http.get(api).then((res) => {
+        this.pagination = res.data.pagination;
         this.isLoading = false;
         this.products = res.data.products;
+        window.scrollTo(0, 0);
       });
     },
     openModal(isNew, item) {
