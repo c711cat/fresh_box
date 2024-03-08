@@ -31,11 +31,11 @@
             </div>
             <div class="col-4 col-sm-3 col-lg">
               <div>原價</div>
-              <div>NT$ {{ item.origin_price }}</div>
+              <div>NT$ {{ $filters.currency(item.origin_price) }}</div>
             </div>
             <div class="col-4 col-sm-3 col-lg">
               <div>售價</div>
-              <div>NT$ {{ item.price }}</div>
+              <div>NT$ {{ $filters.currency(item.price) }}</div>
             </div>
             <div class="col-4 col-sm-6 col-lg">
               數量：{{ item.num }} {{ item.unit }}
