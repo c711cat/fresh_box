@@ -27,7 +27,7 @@
           <div class="row align-items-center">
             <div class="col-12 col-sm-6 col-lg-3">
               <div>{{ item.title }}</div>
-              <div>{{ item.content }}</div>
+              <div>{{ item.content }}／{{ item.unit }}</div>
             </div>
             <div class="col-4 col-sm-3 col-lg">
               <div>原價</div>
@@ -38,7 +38,7 @@
               <div>NT$ {{ $filters.currency(item.price) }}</div>
             </div>
             <div class="col-4 col-sm-6 col-lg">
-              數量：{{ item.num }} {{ item.unit }}
+              數量：{{ item.qty }} {{ item.unit }}
             </div>
             <div
               v-if="item.is_enabled"
