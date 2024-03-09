@@ -136,7 +136,9 @@
                 />
               </div>
               <div class="col-lg-4">
-                <label for="unit_description" class="form-label">說明</label>
+                <label for="unit_description" class="form-label"
+                  >重量說明</label
+                >
                 <input
                   v-model="tempProduct.content"
                   type="text"
@@ -148,7 +150,7 @@
               <div class="col-lg-4">
                 <label for="number" class="form-label">數量</label>
                 <input
-                  v-model="tempProduct.num"
+                  v-model="tempProduct.qty"
                   min="0"
                   type="number"
                   class="form-control"
