@@ -7,11 +7,12 @@ import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { currency } from "./methods/filters";
-// import { currency } from "./methods/filters";
+import vSelect from "vue-select";
 
 const app = createApp(App);
 app.config.globalProperties.$filters = { currency };
 app.use(VueAxios, axios);
 app.use(router);
 app.component("Loading", Loading);
+app.component("v-select", vSelect);
 app.mount("#app");
