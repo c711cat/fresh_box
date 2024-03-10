@@ -38,7 +38,7 @@
             取消
           </button>
           <button
-            @click="$emit('del-product', tempProduct)"
+            @click="$emit('del-product', tempProduct, pages.current_page)"
             type="button"
             class="btn btn-danger"
           >
@@ -66,6 +66,7 @@ export default {
         return {};
       },
     },
+    pages: {},
   },
   watch: {
     product() {

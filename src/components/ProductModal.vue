@@ -225,7 +225,7 @@
           </button>
           <button
             v-if="tempProduct.id"
-            @click="$emit('edit-product', tempProduct)"
+            @click="$emit('edit-product', tempProduct, pages.current_page)"
             type="button"
             class="btn btn-primary"
           >
@@ -264,7 +264,9 @@ export default {
         return {};
       },
     },
+    pages: {},
   },
+
   watch: {
     product() {
       this.tempProduct = this.product;
