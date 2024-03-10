@@ -127,13 +127,11 @@
               <div class="col-lg-6">
                 <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">類別</label>
-                <input
+                <v-select
                   v-model="tempProduct.category"
-                  type="text"
-                  class="form-control"
-                  id="category"
-                  placeholder="例如：水果類"
-                />
+                  label="Select"
+                  :options="options"
+                ></v-select>
               </div>
               <div class="col-lg-4">
                 <label for="unit_description" class="form-label"
@@ -249,12 +247,14 @@
 
 <script>
 import ModalMixin from "@/mixins/modalMixin";
+import "vue-select/dist/vue-select.css";
 
 export default {
   data() {
     return {
       modal: {},
       tempProduct: {},
+      options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
     };
   },
   props: {
@@ -316,5 +316,11 @@ export default {
 <style lang="scss" scoped>
 .rightContainer {
   height: fit-content;
+}
+
+.form-control {
+  padding: 4px 4px 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(60, 60, 60, 0.26);
 }
 </style>
