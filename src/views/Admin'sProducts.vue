@@ -72,17 +72,21 @@
       </div>
     </div>
   </div>
-
   <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
-
   <ProductModal
     ref="productModal"
     :product="tempProduct"
     @edit-product="editProduct"
     @add-product="addProduct"
+    :pages="pagination"
   >
   </ProductModal>
-  <DelModal ref="delModal" :product="tempProduct" @del-product="delProduct">
+  <DelModal
+    ref="delModal"
+    :product="tempProduct"
+    @del-product="delProduct"
+    :pages="pagination"
+  >
   </DelModal>
 </template>
 
@@ -153,14 +157,14 @@ export default {
         }
       });
     },
-    editProduct(item) {
+    editProduct(item, current_page) {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.isLoading = true;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
         if (res.data.success) {
-          this.getProducts();
+          this.getProducts(current_page);
           this.emitter.emit("push-message", {
             style: "success",
             title: "更新成功",
@@ -172,7 +176,7 @@ export default {
             title: "更新失敗",
             content: res.data.message.join("、"),
           });
-          this.getProducts();
+          this.getProducts(current_page);
         }
       });
     },
@@ -180,13 +184,13 @@ export default {
       this.$refs.delModal.showModal();
       this.tempProduct = { ...item };
     },
-    delProduct(item) {
+    delProduct(item, current_page) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.isLoading = true;
       this.$http.delete(api).then((res) => {
         this.isLoading = false;
         if (res.data.success) {
-          this.getProducts();
+          this.getProducts(current_page);
           this.emitter.emit("push-message", {
             style: "success",
             title: "刪除成功",
@@ -199,7 +203,7 @@ export default {
             content: res.data.message.join("、"),
           });
           this.$refs.delModal.hideModal();
-          this.getProducts();
+          this.getProducts(current_page);
         }
       });
     },
