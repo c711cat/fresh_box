@@ -72,9 +72,7 @@
       </div>
     </div>
   </div>
-
   <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
-
   <ProductModal
     ref="productModal"
     :product="tempProduct"
