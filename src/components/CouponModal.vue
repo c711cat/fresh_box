@@ -52,6 +52,7 @@
                 v-model.number="tempCoupon.percent"
                 type="number"
                 min="0"
+                max="100"
                 class="form-control"
                 id="percent"
                 placeholder="例如：打9折請輸入10"
