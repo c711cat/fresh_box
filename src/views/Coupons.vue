@@ -23,20 +23,33 @@
             :key="index"
             class="row align-items-center text-center border-top"
           >
-            <div class="col-12 col-md-3 py-2">{{ coupon.title }}</div>
-            <div class="col-6 col-md-2 text-center py-2">
-              {{ coupon.percent }}
+            <div class="col-12 col-sm-4 col-lg-2 py-2">
+              名稱：{{ coupon.title }}
             </div>
-            <div class="col-6 col-md-2 py-2">
+            <div class="col-12 col-sm-4 col-lg-2 py-2">
+              折扣碼：{{ coupon.code }}
+            </div>
+            <div class="col-12 col-sm-4 col-lg-2 text-center py-2">
+              總金額折扣 {{ coupon.percent }} ％
+            </div>
+            <div class="col-12 col-sm-4 col-lg-2 py-2">
               使用期限：{{ $filters.changeDateStyle(coupon.due_date) }}
             </div>
-            <div v-if="coupon.is_enabled" class="col-6 col-md-2 text-success">
+            <div
+              v-if="coupon.is_enabled"
+              class="col-12 col-sm-4 col-lg-2 text-success py-2"
+            >
               啟用
             </div>
-            <div v-else class="col-6 col-md-2 text-secondary text-center">
+            <div
+              v-else
+              class="col-12 col-sm-4 col-lg-2 text-secondary text-center py-2"
+            >
               未啟用
             </div>
-            <div class="col-6 col-md-3 d-flex justify-content-center flex-wrap">
+            <div
+              class="col-12 col-sm-4 col-lg-2 d-flex justify-content-center flex-wrap"
+            >
               <button
                 @click="openCouponModal(isNew, coupon)"
                 type="button"
