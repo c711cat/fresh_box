@@ -126,13 +126,21 @@ export default {
   watch: {
     coupon() {
       this.tempCoupon = this.coupon;
+      const date = new Date(this.tempCoupon.due_date * 1000)
+        .toISOString()
+        .split("T");
+      this.due_date = date[0];
+
+      if (this.coupon.is_enabled) {
+        this.tempCoupon.is_enabled = this.coupon.is_enabled;
+      } else {
+        this.tempCoupon.is_enabled = 0;
+      }
+    },
     due_date() {
       this.tempCoupon.due_date = Math.floor(new Date(this.due_date)) / 1000;
-      console.log(this.tempCoupon);
     },
   },
-
-  methods: {},
   mixins: [ModalMixin],
 };
 </script>
