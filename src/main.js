@@ -7,10 +7,12 @@ import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { currency } from "./methods/filters";
+import { changeDateStyle } from "./methods/filters";
 import vSelect from "vue-select";
 
 const app = createApp(App);
 app.config.globalProperties.$filters = { currency };
+app.config.globalProperties.$filters = { changeDateStyle };
 app.use(VueAxios, axios);
 app.use(router);
 app.component("Loading", Loading);

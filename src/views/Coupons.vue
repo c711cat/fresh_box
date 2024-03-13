@@ -28,7 +28,7 @@
               {{ coupon.percent }}
             </div>
             <div class="col-6 col-md-2 py-2">
-              使用期限：{{ coupon.due_date }}
+              使用期限：{{ $filters.changeDateStyle(coupon.due_date) }}
             </div>
             <div v-if="coupon.is_enabled" class="col-6 col-md-2 text-success">
               啟用
