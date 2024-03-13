@@ -67,18 +67,17 @@ export default {
       const page = 1;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`;
       this.$http.get(api).then((res) => {
-        console.log(res);
         this.tempCoupon = res.data.coupons;
-        console.log(this.tempCoupon);
       });
     },
     addCoupon(coupon) {
       console.log(coupon);
-      coupon.due_date = 1555459200;
+
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
       this.$http.post(api, { data: coupon }).then((res) => {
         console.log(res);
         this.getCoupons();
+        this.$refs.couponModal.hideModal();
       });
     },
     openCouponModal() {
