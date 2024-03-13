@@ -89,7 +89,12 @@
           >
             取消
           </button>
-          <button v-if="tempCoupon.id" type="button" class="btn btn-primary">
+          <button
+            v-if="tempCoupon.id"
+            @click="$emit('edit-coupon', tempCoupon)"
+            type="button"
+            class="btn btn-primary"
+          >
             更新優惠券
           </button>
           <button

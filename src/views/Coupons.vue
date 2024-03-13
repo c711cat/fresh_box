@@ -71,6 +71,7 @@
     </div>
   </div>
   <CouponModal
+    @edit-coupon="updateCoupon"
     @add-coupon="addCoupon"
     :coupon="tempCoupon"
     ref="couponModal"
@@ -117,6 +118,15 @@ export default {
       } else {
         this.tempCoupon = { ...coupon };
       }
+    },
+    updateCoupon(coupon) {
+      console.log(coupon);
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
+      this.$http.put(api, { data: coupon }).then((res) => {
+        console.log(res);
+        this.getCoupons();
+        this.$refs.couponModal.hideModal();
+      });
     },
     openDelModal(coupon) {
       this.$refs.delModal.showModal();
