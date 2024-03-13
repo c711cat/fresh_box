@@ -61,7 +61,7 @@
               <div class="d-inline text-danger">＊</div>
               <label for="dueDate" class="form-label">有效期限</label>
               <input
-                v-model="tempCoupon.due_date"
+                v-model="due_date"
                 type="date"
                 class="form-control"
                 id="dueDate"
@@ -90,7 +90,13 @@
             取消
           </button>
           <!-- <button type="button" class="btn btn-primary">更新優惠券</button> -->
-          <button type="button" class="btn btn-primary">新增優惠券</button>
+          <button
+            @click="$emit('add-coupon', tempCoupon)"
+            type="button"
+            class="btn btn-primary"
+          >
+            新增優惠券
+          </button>
         </div>
       </div>
     </div>
@@ -105,6 +111,7 @@ export default {
     return {
       modal: {},
       tempCoupon: {},
+      due_date: "",
     };
   },
   props: {
@@ -119,6 +126,9 @@ export default {
   watch: {
     coupon() {
       this.tempCoupon = this.coupon;
+    due_date() {
+      this.tempCoupon.due_date = Math.floor(new Date(this.due_date)) / 1000;
+      console.log(this.tempCoupon);
     },
   },
 
@@ -128,10 +138,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// * {
-//   border: 1px solid black;
-// }
-
 .checkStyle {
   padding-left: 30px;
 }
