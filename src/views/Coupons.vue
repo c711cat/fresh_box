@@ -1,8 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <div class="d-flex justify-content-between align-items-center headerStyle">
-      <h3 class="py-4 mb-0">後台優惠券列表</h3>
+    <div
+      class="pt-4 d-flex justify-content-between align-items-center headerStyle"
+    >
+      <h3>後台優惠券列表</h3>
       <div>
         <button
           @click="openCouponModal"
@@ -14,14 +16,26 @@
       </div>
     </div>
     <div class="container">
-      <div class="row align-items-center border-top py-4">
+      <div class="row align-items-center py-4">
         <div class="col-12">
-          <div class="row align-items-center text-center">
-            <div class="col-12 col-md-3 py-2">首購禮首購禮首購禮</div>
-            <div class="col-6 col-md-2 text-center py-2">折扣％</div>
-            <div class="col-6 col-md-2 py-2">使用期限：2024/12/31</div>
-            <!-- <div class="col-6 col-md-2 text-success">啟用</div> -->
-            <div class="col-6 col-md-2 text-secondary text-center">未開啟</div>
+          <div
+            v-for="(coupon, index) in tempCoupon"
+            :key="index"
+            class="row align-items-center text-center border-top"
+          >
+            <div class="col-12 col-md-3 py-2">{{ coupon.title }}</div>
+            <div class="col-6 col-md-2 text-center py-2">
+              {{ coupon.percent }}
+            </div>
+            <div class="col-6 col-md-2 py-2">
+              使用期限：{{ coupon.due_date }}
+            </div>
+            <div v-if="coupon.is_enabled" class="col-6 col-md-2 text-success">
+              啟用
+            </div>
+            <div v-else class="col-6 col-md-2 text-secondary text-center">
+              未開啟
+            </div>
             <div class="col-6 col-md-3 d-flex justify-content-center flex-wrap">
               <button
                 type="button"
