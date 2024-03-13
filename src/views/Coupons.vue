@@ -58,6 +58,7 @@
                 編輯
               </button>
               <button
+                @click="openDelModal(coupon)"
                 type="button"
                 class="btn btn-outline-danger rounded-1 me-1 my-1"
               >
@@ -74,10 +75,16 @@
     :coupon="tempCoupon"
     ref="couponModal"
   ></CouponModal>
+  <DelModal
+    ref="delModal"
+    @del-coupon="delCoupon"
+    :coupon="tempCoupon"
+  ></DelModal>
 </template>
 
 <script>
 import CouponModal from "@/components/CouponModal.vue";
+import DelModal from "@/components/DelModal.vue";
 export default {
   data() {
     return {
@@ -86,7 +93,7 @@ export default {
       isNew: false,
     };
   },
-  components: { CouponModal },
+  components: { CouponModal, DelModal },
   methods: {
     getCoupons() {
       const page = 1;
@@ -110,6 +117,19 @@ export default {
       } else {
         this.tempCoupon = { ...coupon };
       }
+    },
+    openDelModal(coupon) {
+      this.$refs.delModal.showModal();
+      this.tempCoupon = { ...coupon };
+    },
+    delCoupon(coupon) {
+      console.log(coupon);
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
+      this.$http.delete(api).then((res) => {
+        console.log(res);
+        this.getCoupons();
+        this.$refs.delModal.hideModal();
+      });
     },
   },
   created() {
