@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>
+  <Loading v-if="isLoading"></Loading>
+  <div v-else>
     <div
       class="pt-4 d-flex justify-content-between align-items-center headerStyle"
     >
@@ -92,6 +93,7 @@ export default {
       coupons: [],
       tempCoupon: {},
       isNew: false,
+      isLoading: false,
     };
   },
   components: { CouponModal, DelModal },
@@ -99,16 +101,19 @@ export default {
     getCoupons() {
       const page = 1;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`;
+      this.isLoading = true;
       this.$http.get(api).then((res) => {
         this.coupons = res.data.coupons;
+        this.isLoading = false;
       });
     },
     addCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
+      this.isLoading = true;
       this.$http.post(api, { data: coupon }).then((res) => {
         console.log(res);
-        this.getCoupons();
         this.$refs.couponModal.hideModal();
+        this.getCoupons();
       });
     },
     openCouponModal(isNew, coupon) {
@@ -122,10 +127,11 @@ export default {
     updateCoupon(coupon) {
       console.log(coupon);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
+      this.isLoading = true;
       this.$http.put(api, { data: coupon }).then((res) => {
         console.log(res);
-        this.getCoupons();
         this.$refs.couponModal.hideModal();
+        this.getCoupons();
       });
     },
     openDelModal(coupon) {
@@ -135,10 +141,11 @@ export default {
     delCoupon(coupon) {
       console.log(coupon);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
+      this.isLoading = true;
       this.$http.delete(api).then((res) => {
         console.log(res);
-        this.getCoupons();
         this.$refs.delModal.hideModal();
+        this.getCoupons();
       });
     },
   },
