@@ -12,8 +12,8 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header ps-4">
-          <!-- <h5 class="modal-title">編輯優惠券</h5> -->
-          <h5 class="modal-title">新增優惠券</h5>
+          <h5 v-if="tempCoupon.id" class="modal-title">編輯優惠券</h5>
+          <h5 v-else class="modal-title">新增優惠券</h5>
           <button
             type="button"
             class="btn-close"
@@ -89,8 +89,11 @@
           >
             取消
           </button>
-          <!-- <button type="button" class="btn btn-primary">更新優惠券</button> -->
+          <button v-if="tempCoupon.id" type="button" class="btn btn-primary">
+            更新優惠券
+          </button>
           <button
+            v-else
             @click="$emit('add-coupon', tempCoupon)"
             type="button"
             class="btn btn-primary"
