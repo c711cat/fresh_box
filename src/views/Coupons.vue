@@ -129,13 +129,16 @@ export default {
       }
     },
     updateCoupon(coupon) {
-      console.log(coupon);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
       this.isLoading = true;
       this.$http.put(api, { data: coupon }).then((res) => {
-        console.log(res);
-        this.$refs.couponModal.hideModal();
+        this.$pushMsg(res, "更新優惠券");
         this.getCoupons();
+        if (res.data.success) {
+          this.$refs.couponModal.hideModal();
+        } else {
+          return;
+        }
       });
     },
     openDelModal(coupon) {
@@ -143,13 +146,16 @@ export default {
       this.tempCoupon = { ...coupon };
     },
     delCoupon(coupon) {
-      console.log(coupon);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
       this.isLoading = true;
       this.$http.delete(api).then((res) => {
-        console.log(res);
-        this.$refs.delModal.hideModal();
+        this.$pushMsg(res, "刪除優惠券");
         this.getCoupons();
+        if (res.data.success) {
+          this.$refs.delModal.hideModal();
+        } else {
+          return;
+        }
       });
     },
   },
