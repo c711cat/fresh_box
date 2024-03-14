@@ -6,13 +6,11 @@ import Loading from "@/components/Loading.vue";
 import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { currency } from "./methods/filters";
-import { changeDateStyle } from "./methods/filters";
+import { currency, changeDateStyle } from "./methods/filters";
 import vSelect from "vue-select";
 
 const app = createApp(App);
-app.config.globalProperties.$filters = { currency };
-app.config.globalProperties.$filters = { changeDateStyle };
+app.config.globalProperties.$filters = { currency, changeDateStyle };
 app.use(VueAxios, axios);
 app.use(router);
 app.component("Loading", Loading);
