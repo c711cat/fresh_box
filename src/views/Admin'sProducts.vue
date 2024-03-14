@@ -106,7 +106,6 @@ export default {
     };
   },
   components: { ProductModal, DelModal, Pagination },
-  inject: ["emitter"],
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
@@ -130,30 +129,14 @@ export default {
     addProduct(item) {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
-      const productComponent = this.$refs.productModal;
       this.isLoading = true;
       this.$http.post(api, { data: this.tempProduct }).then((res) => {
-        this.isLoading = false;
-        const msgContent = [...res.data.message];
-        msgContent[0] = "產品名稱";
-        msgContent[1] = "類別";
-        msgContent[2] = "單位";
-        msgContent[3] = "原價";
-        msgContent[4] = "售價";
+        this.$pushMsg(res, "新增產品");
+        this.getProducts();
         if (res.data.success) {
-          this.getProducts();
-          this.emitter.emit("push-message", {
-            style: "success",
-            title: "新增成功",
-          });
-          productComponent.hideModal();
+          this.$refs.productModal.hideModal();
         } else {
-          this.emitter.emit("push-message", {
-            style: "failure",
-            title: "新增失敗",
-            content: msgContent.join("、"),
-          });
-          this.getProducts();
+          return;
         }
       });
     },
@@ -163,20 +146,12 @@ export default {
       this.isLoading = true;
       this.$http.put(api, { data: this.tempProduct }).then((res) => {
         this.isLoading = false;
+        this.$pushMsg(res, "更新產品");
+        this.getProducts(current_page);
         if (res.data.success) {
-          this.getProducts(current_page);
-          this.emitter.emit("push-message", {
-            style: "success",
-            title: "更新成功",
-          });
           this.$refs.productModal.hideModal();
         } else {
-          this.emitter.emit("push-message", {
-            style: "failure",
-            title: "更新失敗",
-            content: res.data.message.join("、"),
-          });
-          this.getProducts(current_page);
+          return;
         }
       });
     },
@@ -189,21 +164,12 @@ export default {
       this.isLoading = true;
       this.$http.delete(api).then((res) => {
         this.isLoading = false;
+        this.$pushMsg(res, "刪除產品");
+        this.getProducts(current_page);
         if (res.data.success) {
-          this.getProducts(current_page);
-          this.emitter.emit("push-message", {
-            style: "success",
-            title: "刪除成功",
-          });
           this.$refs.delModal.hideModal();
         } else {
-          this.emitter.emit("push-message", {
-            style: "failure",
-            title: "刪除失敗",
-            content: res.data.message.join("、"),
-          });
-          this.$refs.delModal.hideModal();
-          this.getProducts(current_page);
+          return;
         }
       });
     },

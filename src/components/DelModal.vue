@@ -12,7 +12,10 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-danger">
-          <h5 class="modal-title text-white">刪除產品</h5>
+          <h5 v-if="tempCoupon.id" class="modal-title text-white">
+            刪除優惠券
+          </h5>
+          <h5 v-else class="modal-title text-white">刪除產品</h5>
           <button
             type="button"
             class="btn-close"
@@ -21,8 +24,15 @@
           ></button>
         </div>
         <div class="modal-body">
-          <span
-            >確定刪除
+          <span v-if="tempCoupon.id">
+            確定刪除
+            <span class="text-danger fw-bold fs-5">
+              {{ tempCoupon.title }}
+            </span>
+            這張優惠券？
+          </span>
+          <span v-else>
+            確定刪除
             <span class="text-danger fw-bold fs-5">
               {{ tempProduct.title }}
             </span>
@@ -38,6 +48,15 @@
             取消
           </button>
           <button
+            v-if="tempCoupon.id"
+            @click="$emit('del-coupon', tempCoupon)"
+            type="button"
+            class="btn btn-danger"
+          >
+            確定刪除
+          </button>
+          <button
+            v-else
             @click="$emit('del-product', tempProduct, pages.current_page)"
             type="button"
             class="btn btn-danger"
@@ -57,10 +76,17 @@ export default {
     return {
       modal: {},
       tempProduct: {},
+      tempCoupon: {},
     };
   },
   props: {
     product: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    coupon: {
       type: Object,
       default() {
         return {};
@@ -71,6 +97,9 @@ export default {
   watch: {
     product() {
       this.tempProduct = this.product;
+    },
+    coupon() {
+      this.tempCoupon = this.coupon;
     },
   },
   mixins: [ModalMixin],
