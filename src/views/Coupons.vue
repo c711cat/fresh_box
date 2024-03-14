@@ -111,9 +111,13 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
       this.isLoading = true;
       this.$http.post(api, { data: coupon }).then((res) => {
-        console.log(res);
-        this.$refs.couponModal.hideModal();
+        this.$pushMsg(res, "新增優惠券");
         this.getCoupons();
+        if (res.data.success) {
+          this.$refs.couponModal.hideModal();
+        } else {
+          return;
+        }
       });
     },
     openCouponModal(isNew, coupon) {
