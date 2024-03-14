@@ -58,7 +58,7 @@ export default {
           const token = res.data.token;
           const expired = new Date(res.data.expired);
           Cookies.set("freshBoxToken", token, { expires: expired });
-          this.$router.push("/dashboard");
+          this.$router.push("/dashboard/admin's-products");
           this.emitter.emit("push-message", {
             style: "success",
             title: "登入成功",
