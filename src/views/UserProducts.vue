@@ -75,11 +75,11 @@ export default {
 // }
 
 img {
-  height: 200px;
+  height: 190px;
   object-fit: cover;
 }
 
 .card {
-  height: 420px;
+  height: 370px;
 }
 </style>
