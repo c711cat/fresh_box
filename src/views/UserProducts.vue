@@ -11,17 +11,20 @@
         <p class="card-text text-secondary">原價 89元</p>
         <strong class="card-text text-danger fs-5">特價 79元</strong>
       </div>
-
-      <div
-        class="btn-group d-flex"
-        role="group"
-        aria-label="Basic outlined example"
-      >
-        <button type="button" class="btn btn-outline-primary disabled">
-          移除
+      <!-- 加入商品的按鈕 -->
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-outline-primary border-radius">
+          <i class="bi bi-plus-lg"></i>
         </button>
+      </div>
+      <!-- 加減商品的input -->
+      <div class="input-group input-group">
         <button type="button" class="btn btn-outline-primary">
-          加入購物車
+          <i class="bi bi-dash-lg"></i>
+        </button>
+        <input class="form-control" />
+        <button type="button" class="btn btn-outline-primary">
+          <i class="bi bi-plus-lg"></i>
         </button>
       </div>
     </div>
