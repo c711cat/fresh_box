@@ -64,4 +64,13 @@ export default {
 // * {
 //   border: 1px solid black;
 // }
+
+img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card {
+  height: 420px;
+}
 </style>
