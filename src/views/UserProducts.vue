@@ -37,21 +37,28 @@
       </div>
     </div>
   </div>
+
+  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
 </template>
 
 <script>
+import Pagination from "@/components/Pagination.vue";
+
 export default {
   data() {
     return {
       allProducts: [],
+      pagination: {},
     };
   },
+  components: { Pagination },
   methods: {
-    getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+    getProducts(page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http.get(api).then((res) => {
         console.log(res);
         this.allProducts = res.data.products;
+        this.pagination = res.data.pagination;
         console.log(this.allProducts);
       });
     },
