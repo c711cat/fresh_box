@@ -1,7 +1,7 @@
 <template>
-  <div class="my-3 d-flex flex-wrap">
-    <div v-for="(item, index) in allProducts" :key="index" class="mx-auto">
-      <div class="card" style="width: 18rem">
+  <div class="d-flex flex-wrap my-3 mx-5">
+    <div v-for="(item, index) in allProducts" :key="index" class="">
+      <div class="card mb-3 mx-2" style="width: 18rem">
         <img :src="item.imageUrl" class="card-img-top" />
 
         <div class="card-body">
