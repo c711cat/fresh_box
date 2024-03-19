@@ -1,6 +1,10 @@
 <template>
-  <div class="d-flex flex-wrap my-3 mx-5">
-    <div v-for="(item, index) in allProducts" :key="index" class="">
+  <div class="row my-5 mx-auto">
+    <div
+      v-for="(item, index) in allProducts"
+      :key="index"
+      class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
+    >
       <div class="card mb-3 mx-2" style="width: 18rem">
         <img :src="item.imageUrl" class="card-img-top" />
 
@@ -8,11 +12,9 @@
           <h5 class="card-title">{{ item.title }}</h5>
           <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
           <div class="d-flex justify-content-between">
-            <p class="card-text text-secondary">
-              原價 {{ item.origin_price }}元
-            </p>
+            <p class="card-text text-secondary">NT$ {{ item.origin_price }}</p>
             <strong class="card-text text-danger fs-5"
-              >特價 {{ item.price }}元
+              >NT$ {{ item.price }}
             </strong>
           </div>
           <!-- 加入商品的按鈕 -->
