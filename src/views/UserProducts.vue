@@ -1,5 +1,6 @@
 <template>
-  <div class="row my-5 mx-auto">
+  <Loading v-if="isLoading"></Loading>
+  <div v-else class="row my-5 mx-auto">
     <div
       v-for="(item, index) in allProducts"
       :key="index"
@@ -18,13 +19,17 @@
             </strong>
           </div>
           <!-- 加入商品的按鈕 -->
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary border-radius">
+          <div v-if="plus" class="d-flex justify-content-end">
+            <button
+              @click="addCart"
+              type="button"
+              class="btn btn-outline-primary border-radius"
+            >
               <i class="bi bi-plus-lg"></i>
             </button>
           </div>
           <!-- 加減商品的input -->
-          <div class="input-group input-group">
+          <div v-else class="input-group">
             <button type="button" class="btn btn-outline-primary">
               <i class="bi bi-dash-lg"></i>
             </button>
@@ -37,29 +42,32 @@
       </div>
     </div>
   </div>
-
   <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
 </template>
 
 <script>
 import Pagination from "@/components/Pagination.vue";
+import Loading from "@/components/Loading.vue";
 
 export default {
   data() {
     return {
       allProducts: [],
       pagination: {},
+      isLoading: false,
+      plus: true,
     };
   },
-  components: { Pagination },
+  components: { Pagination, Loading },
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      this.isLoading = true;
       this.$http.get(api).then((res) => {
-        console.log(res);
+        this.isLoading = false;
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
-        console.log(this.allProducts);
+        window.scrollTo(0, 0);
       });
     },
   },
@@ -70,10 +78,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// * {
-//   border: 1px solid black;
-// }
-
 img {
   height: 190px;
   object-fit: cover;
