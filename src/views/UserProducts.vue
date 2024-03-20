@@ -13,7 +13,12 @@
           <h5 class="card-title">{{ item.title }}</h5>
           <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
           <div class="d-flex justify-content-between mb-2">
-            <strong class="card-text text-secondary"
+            <strong
+              class="card-text text-secondary fs-5"
+              :class="{
+                'text-decoration-line-through':
+                  item.price !== item.origin_price,
+              }"
               >NT$ {{ item.origin_price }}</strong
             >
             <strong
