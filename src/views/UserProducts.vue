@@ -12,9 +12,13 @@
         <div class="card-body">
           <h5 class="card-title">{{ item.title }}</h5>
           <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
-          <div class="d-flex justify-content-between">
-            <p class="card-text text-secondary">NT$ {{ item.origin_price }}</p>
-            <strong class="card-text text-danger fs-5"
+          <div class="d-flex justify-content-between mb-2">
+            <strong class="card-text text-secondary"
+              >NT$ {{ item.origin_price }}</strong
+            >
+            <strong
+              v-if="item.price !== item.origin_price"
+              class="card-text text-danger fs-5"
               >NT$ {{ item.price }}
             </strong>
           </div>
@@ -68,6 +72,7 @@ export default {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         window.scrollTo(0, 0);
+        console.log(res);
       });
     },
   },
