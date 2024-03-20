@@ -81,17 +81,24 @@ export default {
       });
     },
     addCart(item) {
-      console.log(item);
       const addItem = { product_id: item.id, qty: 1 };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.post(api, { data: addItem }).then((res) => {
         console.log(res);
         this.$pushMsg(res, "加入購物車");
+        this.getCart();
+      });
+    },
+    getCart() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.get(api).then((res) => {
+        console.log(res);
       });
     },
   },
   created() {
     this.getProducts();
+    this.getCart();
   },
 };
 </script>
