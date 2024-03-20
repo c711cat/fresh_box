@@ -10,7 +10,13 @@
         <img :src="item.imageUrl" class="card-img-top" />
 
         <div class="card-body">
-          <h5 class="card-title">{{ item.title }}</h5>
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title">{{ item.title }}</h5>
+            <span class="badge text-bg-danger rounded-circle fs-6">{{
+              item.buyQty
+            }}</span>
+          </div>
+
           <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
           <div class="d-flex justify-content-between mb-2">
             <strong
@@ -65,6 +71,7 @@ export default {
       pagination: {},
       isLoading: false,
       plus: true,
+      carts: {},
     };
   },
   components: { Pagination, Loading },
@@ -77,14 +84,13 @@ export default {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         window.scrollTo(0, 0);
-        console.log(res);
+        this.pushBuyQty();
       });
     },
     addCart(item) {
       const addItem = { product_id: item.id, qty: 1 };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.post(api, { data: addItem }).then((res) => {
-        console.log(res);
         this.$pushMsg(res, "加入購物車");
         this.getCart();
       });
@@ -92,12 +98,23 @@ export default {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
-        console.log(res);
+        this.carts = res.data.data.carts;
+        console.log(this.carts);
+        this.getProducts();
       });
+    },
+    pushBuyQty() {
+      this.allProducts.forEach((item) => {
+        this.carts.forEach((cartItem) => {
+          if (item.id === cartItem.product_id) {
+            item.buyQty = cartItem.qty;
+          }
+        });
+      });
+      console.log(this.allProducts);
     },
   },
   created() {
-    this.getProducts();
     this.getCart();
   },
 };
