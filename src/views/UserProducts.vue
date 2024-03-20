@@ -30,7 +30,7 @@
           <!-- 加入商品的按鈕 -->
           <div v-if="plus" class="d-flex justify-content-end">
             <button
-              @click="addCart"
+              @click="addCart(item)"
               type="button"
               class="btn btn-outline-primary border-radius"
             >
@@ -78,6 +78,15 @@ export default {
         this.pagination = res.data.pagination;
         window.scrollTo(0, 0);
         console.log(res);
+      });
+    },
+    addCart(item) {
+      console.log(item);
+      const addItem = { product_id: item.id, qty: 1 };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.post(api, { data: addItem }).then((res) => {
+        console.log(res);
+        this.$pushMsg(res, "加入購物車");
       });
     },
   },
