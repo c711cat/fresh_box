@@ -25,8 +25,9 @@
                 'text-decoration-line-through':
                   item.price !== item.origin_price,
               }"
-              >NT$ {{ item.origin_price }}</strong
             >
+              NT$ {{ item.origin_price }}
+            </strong>
             <strong
               v-if="item.price !== item.origin_price"
               class="card-text text-danger fs-5"
