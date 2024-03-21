@@ -12,9 +12,9 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title">{{ item.title }}</h5>
-            <span class="badge text-bg-danger rounded-circle fs-6">{{
-              item.buyQty
-            }}</span>
+            <span class="badge text-bg-danger rounded-pill fs-6">
+              {{ item.buyQty }}
+            </span>
           </div>
 
           <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
