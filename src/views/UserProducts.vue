@@ -34,23 +34,26 @@
               >NT$ {{ item.price }}
             </strong>
           </div>
-          <!-- 加入商品的按鈕 -->
-          <div v-if="plus" class="d-flex justify-content-end">
+
+          <div
+            class="btn-group w-100"
+            role="group"
+            aria-label="Default button group"
+          >
+            <!-- - -->
+            <button
+              :disabled="!item.buyQty"
+              type="button"
+              class="btn btn-light w-50"
+            >
+              <i class="bi bi-dash-lg"></i>
+            </button>
+            <!-- + -->
             <button
               @click="addCart(item)"
               type="button"
-              class="btn btn-outline-primary border-radius"
+              class="btn btn-light w-50"
             >
-              <i class="bi bi-plus-lg"></i>
-            </button>
-          </div>
-          <!-- 加減商品的input -->
-          <div v-else class="input-group">
-            <button type="button" class="btn btn-outline-primary">
-              <i class="bi bi-dash-lg"></i>
-            </button>
-            <input class="form-control" />
-            <button type="button" class="btn btn-outline-primary">
               <i class="bi bi-plus-lg"></i>
             </button>
           </div>
