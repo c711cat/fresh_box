@@ -11,7 +11,10 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title">{{ item.title }}</h5>
-            <span class="badge text-bg-danger rounded-pill fs-6">
+            <span
+              v-if="item.buyQty >= 1"
+              class="badge text-bg-danger rounded-pill fs-6"
+            >
               {{ item.buyQty }}
             </span>
           </div>
