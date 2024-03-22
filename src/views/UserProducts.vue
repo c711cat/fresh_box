@@ -6,7 +6,9 @@
       class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
     >
       <div class="card mb-3 mx-2" style="width: 18rem">
-        <img :src="item.imageUrl" class="card-img-top" />
+        <img
+          @click="goToProduct(item)"
+          :src="item.imageUrl"
 
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center">
@@ -146,6 +148,10 @@ export default {
         this.$pushMsg(res, "刪除 1 個品項");
         this.getCart();
       });
+    },
+    goToProduct(item) {
+      console.log(item);
+      this.$router.push(`/user/product/${item.id}`);
     },
   },
   created() {
