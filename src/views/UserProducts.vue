@@ -110,7 +110,6 @@ export default {
       });
     },
     addCart(item) {
-      console.log(item);
       const addItem = { product_id: item.id, qty: 1 };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.status.addLoadingItem = item.id;
