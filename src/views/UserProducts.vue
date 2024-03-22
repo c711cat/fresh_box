@@ -1,6 +1,5 @@
 <template>
-  <Loading v-if="isLoading"></Loading>
-  <div v-else class="row my-5 mx-auto">
+  <div class="row my-5 mx-auto">
     <div
       v-for="(item, index) in allProducts"
       :key="index"
@@ -67,7 +66,6 @@
 
 <script>
 import Pagination from "@/components/Pagination.vue";
-import Loading from "@/components/Loading.vue";
 
 export default {
   data() {
@@ -79,13 +77,12 @@ export default {
       carts: {},
     };
   },
-  components: { Pagination, Loading },
+  components: { Pagination },
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-      this.isLoading = true;
+
       this.$http.get(api).then((res) => {
-        this.isLoading = false;
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         window.scrollTo(0, 0);
