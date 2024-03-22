@@ -31,6 +31,16 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/user",
+    component: () => import("../views/UserDashboard.vue"),
+    children: [
+      {
+        path: "user-products",
+        component: () => import("../views/UserProducts.vue"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
