@@ -42,6 +42,7 @@
           >
             <!-- - -->
             <button
+              @click="delOne(item)"
               :disabled="!item.buyQty"
               type="button"
               class="btn btn-light w-50"
@@ -112,10 +113,19 @@ export default {
         this.carts.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
             item.buyQty = cartItem.qty;
+            item.pushId = cartItem.id;
           }
         });
       });
-      console.log(this.allProducts);
+    },
+    delOne(item) {
+      const updateQty = item.buyQty - 1;
+      const delItem = { product_id: item.id, qty: updateQty };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushId}`;
+      this.$http.put(api, { data: delItem }).then((res) => {
+        this.$pushMsg(res, "刪除 1 個品項");
+        this.getCart();
+      });
     },
   },
   created() {
