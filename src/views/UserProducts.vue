@@ -9,34 +9,38 @@
         <img
           @click="goToProduct(item)"
           :src="item.imageUrl"
+          class="imgBody card-img-top"
+        />
 
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center">
-            <h5 class="card-title">{{ item.title }}</h5>
-            <span
-              v-if="item.buyQty >= 1"
-              class="badge text-bg-danger rounded-pill fs-6"
-            >
-              {{ item.buyQty }}
-            </span>
-          </div>
+        <div class="card-body d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <span
+                v-if="item.buyQty >= 1"
+                class="badge text-bg-danger rounded-pill fs-6"
+              >
+                {{ item.buyQty }}
+              </span>
+            </div>
 
-          <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
-          <div class="d-flex justify-content-between mb-2">
-            <strong
-              class="card-text text-secondary fs-5"
-              :class="{
-                'text-decoration-line-through':
-                  item.price !== item.origin_price,
-              }"
-            >
-              NT$ {{ item.origin_price }}
-            </strong>
-            <strong
-              v-if="item.price !== item.origin_price"
-              class="card-text text-danger fs-5"
-              >NT$ {{ item.price }}
-            </strong>
+            <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
+            <div class="d-flex justify-content-between mb-2">
+              <strong
+                class="card-text text-secondary fs-6"
+                :class="{
+                  'text-decoration-line-through':
+                    item.price !== item.origin_price,
+                }"
+              >
+                NT$ {{ item.origin_price }}
+              </strong>
+              <strong
+                v-if="item.price !== item.origin_price"
+                class="card-text text-danger fs-6"
+                >NT$ {{ item.price }}
+              </strong>
+            </div>
           </div>
 
           <div
@@ -166,7 +170,8 @@ img {
   object-fit: cover;
 }
 
-.card {
-  height: 370px;
+.imgBody:hover {
+  cursor: pointer;
+  border: 2px solid #fff;
 }
 </style>
