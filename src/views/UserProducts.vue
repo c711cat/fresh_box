@@ -45,19 +45,34 @@
             <!-- - -->
             <button
               @click="delOne(item)"
-              :disabled="!item.buyQty"
+              :disabled="!item.buyQty || item.id === status.delLoadingItem"
               type="button"
               class="btn btn-light w-50"
             >
-              <i class="bi bi-dash-lg"></i>
+              <div
+                v-if="item.id === status.delLoadingItem"
+                class="spinner-border text-dark spinner-grow-sm"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <i v-else class="bi bi-dash-lg"></i>
             </button>
             <!-- + -->
             <button
               @click="addCart(item)"
+              :disabled="item.id === status.addLoadingItem"
               type="button"
               class="btn btn-light w-50"
             >
-              <i class="bi bi-plus-lg"></i>
+              <div
+                v-if="item.id === status.addLoadingItem"
+                class="spinner-border text-dark spinner-grow-sm"
+                role="status"
+              >
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <i v-else class="bi bi-plus-lg"></i>
             </button>
           </div>
         </div>
@@ -77,6 +92,10 @@ export default {
       pagination: {},
       plus: true,
       carts: {},
+      status: {
+        addLoadingItem: "",
+        delLoadingItem: "",
+      },
     };
   },
   components: { Pagination },
@@ -91,9 +110,12 @@ export default {
       });
     },
     addCart(item) {
+      console.log(item);
       const addItem = { product_id: item.id, qty: 1 };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.status.addLoadingItem = item.id;
       this.$http.post(api, { data: addItem }).then((res) => {
+        this.status.addLoadingItem = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
       });
@@ -119,7 +141,9 @@ export default {
       const updateQty = item.buyQty - 1;
       const delItem = { product_id: item.id, qty: updateQty };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushId}`;
+      this.status.delLoadingItem = item.id;
       this.$http.put(api, { data: delItem }).then((res) => {
+        this.status.delLoadingItem = "";
         this.$pushMsg(res, "刪除 1 個品項");
         this.getCart();
       });
