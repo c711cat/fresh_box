@@ -75,7 +75,6 @@ export default {
     return {
       allProducts: [],
       pagination: {},
-      isLoading: false,
       plus: true,
       carts: {},
     };
@@ -84,12 +83,11 @@ export default {
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-
       this.$http.get(api).then((res) => {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         window.scrollTo(0, 0);
-        this.pushBuyQty();
+        this.pushBuyQtyId();
       });
     },
     addCart(item) {
@@ -104,11 +102,10 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
-
         this.getProducts();
       });
     },
-    pushBuyQty() {
+    pushBuyQtyId() {
       this.allProducts.forEach((item) => {
         this.carts.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
