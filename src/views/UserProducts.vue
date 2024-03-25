@@ -14,7 +14,7 @@
 
         <div class="card-body d-flex flex-column justify-content-between">
           <div>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between">
               <h5 class="card-title">{{ item.title }}</h5>
               <span
                 v-if="item.buyQty >= 1"
@@ -173,5 +173,9 @@ img {
 .imgBody:hover {
   cursor: pointer;
   border: 2px solid #fff;
+}
+
+.badge {
+  height: fit-content;
 }
 </style>
