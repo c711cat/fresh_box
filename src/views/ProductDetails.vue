@@ -1,7 +1,19 @@
 <template>
   <div class="row my-4 mx-auto justify-content-center">
-    <div class="row m-0 justify-content-center">
-      <img class="imgBody p-1 col-12 col-md-5" :src="product.imageUrl" alt="" />
+    <div class="row m-0 d-cloumn justify-content-center">
+      <div class="p-1 col-12 col-md-5">
+        <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
+        <div class="row m-0">
+          <img
+            v-for="(img, index) in product.images"
+            :key="index"
+            @click="changeImg(img)"
+            :src="img"
+            class="imgItems col-4"
+            alt=""
+          />
+        </div>
+      </div>
 
       <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
         <h4>{{ product.title }}</h4>
@@ -69,6 +81,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
       this.$http.get(api).then((res) => {
         this.product = res.data.product;
+        this.pushImg();
         console.log(this.product);
       });
     },
@@ -88,6 +101,12 @@ export default {
           this.$pushMsg(res, "加入購物車");
         });
     },
+    changeImg(img) {
+      this.product.imageUrl = img;
+    },
+    pushImg() {
+      this.product.images.splice(0, 0, this.product.imageUrl);
+    },
   },
   created() {
     this.getProduct();
@@ -100,9 +119,21 @@ export default {
   height: 600px;
   object-fit: cover;
 }
+
+.imgItems {
+  height: 100px;
+  object-fit: cover;
+}
+
+.imgItems:hover {
+  cursor: pointer;
+  padding: 0px;
+}
+
 .productContent {
   color: #77797a;
 }
+
 .btn {
   border: 1px solid #dee2e6;
 }
