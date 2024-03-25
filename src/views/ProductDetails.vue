@@ -26,19 +26,30 @@
           >
         </div>
         <div class="d-flex mb-3">
-          <button type="button" class="btn btn-light rounded-0 rounded-start">
+          <button
+            :disabled="productQty === 1"
+            @click="delQty"
+            type="button"
+            class="btn btn-light rounded-0 rounded-start"
+          >
             <i class="bi bi-dash-lg"></i>
           </button>
           <input
-            v-model="number"
+            v-model="productQty"
             type="text"
             class="form-control text-center rounded-0"
           />
-          <button type="button" class="btn btn-light rounded-0 rounded-end">
+          <button
+            @click="addQty"
+            type="button"
+            class="btn btn-light rounded-0 rounded-end"
+          >
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
-        <button type="button" class="btn btn-light w-100">加入購物車</button>
+        <button @click="addToCart" type="button" class="btn btn-light w-100">
+          加入購物車
+        </button>
       </div>
     </div>
     <div class="m-1 col-12 col-md-10 col-lg-8">{{ product.description }}</div>
@@ -50,7 +61,7 @@ export default {
   data() {
     return {
       product: {},
-      number: 1,
+      productQty: 1,
     };
   },
   methods: {
@@ -58,7 +69,24 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
       this.$http.get(api).then((res) => {
         this.product = res.data.product;
+        console.log(this.product);
       });
+    },
+    addQty() {
+      this.productQty = this.productQty + 1;
+    },
+    delQty() {
+      this.productQty = this.productQty - 1;
+    },
+    addToCart() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http
+        .post(api, {
+          data: { product_id: this.product.id, qty: this.productQty },
+        })
+        .then((res) => {
+          this.$pushMsg(res, "加入購物車");
+        });
     },
   },
   created() {
