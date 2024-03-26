@@ -108,6 +108,7 @@ export default {
         })
         .then((res) => {
           this.$pushMsg(res, "加入購物車");
+          this.productQty = 1;
         });
     },
     changeImg(img) {
