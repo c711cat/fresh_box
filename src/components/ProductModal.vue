@@ -114,7 +114,7 @@
               </div>
             </div>
             <div class="rightContainer col-lg-8 row g-3 mx-0">
-              <div class="col-lg-6">
+              <div class="col-lg-5">
                 <div class="d-inline text-danger">＊</div>
                 <label for="name" class="form-label">產品名稱</label>
                 <input
@@ -124,7 +124,7 @@
                   id="name"
                 />
               </div>
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">類別</label>
                 <v-select
@@ -134,8 +134,27 @@
                 ></v-select>
               </div>
               <div class="col-lg-4">
+                <div class="d-inline text-danger">＊</div>
+                <label for="category" class="form-label">保存方式</label>
+                <v-select
+                  v-model="tempProduct.preservation_methods"
+                  label="Select"
+                  :options="preservationMethods"
+                ></v-select>
+              </div>
+              <div class="col-lg-3">
+                <label for="unit_description" class="form-label">產地</label>
+                <input
+                  v-model="tempProduct.origin_place"
+                  type="text"
+                  class="form-control"
+                  id="unit_description"
+                  placeholder="例如：台灣"
+                />
+              </div>
+              <div class="col-lg-4">
                 <label for="unit_description" class="form-label"
-                  >重量說明</label
+                  >重量規格</label
                 >
                 <input
                   v-model="tempProduct.content"
@@ -145,18 +164,7 @@
                   placeholder="例如：600g±5%"
                 />
               </div>
-              <div class="col-lg-4">
-                <label for="number" class="form-label">數量</label>
-                <input
-                  v-model="tempProduct.qty"
-                  min="0"
-                  type="number"
-                  class="form-control"
-                  id="number"
-                  placeholder="例如：10"
-                />
-              </div>
-              <div class="col-lg-4">
+              <div class="col-lg-2">
                 <div class="d-inline text-danger">＊</div>
                 <label for="unit" class="form-label">單位</label>
                 <input
@@ -167,6 +175,18 @@
                   placeholder="例如：份"
                 />
               </div>
+              <div class="col-lg-3">
+                <label for="number" class="form-label">數量</label>
+                <input
+                  v-model="tempProduct.qty"
+                  min="0"
+                  type="number"
+                  class="form-control"
+                  id="number"
+                  placeholder="例如：10"
+                />
+              </div>
+
               <div class="col-lg-6">
                 <div class="d-inline text-danger">＊</div>
                 <label for="origin_price" class="form-label">原價</label>
@@ -189,6 +209,7 @@
                   placeholder="例如：250"
                 />
               </div>
+
               <div class="col-lg-12">
                 <label for="detailed_description" class="form-label">
                   產品介紹
@@ -255,6 +276,7 @@ export default {
       modal: {},
       tempProduct: {},
       options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
+      preservationMethods: ["冷藏", "室溫陰涼乾燥處"],
     };
   },
   props: {
