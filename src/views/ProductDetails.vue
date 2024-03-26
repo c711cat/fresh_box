@@ -16,19 +16,20 @@
       </div>
 
       <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
-        <h4 class="mb-3">{{ product.title }}</h4>
+        <h4 class="mb-3 border-bottom pb-3">{{ product.title }}</h4>
+        <div v-if="product.description" class="productContent mb-4">
+          {{ product.description }}
+        </div>
         <div class="productContent">
           規格：{{ product.content }} / {{ product.unit }}
         </div>
         <div v-if="product.origin_place" class="productContent">
           產地：{{ product.origin_place }}
         </div>
-        <div v-if="product.origin_place" class="productContent">
+        <div v-if="product.preservation_methods" class="productContent">
           保存方式：{{ product.preservation_methods }}
         </div>
-        <div class="productContent">
-          {{ product.description }}
-        </div>
+
         <div class="row m-0 g-3 mb-3">
           <strong
             :class="{
@@ -73,7 +74,7 @@
         </button>
       </div>
     </div>
-    <div class="m-1 col-12 col-md-10 col-lg-8">{{ product.description }}</div>
+    <div class="m-1 col-12 col-md-10 col-lg-8">預計放其他商品圖片</div>
   </div>
 </template>
 
@@ -140,7 +141,7 @@ export default {
 }
 
 .productContent {
-  color: #29211bb3;
+  color: #9c9ea1;
   margin-bottom: 10px;
 }
 
