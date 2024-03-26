@@ -74,7 +74,6 @@
         </button>
       </div>
     </div>
-    <div class="m-1 col-12 col-md-10 col-lg-8">預計放其他商品圖片</div>
   </div>
 </template>
 
