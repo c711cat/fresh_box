@@ -3,22 +3,31 @@
     <div class="row m-0 d-cloumn justify-content-center">
       <div class="p-1 col-12 col-md-5">
         <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
-        <div class="row m-0">
+        <div class="row m-0 overflow-x-auto flex-nowrap">
           <img
             v-for="(img, index) in product.images"
             :key="index"
             @click="changeImg(img)"
             :src="img"
-            class="imgItems col-4"
+            class="imgItems col-3 mb-3"
             alt=""
           />
         </div>
       </div>
 
       <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
-        <h4>{{ product.title }}</h4>
+        <h4 class="mb-3">{{ product.title }}</h4>
         <div class="productContent">
-          {{ product.content }} / {{ product.unit }}
+          規格：{{ product.content }} / {{ product.unit }}
+        </div>
+        <div v-if="product.origin_place" class="productContent">
+          產地：{{ product.origin_place }}
+        </div>
+        <div v-if="product.origin_place" class="productContent">
+          保存方式：{{ product.preservation_methods }}
+        </div>
+        <div class="productContent">
+          {{ product.description }}
         </div>
         <div class="row m-0 g-3 mb-3">
           <strong
@@ -131,7 +140,8 @@ export default {
 }
 
 .productContent {
-  color: #77797a;
+  color: #29211bb3;
+  margin-bottom: 10px;
 }
 
 .btn {
