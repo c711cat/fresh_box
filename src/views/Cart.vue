@@ -50,6 +50,7 @@
             <i class="bi bi-dash-lg"></i>
           </button>
           <input
+            @change="updateQtyOfInput(item)"
             v-model="item.qty"
             type="text"
             class="form-control text-center rounded-0"
@@ -122,6 +123,16 @@ export default {
         this.$pushMsg(res, "刪除");
         this.getCart();
       });
+    },
+    updateQtyOfInput(item) {
+      const updateQty = Number(item.qty);
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      this.$http
+        .put(api, { data: { product_id: item.id, qty: updateQty } })
+        .then((res) => {
+          this.$pushMsg(res, "更新數量");
+          this.getCart();
+        });
     },
   },
   created() {
