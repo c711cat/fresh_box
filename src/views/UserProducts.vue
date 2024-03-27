@@ -129,6 +129,13 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
+        this.carts.forEach((item) => {
+          if (item.qty === 0) {
+            this.delItem(item.id);
+          } else {
+            return;
+          }
+        });
         this.getProducts();
       });
     },
@@ -154,8 +161,13 @@ export default {
       });
     },
     goToProduct(item) {
-      console.log(item);
       this.$router.push(`/user/product/${item.id}`);
+    },
+    delItem(id) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
+      this.$http.delete(api).then((res) => {
+        return res;
+      });
     },
   },
   created() {
