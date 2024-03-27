@@ -49,12 +49,15 @@
           >
             <i class="bi bi-dash-lg"></i>
           </button>
+
           <input
+            :disabled="item.id === status.updateLoadingItem"
             @change="updateQtyOfInput(item)"
             v-model="item.qty"
             type="text"
             class="form-control text-center rounded-0"
           />
+
           <button
             @click="addOneToCart(item)"
             :disabled="item.id === status.addLoadingItem"
@@ -79,7 +82,7 @@ export default {
   data() {
     return {
       carts: {},
-      status: { addLoadingItem: "", delLoadingItem: "" },
+      status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
     };
   },
   methods: {
@@ -125,11 +128,18 @@ export default {
       });
     },
     updateQtyOfInput(item) {
+      if (item.qty < 0) {
+        item.qty = 0;
+      } else {
+        return;
+      }
       const updateQty = Number(item.qty);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      this.status.updateLoadingItem = item.id;
       this.$http
         .put(api, { data: { product_id: item.id, qty: updateQty } })
         .then((res) => {
+          this, (this.status.updateLoadingItem = "");
           this.$pushMsg(res, "更新數量");
           this.getCart();
         });
