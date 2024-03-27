@@ -41,7 +41,12 @@
 
       <div class="row m-0 align-items-center col-5 col-md-6 col-lg-4 col-xl-4">
         <div class="d-flex col-12 col-md-6 col-lg-6 col-xl-6">
-          <button type="button" class="btn btn-light rounded-0 rounded-start">
+          <button
+            @click="delOneQty(item)"
+            :disabled="item.id === status.delLoadingItem"
+            type="button"
+            class="btn btn-light rounded-0 rounded-start"
+          >
             <i class="bi bi-dash-lg"></i>
           </button>
           <input
@@ -49,13 +54,18 @@
             type="text"
             class="form-control text-center rounded-0"
           />
-          <button type="button" class="btn btn-light rounded-0 rounded-end">
+          <button
+            @click="addOneToCart(item)"
+            :disabled="item.id === status.addLoadingItem"
+            type="button"
+            class="btn btn-light rounded-0 rounded-end"
+          >
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
 
         <div
-          class="my-2 text-center text-md-end col-12 col-md-6 col-lg-6 col-xl-6"
+          class="mt-3 text-center text-md-end col-12 col-md-6 col-lg-6 col-xl-6"
         >
           NT$ {{ item.total }}
         </div>
@@ -68,6 +78,7 @@ export default {
   data() {
     return {
       carts: {},
+      status: { addLoadingItem: "", delLoadingItem: "" },
     };
   },
   methods: {
@@ -75,13 +86,39 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
-        console.log(this.carts);
+        this.carts.forEach((item) => {
+          if (item.qty === 0) {
+            this.delItem(item);
+          } else {
+            return;
+          }
+        });
       });
     },
     delItem(item) {
-      console.log(item);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.$http.delete(api).then((res) => {
+        this.$pushMsg(res, "刪除");
+        this.getCart();
+      });
+    },
+    addOneToCart(item) {
+      const addItem = { product_id: item.product.id, qty: 1 };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.status.addLoadingItem = item.id;
+      this.$http.post(api, { data: addItem }).then((res) => {
+        this.status.addLoadingItem = "";
+        this.$pushMsg(res, "加入購物車");
+        this.getCart();
+      });
+    },
+    delOneQty(item) {
+      const updateQty = item.qty - 1;
+      const delItem = { product_id: item.id, qty: updateQty };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      this.status.delLoadingItem = item.id;
+      this.$http.put(api, { data: delItem }).then((res) => {
+        this.status.delLoadingItem = "";
         this.$pushMsg(res, "刪除");
         this.getCart();
       });
