@@ -91,7 +91,6 @@ export default {
       this.$http.get(api).then((res) => {
         this.product = res.data.product;
         this.pushImg();
-        console.log(this.product);
       });
     },
     addQty() {
@@ -104,7 +103,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http
         .post(api, {
-          data: { product_id: this.product.id, qty: this.productQty },
+          data: { product_id: this.product.id, qty: Number(this.productQty) },
         })
         .then((res) => {
           this.$pushMsg(res, "加入購物車");
