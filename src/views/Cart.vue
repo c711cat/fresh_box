@@ -79,6 +79,28 @@
         </div>
       </div>
     </div>
+    <div
+      class="row g-1 m-0 border-top pt-3 justify-content-center align-items-center"
+    >
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
+      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">NT$ 2000</div>
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+        運費
+        <div class="infoText col-12 text-danger">
+          <i class="bi bi-info-circle"></i>
+          滿 NT$ 1000 免運
+        </div>
+      </div>
+
+      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">NT$ 260</div>
+
+      <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+        付款金額
+      </strong>
+      <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        NT$ 2000
+      </strong>
+    </div>
   </div>
 </template>
 <script>
@@ -162,5 +184,9 @@ export default {
 .imgBody {
   height: 100px;
   object-fit: cover;
+}
+
+.infoText {
+  font-size: 13px;
 }
 </style>
