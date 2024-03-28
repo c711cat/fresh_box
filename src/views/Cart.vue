@@ -92,13 +92,15 @@
         </div>
       </div>
 
-      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">NT$ 260</div>
+      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        NT$ {{ shippingFee }}
+      </div>
 
       <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
         付款金額
       </strong>
       <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-        NT$ 2000
+        NT$ {{ paymentAmount }}
       </strong>
     </div>
   </div>
@@ -107,7 +109,7 @@
 export default {
   data() {
     return {
-      carts: {},
+      carts: [],
       status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
     };
   },
@@ -156,8 +158,6 @@ export default {
     updateQtyOfInput(item) {
       if (item.qty < 0) {
         item.qty = 0;
-      } else {
-        return;
       }
       const updateQty = Number(item.qty);
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
@@ -169,6 +169,25 @@ export default {
           this.$pushMsg(res, "更新數量");
           this.getCart();
         });
+    },
+  },
+  computed: {
+    subtotal() {
+      let total = 0;
+      this.carts.forEach((item) => {
+        total += item.final_total;
+      });
+      return total;
+    },
+    shippingFee() {
+      if (this.subtotal >= 1000) {
+        return 0;
+      } else {
+        return 260;
+      }
+    },
+    paymentAmount() {
+      return this.subtotal + this.shippingFee;
     },
   },
   created() {
