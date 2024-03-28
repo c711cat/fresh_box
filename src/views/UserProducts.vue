@@ -144,7 +144,7 @@ export default {
         this.carts.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
             item.buyQty = cartItem.qty;
-            item.pushId = cartItem.id;
+            item.pushCartId = cartItem.id;
           }
         });
       });
@@ -152,7 +152,7 @@ export default {
     delOne(item) {
       const updateQty = item.buyQty - 1;
       const delItem = { product_id: item.id, qty: updateQty };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushId}`;
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushCartId}`;
       this.status.delLoadingItem = item.id;
       this.$http.put(api, { data: delItem }).then((res) => {
         this.status.delLoadingItem = "";

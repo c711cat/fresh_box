@@ -151,7 +151,7 @@ export default {
     },
     delOneQty(item) {
       const updateQty = item.qty - 1;
-      const delItem = { product_id: item.id, qty: updateQty };
+      const delItem = { product_id: item.product.id, qty: updateQty };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.status.delLoadingItem = item.id;
       this.$http.put(api, { data: delItem }).then((res) => {
@@ -168,7 +168,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.status.updateLoadingItem = item.id;
       this.$http
-        .put(api, { data: { product_id: item.id, qty: updateQty } })
+        .put(api, { data: { product_id: item.product.id, qty: updateQty } })
         .then((res) => {
           this, (this.status.updateLoadingItem = "");
           this.$pushMsg(res, "更新數量");
