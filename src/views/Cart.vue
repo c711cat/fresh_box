@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div v-if="carts.length === 0" class="my-5 d-flex justify-content-center">
-    <h3>購物車是空的</h3>
+  <div v-if="!carts.length" class="m-5">
+    <h3 class="ps-2">購物車空了</h3>
   </div>
   <div v-else class="m-5">
     <h3 class="ps-2">購物車清單</h3>
