@@ -1,6 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="m-5">
+  <div v-if="carts.length === 0" class="my-5 d-flex justify-content-center">
+    <h3>購物車是空的</h3>
+  </div>
+  <div v-else class="m-5">
     <h3 class="ps-2">購物車清單</h3>
     <div
       v-for="(item, index) in carts"
@@ -83,9 +86,11 @@
       class="row g-1 m-0 border-top pt-3 justify-content-center align-items-center"
     >
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
-      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">NT$ 2000</div>
+      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        NT$ {{ subtotal }}
+      </div>
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
-        運費
+        冷藏宅配
         <div class="infoText col-12 text-danger">
           <i class="bi bi-info-circle"></i>
           滿 NT$ 1000 免運
@@ -197,9 +202,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  // border: 1px solid black;
-}
 .imgBody {
   height: 100px;
   object-fit: cover;
