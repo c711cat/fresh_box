@@ -1,8 +1,19 @@
 <template>
   <div class="row my-4 mx-auto justify-content-center">
     <div class="row m-0 d-cloumn justify-content-center">
-      <div class="p-1 col-12 col-md-5">
+      <div class="p-1 col-12 col-md-5 position-relative">
         <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
+        <h2
+          v-if="isMyFavorite"
+          @click="delMyFavorite"
+          class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
+        ></h2>
+
+        <h2
+          v-else
+          @click="addMyFavorite"
+          class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
+        ></h2>
         <div class="row m-0 overflow-x-auto flex-nowrap">
           <img
             v-for="(img, index) in product.images"
@@ -83,6 +94,7 @@ export default {
     return {
       product: {},
       productQty: 1,
+      myFavoriteList: [],
     };
   },
   methods: {
@@ -91,6 +103,7 @@ export default {
       this.$http.get(api).then((res) => {
         this.product = res.data.product;
         this.pushImg();
+        this.getMyFavorite();
       });
     },
     addQty() {
@@ -115,6 +128,33 @@ export default {
     },
     pushImg() {
       this.product.images.splice(0, 0, this.product.imageUrl);
+    },
+    getMyFavorite() {
+      this.myFavoriteList =
+        JSON.parse(localStorage.getItem("myFavorite")) || [];
+    },
+    addMyFavorite() {
+      this.myFavoriteList.push(this.product);
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+    },
+    delMyFavorite() {
+      this.myFavoriteList.filter((listItem, index) => {
+        if (this.product.id === listItem.id) {
+          return this.myFavoriteList.splice(index, 1);
+        }
+      });
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+    },
+  },
+  computed: {
+    isMyFavorite() {
+      let favorite = "";
+      this.myFavoriteList.forEach((listItem) => {
+        if (this.product.id === listItem.id) {
+          favorite = true;
+        }
+      });
+      return favorite;
     },
   },
   created() {
@@ -146,5 +186,25 @@ export default {
 
 .btn {
   border: 1px solid #dee2e6;
+}
+.delmyFavoriteIcon {
+  right: 5px;
+  top: 5px;
+  padding: 8px 12px;
+  color: #f52424b3;
+}
+.delmyFavoriteIcon:hover {
+  cursor: pointer;
+  color: #dc3545;
+}
+.myFavoriteIcon {
+  right: 5px;
+  top: 5px;
+  padding: 8px 12px;
+  color: #ffffffb3;
+}
+.myFavoriteIcon:hover {
+  cursor: pointer;
+  color: #f52424;
 }
 </style>
