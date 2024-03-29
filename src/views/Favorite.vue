@@ -1,7 +1,12 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="row my-5 mx-auto">
+  <div v-if="!myFavoriteList.length" class="row my-5 mx-auto">
+    <h3 class="ps-5">目前無收藏的商品</h3>
+  </div>
+  <div v-else class="row my-5 mx-auto">
+    <h3 class="ps-5 pb-3">收藏清單</h3>
     <div
-      v-for="(item, index) in allProducts"
+      v-for="(item, index) in myFavoriteList"
       :key="index"
       class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
     >
@@ -97,17 +102,12 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination.vue";
-
 export default {
   data() {
     return {
-      allProducts: [],
-      pagination: {},
       carts: {},
       status: {
         addLoadingItem: "",
@@ -116,44 +116,22 @@ export default {
       myFavoriteList: [],
     };
   },
-  components: { Pagination },
+
   methods: {
-    getProducts(page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.allProducts = res.data.products;
-        this.pagination = res.data.pagination;
-        window.scrollTo(0, 0);
-        this.pushBuyQtyId();
-        this.getMyFavorite();
-      });
-    },
-    addCart(item) {
-      const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.status.addLoadingItem = item.id;
-      this.$http.post(api, { data: addItem }).then((res) => {
-        this.status.addLoadingItem = "";
-        this.$pushMsg(res, "加入購物車");
-        this.getCart();
-      });
+    getMyFavorite() {
+      this.myFavoriteList =
+        JSON.parse(localStorage.getItem("myFavorite")) || [];
+      this.getCart();
     },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
-        this.carts.forEach((item) => {
-          if (item.qty === 0) {
-            this.delItem(item.id);
-          } else {
-            return;
-          }
-        });
-        this.getProducts();
+        this.pushBuyQtyId();
       });
     },
     pushBuyQtyId() {
-      this.allProducts.forEach((item) => {
+      this.myFavoriteList.forEach((item) => {
         this.carts.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
             item.buyQty = cartItem.qty;
@@ -161,30 +139,6 @@ export default {
           }
         });
       });
-    },
-    delOne(item) {
-      const updateQty = item.buyQty - 1;
-      const delItem = { product_id: item.id, qty: updateQty };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushCartId}`;
-      this.status.delLoadingItem = item.id;
-      this.$http.put(api, { data: delItem }).then((res) => {
-        this.status.delLoadingItem = "";
-        this.$pushMsg(res, "刪除 1 個品項");
-        this.getCart();
-      });
-    },
-    goToProduct(item) {
-      this.$router.push(`/user/product/${item.id}`);
-    },
-    delItem(id) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-      this.$http.delete(api).then((res) => {
-        return res;
-      });
-    },
-    getMyFavorite() {
-      this.myFavoriteList =
-        JSON.parse(localStorage.getItem("myFavorite")) || [];
     },
     isMyFavorite(item) {
       let favorite = "";
@@ -207,9 +161,33 @@ export default {
       });
       localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
     },
+    addCart(item) {
+      const addItem = { product_id: item.id, qty: 1 };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.status.addLoadingItem = item.id;
+      this.$http.post(api, { data: addItem }).then((res) => {
+        this.status.addLoadingItem = "";
+        this.$pushMsg(res, "加入購物車");
+        this.getCart();
+      });
+    },
+    delOne(item) {
+      const updateQty = item.buyQty - 1;
+      const delItem = { product_id: item.id, qty: updateQty };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushCartId}`;
+      this.status.delLoadingItem = item.id;
+      this.$http.put(api, { data: delItem }).then((res) => {
+        this.status.delLoadingItem = "";
+        this.$pushMsg(res, "刪除 1 個品項");
+        this.getCart();
+      });
+    },
+    goToProduct(item) {
+      this.$router.push(`/user/product/${item.id}`);
+    },
   },
   created() {
-    this.getCart();
+    this.getMyFavorite();
   },
 };
 </script>
