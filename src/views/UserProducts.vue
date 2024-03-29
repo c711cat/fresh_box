@@ -6,10 +6,22 @@
       class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
     >
       <div class="card mb-3 mx-2" style="width: 18rem">
+        <h3
+          v-if="isMyFavorite(item)"
+          @click="delMyFavorite(item)"
+          class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
+        ></h3>
+
+        <h3
+          v-else
+          @click="addMyFavorite(item)"
+          class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
+        ></h3>
+
         <img
           @click="goToProduct(item)"
           :src="item.imageUrl"
-          class="imgBody card-img-top"
+          class="imgBody card-img-top position-relative"
         />
 
         <div class="card-body d-flex flex-column justify-content-between">
@@ -102,6 +114,7 @@ export default {
         addLoadingItem: "",
         delLoadingItem: "",
       },
+      myFavoriteList: [],
     };
   },
   components: { Pagination },
@@ -113,6 +126,7 @@ export default {
         this.pagination = res.data.pagination;
         window.scrollTo(0, 0);
         this.pushBuyQtyId();
+        this.getMyFavorite();
       });
     },
     addCart(item) {
@@ -169,6 +183,31 @@ export default {
         return res;
       });
     },
+    getMyFavorite() {
+      this.myFavoriteList =
+        JSON.parse(localStorage.getItem("myFavorite")) || [];
+    },
+    isMyFavorite(item) {
+      let favorite = "";
+      this.myFavoriteList.forEach((listItem) => {
+        if (item.id === listItem.id) {
+          favorite = true;
+        }
+      });
+      return favorite;
+    },
+    addMyFavorite(addItem) {
+      this.myFavoriteList.push(addItem);
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+    },
+    delMyFavorite(delItem) {
+      this.myFavoriteList.filter((item, index) => {
+        if (delItem.id === item.id) {
+          return this.myFavoriteList.splice(index, 1);
+        }
+      });
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+    },
   },
   created() {
     this.getCart();
@@ -181,13 +220,31 @@ img {
   height: 190px;
   object-fit: cover;
 }
-
 .imgBody:hover {
   cursor: pointer;
   border: 2px solid #fff;
 }
-
 .badge {
   height: fit-content;
+}
+.delmyFavoriteIcon {
+  right: 0px;
+  top: 0px;
+  padding: 8px 12px;
+  color: #f52424b3;
+}
+.delmyFavoriteIcon:hover {
+  cursor: pointer;
+  color: #dc3545;
+}
+.myFavoriteIcon {
+  right: 0px;
+  top: 0px;
+  padding: 8px 12px;
+  color: #ffffffb3;
+}
+.myFavoriteIcon:hover {
+  cursor: pointer;
+  color: #f52424;
 }
 </style>
