@@ -154,6 +154,7 @@ export default {
       status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
       couponCode: "",
       couponOption: ["10%off"],
+      shippingFee: 260,
     };
   },
   watch: {
@@ -171,6 +172,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
+        this.getshippingFee();
         this.carts.forEach((item) => {
           if (item.qty === 0) {
             this.delItem(item);
@@ -224,6 +226,20 @@ export default {
           this.getCart();
         });
     },
+    getshippingFee() {
+      if (!this.couponCode && this.subtotal >= 1000) {
+        this.shippingFee = 0;
+      }
+      if (!this.couponCode && this.subtotal < 1000) {
+        this.shippingFee = 260;
+      }
+      if (this.couponCode && this.subtotal - this.discount >= 1000) {
+        this.shippingFee = 0;
+      }
+      if (this.couponCode && this.subtotal - this.discount < 1000) {
+        this.shippingFee = 260;
+      }
+    },
   },
   computed: {
     subtotal() {
@@ -245,13 +261,6 @@ export default {
     },
     afterDiscount() {
       return this.subtotal - this.discount;
-    },
-    shippingFee() {
-      if (this.subtotal >= 1000) {
-        return 0;
-      } else {
-        return 260;
-      }
     },
     paymentAmount() {
       let total = 0;
