@@ -111,6 +111,13 @@
         - NT$ {{ discount }}
       </div>
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
+        折抵後小計
+      </div>
+      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        NT$ {{ afterDiscount }}
+      </div>
+
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         冷藏宅配
         <div class="infoText col-12 text-danger">
           <i class="bi bi-info-circle"></i>
@@ -228,6 +235,9 @@ export default {
         discount = this.subtotal - total;
       });
       return discount;
+    },
+    afterDiscount() {
+      return this.subtotal - this.discount;
     },
     shippingFee() {
       if (this.subtotal >= 1000) {
