@@ -47,7 +47,9 @@
             </div>
             <div class="col-12 col-lg-6 col-xl-3">
               <div class="d-inline text-danger">＊</div>
-              <label for="percent" class="form-label">總金額扣除的％</label>
+              <label for="percent" class="form-label"
+                >總金額打幾折（單位：％）</label
+              >
               <input
                 v-model.number="tempCoupon.percent"
                 type="number"
@@ -55,7 +57,7 @@
                 max="100"
                 class="form-control"
                 id="percent"
-                placeholder="例如：打9折請輸入10"
+                placeholder="例如：打9折請輸入90"
               />
             </div>
             <div class="col-12 col-lg-6 col-xl-3">
