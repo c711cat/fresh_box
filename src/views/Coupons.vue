@@ -31,7 +31,7 @@
               折扣碼：{{ coupon.code }}
             </div>
             <div class="col-12 col-sm-4 col-lg-2 text-center py-2">
-              總金額折扣 {{ coupon.percent }} ％
+              總金額乘以 {{ coupon.percent }} ％
             </div>
             <div class="col-12 col-sm-4 col-lg-2 py-2">
               使用期限：{{ $filters.changeDateStyle(coupon.due_date) }}
