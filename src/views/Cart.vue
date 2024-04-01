@@ -96,30 +96,39 @@
       >
         優惠碼
       </label>
-      <v-select
-        :disabled="couponCode === couponOption[0]"
-        class="col-5 col-sm-4 col-lg-3 col-xl-2"
-        v-model="couponCode"
-        label="Select"
-        :options="couponOption"
-      ></v-select>
+      <div class="d-flex col-5 col-sm-4 col-lg-3 col-xl-2">
+        <v-select
+          :disabled="used_coupon"
+          class="col-9 col-md-10"
+          v-model="couponCode"
+          label="Select"
+          :options="couponOption"
+        ></v-select>
+        <button
+          @click="useCoupon"
+          type="button"
+          class="btn btn-outline-secondary btn-sm col-auto"
+        >
+          送出
+        </button>
+      </div>
 
       <div
-        v-if="couponCode"
+        v-if="used_coupon"
         class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
       >
         優惠碼折抵
       </div>
-      <div v-if="couponCode" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+      <div v-if="used_coupon" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
         - NT$ {{ discount }}
       </div>
       <div
-        v-if="couponCode"
+        v-if="used_coupon"
         class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
       >
         折抵後小計
       </div>
-      <div v-if="couponCode" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+      <div v-if="used_coupon" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
         NT$ {{ afterDiscount }}
       </div>
 
@@ -155,17 +164,8 @@ export default {
       couponCode: "",
       couponOption: ["10%off"],
       shippingFee: 260,
+      used_coupon: false,
     };
-  },
-  watch: {
-    couponCode() {
-      console.log(this.couponCode);
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
-      this.$http.post(api, { data: { code: this.couponCode } }).then((res) => {
-        console.log(res);
-        this.getCart();
-      });
-    },
   },
   methods: {
     getCart() {
@@ -196,6 +196,7 @@ export default {
       this.$http.post(api, { data: addItem }).then((res) => {
         this.status.addLoadingItem = "";
         this.couponCode = "";
+        this.used_coupon = false;
         this.$pushMsg(res, "加入購物車");
         this.getCart();
       });
@@ -225,6 +226,16 @@ export default {
           this.$pushMsg(res, "更新數量");
           this.getCart();
         });
+    },
+    useCoupon() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      this.$http.post(api, { data: { code: this.couponCode } }).then((res) => {
+        this.$pushMsg(res, "套用優惠券");
+        if (res.data.success) {
+          this.used_coupon = true;
+        }
+        this.getCart();
+      });
     },
     getshippingFee() {
       if (!this.couponCode && this.subtotal >= 1000) {
