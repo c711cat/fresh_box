@@ -85,11 +85,54 @@
     <div
       class="row g-1 m-0 border-top pt-3 justify-content-center align-items-center"
     >
-      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">小計</div>
       <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
         NT$ {{ subtotal }}
       </div>
-      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+
+      <label
+        class="form-label col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end mt-3 pe-3"
+        for="couponCode"
+      >
+        優惠碼
+      </label>
+      <div class="d-flex col-5 col-sm-4 col-lg-3 col-xl-2">
+        <v-select
+          :disabled="used_coupon"
+          class="col-9 col-md-10"
+          v-model="couponCode"
+          label="Select"
+          :options="couponOption"
+        ></v-select>
+        <button
+          @click="useCoupon"
+          type="button"
+          class="btn btn-outline-secondary btn-sm col-auto"
+        >
+          送出
+        </button>
+      </div>
+
+      <div
+        v-if="used_coupon"
+        class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
+      >
+        優惠碼折抵
+      </div>
+      <div v-if="used_coupon" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        - NT$ {{ discount }}
+      </div>
+      <div
+        v-if="used_coupon"
+        class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
+      >
+        折抵後小計
+      </div>
+      <div v-if="used_coupon" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        NT$ {{ afterDiscount }}
+      </div>
+
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         冷藏宅配
         <div class="infoText col-12 text-danger">
           <i class="bi bi-info-circle"></i>
@@ -101,7 +144,7 @@
         NT$ {{ shippingFee }}
       </div>
 
-      <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+      <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         付款金額
       </strong>
       <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
@@ -111,11 +154,17 @@
   </div>
 </template>
 <script>
+import "vue-select/dist/vue-select.css";
+
 export default {
   data() {
     return {
       carts: [],
       status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
+      couponCode: "",
+      couponOption: ["10%off"],
+      shippingFee: 260,
+      used_coupon: false,
     };
   },
   methods: {
@@ -123,6 +172,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
+        this.getshippingFee();
         this.carts.forEach((item) => {
           if (item.qty === 0) {
             this.delItem(item);
@@ -145,6 +195,8 @@ export default {
       this.status.addLoadingItem = item.id;
       this.$http.post(api, { data: addItem }).then((res) => {
         this.status.addLoadingItem = "";
+        this.couponCode = "";
+        this.used_coupon = false;
         this.$pushMsg(res, "加入購物車");
         this.getCart();
       });
@@ -175,24 +227,60 @@ export default {
           this.getCart();
         });
     },
+    useCoupon() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      this.$http.post(api, { data: { code: this.couponCode } }).then((res) => {
+        this.$pushMsg(res, "套用優惠券");
+        if (res.data.success) {
+          this.used_coupon = true;
+        }
+        this.getCart();
+      });
+    },
+    getshippingFee() {
+      if (!this.couponCode && this.subtotal >= 1000) {
+        this.shippingFee = 0;
+      }
+      if (!this.couponCode && this.subtotal < 1000) {
+        this.shippingFee = 260;
+      }
+      if (this.couponCode && this.subtotal - this.discount >= 1000) {
+        this.shippingFee = 0;
+      }
+      if (this.couponCode && this.subtotal - this.discount < 1000) {
+        this.shippingFee = 260;
+      }
+    },
   },
   computed: {
     subtotal() {
       let total = 0;
       this.carts.forEach((item) => {
-        total += item.final_total;
+        total += item.total;
       });
       return total;
     },
-    shippingFee() {
-      if (this.subtotal >= 1000) {
-        return 0;
-      } else {
-        return 260;
-      }
+    discount() {
+      let discount = 0;
+      let total = 0;
+      this.carts.forEach((item) => {
+        total += item.final_total;
+        total = Math.floor(total);
+        discount = this.subtotal - total;
+      });
+      return discount;
+    },
+    afterDiscount() {
+      return this.subtotal - this.discount;
     },
     paymentAmount() {
-      return this.subtotal + this.shippingFee;
+      let total = 0;
+      if (this.couponCode) {
+        total = this.subtotal - this.discount + this.shippingFee;
+      } else {
+        total = this.subtotal + this.shippingFee;
+      }
+      return total;
     },
   },
   created() {
