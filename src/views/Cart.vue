@@ -104,16 +104,22 @@
         :options="couponOption"
       ></v-select>
 
-      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
+      <div
+        v-if="couponCode"
+        class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
+      >
         優惠碼折抵
       </div>
-      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+      <div v-if="couponCode" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
         - NT$ {{ discount }}
       </div>
-      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
+      <div
+        v-if="couponCode"
+        class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
+      >
         折抵後小計
       </div>
-      <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+      <div v-if="couponCode" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
         NT$ {{ afterDiscount }}
       </div>
 
@@ -187,6 +193,7 @@ export default {
       this.status.addLoadingItem = item.id;
       this.$http.post(api, { data: addItem }).then((res) => {
         this.status.addLoadingItem = "";
+        this.couponCode = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
       });
@@ -247,7 +254,13 @@ export default {
       }
     },
     paymentAmount() {
-      return this.subtotal - this.discount + this.shippingFee;
+      let total = 0;
+      if (this.couponCode) {
+        total = this.subtotal - this.discount + this.shippingFee;
+      } else {
+        total = this.subtotal + this.shippingFee;
+      }
+      return total;
     },
   },
   created() {
