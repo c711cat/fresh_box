@@ -85,11 +85,26 @@
     <div
       class="row g-1 m-0 border-top pt-3 justify-content-center align-items-center"
     >
-      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">小計</div>
       <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
         NT$ {{ subtotal }}
       </div>
-      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+
+      <label
+        class="form-label col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end mt-3 pe-3"
+        for="couponCode"
+      >
+        優惠碼
+      </label>
+      <v-select
+        :disabled="couponCode === couponOption[0]"
+        class="col-5 col-sm-4 col-lg-3 col-xl-2"
+        v-model="couponCode"
+        label="Select"
+        :options="couponOption"
+      ></v-select>
+
+      <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         冷藏宅配
         <div class="infoText col-12 text-danger">
           <i class="bi bi-info-circle"></i>
@@ -101,7 +116,7 @@
         NT$ {{ shippingFee }}
       </div>
 
-      <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+      <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         付款金額
       </strong>
       <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
@@ -111,12 +126,26 @@
   </div>
 </template>
 <script>
+import "vue-select/dist/vue-select.css";
+
 export default {
   data() {
     return {
       carts: [],
       status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
+      couponCode: "",
+      couponOption: ["10%off"],
     };
+  },
+  watch: {
+    couponCode() {
+      console.log(this.couponCode);
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      this.$http.post(api, { data: { code: this.couponCode } }).then((res) => {
+        console.log(res);
+        this.getCart();
+      });
+    },
   },
   methods: {
     getCart() {
