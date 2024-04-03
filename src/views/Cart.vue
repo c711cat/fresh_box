@@ -147,9 +147,17 @@
       <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         付款金額
       </strong>
-      <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+      <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end mb-3">
         NT$ {{ paymentAmount }}
       </strong>
+      <div class="col-11 text-end">
+        <button
+          @click="checkout"
+          class="btn btn-primary col-12 col-sm-3 col-md-2 col-xl-1"
+        >
+          結帳
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -167,6 +175,7 @@ export default {
       used_coupon: false,
     };
   },
+  inject: ["emitter"],
   methods: {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
@@ -250,6 +259,21 @@ export default {
       if (this.couponCode && this.subtotal - this.discount < 1000) {
         this.shippingFee = 260;
       }
+    },
+    checkout() {
+      const moneyDetail = {
+        subtotal: this.subtotal,
+        discount: this.discount,
+        afterDiscount: this.afterDiscount,
+        shippingFee: this.shippingFee,
+        paymentAmount: this.paymentAmount,
+      };
+      console.log(moneyDetail);
+      this.$router.push("/user/recipient");
+      this.emitter.emit("money", {
+        subtotal: this.subtotal,
+      });
+      console.log("lll");
     },
   },
   computed: {
