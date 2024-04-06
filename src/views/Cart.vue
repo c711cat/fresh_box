@@ -268,22 +268,19 @@ export default {
       return total;
     },
     discount() {
-      let discount = 0;
-      let total = 0;
-      this.carts.forEach((item) => {
-        total += item.final_total;
-        total = Math.floor(total);
-        discount = this.subtotal - total;
-      });
-      return discount;
+      return this.subtotal - this.afterDiscount;
     },
     afterDiscount() {
-      return this.subtotal - this.discount;
+      let afterDiscount = 0;
+      this.carts.forEach((item) => {
+        afterDiscount += item.final_total;
+      });
+      return Math.round(afterDiscount);
     },
     paymentAmount() {
       let total = 0;
       if (this.couponCode) {
-        total = this.subtotal - this.discount + this.shippingFee;
+        total = this.afterDiscount + this.shippingFee;
       } else {
         total = this.subtotal + this.shippingFee;
       }
