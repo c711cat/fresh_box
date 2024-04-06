@@ -52,8 +52,9 @@ const routes = [
         component: () => import("../views/Favorite.vue"),
       },
       {
-        path: "recipient",
-        component: () => import("../views/RecipientForm.vue"),
+        path: "order/:orderId",
+        component: () => import("../views/Order.vue"),
+      },
       },
     ],
   },
