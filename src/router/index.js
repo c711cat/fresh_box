@@ -55,7 +55,6 @@ const routes = [
         path: "order/:orderId",
         component: () => import("../views/Order.vue"),
       },
-      },
     ],
   },
 ];
