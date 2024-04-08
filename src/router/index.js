@@ -29,6 +29,10 @@ const routes = [
         path: "coupons",
         component: () => import("../views/Coupons.vue"),
       },
+      {
+        path: "order-list",
+        component: () => import("../views/OrderList.vue"),
+      },
     ],
   },
   {
@@ -50,6 +54,10 @@ const routes = [
       {
         path: "favorite",
         component: () => import("../views/Favorite.vue"),
+      },
+      {
+        path: "order/:orderId",
+        component: () => import("../views/Order.vue"),
       },
     ],
   },

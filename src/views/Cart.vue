@@ -83,7 +83,7 @@
       </div>
     </div>
     <div
-      class="row g-1 m-0 border-top pt-3 justify-content-center align-items-center"
+      class="row g-1 m-0 border-top pt-3 pb-5 justify-content-center align-items-center"
     >
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">小計</div>
       <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
@@ -147,15 +147,20 @@
       <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         付款金額
       </strong>
-      <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+      <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end mb-3">
         NT$ {{ paymentAmount }}
       </strong>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="pt-3 col-12 col-xl-6">
+        <RecipientForm></RecipientForm>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import "vue-select/dist/vue-select.css";
-
+import RecipientForm from "@/views/RecipientForm.vue";
 export default {
   data() {
     return {
@@ -167,6 +172,8 @@ export default {
       used_coupon: false,
     };
   },
+  inject: ["emitter"],
+  components: { RecipientForm },
   methods: {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
@@ -261,22 +268,19 @@ export default {
       return total;
     },
     discount() {
-      let discount = 0;
-      let total = 0;
-      this.carts.forEach((item) => {
-        total += item.final_total;
-        total = Math.floor(total);
-        discount = this.subtotal - total;
-      });
-      return discount;
+      return this.subtotal - this.afterDiscount;
     },
     afterDiscount() {
-      return this.subtotal - this.discount;
+      let afterDiscount = 0;
+      this.carts.forEach((item) => {
+        afterDiscount += item.final_total;
+      });
+      return Math.round(afterDiscount);
     },
     paymentAmount() {
       let total = 0;
       if (this.couponCode) {
-        total = this.subtotal - this.discount + this.shippingFee;
+        total = this.afterDiscount + this.shippingFee;
       } else {
         total = this.subtotal + this.shippingFee;
       }
