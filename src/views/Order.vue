@@ -162,13 +162,16 @@ export default {
       shippingFee: 260,
     };
   },
-
+  props: {
+    OrderId: {},
+  },
   methods: {
     getOrder() {
-      const orderId = this.$route.params.orderId;
+      const orderId = this.$route.params.orderId || this.OrderId;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${orderId}`;
       this.$http.get(api).then((res) => {
-        this.order = res.data.order;
+        this.order = { ...res.data.order };
+        this.getShippingFee();
       });
     },
     getShippingFee() {
