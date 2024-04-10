@@ -114,7 +114,7 @@ export default {
         this.pagination = res.data.pagination;
         this.isLoading = false;
         this.products = res.data.products;
-        window.scrollTo(0, 0);
+        window.scrollTo(0, -100);
       });
     },
     openModal(isNew, item) {
