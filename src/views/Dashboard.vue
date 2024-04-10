@@ -1,7 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Navbar></Navbar>
-  <div>
+  <div class="navContainer">
+    <AdminNavbar></AdminNavbar>
+  </div>
+
+  <div class="viewContainer">
     <Messages></Messages>
     <router-view />
   </div>
@@ -9,7 +12,7 @@
 
 <script>
 import Cookie from "js-cookie";
-import Navbar from "../components/Navbar.vue";
+import AdminNavbar from "../components/AdminNavbar.vue";
 import emitter from "@/methods/emitter";
 import Messages from "@/components/Messages.vue";
 
@@ -22,7 +25,7 @@ export default {
       emitter,
     };
   },
-  components: { Navbar, Messages },
+  components: { AdminNavbar, Messages },
   created() {
     const token = Cookie.get("freshBoxToken");
     this.$http.defaults.headers.common["Authorization"] = token;
@@ -35,3 +38,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.navContainer {
+  margin-bottom: 100px;
+}
+</style>
