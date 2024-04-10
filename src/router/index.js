@@ -59,6 +59,10 @@ const routes = [
         path: "order/:orderId",
         component: () => import("../views/Order.vue"),
       },
+      {
+        path: "order-list",
+        component: () => import("../views/UserOrderList.vue"),
+      },
     ],
   },
 ];
