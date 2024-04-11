@@ -177,6 +177,9 @@ export default {
   },
   created() {
     this.getProducts();
+    this.emitter.on("adminSearchNull", () => {
+      this.getProducts();
+    });
     this.emitter.on("adminSearchResult", (data) => {
       this.products = data;
     });

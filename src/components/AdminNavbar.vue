@@ -81,16 +81,18 @@ export default {
   inject: ["emitter"],
   watch: {
     searchText() {
-      if (this.searchText == null) {
-        this.getProducts();
+      if (this.searchText === "") {
+        this.emitter.emit("adminSearchNull");
+      } else {
+        Object.values(this.products).filter((item) => {
+          if (item.title.match(this.searchText)) {
+            this.searchResult.push(item);
+          }
+          console.log(this.searchResult);
+          this.emitter.emit("adminSearchResult", this.searchResult);
+        });
+        this.searchResult = [];
       }
-      Object.values(this.products).filter((item) => {
-        if (item.title.match(this.searchText)) {
-          this.searchResult.push(item);
-        }
-        this.emitter.emit("adminSearchResult", this.searchResult);
-      });
-      this.searchResult = [];
     },
   },
   methods: {
