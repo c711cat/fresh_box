@@ -56,19 +56,13 @@
     >
       <form class="d-flex col-9 col-md-12" role="search">
         <input
+          @change="searchText"
           v-model="searchText"
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
         />
-        <button
-          @click="search"
-          class="btn btn-outline-secondary btn-sm"
-          type="submit"
-        >
-          <i class="bi bi-search"></i>
-        </button>
       </form>
     </div>
   </nav>
@@ -86,6 +80,20 @@ export default {
     };
   },
   inject: ["emitter"],
+  watch: {
+    searchText() {
+      if (this.searchText == null) {
+        this.getProducts();
+      }
+      Object.values(this.products).filter((item) => {
+        if (item.title.match(this.searchText)) {
+          this.searchResult.push(item);
+        }
+        this.emitter.emit("adminSearchResult", this.searchResult);
+      });
+      this.searchResult = [];
+    },
+  },
   methods: {
     logOut() {
       const api = `${process.env.VUE_APP_API}logout`;
@@ -104,15 +112,6 @@ export default {
         this.products = res.data.products;
         window.scrollTo(0, -100);
       });
-    },
-    search() {
-      Object.values(this.products).filter((item) => {
-        if (item.title.match(this.searchText)) {
-          this.searchResult.push(item);
-        }
-        this.emitter.emit("adminSearchResult", this.searchResult);
-      });
-      this.searchResult = [];
     },
   },
   created() {
