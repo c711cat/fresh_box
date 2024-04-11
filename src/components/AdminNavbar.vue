@@ -56,12 +56,17 @@
     >
       <form class="d-flex col-9 col-md-12" role="search">
         <input
+          v-model="searchText"
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
         />
-        <button class="btn btn-outline-secondary btn-sm" type="submit">
+        <button
+          @click="search"
+          class="btn btn-outline-secondary btn-sm"
+          type="submit"
+        >
           <i class="bi bi-search"></i>
         </button>
       </form>
@@ -73,8 +78,14 @@
 import Collapse from "bootstrap/js/dist/collapse";
 export default {
   data() {
-    return { adminNavbar: {} };
+    return {
+      adminNavbar: {},
+      searchText: "",
+      searchResult: [],
+      products: [],
+    };
   },
+  inject: ["emitter"],
   methods: {
     logOut() {
       const api = `${process.env.VUE_APP_API}logout`;
@@ -85,12 +96,31 @@ export default {
         }
       });
     },
+    getProducts() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
+      this.isLoading = true;
+      this.$http.get(api).then((res) => {
+        this.isLoading = false;
+        this.products = res.data.products;
+        window.scrollTo(0, -100);
+      });
+    },
+    search() {
+      Object.values(this.products).filter((item) => {
+        if (item.title.match(this.searchText)) {
+          this.searchResult.push(item);
+        }
+        this.emitter.emit("adminSearchResult", this.searchResult);
+      });
+      this.searchResult = [];
+    },
   },
   created() {
     const collapseElementList = document.querySelectorAll(".collapse");
     this.adminNavbar = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
+    this.getProducts();
   },
 };
 </script>
