@@ -49,19 +49,13 @@
     >
       <form class="d-flex col-8 col-sm-7 col-md-9 col-xl-10 px-1" role="search">
         <input
+          @change="searchText"
           v-model="searchText"
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
         />
-        <button
-          @click="search"
-          class="btn btn-outline-success btn-sm"
-          type="submit"
-        >
-          <i class="bi bi-search"></i>
-        </button>
       </form>
       <router-link to="/user/cart" class="nav-link col-auto">
         <i class="bi bi-cart2 fs-2 iconLink"> </i>
@@ -82,14 +76,9 @@ export default {
     };
   },
   inject: ["emitter"],
-  methods: {
-    getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
-      this.$http.get(api).then((res) => {
-        this.products = res.data.products;
-      });
-    },
-    search() {
+  watch: {
+    searchText() {
+      console.log(this.searchText);
       this.products.filter((item) => {
         if (item.title.match(this.searchText)) {
           this.searchResult.push(item);
@@ -97,6 +86,14 @@ export default {
       });
       this.emitter.emit("searchResult", this.searchResult);
       this.searchResult = [];
+    },
+  },
+  methods: {
+    getProducts() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(api).then((res) => {
+        this.products = res.data.products;
+      });
     },
   },
   created() {
