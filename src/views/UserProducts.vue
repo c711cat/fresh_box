@@ -117,6 +117,7 @@ export default {
     };
   },
   components: { Pagination },
+  inject: ["emitter"],
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
@@ -210,6 +211,9 @@ export default {
   },
   created() {
     this.getCart();
+    this.emitter.on("searchResult", (data) => {
+      this.allProducts = data;
+    });
   },
 };
 </script>

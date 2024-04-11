@@ -49,12 +49,17 @@
     >
       <form class="d-flex col-8 col-sm-7 col-md-9 col-xl-10 px-1" role="search">
         <input
+          v-model="searchText"
           class="form-control me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
         />
-        <button class="btn btn-outline-success btn-sm" type="submit">
+        <button
+          @click="search"
+          class="btn btn-outline-success btn-sm"
+          type="submit"
+        >
           <i class="bi bi-search"></i>
         </button>
       </form>
@@ -71,13 +76,36 @@ export default {
   data() {
     return {
       userNavbar: {},
+      searchText: "",
+      products: [],
+      searchResult: [],
     };
+  },
+  inject: ["emitter"],
+  methods: {
+    getProducts() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(api).then((res) => {
+        this.products = res.data.products;
+        console.log(this.products);
+      });
+    },
+    search() {
+      this.products.filter((item) => {
+        if (item.title.match(this.searchText)) {
+          this.searchResult.push(item);
+        }
+      });
+      this.emitter.emit("searchResult", this.searchResult);
+      this.searchResult = [];
+    },
   },
   created() {
     const collapseElementList = document.querySelectorAll(".collapse");
     this.userNavbar = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
+    this.getProducts();
   },
 };
 </script>
