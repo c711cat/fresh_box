@@ -121,12 +121,11 @@ export default {
 
 .logo:hover {
   cursor: pointer;
-  background-color: rgb(229, 247, 213);
   padding: 2px;
 }
 
 .navbarText:hover {
-  background-color: rgb(229, 247, 213);
+  font-weight: bold;
 }
 
 .navbar-toggler:focus {
@@ -134,19 +133,16 @@ export default {
 }
 
 .bi-list:hover {
-  background-color: rgb(229, 247, 213);
-}
-
-.bi-cart2 {
-  padding: 0px 7px;
+  color: black;
 }
 
 .iconLink {
-  color: rgba(0, 0, 0, 0.65);
+  color: #000000a6;
   font-weight: 100;
+  padding: 7px;
 }
 
 .iconLink:hover {
-  color: rgb(76, 154, 8);
+  color: black;
 }
 </style>
