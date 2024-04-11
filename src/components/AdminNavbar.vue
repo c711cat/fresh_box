@@ -133,12 +133,11 @@ export default {
 
 .logo:hover {
   cursor: pointer;
-  background-color: rgb(230, 231, 232);
   padding: 2px;
 }
 
 .navbarText:hover {
-  background-color: rgb(230, 231, 232);
+  font-weight: bold;
 }
 
 .navbar-toggler:focus {
@@ -146,7 +145,7 @@ export default {
 }
 
 .bi-list:hover {
-  background-color: rgb(230, 231, 232);
+  color: black;
 }
 
 .logOutLink:hover {
