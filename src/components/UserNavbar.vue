@@ -77,14 +77,17 @@ export default {
   inject: ["emitter"],
   watch: {
     searchText() {
-      console.log(this.searchText);
-      this.products.filter((item) => {
-        if (item.title.match(this.searchText)) {
-          this.searchResult.push(item);
-        }
-      });
-      this.emitter.emit("searchResult", this.searchResult);
-      this.searchResult = [];
+      if (this.searchText === "") {
+        this.emitter.emit("userSearchNull");
+      } else {
+        this.products.filter((item) => {
+          if (item.title.match(this.searchText)) {
+            this.searchResult.push(item);
+          }
+        });
+        this.emitter.emit("searchResult", this.searchResult);
+        this.searchResult = [];
+      }
     },
   },
   methods: {

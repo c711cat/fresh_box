@@ -214,6 +214,9 @@ export default {
     this.emitter.on("searchResult", (data) => {
       this.allProducts = data;
     });
+    this.emitter.on("userSearchNull", () => {
+      this.getProducts();
+    });
   },
 };
 </script>
