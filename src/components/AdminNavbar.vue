@@ -56,7 +56,6 @@
     >
       <form class="d-flex col-9 col-md-12" role="search">
         <input
-          @change="searchText"
           v-model="searchText"
           class="form-control me-2"
           type="search"

@@ -49,7 +49,6 @@
     >
       <form class="d-flex col-8 col-sm-7 col-md-9 col-xl-10 px-1" role="search">
         <input
-          @change="searchText"
           v-model="searchText"
           class="form-control me-2"
           type="search"
