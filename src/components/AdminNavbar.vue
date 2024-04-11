@@ -88,7 +88,6 @@ export default {
           if (item.title.match(this.searchText)) {
             this.searchResult.push(item);
           }
-          console.log(this.searchResult);
           this.emitter.emit("adminSearchResult", this.searchResult);
         });
         this.searchResult = [];

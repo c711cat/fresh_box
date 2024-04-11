@@ -72,7 +72,11 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+  <Pagination
+    v-if="products.length >= 10"
+    :pages="pagination"
+    @emit-pages="getProducts"
+  ></Pagination>
   <ProductModal
     ref="productModal"
     :product="tempProduct"

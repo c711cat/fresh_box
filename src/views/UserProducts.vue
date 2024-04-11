@@ -97,7 +97,11 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+  <Pagination
+    v-if="allProducts.length >= 10"
+    :pages="pagination"
+    @emit-pages="getProducts"
+  ></Pagination>
 </template>
 
 <script>
