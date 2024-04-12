@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="row mx-5 my-5 p-0">
-    <div class="detailsText pb-4 col-lg-7">
+  <div class="row m-0 p-0">
+    <div class="detailsText pb-2 col-lg-7">
       <h3 class="ps-3">訂單明細</h3>
       <div
         v-for="(item, index) in order.products"
@@ -135,19 +135,6 @@
         </div>
       </div>
     </div>
-    <div class="text-end col-12 col-lg-7">
-      <button
-        v-if="order.is_paid"
-        @click="viewOrder"
-        type="button"
-        class="btn btn-success px-4"
-      >
-        查看訂單
-      </button>
-      <button v-else @click="toPay" type="button" class="btn btn-danger px-4">
-        確認付款
-      </button>
-    </div>
   </div>
 </template>
 
@@ -172,6 +159,7 @@ export default {
       this.$http.get(api).then((res) => {
         this.order = { ...res.data.order };
         this.getShippingFee();
+        this.emitOrderToUserOrder();
       });
     },
     getShippingFee() {
@@ -188,6 +176,9 @@ export default {
         this.$pushMsg(res, "付款");
         this.getOrder();
       });
+    },
+    emitOrderToUserOrder() {
+      this.$emit("order", this.order);
     },
   },
   computed: {
