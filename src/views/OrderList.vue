@@ -16,15 +16,14 @@
           aria-expanded="true"
           :aria-controls="`accordion-collapse-collapse` + `${index}`"
         >
-          訂單編號 {{ item.id }}+{{ index }}
+          訂單日期 {{ turnDate(item.create_at) }}
         </button>
       </h2>
       <div
         :id="`accordion-collapse-collapse` + `${index}`"
-        class="accordion-collapse collapse show"
+        class="accordion-collapse collapse"
       >
         <div class="accordion-body">
-          <strong>{{ item.id }}</strong>
           <Order :OrderId="item.id"></Order>
         </div>
       </div>
@@ -48,6 +47,9 @@ export default {
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
       });
+    },
+    turnDate(date) {
+      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
   },
   created() {
