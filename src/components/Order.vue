@@ -2,7 +2,11 @@
 <template>
   <div class="row m-0 p-0">
     <div class="detailsText pb-2 col-lg-7">
-      <h3 class="ps-3">訂單明細</h3>
+      <div class="d-flex align-items-center justify-content-between">
+        <h3 class="ps-3">訂單明細</h3>
+        <div class="orderId">訂單編號 {{ order.id }}</div>
+      </div>
+
       <div
         v-for="(item, index) in order.products"
         :key="index"
@@ -233,5 +237,8 @@ export default {
 .imgBody {
   width: 50px;
   object-fit: cover;
+}
+.orderId {
+  font-size: 12px;
 }
 </style>
