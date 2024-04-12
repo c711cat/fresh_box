@@ -25,27 +25,55 @@
       >
         <div class="accordion-body">
           <Order :OrderId="item.id"></Order>
+          <div class="text-end pe-5">
+            <button
+              @click="openDelModal(item)"
+              class="btn btn-danger"
+              type="button"
+            >
+              刪除訂單
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <delModal ref="delModal" :order="tempOrder" @del-order="delOrder"></delModal>
 </template>
 
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
 import Order from "@/components/Order.vue";
+import delModal from "@/components/DelModal.vue";
 export default {
   data() {
     return {
       orderList: {},
+      tempOrder: {},
     };
   },
-  components: { Order },
+  components: { Order, delModal },
   methods: {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
+      });
+    },
+    openDelModal(item) {
+      this.tempOrder = { ...item };
+      this.$refs.delModal.showModal();
+    },
+    delOrder(order) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`;
+      this.$http.delete(api).then((res) => {
+        this.$pushMsg(res, "刪除訂單");
+        this.getOrders();
+        if (res.data.success) {
+          this.$refs.delModal.hideModal();
+        } else {
+          return;
+        }
       });
     },
     turnDate(date) {
