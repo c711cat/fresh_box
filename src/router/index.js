@@ -15,7 +15,7 @@ const routes = [
 
   {
     path: "/dashboard",
-    component: () => import("../views/Dashboard.vue"),
+    component: () => import("../views/AdminDashboard.vue"),
     children: [
       {
         path: "login",
@@ -58,6 +58,10 @@ const routes = [
       {
         path: "order/:orderId",
         component: () => import("../views/Order.vue"),
+      },
+      {
+        path: "order-list",
+        component: () => import("../views/UserOrderList.vue"),
       },
     ],
   },

@@ -97,7 +97,11 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+  <Pagination
+    v-if="allProducts.length >= 10"
+    :pages="pagination"
+    @emit-pages="getProducts"
+  ></Pagination>
 </template>
 
 <script>
@@ -117,6 +121,7 @@ export default {
     };
   },
   components: { Pagination },
+  inject: ["emitter"],
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
@@ -210,6 +215,12 @@ export default {
   },
   created() {
     this.getCart();
+    this.emitter.on("searchResult", (data) => {
+      this.allProducts = data;
+    });
+    this.emitter.on("userSearchNull", () => {
+      this.getProducts();
+    });
   },
 };
 </script>

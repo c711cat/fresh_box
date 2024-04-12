@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="toast-container end-0 top-0 mt-3 container-fluid">
+  <div class="toast-container end-0 mt-3 container-fluid">
     <Toast v-for="(msg, index) in messages" :key="index" :msg="msg"></Toast>
   </div>
 </template>
@@ -24,3 +24,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.toast-container {
+  top: 80px;
+}
+</style>

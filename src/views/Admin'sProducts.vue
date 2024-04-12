@@ -72,7 +72,11 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+  <Pagination
+    v-if="products.length >= 10"
+    :pages="pagination"
+    @emit-pages="getProducts"
+  ></Pagination>
   <ProductModal
     ref="productModal"
     :product="tempProduct"
@@ -106,6 +110,7 @@ export default {
     };
   },
   components: { ProductModal, DelModal, Pagination },
+  inject: ["emitter"],
   methods: {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
@@ -114,7 +119,7 @@ export default {
         this.pagination = res.data.pagination;
         this.isLoading = false;
         this.products = res.data.products;
-        window.scrollTo(0, 0);
+        window.scrollTo(0, -100);
       });
     },
     openModal(isNew, item) {
@@ -176,6 +181,12 @@ export default {
   },
   created() {
     this.getProducts();
+    this.emitter.on("adminSearchNull", () => {
+      this.getProducts();
+    });
+    this.emitter.on("adminSearchResult", (data) => {
+      this.products = data;
+    });
   },
 };
 </script>
