@@ -2,7 +2,7 @@
   <div
     v-for="(item, index) in orderList"
     :key="index"
-    class="accordion"
+    class="accordion m-0"
     id="accordionPanelsStayOpenExample"
   >
     <div class="accordion-item">
@@ -34,7 +34,7 @@
 
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
-import Order from "@/views/Order.vue";
+import Order from "@/components/Order.vue";
 export default {
   data() {
     return {
@@ -46,9 +46,7 @@ export default {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http.get(api).then((res) => {
-        console.log(res);
         this.orderList = { ...res.data.orders };
-        console.log(this.orderList);
       });
     },
   },
