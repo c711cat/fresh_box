@@ -1,43 +1,46 @@
 <template>
-  <div
-    v-for="(item, index) in orderList"
-    :key="index"
-    class="accordion m-0"
-    id="accordionPanelsStayOpenExample"
-  >
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button
-          @click="open"
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          :data-bs-target="`#accordion-collapse-collapse` + `${index}`"
-          aria-expanded="true"
-          :aria-controls="`accordion-collapse-collapse` + `${index}`"
+  <div class="listContainer mx-auto mb-5">
+    <div
+      v-for="(item, index) in orderList"
+      :key="index"
+      class="accordion m-0"
+      id="accordionPanelsStayOpenExample"
+    >
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button
+            @click="open"
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            :data-bs-target="`#accordion-collapse-collapse` + `${index}`"
+            aria-expanded="true"
+            :aria-controls="`accordion-collapse-collapse` + `${index}`"
+          >
+            訂單日期 {{ turnDate(item.create_at) }}
+          </button>
+        </h2>
+        <div
+          :id="`accordion-collapse-collapse` + `${index}`"
+          class="accordion-collapse collapse show"
         >
-          訂單日期 {{ turnDate(item.create_at) }}
-        </button>
-      </h2>
-      <div
-        :id="`accordion-collapse-collapse` + `${index}`"
-        class="accordion-collapse collapse"
-      >
-        <div class="accordion-body">
-          <Order :OrderId="item.id"></Order>
-          <div class="text-end pe-5">
-            <button
-              @click="openDelModal(item)"
-              class="btn btn-danger"
-              type="button"
-            >
-              刪除訂單
-            </button>
+          <div class="accordion-body">
+            <Order :OrderId="item.id"></Order>
+            <div class="text-end pe-5">
+              <button
+                @click="openDelModal(item)"
+                class="btn btn-danger"
+                type="button"
+              >
+                刪除訂單
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <delModal ref="delModal" :order="tempOrder" @del-order="delOrder"></delModal>
 </template>
 
@@ -89,3 +92,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.accordion-button:not(.collapsed) {
+  background-color: rgba(248, 249, 250);
+}
+
+.listContainer {
+  padding-top: 40px;
+  max-width: 1300px;
+}
+</style>
