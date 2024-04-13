@@ -155,6 +155,7 @@ export default {
   },
   props: {
     OrderId: {},
+    isLoading: {},
   },
   methods: {
     getOrder() {
@@ -176,9 +177,11 @@ export default {
     },
     toPay() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`;
+      this.$emit("loading", true);
       this.$http.post(api).then((res) => {
         this.$pushMsg(res, "付款");
         this.getOrder();
+        this.$emit("loading", false);
       });
     },
     emitOrderToUserOrder() {
