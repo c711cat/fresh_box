@@ -31,7 +31,7 @@ const routes = [
       },
       {
         path: "order-list",
-        component: () => import("../views/OrderList.vue"),
+        component: () => import("../views/AdminOrderList.vue"),
       },
     ],
   },
