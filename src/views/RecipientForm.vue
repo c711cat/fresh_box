@@ -49,7 +49,7 @@
         class="form-control"
         id="address"
         name="地址"
-        type="address"
+        type="text"
         rules="required"
       ></Field>
       <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
@@ -104,7 +104,6 @@ export default {
     createOrder() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
       this.$http.post(api, { data: this.form }).then((res) => {
-        console.log(res);
         this.$router.push(`/user/order/${res.data.orderId}`);
       });
     },

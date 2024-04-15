@@ -12,10 +12,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header bg-danger">
-          <h5 v-if="tempCoupon.id" class="modal-title text-white">
-            刪除優惠券
-          </h5>
-          <h5 v-else class="modal-title text-white">刪除產品</h5>
+          <h5 class="modal-title text-white">再次確認</h5>
           <button
             type="button"
             class="btn-close"
@@ -31,6 +28,15 @@
             </span>
             這張優惠券？
           </span>
+          <strong v-if="tempOrder.id">
+            確定刪除這張訂單？
+            <div class="text-danger fw-bold fs-5">
+              訂單編號 {{ tempOrder.id }}
+            </div>
+            <div class="text-danger fw-bold fs-5">
+              訂單日期 {{ turnDate(tempOrder.create_at) }}
+            </div>
+          </strong>
           <span v-else>
             確定刪除
             <span class="text-danger fw-bold fs-5">
@@ -50,6 +56,14 @@
           <button
             v-if="tempCoupon.id"
             @click="$emit('del-coupon', tempCoupon)"
+            type="button"
+            class="btn btn-danger"
+          >
+            確定刪除
+          </button>
+          <button
+            v-if="tempOrder.id"
+            @click="$emit('del-order', tempOrder)"
             type="button"
             class="btn btn-danger"
           >
@@ -77,6 +91,7 @@ export default {
       modal: {},
       tempProduct: {},
       tempCoupon: {},
+      tempOrder: {},
     };
   },
   props: {
@@ -92,7 +107,18 @@ export default {
         return {};
       },
     },
+    order: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
     pages: {},
+  },
+  methods: {
+    turnDate(date) {
+      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+    },
   },
   watch: {
     product() {
@@ -100,6 +126,9 @@ export default {
     },
     coupon() {
       this.tempCoupon = this.coupon;
+    },
+    order() {
+      this.tempOrder = this.order;
     },
   },
   mixins: [ModalMixin],

@@ -1,8 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="row mx-5 my-5 p-0">
-    <div class="detailsText pb-4 col-lg-7">
-      <h3 class="ps-3">訂單明細</h3>
+  <div class="row m-0 p-0">
+    <div class="detailsText pb-2 col-lg-7">
+      <div class="d-flex align-items-center justify-content-between">
+        <h3 class="ps-3">訂單明細</h3>
+        <div>
+          <div class="orderId">訂單日期 {{ turnDate(order.create_at) }}</div>
+          <div class="orderId">訂單編號 {{ order.id }}</div>
+        </div>
+      </div>
+
       <div
         v-for="(item, index) in order.products"
         :key="index"
@@ -53,32 +60,32 @@
       >
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ subtotal }}
+          NT$ {{ order.subtotal }}
         </div>
 
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
         >
           優惠碼折抵
         </div>
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          - NT$ {{ discount }}
+          - NT$ {{ order.discount }}
         </div>
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
         >
           折抵後小計
         </div>
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          NT$ {{ afterDiscount }}
+          NT$ {{ order.afterDiscount }}
         </div>
 
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
@@ -90,15 +97,15 @@
         </div>
 
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ shippingFee }}
+          NT$ {{ order.shippingFee }}
         </div>
 
         <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           付款金額
         </strong>
         <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ paymentAmount }}</strong
-        >
+          NT$ {{ order.paymentAmount }}
+        </strong>
         <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           付款狀態
         </strong>
@@ -126,27 +133,14 @@
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <div class="py-1 fw-bold col-sm-2 col-12">地址</div>
-        <div class="py-1 col-sm-10 col-12">{{ order.user.address }}</div>
+        <div class="py-1 col-sm-10 col-12">
+          {{ order.user.address }}
+        </div>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <div class="py-1 fw-bold col-sm-2 col-12">備註</div>
-        <div class="py-1 col-sm-10 col-12">
-          {{ order.message }}
-        </div>
+        <div class="py-1 col-sm-10 col-12">{{ order.message }}</div>
       </div>
-    </div>
-    <div class="text-end col-12 col-lg-7">
-      <button
-        v-if="order.is_paid"
-        @click="viewOrder"
-        type="button"
-        class="btn btn-success px-4"
-      >
-        查看訂單
-      </button>
-      <button v-else @click="toPay" type="button" class="btn btn-danger px-4">
-        確認付款
-      </button>
     </div>
   </div>
 </template>
@@ -156,64 +150,71 @@ export default {
   data() {
     return {
       order: {
+        products: {},
+        subtotal: 0,
+        discount: 0,
+        afterDiscount: 0,
+        paymentAmount: 0,
+        shippingFee: 260,
         user: {},
-        products: [],
       },
-      shippingFee: 260,
     };
   },
   props: {
-    OrderId: {},
+    oneOrder: {},
+    transOrder: {},
+  },
+  watch: {
+    transOrder() {
+      this.order = { ...this.transOrder };
+      this.getSubtotal();
+    },
+    oneOrder() {},
   },
   methods: {
     getOrder() {
-      const orderId = this.$route.params.orderId || this.OrderId;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${orderId}`;
-      this.$http.get(api).then((res) => {
-        this.order = { ...res.data.order };
-        this.getShippingFee();
+      if (this.oneOrder) {
+        this.order = { ...this.oneOrder };
+        this.order.user = { ...this.oneOrder.user };
+        this.order.products = { ...this.oneOrder.products };
+        this.getSubtotal();
+      }
+    },
+    getSubtotal() {
+      let subtotal = 0;
+      Object.values(this.order.products).forEach((item) => {
+        subtotal += item.total;
       });
+      this.order.subtotal = subtotal;
+      this.getAfterDiscount();
+    },
+    getAfterDiscount() {
+      this.order.afterDiscount = Math.round(this.order.total);
+      this.getDiscount();
+      this.getShippingFee();
+      this.getPaymentAmount();
+      this.getShippingFee();
+    },
+    getDiscount() {
+      this.order.discount = this.order.subtotal - this.order.afterDiscount;
     },
     getShippingFee() {
       if (this.order.total >= 1000) {
-        this.shippingFee = 0;
+        this.order.shippingFee = 0;
       }
       if (this.order.total < 1000) {
-        this.shippingFee = 260;
+        this.order.shippingFee = 260;
       }
     },
-    toPay() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`;
-      this.$http.post(api).then((res) => {
-        this.$pushMsg(res, "付款");
-        this.getOrder();
-      });
+    getPaymentAmount() {
+      this.order.paymentAmount =
+        this.order.afterDiscount + this.order.shippingFee;
+    },
+    turnDate(date) {
+      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
   },
   computed: {
-    subtotal() {
-      let total = 0;
-      Object.values(this.order.products).forEach((item) => {
-        total += item.total;
-      });
-      return total;
-    },
-    discount() {
-      return this.subtotal - this.afterDiscount;
-    },
-    afterDiscount() {
-      return Math.round(this.order.total);
-    },
-    showDiscount() {
-      if (this.discount === 0) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    paymentAmount() {
-      return this.afterDiscount + this.shippingFee;
-    },
     paymentStatus() {
       if (this.order.is_paid === true) {
         return "付款完成";
@@ -242,5 +243,8 @@ export default {
 .imgBody {
   width: 50px;
   object-fit: cover;
+}
+.orderId {
+  font-size: 12px;
 }
 </style>

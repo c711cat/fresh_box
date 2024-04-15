@@ -31,7 +31,7 @@ const routes = [
       },
       {
         path: "order-list",
-        component: () => import("../views/OrderList.vue"),
+        component: () => import("../views/AdminOrderList.vue"),
       },
     ],
   },
@@ -57,7 +57,7 @@ const routes = [
       },
       {
         path: "order/:orderId",
-        component: () => import("../views/Order.vue"),
+        component: () => import("../views/UserOrder.vue"),
       },
       {
         path: "order-list",
