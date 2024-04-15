@@ -4,7 +4,7 @@
       v-for="(item, index) in orderList"
       :key="index"
       class="accordion m-0"
-      id="accordionPanelsStayOpenExample"
+      id="accordionPanelsUserOrderList"
     >
       <div class="accordion-item">
         <h2 class="accordion-header">
@@ -24,8 +24,8 @@
           :id="`accordion-collapse-collapse` + `${index}`"
           class="accordion-collapse collapse show"
         >
-          <div class="accordion-body">
-            <Order :OrderId="item.id"></Order>
+          <div class="accordion-body pt-4">
+            <Order :oneOrder="item"></Order>
           </div>
         </div>
       </div>

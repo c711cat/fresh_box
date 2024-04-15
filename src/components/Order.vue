@@ -4,7 +4,10 @@
     <div class="detailsText pb-2 col-lg-7">
       <div class="d-flex align-items-center justify-content-between">
         <h3 class="ps-3">訂單明細</h3>
-        <div class="orderId">訂單編號 {{ order.id }}</div>
+        <div>
+          <div class="orderId">訂單日期 {{ turnDate(order.create_at) }}</div>
+          <div class="orderId">訂單編號 {{ order.id }}</div>
+        </div>
       </div>
 
       <div
@@ -130,7 +133,9 @@
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <div class="py-1 fw-bold col-sm-2 col-12">地址</div>
-        <div class="py-1 col-sm-10 col-12">{{ order.user.address }}</div>
+        <div class="py-1 col-sm-10 col-12">
+          {{ order.user.address }}
+        </div>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <div class="py-1 fw-bold col-sm-2 col-12">備註</div>
@@ -145,6 +150,7 @@ export default {
   data() {
     return {
       order: {
+        products: {},
         subtotal: 0,
         discount: 0,
         afterDiscount: 0,
@@ -157,15 +163,23 @@ export default {
   props: {
     oneOrder: {},
     transOrder: {},
-    isLoading: {},
   },
   watch: {
     transOrder() {
       this.order = { ...this.transOrder };
       this.getSubtotal();
     },
+    oneOrder() {},
   },
   methods: {
+    getOrder() {
+      if (this.oneOrder) {
+        this.order = { ...this.oneOrder };
+        this.order.user = { ...this.oneOrder.user };
+        this.order.products = { ...this.oneOrder.products };
+        this.getSubtotal();
+      }
+    },
     getSubtotal() {
       let subtotal = 0;
       Object.values(this.order.products).forEach((item) => {
@@ -196,6 +210,9 @@ export default {
       this.order.paymentAmount =
         this.order.afterDiscount + this.order.shippingFee;
     },
+    turnDate(date) {
+      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+    },
   },
   computed: {
     paymentStatus() {
@@ -212,6 +229,9 @@ export default {
         return "text-danger";
       }
     },
+  },
+  created() {
+    this.getOrder();
   },
 };
 </script>

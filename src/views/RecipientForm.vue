@@ -49,7 +49,7 @@
         class="form-control"
         id="address"
         name="地址"
-        type="address"
+        type="text"
         rules="required"
       ></Field>
       <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
