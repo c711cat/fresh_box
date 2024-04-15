@@ -57,32 +57,32 @@
       >
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ subtotal }}
+          NT$ {{ order.subtotal }}
         </div>
 
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
         >
           優惠碼折抵
         </div>
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          - NT$ {{ discount }}
+          - NT$ {{ order.discount }}
         </div>
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
         >
           折抵後小計
         </div>
         <div
-          v-if="showDiscount"
+          v-if="order.discount > 0"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          NT$ {{ afterDiscount }}
+          NT$ {{ order.afterDiscount }}
         </div>
 
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
@@ -94,15 +94,15 @@
         </div>
 
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ shippingFee }}
+          NT$ {{ order.shippingFee }}
         </div>
 
         <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           付款金額
         </strong>
         <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ paymentAmount }}</strong
-        >
+          NT$ {{ order.paymentAmount }}
+        </strong>
         <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           付款狀態
         </strong>
@@ -134,9 +134,7 @@
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <div class="py-1 fw-bold col-sm-2 col-12">備註</div>
-        <div class="py-1 col-sm-10 col-12">
-          {{ order.message }}
-        </div>
+        <div class="py-1 col-sm-10 col-12">{{ order.message }}</div>
       </div>
     </div>
   </div>
@@ -147,71 +145,59 @@ export default {
   data() {
     return {
       order: {
+        subtotal: 0,
+        discount: 0,
+        afterDiscount: 0,
+        paymentAmount: 0,
+        shippingFee: 260,
         user: {},
-        products: [],
       },
-      shippingFee: 260,
     };
   },
   props: {
-    OrderId: {},
+    oneOrder: {},
+    transOrder: {},
     isLoading: {},
   },
+  watch: {
+    transOrder() {
+      this.order = { ...this.transOrder };
+      this.getSubtotal();
+    },
+  },
   methods: {
-    getOrder() {
-      const orderId = this.$route.params.orderId || this.OrderId;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${orderId}`;
-      this.$http.get(api).then((res) => {
-        this.order = { ...res.data.order };
-        this.getShippingFee();
-        this.emitOrderToUserOrder();
+    getSubtotal() {
+      let subtotal = 0;
+      Object.values(this.order.products).forEach((item) => {
+        subtotal += item.total;
       });
+      this.order.subtotal = subtotal;
+      this.getAfterDiscount();
+    },
+    getAfterDiscount() {
+      this.order.afterDiscount = Math.round(this.order.total);
+      this.getDiscount();
+      this.getShippingFee();
+      this.getPaymentAmount();
+      this.getShippingFee();
+    },
+    getDiscount() {
+      this.order.discount = this.order.subtotal - this.order.afterDiscount;
     },
     getShippingFee() {
       if (this.order.total >= 1000) {
-        this.shippingFee = 0;
+        this.order.shippingFee = 0;
       }
       if (this.order.total < 1000) {
-        this.shippingFee = 260;
+        this.order.shippingFee = 260;
       }
     },
-    toPay() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`;
-      this.$emit("loading", true);
-      this.$http.post(api).then((res) => {
-        this.$pushMsg(res, "付款");
-        this.getOrder();
-        this.$emit("loading", false);
-      });
-    },
-    emitOrderToUserOrder() {
-      this.$emit("order", this.order);
+    getPaymentAmount() {
+      this.order.paymentAmount =
+        this.order.afterDiscount + this.order.shippingFee;
     },
   },
   computed: {
-    subtotal() {
-      let total = 0;
-      Object.values(this.order.products).forEach((item) => {
-        total += item.total;
-      });
-      return total;
-    },
-    discount() {
-      return this.subtotal - this.afterDiscount;
-    },
-    afterDiscount() {
-      return Math.round(this.order.total);
-    },
-    showDiscount() {
-      if (this.discount === 0) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-    paymentAmount() {
-      return this.afterDiscount + this.shippingFee;
-    },
     paymentStatus() {
       if (this.order.is_paid === true) {
         return "付款完成";
@@ -226,9 +212,6 @@ export default {
         return "text-danger";
       }
     },
-  },
-  created() {
-    this.getOrder();
   },
 };
 </script>
