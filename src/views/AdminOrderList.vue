@@ -40,7 +40,7 @@
       </div>
     </div>
   </div>
-
+  <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
   <delModal ref="delModal" :order="tempOrder" @del-order="delOrder"></delModal>
 </template>
 
@@ -48,19 +48,23 @@
 import Collapse from "bootstrap/js/dist/collapse";
 import Order from "@/components/Order.vue";
 import delModal from "@/components/DelModal.vue";
+import Pagination from "@/components/Pagination.vue";
+
 export default {
   data() {
     return {
       orderList: {},
       tempOrder: {},
+      pagination: {},
     };
   },
-  components: { Order, delModal },
+  components: { Order, delModal, Pagination },
   methods: {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
+        this.pagination = res.data.pagination;
       });
     },
     openDelModal(item) {

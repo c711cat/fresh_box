@@ -31,23 +31,27 @@
       </div>
     </div>
   </div>
+  <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
 import Order from "@/components/Order.vue";
+import Pagination from "@/components/Pagination.vue";
 
 export default {
   data() {
     return {
       orderList: {},
+      pagination: {},
     };
   },
-  components: { Order },
+  components: { Order, Pagination },
   methods: {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
+        this.pagination = res.data.pagination;
       });
     },
     turnDate(date) {
