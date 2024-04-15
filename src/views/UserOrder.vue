@@ -50,7 +50,6 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${orderId}`;
       this.$http.get(api).then((res) => {
         this.order = { ...res.data.order };
-        console.log(this.order);
       });
     },
     toPay() {

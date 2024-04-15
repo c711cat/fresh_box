@@ -4,7 +4,7 @@
       v-for="(item, index) in orderList"
       :key="index"
       class="accordion m-0"
-      id="accordionPanelsStayOpenExample"
+      id="accordionPanelsAdminOrderList"
     >
       <div class="accordion-item">
         <h2 class="accordion-header">
@@ -25,7 +25,7 @@
           class="accordion-collapse collapse show"
         >
           <div class="accordion-body">
-            <Order :OrderId="item.id"></Order>
+            <Order :oneOrder="item"></Order>
             <div class="text-end pe-5">
               <button
                 @click="openDelModal(item)"
@@ -60,15 +60,7 @@ export default {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(api).then((res) => {
-        console.log(res);
         this.orderList = { ...res.data.orders };
-      });
-    },
-
-    delAllOrders() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
-      this.$http.delete(api).then((res) => {
-        console.log(res);
       });
     },
     openDelModal(item) {
@@ -79,12 +71,12 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`;
       this.$http.delete(api).then((res) => {
         this.$pushMsg(res, "刪除訂單");
-        this.getOrders();
         if (res.data.success) {
           this.$refs.delModal.hideModal();
         } else {
           return;
         }
+        window.location.reload();
       });
     },
     turnDate(date) {
