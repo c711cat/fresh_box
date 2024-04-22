@@ -253,6 +253,7 @@ export default {
   created() {
     this.getCart();
     this.emitter.on("searchResult", (data) => {
+      this.pagination.total_pages = 0;
       this.allProducts = data;
     });
     this.emitter.on("userSearchNull", () => {
