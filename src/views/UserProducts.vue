@@ -97,38 +97,81 @@
       </div>
     </div>
   </div>
-  <Pagination
-    v-if="allProducts.length >= 10"
-    :pages="pagination"
-    @emit-pages="getProducts"
-  ></Pagination>
+  <Observer
+    v-if="scrollOptions.current_page < scrollOptions.total_pages"
+    @is-in-view="handleIsInView"
+    @is-outside-view="handleIsOutsideView"
+  />
 </template>
 
 <script>
-import Pagination from "@/components/Pagination.vue";
-
+import Observer from "@/components/Observer.vue";
+import { throttle } from "lodash";
 export default {
   data() {
     return {
+      newPage: [],
       allProducts: [],
       pagination: {},
-      carts: {},
+      carts: [],
       status: {
         addLoadingItem: "",
         delLoadingItem: "",
       },
       myFavoriteList: [],
+      scrollOptions: {
+        current_page: 1,
+        total_pages: 2,
+        isInView: false,
+      },
+
+      getOtherPageProducts: throttle(
+        function (options = this.scrollOptions) {
+          const { current_page, total_pages, isInView } = options;
+          if (isInView === true && current_page < total_pages) {
+            const page = current_page + 1;
+            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+            this.$http.get(api).then((res) => {
+              this.pagination = { ...res.data.pagination };
+              this.scrollOptions.current_page = this.pagination.current_page;
+              this.scrollOptions.total_pages = this.pagination.total_pages;
+              this.newPage = [...res.data.products];
+              this.newPage.forEach((item) => {
+                this.carts.forEach((cartItem) => {
+                  if (item.id === cartItem.product_id) {
+                    item.buyQty = cartItem.qty;
+                    item.pushCartId = cartItem.id;
+                  }
+                });
+              });
+              this.allProducts = [...this.allProducts, ...this.newPage];
+            });
+          }
+        },
+        500,
+        { leading: true, trailing: true }
+      ),
     };
   },
-  components: { Pagination },
+  components: { Observer },
   inject: ["emitter"],
   methods: {
-    getProducts(page = 1) {
+    handleLoadmore() {
+      this.getOtherPageProducts();
+    },
+    handleIsInView() {
+      this.scrollOptions.isInView = true;
+      this.handleLoadmore();
+    },
+    handleIsOutsideView() {
+      this.scrollOptions.isInView = false;
+    },
+    getPage1Products(page = 1) {
+      this.scrollOptions.current_page = 1;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http.get(api).then((res) => {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
-        window.scrollTo(0, 0);
         this.pushBuyQtyId();
         this.getMyFavorite();
       });
@@ -154,12 +197,13 @@ export default {
             return;
           }
         });
-        this.getProducts();
       });
+      this.getPage1Products();
     },
     pushBuyQtyId() {
+      const cart = [...this.carts];
       this.allProducts.forEach((item) => {
-        this.carts.forEach((cartItem) => {
+        cart.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
             item.buyQty = cartItem.qty;
             item.pushCartId = cartItem.id;
@@ -219,7 +263,7 @@ export default {
       this.allProducts = data;
     });
     this.emitter.on("userSearchNull", () => {
-      this.getProducts();
+      this.getPage1Products();
     });
   },
 };
