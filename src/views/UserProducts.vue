@@ -98,7 +98,7 @@
     </div>
   </div>
   <Observer
-    v-if="scrollOptions.current_page < scrollOptions.total_pages"
+    v-if="pagination.current_page < pagination.total_pages"
     @is-in-view="handleIsInView"
     @is-outside-view="handleIsOutsideView"
   />
@@ -112,45 +112,37 @@ export default {
     return {
       newPage: [],
       allProducts: [],
-      pagination: {},
+      pagination: {
+        current_page: 1,
+        total_pages: 2,
+        isInView: false,
+      },
       carts: [],
       status: {
         addLoadingItem: "",
         delLoadingItem: "",
       },
       myFavoriteList: [],
-      scrollOptions: {
-        current_page: 1,
-        total_pages: 2,
-        isInView: false,
-      },
-
-      getOtherPageProducts: throttle(
-        function (options = this.scrollOptions) {
-          const { current_page, total_pages, isInView } = options;
-          if (isInView === true && current_page < total_pages) {
-            const page = current_page + 1;
-            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-            this.$http.get(api).then((res) => {
-              this.pagination = { ...res.data.pagination };
-              this.scrollOptions.current_page = this.pagination.current_page;
-              this.scrollOptions.total_pages = this.pagination.total_pages;
-              this.newPage = [...res.data.products];
-              this.newPage.forEach((item) => {
-                this.carts.forEach((cartItem) => {
-                  if (item.id === cartItem.product_id) {
-                    item.buyQty = cartItem.qty;
-                    item.pushCartId = cartItem.id;
-                  }
-                });
+      getOtherPageProducts: throttle(function (options = this.pagination) {
+        const { current_page, total_pages, isInView } = options;
+        if (isInView === true && current_page < total_pages) {
+          const page = current_page + 1;
+          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+          this.$http.get(api).then((res) => {
+            this.pagination = { ...res.data.pagination };
+            this.newPage = [...res.data.products];
+            this.newPage.forEach((item) => {
+              this.carts.forEach((cartItem) => {
+                if (item.id === cartItem.product_id) {
+                  item.buyQty = cartItem.qty;
+                  item.pushCartId = cartItem.id;
+                }
               });
-              this.allProducts = [...this.allProducts, ...this.newPage];
             });
-          }
-        },
-        500,
-        { leading: true, trailing: true }
-      ),
+            this.allProducts = [...this.allProducts, ...this.newPage];
+          });
+        }
+      }),
     };
   },
   components: { Observer },
@@ -160,14 +152,14 @@ export default {
       this.getOtherPageProducts();
     },
     handleIsInView() {
-      this.scrollOptions.isInView = true;
+      this.pagination.isInView = true;
       this.handleLoadmore();
     },
     handleIsOutsideView() {
-      this.scrollOptions.isInView = false;
+      this.pagination.isInView = false;
     },
     getPage1Products(page = 1) {
-      this.scrollOptions.current_page = 1;
+      this.pagination.current_page = 1;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http.get(api).then((res) => {
         this.allProducts = res.data.products;
@@ -199,6 +191,7 @@ export default {
         });
       });
       this.getPage1Products();
+      this.getOtherPageProducts();
     },
     pushBuyQtyId() {
       const cart = [...this.carts];
