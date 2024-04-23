@@ -56,15 +56,26 @@
           aria-label="Search"
         />
       </form>
-      <router-link to="/user/cart" class="nav-link col-auto position-relative">
-        <i class="bi bi-cart2 fs-2 iconLink"> </i>
-        <span
-          v-if="carts.length >= 1"
-          class="position-absolute translate-middle badge rounded-pill bg-danger"
-        >
-          {{ carts.length }}
-          <span class="visually-hidden">cart items</span>
-        </span>
+      <router-link
+        to="/user/cart"
+        class="nav-link col-auto d-flex flex-column align-items-center"
+      >
+        <div class="position-relative">
+          <i class="bi bi-cart2 fs-2 iconLink"> </i>
+          <span
+            v-if="carts.length >= 1"
+            class="position-absolute translate-middle badge rounded-pill bg-danger"
+          >
+            {{ carts.length }}
+            <span class="visually-hidden">cart items</span>
+          </span>
+        </div>
+
+        <h5>
+          <span class="badge text-bg-warning"
+            >NT$ {{ undiscountedAmount }}</span
+          >
+        </h5>
       </router-link>
     </div>
   </nav>
@@ -110,6 +121,15 @@ export default {
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
       });
+    },
+  },
+  computed: {
+    undiscountedAmount() {
+      let total = 0;
+      this.carts.forEach((item) => {
+        total += item.total;
+      });
+      return total;
     },
   },
   created() {

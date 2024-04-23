@@ -194,6 +194,7 @@ export default {
       this.$http.delete(api).then((res) => {
         this.$pushMsg(res, "刪除");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     addOneToCart(item) {
@@ -206,6 +207,7 @@ export default {
         this.used_coupon = false;
         this.$pushMsg(res, "加入購物車");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     delOneQty(item) {
@@ -217,6 +219,7 @@ export default {
         this.status.delLoadingItem = "";
         this.$pushMsg(res, "刪除");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     updateQtyOfInput(item) {
@@ -232,6 +235,7 @@ export default {
           this, (this.status.updateLoadingItem = "");
           this.$pushMsg(res, "更新數量");
           this.getCart();
+          this.emitter.emit("updateProductInCart");
         });
     },
     useCoupon() {
@@ -242,6 +246,7 @@ export default {
           this.used_coupon = true;
         }
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     getshippingFee() {
