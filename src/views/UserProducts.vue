@@ -115,34 +115,38 @@ export default {
       pagination: {
         current_page: 1,
         total_pages: 2,
-        isInView: false,
       },
+      isInView: false,
       carts: [],
       status: {
         addLoadingItem: "",
         delLoadingItem: "",
       },
       myFavoriteList: [],
-      getOtherPageProducts: throttle(function (options = this.pagination) {
-        const { current_page, total_pages, isInView } = options;
-        if (isInView === true && current_page < total_pages) {
-          const page = current_page + 1;
-          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-          this.$http.get(api).then((res) => {
-            this.pagination = { ...res.data.pagination };
-            this.newPage = [...res.data.products];
-            this.newPage.forEach((item) => {
-              this.carts.forEach((cartItem) => {
-                if (item.id === cartItem.product_id) {
-                  item.buyQty = cartItem.qty;
-                  item.pushCartId = cartItem.id;
-                }
+      getOtherPageProducts: throttle(
+        function (options = this.pagination) {
+          const { current_page, total_pages } = options;
+          if (this.isInView === true && current_page < total_pages) {
+            const page = current_page + 1;
+            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+            this.$http.get(api).then((res) => {
+              this.pagination = { ...res.data.pagination };
+              this.newPage = [...res.data.products];
+              this.newPage.forEach((item) => {
+                this.carts.forEach((cartItem) => {
+                  if (item.id === cartItem.product_id) {
+                    item.buyQty = cartItem.qty;
+                    item.pushCartId = cartItem.id;
+                  }
+                });
               });
+              this.allProducts = [...this.allProducts, ...this.newPage];
             });
-            this.allProducts = [...this.allProducts, ...this.newPage];
-          });
-        }
-      }),
+          }
+        },
+        500,
+        { leading: true, trailing: true }
+      ),
     };
   },
   components: { Observer },
@@ -152,11 +156,11 @@ export default {
       this.getOtherPageProducts();
     },
     handleIsInView() {
-      this.pagination.isInView = true;
+      this.isInView = true;
       this.handleLoadmore();
     },
     handleIsOutsideView() {
-      this.pagination.isInView = false;
+      this.isInView = false;
     },
     getPage1Products(page = 1) {
       this.pagination.current_page = 1;
