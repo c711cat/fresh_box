@@ -56,8 +56,15 @@
           aria-label="Search"
         />
       </form>
-      <router-link to="/user/cart" class="nav-link col-auto">
+      <router-link to="/user/cart" class="nav-link col-auto position-relative">
         <i class="bi bi-cart2 fs-2 iconLink"> </i>
+        <span
+          v-if="carts.length >= 1"
+          class="position-absolute translate-middle badge rounded-pill bg-danger"
+        >
+          {{ carts.length }}
+          <span class="visually-hidden">cart items</span>
+        </span>
       </router-link>
     </div>
   </nav>
@@ -72,6 +79,7 @@ export default {
       searchText: "",
       products: [],
       searchResult: [],
+      carts: [],
     };
   },
   inject: ["emitter"],
@@ -95,15 +103,24 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
         this.products = res.data.products;
+    getCart() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.get(api).then((res) => {
+        this.carts = [...res.data.data.carts];
       });
     },
   },
   created() {
+    this.getCart();
+    this.getProducts();
     const collapseElementList = document.querySelectorAll(".collapse");
     this.userNavbar = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
     this.getProducts();
+    this.emitter.on("updateProductInCart", () => {
+      this.getCart();
+    });
   },
 };
 </script>
@@ -143,5 +160,10 @@ export default {
 
 .iconLink:hover {
   color: black;
+}
+
+.position-absolute {
+  top: 13px;
+  left: 38px;
 }
 </style>

@@ -180,6 +180,7 @@ export default {
         this.status.addLoadingItem = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     getCart() {
@@ -212,6 +213,7 @@ export default {
           this.delItem(item.pushCartId);
         }
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     goToProduct(item) {
