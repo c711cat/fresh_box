@@ -132,7 +132,8 @@ export default {
             this.$http.get(api).then((res) => {
               this.pagination = { ...res.data.pagination };
               this.newPage = [...res.data.products];
-              this.newPage.forEach((item) => {
+              this.allProducts = [...this.allProducts, ...this.newPage];
+              this.allProducts.forEach((item) => {
                 this.carts.forEach((cartItem) => {
                   if (item.id === cartItem.product_id) {
                     item.buyQty = cartItem.qty;
@@ -140,7 +141,6 @@ export default {
                   }
                 });
               });
-              this.allProducts = [...this.allProducts, ...this.newPage];
             });
           }
         },
