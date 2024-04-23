@@ -73,7 +73,7 @@
     </div>
   </div>
   <Pagination
-    v-if="products.length >= 10"
+    v-if="openPagination"
     :pages="pagination"
     @emit-pages="getProducts"
   ></Pagination>
@@ -107,6 +107,7 @@ export default {
       isNew: false,
       isLoading: false,
       pagination: {},
+      openPagination: true,
     };
   },
   components: { ProductModal, DelModal, Pagination },
@@ -119,6 +120,7 @@ export default {
         this.pagination = res.data.pagination;
         this.isLoading = false;
         this.products = res.data.products;
+        this.openPagination = true;
         window.scrollTo(0, -100);
       });
     },
@@ -186,6 +188,7 @@ export default {
     });
     this.emitter.on("adminSearchResult", (data) => {
       this.products = data;
+      this.openPagination = false;
     });
   },
 };
