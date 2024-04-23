@@ -103,10 +103,12 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
         this.products = res.data.products;
+      });
+    },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
-        this.carts = [...res.data.data.carts];
+        this.carts = res.data.data.carts;
       });
     },
   },

@@ -186,6 +186,7 @@ export default {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
+        this.carts = [...res.data.data.carts];
       });
       this.getPage1Products();
       this.getOtherPageProducts();
