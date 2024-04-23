@@ -47,7 +47,7 @@
     <div
       class="row m-0 px-4 align-items-center justify-content-between col-12 col-md-5"
     >
-      <form class="d-flex col-8 col-sm-7 col-md-9 col-xl-10 px-1" role="search">
+      <form class="d-flex col-3 col-sm-5 col-md-5 col-xl-7 px-1" role="search">
         <input
           v-model="searchText"
           class="form-control me-2"
