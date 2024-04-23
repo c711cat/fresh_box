@@ -185,14 +185,6 @@ export default {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
-        this.carts = res.data.data.carts;
-        this.carts.forEach((item) => {
-          if (item.qty === 0) {
-            this.delItem(item.id);
-          } else {
-            return;
-          }
-        });
       });
       this.getPage1Products();
       this.getOtherPageProducts();
@@ -216,6 +208,9 @@ export default {
       this.$http.put(api, { data: delItem }).then((res) => {
         this.status.delLoadingItem = "";
         this.$pushMsg(res, "刪除 1 個品項");
+        if (res.data.data.qty === 0) {
+          this.delItem(item.pushCartId);
+        }
         this.getCart();
       });
     },
