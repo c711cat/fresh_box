@@ -77,4 +77,9 @@ export default {
   padding-top: 40px;
   max-width: 1300px;
 }
+
+.accordion-button:not(.collapsed) {
+  color: #000000a6;
+  font-weight: bolder;
+}
 </style>

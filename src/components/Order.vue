@@ -90,7 +90,7 @@
 
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           冷藏宅配
-          <div class="col-12 text-danger">
+          <div class="col-12 text-success">
             <i class="bi bi-info-circle"></i>
             滿 NT$ 1000 免運
           </div>
@@ -100,10 +100,16 @@
           NT$ {{ order.shippingFee }}
         </div>
 
-        <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+        <strong
+          :class="paymentAmountColor"
+          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
+        >
           付款金額
         </strong>
-        <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        <strong
+          :class="paymentAmountColor"
+          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
+        >
           NT$ {{ order.paymentAmount }}
         </strong>
         <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
@@ -225,6 +231,13 @@ export default {
     paymentStatusColor() {
       if (this.order.is_paid === true) {
         return "text-success";
+      } else {
+        return "text-danger";
+      }
+    },
+    paymentAmountColor() {
+      if (this.order.is_paid === true) {
+        return "";
       } else {
         return "text-danger";
       }

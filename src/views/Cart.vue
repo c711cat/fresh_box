@@ -134,7 +134,7 @@
 
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         冷藏宅配
-        <div class="infoText col-12 text-danger">
+        <div class="infoText col-12 text-success">
           <i class="bi bi-info-circle"></i>
           滿 NT$ 1000 免運
         </div>
@@ -144,10 +144,14 @@
         NT$ {{ shippingFee }}
       </div>
 
-      <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
+      <strong
+        class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3 text-danger"
+      >
         付款金額
       </strong>
-      <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end mb-3">
+      <strong
+        class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end mb-3 text-danger"
+      >
         NT$ {{ paymentAmount }}
       </strong>
     </div>
@@ -194,6 +198,7 @@ export default {
       this.$http.delete(api).then((res) => {
         this.$pushMsg(res, "刪除");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     addOneToCart(item) {
@@ -206,6 +211,7 @@ export default {
         this.used_coupon = false;
         this.$pushMsg(res, "加入購物車");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     delOneQty(item) {
@@ -217,6 +223,7 @@ export default {
         this.status.delLoadingItem = "";
         this.$pushMsg(res, "刪除");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     updateQtyOfInput(item) {
@@ -232,6 +239,7 @@ export default {
           this, (this.status.updateLoadingItem = "");
           this.$pushMsg(res, "更新數量");
           this.getCart();
+          this.emitter.emit("updateProductInCart");
         });
     },
     useCoupon() {
@@ -242,6 +250,7 @@ export default {
           this.used_coupon = true;
         }
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     getshippingFee() {

@@ -132,7 +132,8 @@ export default {
             this.$http.get(api).then((res) => {
               this.pagination = { ...res.data.pagination };
               this.newPage = [...res.data.products];
-              this.newPage.forEach((item) => {
+              this.allProducts = [...this.allProducts, ...this.newPage];
+              this.allProducts.forEach((item) => {
                 this.carts.forEach((cartItem) => {
                   if (item.id === cartItem.product_id) {
                     item.buyQty = cartItem.qty;
@@ -140,7 +141,6 @@ export default {
                   }
                 });
               });
-              this.allProducts = [...this.allProducts, ...this.newPage];
             });
           }
         },
@@ -180,19 +180,13 @@ export default {
         this.status.addLoadingItem = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
-        this.carts = res.data.data.carts;
-        this.carts.forEach((item) => {
-          if (item.qty === 0) {
-            this.delItem(item.id);
-          } else {
-            return;
-          }
-        });
+        this.carts = [...res.data.data.carts];
       });
       this.getPage1Products();
       this.getOtherPageProducts();
@@ -216,7 +210,11 @@ export default {
       this.$http.put(api, { data: delItem }).then((res) => {
         this.status.delLoadingItem = "";
         this.$pushMsg(res, "刪除 1 個品項");
+        if (res.data.data.qty === 0) {
+          this.delItem(item.pushCartId);
+        }
         this.getCart();
+        this.emitter.emit("updateProductInCart");
       });
     },
     goToProduct(item) {
