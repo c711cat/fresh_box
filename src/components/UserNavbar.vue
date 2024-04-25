@@ -3,10 +3,18 @@
   <nav
     class="navbarBg navbar navbar-expand-lg flex-row-reverse justify-content-between fixed-top"
   >
-    <router-link to="/" class="logo">
-      <img class="w-100" src="../assets/img/flesh_box_logo.png" alt="" />
+    <router-link
+      to="/"
+      class="logo logo_lg d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block"
+    >
+      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
     </router-link>
-
+    <router-link
+      to="/"
+      class="logo logo_md d-block d-sm-block d-md-block d-lg-none d-xl-none d-xxl-none"
+    >
+      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
+    </router-link>
     <div class="container-fluid">
       <button
         class="navbar-toggler border-0"
@@ -151,11 +159,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  border: 1px solid;
-}
 .navbarBg {
-  background-color: rgba(246, 242, 166, 1);
+  background-color: #727272;
 }
 
 .logo {
@@ -163,6 +168,13 @@ export default {
   width: 75px;
   padding: 0px;
   top: 5px;
+}
+
+.logo_lg {
+  right: 48%;
+}
+
+.logo_md {
   right: 45%;
 }
 
@@ -170,16 +182,17 @@ export default {
   cursor: pointer;
   padding: 2px;
 }
+
 .navbarText {
-  color: #a59b72;
+  color: #ccaf3c;
 }
 
 .searchText {
-  color: #a59b72;
+  color: #ccaf3c;
 }
 
 .navbarText:hover {
-  color: rgb(126, 100, 5);
+  color: rgb(249, 196, 6);
   font-weight: bolder;
 }
 
@@ -192,13 +205,13 @@ export default {
 }
 
 .iconLink {
-  color: #a59b72;
+  color: #ccaf3c;
   font-weight: 100;
   padding: 7px;
 }
 
 .iconLink:hover {
-  color: rgb(126, 100, 5);
+  color: rgb(249, 196, 6);
 }
 
 .position-absolute {
