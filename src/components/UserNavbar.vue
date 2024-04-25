@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <nav
-    class="userNavbarBg navbar navbar-expand-lg flex-row-reverse justify-content-between fixed-top"
+    class="navbarBg navbar navbar-expand-lg flex-row-reverse justify-content-between fixed-top"
   >
     <router-link to="/" class="logo">
       <img class="w-100" src="../assets/img/flesh_box_logo.png" alt="" />
@@ -17,14 +17,17 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <i class="bi bi-list fs-1 px-2"></i>
+        <i class="bi bi-list fs-1 px-2 navbarText"></i>
       </button>
       <router-link
         to="/user/cart"
-        class="nav-link d-flex flex-row-reverse col-4 col-sm-3 col-md-3 col-lg"
+        class="nav-link d-flex flex-row-reverse col-1 col-sm-1 col-md-1 col-lg"
       >
-        <div class="d-flex flex-column align-items-center">
-          <div class="position-relative">
+        <div
+          style="height: 75px"
+          class="h-100 d-flex flex-column align-items-center"
+        >
+          <div class="h-auto position-relative">
             <i class="bi bi-cart2 fs-2 iconLink"></i>
             <span
               v-if="carts.length >= 1"
@@ -35,7 +38,7 @@
             </span>
           </div>
 
-          <h5>
+          <h5 class="m-0 d-flex align-items-center">
             <span class="badge text-bg-warning"
               >NT$ {{ undiscountedAmount }}
             </span>
@@ -44,33 +47,33 @@
       </router-link>
     </div>
 
-    <div class="collapse navbar-collapse col-lg-9" id="user_navbarNav">
-      <ul class="navbar-nav px-5 align-items-center">
-        <li class="nav-item">
+    <div class="collapse navbar-collapse col-lg-11" id="user_navbarNav">
+      <ul class="navbar-nav px-5 align-items-center col-lg-6">
+        <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
           <router-link
             to="/user/user-products"
-            class="nav-link text-center navbarText px-4"
+            class="nav-link text-center navbarText"
             >所有產品
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item col-12 col-lg-auto px-2">
           <router-link
             to="/user/order-list"
-            class="nav-link text-center navbarText px-4"
+            class="nav-link text-center navbarText"
             >訂單
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item col-12 col-lg-auto px-2">
           <router-link
             to="/user/favorite"
-            class="nav-link text-center navbarText px-4"
+            class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>
-        <form class="ps-4 col-lg-3 col-xl-5" role="search">
+        <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
           <input
             v-model="searchText"
-            class="form-control me-2"
+            class="form-control searchText"
             type="search"
             placeholder="Search"
             aria-label="Search"
@@ -149,17 +152,17 @@ export default {
 
 <style lang="scss" scoped>
 * {
-  // border: 1px solid;
+  border: 1px solid;
 }
-.userNavbarBg {
-  background-color: rgb(243, 253, 234);
+.navbarBg {
+  background-color: rgba(246, 242, 166, 1);
 }
 
 .logo {
   position: absolute;
   width: 75px;
   padding: 0px;
-  top: 13%;
+  top: 5px;
   right: 45%;
 }
 
@@ -167,9 +170,17 @@ export default {
   cursor: pointer;
   padding: 2px;
 }
+.navbarText {
+  color: #a59b72;
+}
+
+.searchText {
+  color: #a59b72;
+}
 
 .navbarText:hover {
-  font-weight: bold;
+  color: rgb(126, 100, 5);
+  font-weight: bolder;
 }
 
 .navbar-toggler:focus {
@@ -181,13 +192,13 @@ export default {
 }
 
 .iconLink {
-  color: #000000a6;
+  color: #a59b72;
   font-weight: 100;
   padding: 7px;
 }
 
 .iconLink:hover {
-  color: black;
+  color: rgb(126, 100, 5);
 }
 
 .position-absolute {
