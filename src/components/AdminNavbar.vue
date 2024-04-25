@@ -1,12 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <nav
-    class="bg-body-tertiary navbar navbar-expand-md fixed-top px-5 row m-0 col-12"
+    class="bg-body-tertiary navbar navbar-expand-lg fixed-top px-5 row m-0 col-12"
   >
-    <div class="container-fluid col-md-auto">
-      <router-link to="/" class="">
-        <img class="logo" src="../assets/img/flesh_box_logo.png" alt="" />
-      </router-link>
+    <div class="container-fluid col-lg-auto">
       <button
         class="navbar-toggler border-0"
         type="button"
@@ -18,8 +15,11 @@
       >
         <i class="bi bi-list fs-1 px-2"></i>
       </button>
+      <router-link to="/">
+        <img class="logo" src="../assets/img/flesh_box_logo.png" alt="" />
+      </router-link>
     </div>
-    <div class="collapse navbar-collapse col-md-8" id="user_navbarNav">
+    <div class="collapse navbar-collapse" id="user_navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
           <router-link
@@ -49,20 +49,18 @@
             >登出</a
           >
         </li>
+        <li class="nav-item">
+          <form class="px-4" role="search">
+            <input
+              v-model="searchText"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+          </form>
+        </li>
       </ul>
-    </div>
-    <div
-      class="row m-0 align-items-center justify-content-center col-12 col-md-3"
-    >
-      <form class="d-flex col-9 col-md-12" role="search">
-        <input
-          v-model="searchText"
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </form>
     </div>
   </nav>
 </template>

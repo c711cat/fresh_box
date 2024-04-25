@@ -1,12 +1,21 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <nav
-    class="userNavbarBg navbar navbar-expand-md fixed-top px-5 row m-0 col-12"
+    class="navbarBg navbar navbar-expand-lg flex-row-reverse justify-content-between fixed-top"
   >
-    <div class="container-fluid col-md-auto">
-      <router-link to="/" class="">
-        <img class="logo" src="../assets/img/flesh_box_logo.png" alt="" />
-      </router-link>
+    <router-link
+      to="/"
+      class="logo logo_lg d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block"
+    >
+      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
+    </router-link>
+    <router-link
+      to="/"
+      class="logo logo_md d-block d-sm-block d-md-block d-lg-none d-xl-none d-xxl-none"
+    >
+      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
+    </router-link>
+    <div class="container-fluid">
       <button
         class="navbar-toggler border-0"
         type="button"
@@ -16,67 +25,69 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <i class="bi bi-list fs-1 px-2"></i>
+        <i class="bi bi-list fs-1 px-2 navbarText"></i>
       </button>
+      <router-link
+        to="/user/cart"
+        class="nav-link d-flex flex-row-reverse col-1 col-sm-1 col-md-1 col-lg"
+      >
+        <div
+          style="height: 75px"
+          class="h-100 d-flex flex-column align-items-center"
+        >
+          <div class="h-auto position-relative">
+            <i class="bi bi-cart2 fs-2 iconLink"></i>
+            <span
+              v-if="carts.length >= 1"
+              class="position-absolute translate-middle badge rounded-pill bg-danger"
+            >
+              {{ carts.length }}
+              <span class="visually-hidden">cart items</span>
+            </span>
+          </div>
+
+          <h5 class="m-0 d-flex align-items-center">
+            <span class="badge text-bg-warning"
+              >NT$ {{ undiscountedAmount }}
+            </span>
+          </h5>
+        </div>
+      </router-link>
     </div>
-    <div class="collapse navbar-collapse col-md-6" id="user_navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
+
+    <div class="collapse navbar-collapse col-lg-11" id="user_navbarNav">
+      <ul class="navbar-nav px-5 align-items-center col-lg-6">
+        <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
           <router-link
             to="/user/user-products"
-            class="nav-link text-center navbarText px-4"
+            class="nav-link text-center navbarText"
             >所有產品
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item col-12 col-lg-auto px-2">
           <router-link
             to="/user/order-list"
-            class="nav-link text-center navbarText px-4"
+            class="nav-link text-center navbarText"
             >訂單
           </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item col-12 col-lg-auto px-2">
           <router-link
             to="/user/favorite"
-            class="nav-link text-center navbarText px-4"
+            class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>
+        <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
+          <input
+            v-model="searchText"
+            class="form-control searchText"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
       </ul>
-    </div>
-    <div
-      class="row m-0 px-4 align-items-center justify-content-between col-12 col-md-5"
-    >
-      <form class="d-flex col-3 col-sm-5 col-md-5 col-xl-7 px-1" role="search">
-        <input
-          v-model="searchText"
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-      </form>
-      <router-link
-        to="/user/cart"
-        class="nav-link col-auto d-flex flex-column align-items-center"
-      >
-        <div class="position-relative">
-          <i class="bi bi-cart2 fs-2 iconLink"> </i>
-          <span
-            v-if="carts.length >= 1"
-            class="position-absolute translate-middle badge rounded-pill bg-danger"
-          >
-            {{ carts.length }}
-            <span class="visually-hidden">cart items</span>
-          </span>
-        </div>
-
-        <h5>
-          <span class="badge text-bg-warning"
-            >NT$ {{ undiscountedAmount }}</span
-          >
-        </h5>
-      </router-link>
     </div>
   </nav>
 </template>
@@ -148,13 +159,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.userNavbarBg {
-  background-color: rgb(243, 253, 234);
+.navbarBg {
+  background-color: #727272;
 }
 
 .logo {
+  position: absolute;
   width: 75px;
   padding: 0px;
+  top: 5px;
+}
+
+.logo_lg {
+  right: 48%;
+}
+
+.logo_md {
+  right: 45%;
 }
 
 .logo:hover {
@@ -162,8 +183,17 @@ export default {
   padding: 2px;
 }
 
+.navbarText {
+  color: #ccaf3c;
+}
+
+.searchText {
+  color: #ccaf3c;
+}
+
 .navbarText:hover {
-  font-weight: bold;
+  color: rgb(249, 196, 6);
+  font-weight: bolder;
 }
 
 .navbar-toggler:focus {
@@ -175,13 +205,13 @@ export default {
 }
 
 .iconLink {
-  color: #000000a6;
+  color: #ccaf3c;
   font-weight: 100;
   padding: 7px;
 }
 
 .iconLink:hover {
-  color: black;
+  color: rgb(249, 196, 6);
 }
 
 .position-absolute {

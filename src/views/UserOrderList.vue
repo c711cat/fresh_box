@@ -69,17 +69,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.accordion-button {
+  background-color: rgba(248, 249, 250, 1);
+  color: #a59b72;
+}
+
 .accordion-button:not(.collapsed) {
-  background-color: rgba(243, 253, 234);
+  background-color: #727272;
+  color: #ccaf3c;
+  font-weight: bolder;
 }
 
 .listContainer {
   padding-top: 40px;
   max-width: 1300px;
-}
-
-.accordion-button:not(.collapsed) {
-  color: #000000a6;
-  font-weight: bolder;
 }
 </style>
