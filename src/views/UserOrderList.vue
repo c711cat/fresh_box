@@ -70,13 +70,13 @@ export default {
 
 <style lang="scss" scoped>
 .accordion-button {
-  background-color: rgba(246, 242, 166, 0.341);
+  background-color: rgba(248, 249, 250, 1);
   color: #a59b72;
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: rgba(246, 242, 166, 1);
-  color: rgb(126, 100, 5);
+  background-color: #727272;
+  color: #ccaf3c;
   font-weight: bolder;
 }
 
