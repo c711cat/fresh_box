@@ -1,5 +1,5 @@
 <template>
-  <div class="listContainer mx-auto mb-5">
+  <div class="listContainer mx-auto mb-5 px-3">
     <div
       v-for="(item, index) in orderList"
       :key="index"
