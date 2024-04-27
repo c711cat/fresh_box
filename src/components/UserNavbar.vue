@@ -214,4 +214,9 @@ export default {
   top: 13px;
   left: 38px;
 }
+
+.form-control:focus {
+  border-color: #ccaf3c;
+  box-shadow: 0 0 0 0.25rem rgb(249, 196, 6, 0.25);
+}
 </style>
