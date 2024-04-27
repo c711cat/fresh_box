@@ -28,7 +28,7 @@
         <i class="bi bi-list fs-1 px-2 navbarText"></i>
       </button>
       <router-link
-        to="/user/cart"
+        to="/cart"
         class="nav-link d-flex flex-row-reverse col-1 col-sm-1 col-md-1 col-lg"
       >
         <div
@@ -59,22 +59,18 @@
       <ul class="navbar-nav px-5 align-items-center col-lg-6">
         <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
           <router-link
-            to="/user/user-products"
+            to="/user-products"
             class="nav-link text-center navbarText"
             >所有產品
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
-            to="/user/order-list"
-            class="nav-link text-center navbarText"
+          <router-link to="/order-list" class="nav-link text-center navbarText"
             >訂單
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
-            to="/user/favorite"
-            class="nav-link text-center navbarText"
+          <router-link to="/favorite" class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>

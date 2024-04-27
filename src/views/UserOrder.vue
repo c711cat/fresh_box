@@ -6,16 +6,12 @@
       <Order :transOrder="order"></Order>
     </div>
     <div class="text-end col-12 col-lg-7 pe-4 pb-5">
-      <router-link
-        v-if="order.is_paid"
-        to="/user/user-products"
-        class="border-0"
-      >
+      <router-link v-if="order.is_paid" to="/user-products" class="border-0">
         <button type="button" class="btn btn-outline-primary px-4 me-3">
           繼續逛逛
         </button>
       </router-link>
-      <router-link v-if="order.is_paid" to="/user/order-list" class="border-0">
+      <router-link v-if="order.is_paid" to="/order-list" class="border-0">
         <button type="button" class="btn btn-outline-success px-4">
           查看訂單
         </button>

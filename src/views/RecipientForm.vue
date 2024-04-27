@@ -104,7 +104,7 @@ export default {
     createOrder() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
       this.$http.post(api, { data: this.form }).then((res) => {
-        this.$router.push(`/user/order/${res.data.orderId}`);
+        this.$router.push(`/order/${res.data.orderId}`);
       });
     },
   },

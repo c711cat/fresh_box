@@ -183,7 +183,7 @@ export default {
       });
     },
     goToProduct(item) {
-      this.$router.push(`/user/product/${item.id}`);
+      this.$router.push(`/product/${item.id}`);
     },
   },
   created() {

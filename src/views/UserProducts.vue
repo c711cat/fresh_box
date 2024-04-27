@@ -218,7 +218,7 @@ export default {
       });
     },
     goToProduct(item) {
-      this.$router.push(`/user/product/${item.id}`);
+      this.$router.push(`/product/${item.id}`);
     },
     delItem(id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
