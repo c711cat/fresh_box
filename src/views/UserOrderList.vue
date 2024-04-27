@@ -1,5 +1,5 @@
 <template>
-  <div class="listContainer mx-auto mb-5">
+  <div class="listContainer mx-auto mb-5 px-4">
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -81,7 +81,7 @@ export default {
 }
 
 .listContainer {
-  padding-top: 40px;
+  padding-top: 120px;
   max-width: 1300px;
 }
 </style>

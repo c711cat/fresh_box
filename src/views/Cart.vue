@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div v-if="!carts.length" class="m-5">
+  <div v-if="!carts.length" class="m-5 cartContainer">
     <h3 class="ps-2">購物車空了</h3>
   </div>
-  <div v-else class="m-5">
+  <div v-else class="m-5 cartContainer">
     <h3 class="ps-2">購物車清單</h3>
     <div
       v-for="(item, index) in carts"
@@ -310,5 +310,9 @@ export default {
 
 .infoText {
   font-size: 13px;
+}
+
+.cartContainer {
+  padding-top: 100px;
 }
 </style>

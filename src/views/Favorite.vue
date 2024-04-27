@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div v-if="!myFavoriteList.length" class="row my-5 mx-auto">
+  <div v-if="!myFavoriteList.length" class="row my-5 mx-auto favoriteContainer">
     <h3 class="ps-5">目前無收藏的商品</h3>
   </div>
-  <div v-else class="row my-5 mx-auto">
+  <div v-else class="row my-5 mx-auto favoriteContainer">
     <h3 class="ps-5 pb-3">收藏清單</h3>
     <div
       v-for="(item, index) in myFavoriteList"
@@ -223,5 +223,9 @@ img {
 .myFavoriteIcon:hover {
   cursor: pointer;
   color: #f52424;
+}
+
+.favoriteContainer {
+  padding-top: 100px;
 }
 </style>

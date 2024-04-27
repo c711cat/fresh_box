@@ -1,5 +1,5 @@
 <template>
-  <div class="row my-5 mx-auto">
+  <div class="row my-5 mx-auto productsContainer">
     <div
       v-for="(item, index) in allProducts"
       :key="index"
@@ -296,5 +296,9 @@ img {
 .myFavoriteIcon:hover {
   cursor: pointer;
   color: #f52424;
+}
+
+.productsContainer {
+  padding-top: 100px;
 }
 </style>

@@ -1,10 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="navContainer">
+  <div>
     <UserNavbar></UserNavbar>
   </div>
 
-  <div class="viewContainer">
+  <div>
     <Messages></Messages>
     <router-view />
   </div>
@@ -27,12 +27,3 @@ export default {
   components: { UserNavbar, Messages },
 };
 </script>
-
-<style lang="scss" scoped>
-.navContainer {
-  margin-bottom: 120px;
-}
-.viewContainer {
-  margin: 0px 20px;
-}
-</style>
