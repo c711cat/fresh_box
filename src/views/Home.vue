@@ -3,7 +3,7 @@
   <div class="mb-5">
     <img src="../assets/img/1.jpg" class="img-fluid homeImg" alt="homeImg" />
   </div>
-  <div class="row m-0 ps-5 col-12 justify-content-center">
+  <div class="row mx-0 ps-5 mb-5 pb-3 pt-4 col-12 justify-content-center">
     <h3
       class="writeStyle bestSellTitle m-0 col-1"
       data-aos="fade-in"
@@ -18,7 +18,7 @@
       <div
         v-for="(item, index) in bestSellerProducts"
         :key="index"
-        class="pt-4 mb-5 col-10 col-sm-6 col-md-6 col-lg-3 col-xl"
+        class="pt-4 mb-4 col-10 col-sm-6 col-md-6 col-lg-3 col-xl"
         data-aos="fade-up"
         data-aos-duration="800"
         :data-aos-delay="index * 100"
@@ -46,6 +46,34 @@
             加入購物車
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="newsContainer row col-12 mx-0 mb-5 justify-content-center align-items-center"
+  >
+    <img
+      class="newsImg object-fit-cover col-lg-6 p-0"
+      data-aos="fade-right"
+      data-aos-easing="ease-out-circ"
+      data-aos-duration="1000"
+      src="../assets/img/5.jpg"
+      alt=""
+    />
+    <div
+      class="newsContent col-lg-5 d-flex flex-column justify-content-center align-items-center"
+      data-aos="zoom-in-left"
+      data-aos-offset="300"
+      data-aos-easing="ease-out-sine"
+      data-aos-duration="900"
+      data-aos-delay="800"
+    >
+      <div class="fs-1 fw-lighter mb-3">全館滿千免運</div>
+      <div class="fs-4 fw-lighter text-center">
+        結帳代入
+        <span class="border px-2 py-1">10%off</span>
+        享 9 折優惠
       </div>
     </div>
   </div>
@@ -101,6 +129,7 @@ export default {
 * {
   // border: 1px solid;
 }
+
 .homeImg {
   width: 100%;
   height: 1000px;
@@ -129,5 +158,26 @@ export default {
 
 .bestSellersImg:hover {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511) !important;
+}
+
+.newsContainer {
+  width: 100%;
+  background-color: #34343411;
+  position: relative;
+  padding: 50px 0px 50px 30px;
+}
+
+.newsImg {
+  height: 300px;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+.newsContent {
+  height: 250px;
+  background-color: rgba(252, 251, 251, 0.832);
+  position: relative;
+  left: -30px;
 }
 </style>
