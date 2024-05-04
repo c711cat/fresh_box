@@ -59,23 +59,23 @@
       data-aos-easing="ease-out-circ"
       data-aos-duration="1000"
       src="../assets/img/5.jpg"
-      alt=""
+      alt="homeImg"
     />
-    <div
-      class="newsContent col-lg-5 d-flex flex-column justify-content-center align-items-center"
+    <router-link
+      to="/user-products"
+      class="newsContent text-decoration-none text-secondary col-lg-5 d-flex flex-column justify-content-center align-items-center"
       data-aos="zoom-in-left"
-      data-aos-offset="300"
       data-aos-easing="ease-out-sine"
       data-aos-duration="900"
-      data-aos-delay="800"
     >
       <div class="fs-1 fw-lighter mb-3">全館滿千免運</div>
-      <div class="fs-4 fw-lighter text-center">
+      <div class="fs-4 fw-lighter text-center mb-3">
         結帳代入
         <span class="border px-2 py-1">10%off</span>
         享 9 折優惠
       </div>
-    </div>
+      <div class="goShopping fw-lighter fs-5">去 逛 逛</div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -179,5 +179,19 @@ export default {
   background-color: rgba(252, 251, 251, 0.832);
   position: relative;
   left: -30px;
+}
+
+.goShopping {
+  position: absolute;
+  bottom: 30px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.newsContent:hover {
+  box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
+}
+.newsContent:hover .goShopping {
+  opacity: 1;
 }
 </style>
