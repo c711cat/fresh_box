@@ -75,13 +75,20 @@ export default {
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: #727272;
+  background-color: #000;
   color: #ccaf3c;
   font-weight: bolder;
+}
+.accordion-button:hover {
+  color: #f9c406;
 }
 
 .listContainer {
   padding-top: 120px;
   max-width: 1300px;
+}
+
+.accordion-button::after {
+  content: none;
 }
 </style>
