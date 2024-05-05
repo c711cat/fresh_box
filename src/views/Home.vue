@@ -13,7 +13,7 @@
         <div class="straightLine writeStyle mt-3 ms-2"></div>
       </h3>
       <!-- 暢銷商品 -->
-      <div class="col col-md-11 col-xl-8 row m-0 justify-content-center">
+      <div class="col col-md-11 col-xl-9 row m-0 justify-content-center">
         <div
           v-for="(item, index) in bestSellerProducts"
           :key="index"
@@ -94,7 +94,7 @@ export default {
           id: "-NsfVCnYqjTKonXqR4cO",
         },
         {
-          title: "空運無籽黑葡萄",
+          title: "無籽黑葡萄",
           imgUrl:
             "https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           content: "1.8kg±10% / 盒",
