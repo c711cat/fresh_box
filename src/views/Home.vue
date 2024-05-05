@@ -40,6 +40,7 @@
             <div class="text-end">NT$ {{ item.price }}</div>
           </div>
           <button
+            @click="addCart(item)"
             class="w-100 my-3 btn btn-light shadow rounded-0"
             type="button"
           >
@@ -121,6 +122,17 @@ export default {
         },
       ],
     };
+  },
+  inject: ["emitter"],
+  methods: {
+    addCart(item) {
+      const addItem = { product_id: item.id, qty: 1 };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http.post(api, { data: addItem }).then((res) => {
+        this.$pushMsg(res, "加入購物車");
+        this.emitter.emit("updateProductInCart");
+      });
+    },
   },
 };
 </script>
