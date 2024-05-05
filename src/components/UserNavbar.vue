@@ -151,7 +151,7 @@ export default {
 
 <style lang="scss" scoped>
 .navbarBg {
-  background-color: #727272;
+  background-color: #000;
 }
 
 .logo {
