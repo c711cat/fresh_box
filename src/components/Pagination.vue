@@ -65,7 +65,7 @@ export default {
   height: 36px;
   border-radius: 50%;
   text-align: center;
-  color: #727272;
+  color: #000;
   border: none;
 }
 
@@ -79,17 +79,17 @@ export default {
 
 .page-link:hover {
   color: #000;
-  outline: 1px auto #727272;
+  outline: 1px auto #000;
 }
 
 .currentPageStyle {
-  background-color: #000000ae;
+  background-color: #000;
   color: #fff;
   cursor: default;
 }
 
 .currentPageStyle:hover {
-  background-color: #000000ae;
+  background-color: #000;
   color: #fff;
   cursor: default;
   outline: none;
