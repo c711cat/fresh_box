@@ -1,51 +1,51 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="mb-5">
-    <img src="../assets/img/1.jpg" class="img-fluid homeImg" alt="homeImg" />
-  </div>
-  <div class="row mx-0 ps-5 mb-5 pb-3 pt-4 col-12 justify-content-center">
-    <h3
-      class="writeStyle bestSellTitle m-0 col-1"
-      data-aos="fade-in"
-      data-aos-easing="ease-out-sine"
-      data-aos-duration="1500"
-    >
-      暢銷商品
-      <div class="straightLine writeStyle mt-3 ms-2"></div>
-    </h3>
-    <!-- 暢銷商品 -->
-    <div class="col col-md-10 col-xl-8 row m-0 justify-content-center">
-      <div
-        v-for="(item, index) in bestSellerProducts"
-        :key="index"
-        class="pt-4 mb-4 col-10 col-sm-6 col-md-6 col-lg-3 col-xl"
-        data-aos="fade-up"
-        data-aos-duration="800"
-        :data-aos-delay="index * 100"
+  <img src="../assets/img/1.jpg" class="homeImg mb-5" alt="homeImg" />
+  <div class="d-flex justify-content-center">
+    <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
+      <h3
+        class="writeStyle m-0 col-1"
+        data-aos="fade-in"
+        data-aos-easing="ease-out-sine"
+        data-aos-duration="1500"
       >
-        <router-link :to="`/product/${item.id}`" class="linkStyle">
-          <img
-            class="img-fluid bestSellersImg shadow-lg"
-            :src="item.imgUrl"
-            alt="bestSellerProductImg"
-          />
-        </router-link>
-        <div>
-          <div class="p-2 fs-5">{{ item.title }}</div>
-          <div class="px-2">{{ item.content }}</div>
-          <div class="d-flex p-2 justify-content-between">
-            <div class="text-decoration-line-through text-secondary">
-              NT$ {{ item.origin_price }}
+        暢銷商品
+        <div class="straightLine writeStyle mt-3 ms-2"></div>
+      </h3>
+      <!-- 暢銷商品 -->
+      <div class="col col-md-11 col-xl-8 row m-0 justify-content-center">
+        <div
+          v-for="(item, index) in bestSellerProducts"
+          :key="index"
+          class="pt-4 mb-4 col-10 col-sm-6 col-md-6 col-lg-3 col-xl"
+          data-aos="fade-up"
+          data-aos-duration="800"
+          :data-aos-delay="index * 100"
+        >
+          <router-link :to="`/product/${item.id}`" class="linkStyle">
+            <img
+              class="img-fluid bestSellersImg shadow-lg"
+              :src="item.imgUrl"
+              alt="bestSellerProductImg"
+            />
+          </router-link>
+          <div>
+            <div class="p-2 fs-5">{{ item.title }}</div>
+            <div class="px-2">{{ item.content }}</div>
+            <div class="d-flex p-2 justify-content-between">
+              <div class="text-decoration-line-through text-secondary">
+                NT$ {{ item.origin_price }}
+              </div>
+              <div class="text-end">NT$ {{ item.price }}</div>
             </div>
-            <div class="text-end">NT$ {{ item.price }}</div>
+            <button
+              @click="addCart(item)"
+              class="w-100 my-3 btn btn-light shadow rounded-0"
+              type="button"
+            >
+              加入購物車
+            </button>
           </div>
-          <button
-            @click="addCart(item)"
-            class="w-100 my-3 btn btn-light shadow rounded-0"
-            type="button"
-          >
-            加入購物車
-          </button>
         </div>
       </div>
     </div>
@@ -139,12 +139,12 @@ export default {
 
 <style lang="scss" scoped>
 * {
-  // border: 1px solid;
+  border: 1px solid;
 }
 
 .homeImg {
-  width: 100%;
-  height: 1000px;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
 }
 
@@ -156,10 +156,6 @@ export default {
   width: 1px;
   background-color: black;
   height: 180px;
-}
-
-.bestSellTitle {
-  width: 50px;
 }
 
 .bestSellersImg {
