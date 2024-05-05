@@ -27,10 +27,7 @@
       >
         <i class="bi bi-list fs-1 px-2 navbarText"></i>
       </button>
-      <router-link
-        to="/cart"
-        class="nav-link d-flex flex-row-reverse col-1 col-sm-1 col-md-1 col-lg"
-      >
+      <router-link to="/cart" class="nav-link d-flex flex-row-reverse">
         <div
           style="height: 75px"
           class="h-100 d-flex flex-column align-items-center"
@@ -47,9 +44,7 @@
           </div>
 
           <h5 class="m-0 d-flex align-items-center">
-            <span class="badge text-bg-warning"
-              >NT$ {{ undiscountedAmount }}
-            </span>
+            <span class="amountText badge">NT$ {{ undiscountedAmount }} </span>
           </h5>
         </div>
       </router-link>
@@ -218,5 +213,10 @@ export default {
 .form-control:focus {
   border-color: #ccaf3c;
   box-shadow: 0 0 0 0.25rem rgb(249, 196, 6, 0.25);
+}
+
+.amountText {
+  width: 120px;
+  color: rgb(249, 196, 6);
 }
 </style>
