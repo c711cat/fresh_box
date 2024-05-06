@@ -138,10 +138,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  border: 1px solid;
-}
-
 .homeImg {
   width: 100vw;
   height: 100vh;
