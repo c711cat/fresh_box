@@ -196,7 +196,7 @@ export default {
 }
 
 .bi-list:hover {
-  color: black;
+  color: rgb(249, 196, 6);
 }
 
 .iconLink {
