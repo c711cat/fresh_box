@@ -15,7 +15,7 @@
       </span>
       <!-- xs 可見：字體縮小 及 調整視覺置中 -->
       <span
-        class="fs-5 pt-1 pe-3 logoText d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
+        class="fs-5 pt-1 logoText d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         FRESH BOX
       </span>
@@ -163,6 +163,7 @@ export default {
   width: 1px;
   position: absolute;
   right: 50%;
+  top: 40px;
 }
 
 .logoText {
