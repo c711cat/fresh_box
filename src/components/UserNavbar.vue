@@ -5,15 +5,20 @@
   >
     <router-link
       to="/"
-      class="logo logo_lg d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block"
+      class="align-baseline text-center text-decoration-none logoRouterLink"
     >
-      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
-    </router-link>
-    <router-link
-      to="/"
-      class="logo logo_md d-block d-sm-block d-md-block d-lg-none d-xl-none d-xxl-none"
-    >
-      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
+      <!-- sm（含）以上可見 -->
+      <span
+        class="fs-3 logoText d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
+      >
+        FRESH BOX
+      </span>
+      <!-- xs 可見：字體縮小 及 調整視覺置中 -->
+      <span
+        class="fs-5 pt-1 pe-3 logoText d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
+      >
+        FRESH BOX
+      </span>
     </router-link>
     <div class="container-fluid">
       <button
@@ -154,24 +159,23 @@ export default {
   background-color: #000;
 }
 
-.logo {
+.logoRouterLink {
+  width: 1px;
   position: absolute;
-  width: 75px;
-  padding: 0px;
-  top: 5px;
+  right: 50%;
 }
 
-.logo_lg {
-  right: 48%;
+.logoText {
+  position: absolute;
+  margin: -19px -80px;
+  width: 170px;
+  font-family: "Times New Roman", Times, serif;
+  color: #ccaf3c;
 }
 
-.logo_md {
-  right: 45%;
-}
-
-.logo:hover {
+.logoText:hover {
   cursor: pointer;
-  padding: 2px;
+  color: rgb(249, 196, 6);
 }
 
 .navbarText {
