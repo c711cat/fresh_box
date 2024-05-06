@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <nav
-    class="bg-body-tertiary navbar navbar-expand-lg fixed-top px-5 row m-0 col-12"
+    class="bg-body-tertiary navbar navbar-expand-lg fixed-top row m-0 col-12"
   >
     <div class="container-fluid col-lg-auto">
       <button
@@ -15,8 +15,11 @@
       >
         <i class="bi bi-list fs-1 px-2"></i>
       </button>
-      <router-link to="/">
-        <img class="logo" src="../assets/img/flesh_box_logo.png" alt="" />
+      <router-link
+        to="/"
+        class="logoText text-decoration-none text-center fs-4"
+      >
+        FRESH BOX
       </router-link>
     </div>
     <div class="collapse navbar-collapse" id="user_navbarNav">
@@ -123,14 +126,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  width: 75px;
-  padding: 0px;
+.logoText {
+  width: 170px;
+  color: #000000a6;
+  font-family: "Times New Roman", Times, serif;
 }
 
-.logo:hover {
+.logoText:hover {
   cursor: pointer;
-  padding: 2px;
+  color: black;
 }
 
 .navbarText:hover {
