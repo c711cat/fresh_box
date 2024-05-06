@@ -36,7 +36,7 @@
             <i class="bi bi-cart2 fs-2 iconLink"></i>
             <span
               v-if="carts.length >= 1"
-              class="position-absolute translate-middle badge rounded-pill bg-danger"
+              class="position-absolute translate-middle badge rounded-pill numInCart"
             >
               {{ carts.length }}
               <span class="visually-hidden">cart items</span>
@@ -218,5 +218,10 @@ export default {
 .amountText {
   width: 120px;
   color: rgb(249, 196, 6);
+}
+
+.numInCart {
+  background-color: rgb(249, 196, 6);
+  color: #000;
 }
 </style>
