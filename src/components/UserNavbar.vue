@@ -79,7 +79,7 @@
             v-model="searchText"
             class="form-control searchText"
             type="search"
-            placeholder="Search"
+            placeholder="Search for products"
             aria-label="Search"
           />
         </form>
