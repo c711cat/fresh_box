@@ -1,5 +1,5 @@
 <template>
-  <div class="row my-4 mx-auto justify-content-center">
+  <div class="row my-4 mx-auto justify-content-center productDetailsContainer">
     <div class="row m-0 d-cloumn justify-content-center">
       <div class="p-1 col-12 col-md-5 position-relative">
         <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
@@ -206,5 +206,9 @@ export default {
 .myFavoriteIcon:hover {
   cursor: pointer;
   color: #f52424;
+}
+
+.productDetailsContainer {
+  padding-top: 120px;
 }
 </style>

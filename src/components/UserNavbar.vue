@@ -5,15 +5,20 @@
   >
     <router-link
       to="/"
-      class="logo logo_lg d-none d-sm-none d-md-none d-lg-block d-xl-block d-xxl-block"
+      class="align-baseline text-center text-decoration-none logoRouterLink"
     >
-      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
-    </router-link>
-    <router-link
-      to="/"
-      class="logo logo_md d-block d-sm-block d-md-block d-lg-none d-xl-none d-xxl-none"
-    >
-      <img class="w-100" src="../assets/img/logo_light_font.png" alt="" />
+      <!-- sm（含）以上可見 -->
+      <span
+        class="fs-3 logoText d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
+      >
+        FRESH BOX
+      </span>
+      <!-- xs 可見：字體縮小 及 調整視覺置中 -->
+      <span
+        class="fs-5 pt-1 logoText d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
+      >
+        FRESH BOX
+      </span>
     </router-link>
     <div class="container-fluid">
       <button
@@ -27,10 +32,7 @@
       >
         <i class="bi bi-list fs-1 px-2 navbarText"></i>
       </button>
-      <router-link
-        to="/user/cart"
-        class="nav-link d-flex flex-row-reverse col-1 col-sm-1 col-md-1 col-lg"
-      >
+      <router-link to="/cart" class="nav-link d-flex flex-row-reverse">
         <div
           style="height: 75px"
           class="h-100 d-flex flex-column align-items-center"
@@ -39,7 +41,7 @@
             <i class="bi bi-cart2 fs-2 iconLink"></i>
             <span
               v-if="carts.length >= 1"
-              class="position-absolute translate-middle badge rounded-pill bg-danger"
+              class="position-absolute translate-middle badge rounded-pill numInCart"
             >
               {{ carts.length }}
               <span class="visually-hidden">cart items</span>
@@ -47,9 +49,7 @@
           </div>
 
           <h5 class="m-0 d-flex align-items-center">
-            <span class="badge text-bg-warning"
-              >NT$ {{ undiscountedAmount }}
-            </span>
+            <span class="amountText badge">NT$ {{ undiscountedAmount }} </span>
           </h5>
         </div>
       </router-link>
@@ -59,22 +59,18 @@
       <ul class="navbar-nav px-5 align-items-center col-lg-6">
         <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
           <router-link
-            to="/user/user-products"
+            to="/user-products"
             class="nav-link text-center navbarText"
             >所有產品
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
-            to="/user/order-list"
-            class="nav-link text-center navbarText"
+          <router-link to="/order-list" class="nav-link text-center navbarText"
             >訂單
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
-            to="/user/favorite"
-            class="nav-link text-center navbarText"
+          <router-link to="/favorite" class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>
@@ -83,7 +79,7 @@
             v-model="searchText"
             class="form-control searchText"
             type="search"
-            placeholder="Search"
+            placeholder="Search for products"
             aria-label="Search"
           />
         </form>
@@ -160,27 +156,27 @@ export default {
 
 <style lang="scss" scoped>
 .navbarBg {
-  background-color: #727272;
+  background-color: #000;
 }
 
-.logo {
+.logoRouterLink {
+  width: 1px;
   position: absolute;
-  width: 75px;
-  padding: 0px;
-  top: 5px;
+  right: 50%;
+  top: 40px;
 }
 
-.logo_lg {
-  right: 48%;
+.logoText {
+  position: absolute;
+  margin: -19px -80px;
+  width: 170px;
+  font-family: "Times New Roman", Times, serif;
+  color: #ccaf3c;
 }
 
-.logo_md {
-  right: 45%;
-}
-
-.logo:hover {
+.logoText:hover {
   cursor: pointer;
-  padding: 2px;
+  color: rgb(249, 196, 6);
 }
 
 .navbarText {
@@ -201,7 +197,7 @@ export default {
 }
 
 .bi-list:hover {
-  color: black;
+  color: rgb(249, 196, 6);
 }
 
 .iconLink {
@@ -217,5 +213,20 @@ export default {
 .position-absolute {
   top: 13px;
   left: 38px;
+}
+
+.form-control:focus {
+  border-color: #ccaf3c;
+  box-shadow: 0 0 0 0.25rem rgb(249, 196, 6, 0.25);
+}
+
+.amountText {
+  width: 120px;
+  color: rgb(249, 196, 6);
+}
+
+.numInCart {
+  background-color: rgb(249, 196, 6);
+  color: #000;
 }
 </style>

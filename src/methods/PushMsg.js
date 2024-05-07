@@ -8,7 +8,7 @@ export default function (res, title) {
     });
   } else {
     const msg = [];
-    res.data.message.forEach((item) => {
+    Object.values(res.data.message).forEach((item) => {
       if (item === " title 欄位為必填") {
         item = "名稱";
         msg.push(item);

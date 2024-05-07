@@ -1,5 +1,5 @@
 <template>
-  <div class="listContainer mx-auto mb-5">
+  <div class="listContainer mx-auto mb-5 px-4">
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -75,13 +75,20 @@ export default {
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: #727272;
+  background-color: #000;
   color: #ccaf3c;
   font-weight: bolder;
 }
+.accordion-button:hover {
+  color: #f9c406;
+}
 
 .listContainer {
-  padding-top: 40px;
+  padding-top: 120px;
   max-width: 1300px;
+}
+
+.accordion-button::after {
+  content: none;
 }
 </style>

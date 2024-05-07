@@ -27,6 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .toast-container {
+  position: fixed;
   top: 80px;
 }
 </style>
