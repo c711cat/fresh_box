@@ -8,13 +8,14 @@
     <Messages></Messages>
     <router-view />
   </div>
+  <Footer></Footer>
 </template>
 
 <script>
 import UserNavbar from "../components/UserNavbar.vue";
 import emitter from "@/methods/emitter";
 import Messages from "@/components/Messages.vue";
-
+import Footer from "@/components/Footer.vue";
 export default {
   data() {
     return {};
@@ -24,6 +25,6 @@ export default {
       emitter,
     };
   },
-  components: { UserNavbar, Messages },
+  components: { UserNavbar, Messages, Footer },
 };
 </script>
