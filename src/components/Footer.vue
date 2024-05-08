@@ -2,12 +2,14 @@
 <template>
   <div class="row m-0 py-2 ps-4 footerContainer fw-light">
     <div class="row m-0 align-items-center justify-content-between col-12">
-      <router-link
-        to="/"
-        class="text-decoration-none textStyle fs-5 logoStyle col-12 col-sm-6"
-      >
-        FRESH BOX
-      </router-link>
+      <div class="col-12 col-sm-6">
+        <router-link
+          to="/"
+          class="text-decoration-none textStyle fs-5 logoStyle"
+        >
+          FRESH BOX
+        </router-link>
+      </div>
 
       <div
         class="col-12 col-sm-6 row m-0 align-items-center justify-content-between p-0 flex-wrap"
@@ -37,6 +39,9 @@
 </template>
 
 <style lang="scss" scoped>
+* {
+  border: 1px solid;
+}
 .footerContainer {
   background-color: #34343411;
 }
