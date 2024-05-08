@@ -1,102 +1,115 @@
 <template>
-  <div class="row my-5 mx-auto productsContainer">
-    <div
-      v-for="(item, index) in allProducts"
-      :key="index"
-      class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
+  <div class="row mx-0 my-4">
+    <ul
+      style="margin-left: 50px; margin-top: 100px"
+      class="nav flex-column p-0 col-1"
     >
-      <div class="card mb-3 mx-2" style="width: 18rem">
-        <h3
-          v-if="isMyFavorite(item)"
-          @click="delMyFavorite(item)"
-          class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
-        ></h3>
+      <li class="nav-item nav-link active">所有類別</li>
+      <li class="nav-item nav-link active">葉菜</li>
+      <li class="nav-item nav-link active">瓜果根球莖</li>
+      <li class="nav-item nav-link active">水果</li>
+      <li class="nav-item nav-link active">辛香料</li>
+    </ul>
+    <div class="col-10 row my-0 mx-auto productsContainer">
+      <div
+        v-for="(item, index) in allProducts"
+        :key="index"
+        class="col-10 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
+      >
+        <div class="card mb-3 mx-2" style="width: 18rem">
+          <h3
+            v-if="isMyFavorite(item)"
+            @click="delMyFavorite(item)"
+            class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
+          ></h3>
 
-        <h3
-          v-else
-          @click="addMyFavorite(item)"
-          class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
-        ></h3>
+          <h3
+            v-else
+            @click="addMyFavorite(item)"
+            class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
+          ></h3>
 
-        <img
-          @click="goToProduct(item)"
-          :src="item.imageUrl"
-          class="imgBody card-img-top position-relative"
-        />
+          <img
+            @click="goToProduct(item)"
+            :src="item.imageUrl"
+            class="imgBody card-img-top position-relative"
+          />
 
-        <div class="card-body d-flex flex-column justify-content-between">
-          <div>
-            <div class="d-flex justify-content-between">
-              <h5 class="card-title">{{ item.title }}</h5>
-              <span
-                v-if="item.buyQty >= 1"
-                class="badge text-bg-danger rounded-pill fs-6"
-              >
-                {{ item.buyQty }}
-              </span>
+          <div class="card-body d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between">
+                <h5 class="card-title">{{ item.title }}</h5>
+                <span
+                  v-if="item.buyQty >= 1"
+                  class="badge text-bg-danger rounded-pill fs-6"
+                >
+                  {{ item.buyQty }}
+                </span>
+              </div>
+
+              <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
+              <div class="d-flex justify-content-between mb-2">
+                <strong
+                  class="card-text text-secondary fs-6"
+                  :class="{
+                    'text-decoration-line-through':
+                      item.price !== item.origin_price,
+                  }"
+                >
+                  NT$ {{ item.origin_price }}
+                </strong>
+                <strong
+                  v-if="item.price !== item.origin_price"
+                  class="card-text text-danger fs-6"
+                  >NT$ {{ item.price }}
+                </strong>
+              </div>
             </div>
 
-            <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
-            <div class="d-flex justify-content-between mb-2">
-              <strong
-                class="card-text text-secondary fs-6"
-                :class="{
-                  'text-decoration-line-through':
-                    item.price !== item.origin_price,
-                }"
+            <div
+              class="btn-group w-100"
+              role="group"
+              aria-label="Default button group"
+            >
+              <!-- - -->
+              <button
+                @click="delOne(item)"
+                :disabled="!item.buyQty || item.id === status.delLoadingItem"
+                type="button"
+                class="btn btn-light w-50"
               >
-                NT$ {{ item.origin_price }}
-              </strong>
-              <strong
-                v-if="item.price !== item.origin_price"
-                class="card-text text-danger fs-6"
-                >NT$ {{ item.price }}
-              </strong>
+                <div
+                  v-if="item.id === status.delLoadingItem"
+                  class="spinner-border text-dark spinner-grow-sm"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <i v-else class="bi bi-dash-lg"></i>
+              </button>
+              <!-- + -->
+              <button
+                @click="addCart(item)"
+                :disabled="item.id === status.addLoadingItem"
+                type="button"
+                class="btn btn-light w-50"
+              >
+                <div
+                  v-if="item.id === status.addLoadingItem"
+                  class="spinner-border text-dark spinner-grow-sm"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <i v-else class="bi bi-plus-lg"></i>
+              </button>
             </div>
-          </div>
-
-          <div
-            class="btn-group w-100"
-            role="group"
-            aria-label="Default button group"
-          >
-            <!-- - -->
-            <button
-              @click="delOne(item)"
-              :disabled="!item.buyQty || item.id === status.delLoadingItem"
-              type="button"
-              class="btn btn-light w-50"
-            >
-              <div
-                v-if="item.id === status.delLoadingItem"
-                class="spinner-border text-dark spinner-grow-sm"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <i v-else class="bi bi-dash-lg"></i>
-            </button>
-            <!-- + -->
-            <button
-              @click="addCart(item)"
-              :disabled="item.id === status.addLoadingItem"
-              type="button"
-              class="btn btn-light w-50"
-            >
-              <div
-                v-if="item.id === status.addLoadingItem"
-                class="spinner-border text-dark spinner-grow-sm"
-                role="status"
-              >
-                <span class="visually-hidden">Loading...</span>
-              </div>
-              <i v-else class="bi bi-plus-lg"></i>
-            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <Observer
     v-if="pagination.current_page < pagination.total_pages"
     @is-in-view="handleIsInView"
@@ -266,6 +279,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+* {
+  border: 1px solid;
+}
 img {
   height: 190px;
   object-fit: cover;
@@ -300,5 +316,16 @@ img {
 
 .productsContainer {
   padding-top: 100px;
+}
+
+.nav-link {
+  color: #212529;
+  border-bottom: 1px solid #212529;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  color: #ccaf3c;
+  border-bottom: 1px solid #ccaf3c;
 }
 </style>
