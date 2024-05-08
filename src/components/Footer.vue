@@ -39,9 +39,6 @@
 </template>
 
 <style lang="scss" scoped>
-* {
-  border: 1px solid;
-}
 .footerContainer {
   background-color: #34343411;
 }
