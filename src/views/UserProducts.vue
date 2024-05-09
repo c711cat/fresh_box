@@ -305,54 +305,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.linkStyle {
-  color: #212529;
-}
-.linkStyle:hover {
-  color: #ccaf3c;
-}
-.currentCategory {
-  color: #ccaf3c;
-}
-.dropdown-item:hover {
-  cursor: pointer;
-  color: #ccaf3c;
-}
-.dropdown-item.active,
-.dropdown-item:active {
-  background-color: none;
-  color: #ccaf3c;
-}
-* {
-  border: 1px solid;
-}
 img {
   height: 190px;
   object-fit: cover;
 }
+
 .imgBody:hover {
   cursor: pointer;
   border: 2px solid #fff;
 }
+
 .badge {
   height: fit-content;
 }
+
 .delmyFavoriteIcon {
   right: 0px;
   top: 0px;
   padding: 8px 12px;
   color: #f52424b3;
 }
+
 .delmyFavoriteIcon:hover {
   cursor: pointer;
   color: #dc3545;
 }
+
 .myFavoriteIcon {
   right: 0px;
   top: 0px;
   padding: 8px 12px;
   color: #ffffffb3;
 }
+
 .myFavoriteIcon:hover {
   cursor: pointer;
   color: #f52424;
@@ -371,5 +356,33 @@ img {
   cursor: pointer;
   color: #ccaf3c;
   border-bottom: 1px solid #ccaf3c;
+}
+
+.linkStyle {
+  color: #212529;
+}
+
+.linkStyle:hover {
+  color: #ccaf3c;
+}
+
+.currentCategory {
+  color: #ccaf3c;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+  color: #ccaf3c;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #f8f9fa;
+  color: #ccaf3c;
+}
+
+.dropdown-item:focus-visible {
+  outline: 2px solid #ccaf3c;
+  border-radius: 3%;
 }
 </style>
