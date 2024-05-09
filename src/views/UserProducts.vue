@@ -1,6 +1,8 @@
 <template>
-  <div class="col-12 col-lg-10 row my-0 mx-auto productsContainer">
-    <ul class="mt-1 mb-3 nav d-flex align-items-center">
+  <div
+    class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row my-0 mx-auto productsContainer"
+  >
+    <ul class="mt-1 nav d-flex align-items-center">
       <li class="nav-item nav-link border-0">
         <router-link to="/user-products" class="text-decoration-none linkStyle">
           所有產品
@@ -31,9 +33,9 @@
     <div
       v-for="(item, index) in allProducts"
       :key="index"
-      class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
+      class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
     >
-      <div class="card mb-3 mx-2" style="width: 18rem">
+      <div class="card my-3 mx-auto">
         <h3
           v-if="isMyFavorite(item)"
           @click="delMyFavorite(item)"
