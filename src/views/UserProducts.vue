@@ -155,7 +155,7 @@ export default {
       },
       myFavoriteList: [],
       dropdownList: {},
-      categoryList: ["葉菜", "瓜果根球莖", "水果", "辛香料"],
+      categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
       forCategoryAllProducts: [],
       currentCategory: "選擇類別",
       getOtherPageProducts: throttle(
