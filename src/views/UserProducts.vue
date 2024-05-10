@@ -15,7 +15,7 @@
           role="button"
           aria-expanded="false"
         >
-          選擇類別
+          {{ currentCategory }}
         </a>
         <ul class="dropdown-menu">
           <li
@@ -157,7 +157,7 @@ export default {
       dropdownList: {},
       categoryList: ["葉菜", "瓜果根球莖", "水果", "辛香料"],
       forCategoryAllProducts: [],
-      currentCategory: "",
+      currentCategory: "選擇類別",
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -220,6 +220,7 @@ export default {
     },
     getPage1Products(page = 1) {
       this.pagination.current_page = 1;
+      this.currentCategory = "選擇類別";
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http.get(api).then((res) => {
         this.allProducts = res.data.products;
