@@ -3,12 +3,10 @@
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row my-0 mx-auto productsContainer"
   >
     <ul class="mt-1 nav d-flex align-items-center">
-      <li class="nav-item nav-link border-0">
-        <router-link to="/user-products" class="text-decoration-none linkStyle">
-          所有產品
-        </router-link>
+      <li @click="getPage1Products" class="nav-item nav-link border-0">
+        所有產品
       </li>
-      <li class="">／</li>
+      <li>／</li>
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle border-0"
@@ -21,6 +19,7 @@
         </a>
         <ul class="dropdown-menu">
           <li
+            @click="chooseCategory(item)"
             v-for="(item, index) in categoryList"
             :key="index"
             class="dropdown-item"
@@ -156,7 +155,9 @@ export default {
       },
       myFavoriteList: [],
       dropdownList: {},
-      categoryList: ["所有類別", "葉菜", "瓜果根球莖", "水果", "辛香料"],
+      categoryList: ["葉菜", "瓜果根球莖", "水果", "辛香料"],
+      forCategoryAllProducts: [],
+      currentCategory: "",
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -186,6 +187,27 @@ export default {
   components: { Observer },
   inject: ["emitter"],
   methods: {
+    chooseCategory(category) {
+      this.currentCategory = category;
+      this.pagination.total_pages = 0;
+      this.getAllProducts();
+    },
+    showCategoryProducts() {
+      let inCaterogy = [];
+      this.forCategoryAllProducts.filter((item) => {
+        if (item.category === this.currentCategory) {
+          inCaterogy.push(item);
+        }
+      });
+      this.allProducts = inCaterogy;
+    },
+    getAllProducts() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(api).then((res) => {
+        this.forCategoryAllProducts = res.data.products;
+        this.showCategoryProducts();
+      });
+    },
     handleLoadmore() {
       this.getOtherPageProducts();
     },
@@ -356,14 +378,6 @@ img {
   cursor: pointer;
   color: #ccaf3c;
   border-bottom: 1px solid #ccaf3c;
-}
-
-.linkStyle {
-  color: #212529;
-}
-
-.linkStyle:hover {
-  color: #ccaf3c;
 }
 
 .currentCategory {
