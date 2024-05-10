@@ -1,6 +1,6 @@
 <template>
   <div
-    class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row my-0 mx-auto productsContainer"
+    class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
   >
     <ul class="mt-1 nav d-flex align-items-center">
       <li @click="getPage1Products" class="nav-item nav-link border-0">
