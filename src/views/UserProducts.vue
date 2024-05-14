@@ -381,10 +381,6 @@ img {
   border-bottom: 1px solid #ccaf3c;
 }
 
-.currentCategory {
-  color: #ccaf3c;
-}
-
 .dropdown-item:hover {
   cursor: pointer;
   color: #ccaf3c;
