@@ -1,6 +1,70 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <img src="../assets/img/1.jpg" class="homeImg mb-5" alt="homeImg" />
+  <img src="../assets/img/1.jpg" class="homeImg" alt="homeImg" />
+  <!-- 商品類別 -->
+
+  <div
+    class="categoryWrap row my-0 mx-auto justify-content-center col-12 text-center"
+  >
+    <router-link
+      to="/user-products"
+      data-aos="zoom-in"
+      data-aos-duration="600"
+      class="categoryImg m-1 categoryLink col-1"
+    >
+      <img
+        class="categoryImg"
+        src="@/assets/img/leafy_vegetable.png"
+        alt="leafy_vegetable_img"
+      />
+      <div>葉菜</div>
+    </router-link>
+    <router-link
+      to="/user-products"
+      data-aos="zoom-in"
+      data-aos-duration="600"
+      class="m-1 categoryLink categoryLink col-1"
+    >
+      <img
+        class="categoryImg"
+        src="@/assets/img/melon_root_bulb.png"
+        alt="melon_root_bulb_img"
+      />
+      <div>瓜果根球莖</div>
+    </router-link>
+    <router-link
+      to="/user-products"
+      data-aos="zoom-in"
+      data-aos-duration="600"
+      class="m-1 categoryLink categoryLink col-1"
+    >
+      <img
+        class="categoryImg"
+        src="@/assets/img/mushroom.png"
+        alt="mushroom_img"
+      />
+      <div>菇菌</div>
+    </router-link>
+    <router-link
+      to="/user-products"
+      data-aos="zoom-in"
+      data-aos-duration="600"
+      class="m-1 categoryLink categoryLink col-1"
+    >
+      <img class="categoryImg" src="@/assets/img/fruit.png" alt="fruit_img" />
+      <div>水果</div>
+    </router-link>
+    <router-link
+      to="/user-products"
+      data-aos="zoom-in"
+      data-aos-duration="600"
+      class="m-1 categoryLink categoryLink col-1"
+    >
+      <img class="categoryImg" src="@/assets/img/spice.png" alt="spice_img" />
+      <div>辛香料</div>
+    </router-link>
+  </div>
+
   <div class="d-flex justify-content-center">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
       <h3
@@ -83,6 +147,29 @@
 export default {
   data() {
     return {
+      veg: "@/assets/img/4-2.png",
+      categoryData: [
+        {
+          category: "葉菜",
+          img: "https://images.unsplash.com/photo-1615485291234-9d694218aeb3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          category: "瓜果根球莖",
+          img: "https://images.unsplash.com/photo-1615485499978-1279c3d6302f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        },
+        {
+          category: "菌菇",
+          img: "https://images.pexels.com/photos/793267/pexels-photo-793267.jpeg?auto=compress&cs=tinysrgb&w=600",
+        },
+        {
+          category: "水果",
+          img: "https://images.unsplash.com/flagged/photo-1587302164675-820fe61bbd55?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8",
+        },
+        {
+          category: "香辛料",
+          img: "https://images.unsplash.com/photo-1587049693270-c7560da11218?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDI4fHx8ZW58MHx8fHx8",
+        },
+      ],
       bestSellerProducts: [
         {
           title: "台灣水蜜桃",
@@ -195,7 +282,36 @@ export default {
 .newsContent:hover {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
 }
+
 .newsContent:hover .goShopping {
   opacity: 1;
+}
+
+.categoryWrap {
+  padding: 20px 0px;
+  background-color: rgba(252, 251, 251, 0.832);
+}
+
+.categoryImg {
+  width: 45px;
+  height: 45px;
+  margin-bottom: 8px;
+}
+
+.categoryLink {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 115px;
+  width: 115px;
+
+  text-decoration: none;
+  color: #6c757d;
+}
+
+.categoryLink:hover {
+  border-radius: 50%;
+  background-color: rgba(249, 196, 6, 0.292);
 }
 </style>
