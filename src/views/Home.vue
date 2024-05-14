@@ -2,70 +2,9 @@
 <template>
   <img src="../assets/img/1.jpg" class="homeImg" alt="homeImg" />
   <!-- 商品類別 -->
-
-  <div
-    class="categoryWrap row my-0 mx-auto justify-content-center col-12 text-center"
-  >
-    <router-link
-      to="/user-products"
-      data-aos="zoom-in"
-      data-aos-duration="600"
-      class="categoryImg m-1 categoryLink col-1"
-    >
-      <img
-        class="categoryImg"
-        src="@/assets/img/leafy_vegetable.png"
-        alt="leafy_vegetable_img"
-      />
-      <div>葉菜</div>
-    </router-link>
-    <router-link
-      to="/user-products"
-      data-aos="zoom-in"
-      data-aos-duration="600"
-      class="m-1 categoryLink categoryLink col-1"
-    >
-      <img
-        class="categoryImg"
-        src="@/assets/img/melon_root_bulb.png"
-        alt="melon_root_bulb_img"
-      />
-      <div>瓜果根球莖</div>
-    </router-link>
-    <router-link
-      to="/user-products"
-      data-aos="zoom-in"
-      data-aos-duration="600"
-      class="m-1 categoryLink categoryLink col-1"
-    >
-      <img
-        class="categoryImg"
-        src="@/assets/img/mushroom.png"
-        alt="mushroom_img"
-      />
-      <div>菇菌</div>
-    </router-link>
-    <router-link
-      to="/user-products"
-      data-aos="zoom-in"
-      data-aos-duration="600"
-      class="m-1 categoryLink categoryLink col-1"
-    >
-      <img class="categoryImg" src="@/assets/img/fruit.png" alt="fruit_img" />
-      <div>水果</div>
-    </router-link>
-    <router-link
-      to="/user-products"
-      data-aos="zoom-in"
-      data-aos-duration="600"
-      class="m-1 categoryLink categoryLink col-1"
-    >
-      <img class="categoryImg" src="@/assets/img/spice.png" alt="spice_img" />
-      <div>辛香料</div>
-    </router-link>
-  </div>
-
-  <div class="d-flex justify-content-center">
+  <Category></Category>
+  <!-- 暢銷商品 -->
+  <div class="d-flex justify-content-center mt-5">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
       <h3
         class="writeStyle m-0 col-1"
@@ -76,7 +15,7 @@
         暢銷商品
         <div class="straightLine writeStyle mt-3 ms-2"></div>
       </h3>
-      <!-- 暢銷商品 -->
+
       <div class="col col-md-11 col-xl-9 row m-0 justify-content-center">
         <div
           v-for="(item, index) in bestSellerProducts"
@@ -144,6 +83,7 @@
   </div>
 </template>
 <script>
+import Category from "@/components/Category.vue";
 export default {
   data() {
     return {
@@ -187,6 +127,7 @@ export default {
       ],
     };
   },
+  components: { Category },
   inject: ["emitter"],
   methods: {
     addCart(item) {
@@ -262,33 +203,5 @@ export default {
 
 .newsContent:hover .goShopping {
   opacity: 1;
-}
-
-.categoryWrap {
-  padding: 20px 0px;
-  background-color: rgba(252, 251, 251, 0.832);
-}
-
-.categoryImg {
-  width: 45px;
-  height: 45px;
-  margin-bottom: 8px;
-}
-
-.categoryLink {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 115px;
-  width: 115px;
-
-  text-decoration: none;
-  color: #6c757d;
-}
-
-.categoryLink:hover {
-  border-radius: 50%;
-  background-color: rgba(249, 196, 6, 0.292);
 }
 </style>
