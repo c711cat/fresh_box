@@ -147,29 +147,6 @@
 export default {
   data() {
     return {
-      veg: "@/assets/img/4-2.png",
-      categoryData: [
-        {
-          category: "葉菜",
-          img: "https://images.unsplash.com/photo-1615485291234-9d694218aeb3?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        },
-        {
-          category: "瓜果根球莖",
-          img: "https://images.unsplash.com/photo-1615485499978-1279c3d6302f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        },
-        {
-          category: "菌菇",
-          img: "https://images.pexels.com/photos/793267/pexels-photo-793267.jpeg?auto=compress&cs=tinysrgb&w=600",
-        },
-        {
-          category: "水果",
-          img: "https://images.unsplash.com/flagged/photo-1587302164675-820fe61bbd55?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHx8",
-        },
-        {
-          category: "香辛料",
-          img: "https://images.unsplash.com/photo-1587049693270-c7560da11218?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwcm9maWxlLWxpa2VkfDI4fHx8ZW58MHx8fHx8",
-        },
-      ],
       bestSellerProducts: [
         {
           title: "台灣水蜜桃",
