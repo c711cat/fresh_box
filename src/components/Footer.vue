@@ -2,12 +2,14 @@
 <template>
   <div class="row m-0 py-2 ps-4 footerContainer fw-light">
     <div class="row m-0 align-items-center justify-content-between col-12">
-      <router-link
-        to="/"
-        class="text-decoration-none textStyle fs-5 logoStyle col-12 col-sm-6"
-      >
-        FRESH BOX
-      </router-link>
+      <div class="col-12 col-sm-6">
+        <router-link
+          to="/"
+          class="text-decoration-none textStyle fs-5 logoStyle"
+        >
+          FRESH BOX
+        </router-link>
+      </div>
 
       <div
         class="col-12 col-sm-6 row m-0 align-items-center justify-content-between p-0 flex-wrap"
@@ -30,7 +32,24 @@
       </div>
     </div>
     <div class="row m-0 col-12">
-      <span class="col-sm-auto">此網站為個人作品展示，非商業用途</span>
+      <span class="col-sm-auto">
+        此網站為個人作品展示，非商業用途。
+        <a
+          class="text-decoration-none"
+          target="_blank"
+          href="https://icons8.com/icons/collections/x6c5ehv2qqdv25m8idkq"
+        >
+          category
+        </a>
+        icons by
+        <a
+          class="text-decoration-none"
+          target="_blank"
+          href="https://icons8.com"
+        >
+          Icons8
+        </a>
+      </span>
       <div class="textStyle fs-6 col-sm">© 2024 FRESH BOX</div>
     </div>
   </div>

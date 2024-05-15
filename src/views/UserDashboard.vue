@@ -1,14 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div>
-    <UserNavbar></UserNavbar>
-  </div>
+  <div class="userViewContainer">
+    <div>
+      <UserNavbar></UserNavbar>
+      <Messages></Messages>
+      <router-view />
+    </div>
 
-  <div>
-    <Messages></Messages>
-    <router-view />
+    <div>
+      <Footer></Footer>
+    </div>
   </div>
-  <Footer></Footer>
 </template>
 
 <script>
@@ -28,3 +30,12 @@ export default {
   components: { UserNavbar, Messages, Footer },
 };
 </script>
+
+<style lang="scss" scoped>
+.userViewContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+</style>

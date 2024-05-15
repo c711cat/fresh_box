@@ -220,6 +220,11 @@ export default {
   box-shadow: 0 0 0 0.25rem rgb(249, 196, 6, 0.25);
 }
 
+.form-control:focus-visible {
+  outline: 2px solid #ccaf3c;
+  box-shadow: 0 0 0 0.25rem rgb(249, 196, 6, 0.25);
+}
+
 .amountText {
   width: 120px;
   color: rgb(249, 196, 6);

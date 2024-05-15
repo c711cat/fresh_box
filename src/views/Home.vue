@@ -1,7 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <img src="../assets/img/1.jpg" class="homeImg mb-5" alt="homeImg" />
-  <div class="d-flex justify-content-center">
+  <img src="../assets/img/1.jpg" class="homeImg" alt="homeImg" />
+  <!-- 商品類別 -->
+  <Category></Category>
+  <!-- 暢銷商品 -->
+  <div class="d-flex justify-content-center mt-5">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
       <h3
         class="writeStyle m-0 col-1"
@@ -12,7 +15,7 @@
         暢銷商品
         <div class="straightLine writeStyle mt-3 ms-2"></div>
       </h3>
-      <!-- 暢銷商品 -->
+
       <div class="col col-md-11 col-xl-9 row m-0 justify-content-center">
         <div
           v-for="(item, index) in bestSellerProducts"
@@ -80,6 +83,7 @@
   </div>
 </template>
 <script>
+import Category from "@/components/Category.vue";
 export default {
   data() {
     return {
@@ -123,6 +127,7 @@ export default {
       ],
     };
   },
+  components: { Category },
   inject: ["emitter"],
   methods: {
     addCart(item) {
@@ -195,6 +200,7 @@ export default {
 .newsContent:hover {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
 }
+
 .newsContent:hover .goShopping {
   opacity: 1;
 }

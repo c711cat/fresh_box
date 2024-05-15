@@ -1,11 +1,40 @@
 <template>
-  <div class="row my-5 mx-auto productsContainer">
+  <div
+    class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
+  >
+    <ul class="mt-1 nav d-flex align-items-center">
+      <li @click="getPage1Products" class="nav-item nav-link border-0">
+        所有產品
+      </li>
+      <li>／</li>
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle border-0"
+          data-bs-toggle="dropdown"
+          href="#"
+          role="button"
+          aria-expanded="false"
+        >
+          {{ currentCategory }}
+        </a>
+        <ul class="dropdown-menu">
+          <li
+            @click="chooseCategory(item)"
+            v-for="(item, index) in categoryList"
+            :key="index"
+            class="dropdown-item"
+          >
+            {{ item }}
+          </li>
+        </ul>
+      </li>
+    </ul>
     <div
       v-for="(item, index) in allProducts"
       :key="index"
-      class="col-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 d-flex justify-content-center"
+      class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
     >
-      <div class="card mb-3 mx-2" style="width: 18rem">
+      <div class="card my-3 mx-auto">
         <h3
           v-if="isMyFavorite(item)"
           @click="delMyFavorite(item)"
@@ -97,6 +126,7 @@
       </div>
     </div>
   </div>
+
   <Observer
     v-if="pagination.current_page < pagination.total_pages"
     @is-in-view="handleIsInView"
@@ -107,6 +137,7 @@
 <script>
 import Observer from "@/components/Observer.vue";
 import { throttle } from "lodash";
+import Dropdown from "bootstrap/js/dist/dropdown";
 export default {
   data() {
     return {
@@ -123,6 +154,11 @@ export default {
         delLoadingItem: "",
       },
       myFavoriteList: [],
+      dropdownList: {},
+      categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
+      forCategoryAllProducts: [],
+      currentCategory: "選擇類別",
+      transCategory: "",
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -152,6 +188,31 @@ export default {
   components: { Observer },
   inject: ["emitter"],
   methods: {
+    chooseCategory(category) {
+      console.log("chooseCategory", category);
+      this.currentCategory = category;
+      this.pagination.total_pages = 0;
+      this.getAllProducts();
+    },
+    showCategoryProducts() {
+      console.log("showCategoryProducts");
+      let inCaterogy = [];
+      this.forCategoryAllProducts.filter((item) => {
+        if (item.category === this.currentCategory) {
+          inCaterogy.push(item);
+        }
+      });
+      this.allProducts = inCaterogy;
+      console.log("showCategoryProducts:", this.allProducts);
+    },
+    getAllProducts() {
+      console.log("getAllProducts");
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(api).then((res) => {
+        this.forCategoryAllProducts = res.data.products;
+        this.showCategoryProducts();
+      });
+    },
     handleLoadmore() {
       this.getOtherPageProducts();
     },
@@ -164,6 +225,7 @@ export default {
     },
     getPage1Products(page = 1) {
       this.pagination.current_page = 1;
+      this.currentCategory = "選擇類別";
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http.get(api).then((res) => {
         this.allProducts = res.data.products;
@@ -253,13 +315,25 @@ export default {
     },
   },
   created() {
-    this.getCart();
+    this.pagination.total_pages = 0;
+    const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
+    this.dropdownList = [...dropdownElementList].map(
+      (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
+    );
+
+    // this.getCart();
     this.emitter.on("searchResult", (data) => {
       this.pagination.total_pages = 0;
       this.allProducts = data;
     });
     this.emitter.on("userSearchNull", () => {
       this.getPage1Products();
+    });
+    this.emitter.on("goToCategory", (data) => {
+      this.pagination.total_pages = 0;
+      console.log("goToCategory", data);
+      this.chooseCategory(data);
+      this.emitter.off("goToCategory");
     });
   },
 };
@@ -270,29 +344,35 @@ img {
   height: 190px;
   object-fit: cover;
 }
+
 .imgBody:hover {
   cursor: pointer;
   border: 2px solid #fff;
 }
+
 .badge {
   height: fit-content;
 }
+
 .delmyFavoriteIcon {
   right: 0px;
   top: 0px;
   padding: 8px 12px;
   color: #f52424b3;
 }
+
 .delmyFavoriteIcon:hover {
   cursor: pointer;
   color: #dc3545;
 }
+
 .myFavoriteIcon {
   right: 0px;
   top: 0px;
   padding: 8px 12px;
   color: #ffffffb3;
 }
+
 .myFavoriteIcon:hover {
   cursor: pointer;
   color: #f52424;
@@ -300,5 +380,32 @@ img {
 
 .productsContainer {
   padding-top: 100px;
+}
+
+.nav-link {
+  color: #212529;
+  border-bottom: 1px solid #212529;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  color: #ccaf3c;
+  border-bottom: 1px solid #ccaf3c;
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+  color: #ccaf3c;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #f8f9fa;
+  color: #ccaf3c;
+}
+
+.dropdown-item:focus-visible {
+  outline: 2px solid #ccaf3c;
+  border-radius: 3%;
 }
 </style>
