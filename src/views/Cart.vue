@@ -37,10 +37,10 @@
           v-if="item.product.origin_price === item.product.price"
           class="text-secondary col-md-12 col-lg-12 col-xl-4"
         >
-          NT$ {{ item.product.origin_price }}
+          NT$ {{ $filters.currency(item.product.origin_price) }}
         </div>
         <div v-else class="text-danger fw-bold col-md-12 col-lg-12 col-xl-4">
-          NT$ {{ item.product.price }}
+          NT$ {{ $filters.currency(item.product.price) }}
         </div>
       </div>
 
@@ -78,7 +78,7 @@
         <div
           class="my-2 text-center text-md-end col-12 col-md-6 col-lg-6 col-xl-6"
         >
-          NT$ {{ item.total }}
+          NT$ {{ $filters.currency(item.total) }}
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
     >
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">小計</div>
       <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-        NT$ {{ subtotal }}
+        NT$ {{ $filters.currency(subtotal) }}
       </div>
 
       <label
@@ -120,7 +120,7 @@
         優惠碼折抵
       </div>
       <div v-if="used_coupon" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-        - NT$ {{ discount }}
+        - NT$ {{ $filters.currency(discount) }}
       </div>
       <div
         v-if="used_coupon"
@@ -129,19 +129,19 @@
         折抵後小計
       </div>
       <div v-if="used_coupon" class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-        NT$ {{ afterDiscount }}
+        NT$ {{ $filters.currency(afterDiscount) }}
       </div>
 
       <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
         冷藏宅配
         <div class="infoText col-12 text-success">
           <i class="bi bi-info-circle"></i>
-          滿 NT$ 1000 免運
+          滿 NT$ 1,000 免運
         </div>
       </div>
 
       <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-        NT$ {{ shippingFee }}
+        NT$ {{ $filters.currency(shippingFee) }}
       </div>
 
       <strong
@@ -152,7 +152,7 @@
       <strong
         class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end mb-3 text-danger"
       >
-        NT$ {{ paymentAmount }}
+        NT$ {{ $filters.currency(paymentAmount) }}
       </strong>
     </div>
     <div class="d-flex justify-content-center">

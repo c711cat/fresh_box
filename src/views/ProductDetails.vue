@@ -49,13 +49,13 @@
             }"
             class="text-secondary fs-5 w-50"
           >
-            NT$ {{ product.origin_price }}</strong
+            NT$ {{ $filters.currency(product.origin_price) }}</strong
           >
           <strong
             v-if="product.origin_price !== product.price"
             class="text-danger fs-5 w-50 text-end"
           >
-            NT$ {{ product.price }}</strong
+            NT$ {{ $filters.currency(product.price) }}</strong
           >
         </div>
         <div class="d-flex mb-3">

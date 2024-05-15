@@ -74,12 +74,12 @@
                     item.price !== item.origin_price,
                 }"
               >
-                NT$ {{ item.origin_price }}
+                NT$ {{ $filters.currency(item.origin_price) }}
               </strong>
               <strong
                 v-if="item.price !== item.origin_price"
                 class="card-text text-danger fs-6"
-                >NT$ {{ item.price }}
+                >NT$ {{ $filters.currency(item.price) }}
               </strong>
             </div>
           </div>
