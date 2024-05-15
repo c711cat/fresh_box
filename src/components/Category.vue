@@ -3,8 +3,8 @@
   <div
     class="categoryWrap row m-0 flex-wrap justify-content-center align-items-center"
   >
-    <router-link
-      to="/user-products"
+    <div
+      @click="goToCategoryItems(categoryList.veleafy_vegetable)"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -19,18 +19,18 @@
       <div
         class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
-        葉菜
+        {{ categoryList.veleafy_vegetable }}
       </div>
 
       <!-- sm以下字體 -->
       <div
         class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
-        葉菜
+        {{ categoryList.veleafy_vegetable }}
       </div>
-    </router-link>
-    <router-link
-      to="/user-products"
+    </div>
+    <div
+      @click="goToCategoryItems(categoryList.melon_root_bulb)"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -43,17 +43,17 @@
       <div
         class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
-        瓜果根球莖
+        {{ categoryList.melon_root_bulb }}
       </div>
       <!-- sm以下字體 -->
       <div
         class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
-        瓜果根球莖
+        {{ categoryList.melon_root_bulb }}
       </div>
-    </router-link>
-    <router-link
-      to="/user-products"
+    </div>
+    <div
+      @click="goToCategoryItems(categoryList.mushroom)"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -66,17 +66,17 @@
       <div
         class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
-        菇菌
+        {{ categoryList.mushroom }}
       </div>
       <!-- sm以下字體 -->
       <div
         class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
-        菇菌
+        {{ categoryList.mushroom }}
       </div>
-    </router-link>
-    <router-link
-      to="/user-products"
+    </div>
+    <div
+      @click="goToCategoryItems(categoryList.fruit)"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -85,16 +85,16 @@
       <div
         class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
-        水果
+        {{ categoryList.fruit }}
       </div>
       <div
         class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
-        水果
+        {{ categoryList.fruit }}
       </div>
-    </router-link>
-    <router-link
-      to="/user-products"
+    </div>
+    <div
+      @click="goToCategoryItems(categoryList.spice)"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -103,16 +103,39 @@
       <div
         class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
-        辛香料
+        {{ categoryList.spice }}
       </div>
       <div
         class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
-        辛香料
+        {{ categoryList.spice }}
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      categoryList: {
+        veleafy_vegetable: "葉菜",
+        melon_root_bulb: "瓜果根球莖",
+        mushroom: "菇菌",
+        fruit: "水果",
+        spice: "辛香料",
+      },
+    };
+  },
+  inject: ["emitter"],
+  methods: {
+    goToCategoryItems(category) {
+      console.log(category);
+      this.emitter.emit("goToCategory", category);
+      this.$router.push("/user-products");
+    },
+  },
+};
+</script>
 <style lang="scss" scoped>
 .categoryWrap {
   padding: 10px 0px;
@@ -125,6 +148,7 @@
 }
 
 .categoryLink {
+  cursor: pointer;
   padding: 5px 0px;
   display: flex;
   flex-direction: column;
