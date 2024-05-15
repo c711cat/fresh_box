@@ -15,10 +15,12 @@
         :key="index"
         class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
       >
-        <div class="d-none d-sm-block col-sm-2 col-xxl-1 m-0 text-center">
+        <router-link
+          :to="`/product/${item.product.id}`"
+          class="d-none d-sm-block col-sm-2 col-xxl-1 m-0 text-center p-0"
+        >
           <img class="imgBody" :src="item.product.imageUrl" alt="" />
-        </div>
-
+        </router-link>
         <div
           class="col-7 col-sm-6 col-md-4 col-lg-5 col-xl-4 col-xxl-7 row mx-0 my-1 align-items-center"
         >
@@ -253,10 +255,12 @@ export default {
 .detailsText {
   font-size: 14px;
 }
+
 .imgBody {
   width: 50px;
   object-fit: cover;
 }
+
 .orderId {
   font-size: 12px;
 }
