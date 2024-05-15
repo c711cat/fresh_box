@@ -37,9 +37,11 @@
             <div class="px-2">{{ item.content }}</div>
             <div class="d-flex p-2 justify-content-between">
               <div class="text-decoration-line-through text-secondary">
-                NT$ {{ item.origin_price }}
+                NT$ {{ $filters.currency(item.origin_price) }}
               </div>
-              <div class="text-end">NT$ {{ item.price }}</div>
+              <div class="text-end">
+                NT$ {{ $filters.currency(item.price) }}
+              </div>
             </div>
             <button
               @click="addCart(item)"

@@ -32,13 +32,13 @@
             v-if="item.product.origin_price === item.product.price"
             class="text-secondary col-md-12 col-lg-12 col-xl-12 col-xxl-4"
           >
-            NT$ {{ item.product.origin_price }}
+            NT$ {{ $filters.currency(item.product.origin_price) }}
           </div>
           <div
             v-else
             class="text-danger fw-bold col-md-12 col-lg-12 col-xl-12 col-xxl-4"
           >
-            NT$ {{ item.product.price }}
+            NT$ {{ $filters.currency(item.product.price) }}
           </div>
         </div>
 
@@ -50,7 +50,7 @@
           </div>
 
           <div class="my-2 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            NT$ {{ item.total }}
+            NT$ {{ $filters.currency(item.total) }}
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
       >
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ order.subtotal }}
+          NT$ {{ $filters.currency(order.subtotal) }}
         </div>
 
         <div
@@ -73,7 +73,7 @@
           v-if="order.discount > 0"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          - NT$ {{ order.discount }}
+          - NT$ {{ $filters.currency(order.discount) }}
         </div>
         <div
           v-if="order.discount > 0"
@@ -85,19 +85,19 @@
           v-if="order.discount > 0"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          NT$ {{ order.afterDiscount }}
+          NT$ {{ $filters.currency(order.afterDiscount) }}
         </div>
 
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           冷藏宅配
           <div class="col-12 text-success">
             <i class="bi bi-info-circle"></i>
-            滿 NT$ 1000 免運
+            滿 NT$ 1,000 免運
           </div>
         </div>
 
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ order.shippingFee }}
+          NT$ {{ $filters.currency(order.shippingFee) }}
         </div>
 
         <strong
@@ -110,7 +110,7 @@
           :class="paymentAmountColor"
           class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
         >
-          NT$ {{ order.paymentAmount }}
+          NT$ {{ $filters.currency(order.paymentAmount) }}
         </strong>
         <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           付款狀態

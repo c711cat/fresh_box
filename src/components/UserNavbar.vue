@@ -49,7 +49,9 @@
           </div>
 
           <h5 class="m-0 d-flex align-items-center">
-            <span class="amountText badge">NT$ {{ undiscountedAmount }} </span>
+            <span class="amountText badge"
+              >NT$ {{ $filters.currency(undiscountedAmount) }}
+            </span>
           </h5>
         </div>
       </router-link>
