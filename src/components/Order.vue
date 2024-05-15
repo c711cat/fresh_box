@@ -24,9 +24,12 @@
         <div
           class="col-7 col-sm-6 col-md-4 col-lg-5 col-xl-4 col-xxl-7 row mx-0 my-1 align-items-center"
         >
-          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4">
+          <router-link
+            :to="`/product/${item.product.id}`"
+            class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 titleLink"
+          >
             {{ item.product.title }}
-          </div>
+          </router-link>
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4">
             {{ item.product.content }}／{{ item.product.unit }}
           </div>
@@ -99,7 +102,7 @@
         </div>
 
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ $filters.currency(order.shippingFee) }}
+          NT$ {{ order.shippingFee }}
         </div>
 
         <strong
@@ -158,7 +161,13 @@ export default {
   data() {
     return {
       order: {
-        products: {},
+        products: {
+          total: 0,
+          product: {
+            origin_price: 0,
+            price: 0,
+          },
+        },
         subtotal: 0,
         discount: 0,
         afterDiscount: 0,
@@ -263,5 +272,14 @@ export default {
 
 .orderId {
   font-size: 12px;
+}
+
+.titleLink {
+  text-decoration: none;
+  color: #212529;
+}
+
+.titleLink:hover {
+  font-weight: bold;
 }
 </style>
