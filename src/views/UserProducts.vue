@@ -158,6 +158,7 @@ export default {
       categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
       forCategoryAllProducts: [],
       currentCategory: "選擇類別",
+      transCategory: "",
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -188,11 +189,13 @@ export default {
   inject: ["emitter"],
   methods: {
     chooseCategory(category) {
+      console.log("chooseCategory", category);
       this.currentCategory = category;
       this.pagination.total_pages = 0;
       this.getAllProducts();
     },
     showCategoryProducts() {
+      console.log("showCategoryProducts");
       let inCaterogy = [];
       this.forCategoryAllProducts.filter((item) => {
         if (item.category === this.currentCategory) {
@@ -200,8 +203,10 @@ export default {
         }
       });
       this.allProducts = inCaterogy;
+      console.log("showCategoryProducts:", this.allProducts);
     },
     getAllProducts() {
+      console.log("getAllProducts");
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
         this.forCategoryAllProducts = res.data.products;
@@ -310,18 +315,25 @@ export default {
     },
   },
   created() {
+    this.pagination.total_pages = 0;
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
 
-    this.getCart();
+    // this.getCart();
     this.emitter.on("searchResult", (data) => {
       this.pagination.total_pages = 0;
       this.allProducts = data;
     });
     this.emitter.on("userSearchNull", () => {
       this.getPage1Products();
+    });
+    this.emitter.on("goToCategory", (data) => {
+      this.pagination.total_pages = 0;
+      console.log("goToCategory", data);
+      this.chooseCategory(data);
+      this.emitter.off("goToCategory");
     });
   },
 };
