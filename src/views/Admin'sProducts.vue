@@ -20,9 +20,12 @@
         :key="item.id"
         class="row align-items-center border-top py-4"
       >
-        <div class="text-center col-12 col-sm-2">
+        <router-link
+          :to="`/product/${item.id}`"
+          class="imgLinkContainer text-center col-12 col-sm-2"
+        >
           <img :src="item.imageUrl" class="img-fluid" />
-        </div>
+        </router-link>
         <div class="col-12 col-sm-10">
           <div class="row align-items-center">
             <div class="col-12 col-sm-6 col-lg-3">
@@ -198,4 +201,12 @@ export default {
 .titleStyle {
   padding-left: 6%;
 }
+.imgLinkContainer {
+  padding: 5px;
+}
+.imgLinkContainer:hover {
+  padding: 3px;
+  border: 2px solid #b5b9be;
+}
+
 </style>
