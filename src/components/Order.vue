@@ -11,8 +11,8 @@
       </div>
 
       <div
-        v-for="(item, index) in order.products"
-        :key="index"
+        v-for="(item, id) in order.products"
+        :key="id"
         class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
       >
         <router-link
@@ -161,13 +161,7 @@ export default {
   data() {
     return {
       order: {
-        products: {
-          total: 0,
-          product: {
-            origin_price: 0,
-            price: 0,
-          },
-        },
+        products: {},
         subtotal: 0,
         discount: 0,
         afterDiscount: 0,
