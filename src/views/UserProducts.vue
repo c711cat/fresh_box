@@ -235,7 +235,6 @@ export default {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         this.pushBuyQtyId();
-        this.getMyFavorite();
       });
     },
     addCart(item) {
@@ -327,6 +326,7 @@ export default {
   },
   created() {
     this.isFromCategory();
+    this.getMyFavorite();
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
