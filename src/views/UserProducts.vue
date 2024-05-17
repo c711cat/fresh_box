@@ -3,7 +3,7 @@
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
   >
     <ul class="mt-1 nav d-flex align-items-center">
-      <li @click="getPage1Products" class="nav-item nav-link border-0">
+      <li @click="goToAllProducts" class="nav-item nav-link border-0">
         所有產品
       </li>
       <li>／</li>
@@ -19,7 +19,7 @@
         </a>
         <ul class="dropdown-menu">
           <li
-            @click="chooseCategory(item)"
+            @click="goToTheCategory(item)"
             v-for="(item, index) in categoryList"
             :key="index"
             class="dropdown-item"
@@ -188,6 +188,14 @@ export default {
   components: { Observer },
   inject: ["emitter"],
   methods: {
+    goToAllProducts() {
+      this.$router.push("/user-products");
+      this.getPage1Products();
+    },
+    goToTheCategory(category) {
+      this.$router.push(`/user-products/${category}`);
+      this.chooseCategory(category);
+    },
     chooseCategory(category) {
       this.currentCategory = category;
       this.pagination.total_pages = 0;
@@ -323,7 +331,6 @@ export default {
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
-
     this.emitter.on("searchResult", (data) => {
       this.pagination.total_pages = 0;
       this.allProducts = data;
