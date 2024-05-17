@@ -190,6 +190,7 @@ export default {
   methods: {
     goToAllProducts() {
       this.$router.push("/user-products");
+      this.getCart();
       this.getPage1Products();
     },
     goToTheCategory(category) {
@@ -248,8 +249,12 @@ export default {
         this.status.addLoadingItem = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
-        this.getPage1Products();
-        this.getOtherPageProducts();
+        if (this.$route.params.currentCategory) {
+          this.chooseCategory(this.$route.params.currentCategory);
+        } else {
+          this.getPage1Products();
+          this.getOtherPageProducts();
+        }
         this.emitter.emit("updateProductInCart");
       });
     },
@@ -283,8 +288,12 @@ export default {
           this.delItem(item.pushCartId);
         }
         this.getCart();
-        this.getPage1Products();
-        this.getOtherPageProducts();
+        if (this.$route.params.currentCategory) {
+          this.chooseCategory(this.$route.params.currentCategory);
+        } else {
+          this.getPage1Products();
+          this.getOtherPageProducts();
+        }
         this.emitter.emit("updateProductInCart");
       });
     },
