@@ -209,12 +209,15 @@ export default {
         }
       });
       this.allProducts = inCaterogy;
+      this.pushBuyQtyId();
     },
     getAllProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
-        this.forCategoryAllProducts = res.data.products;
-        this.showCategoryProducts();
+        if (res.data.success) {
+          this.forCategoryAllProducts = res.data.products;
+          this.showCategoryProducts();
+        }
       });
     },
     handleLoadmore() {
