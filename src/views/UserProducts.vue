@@ -203,28 +203,22 @@ export default {
       this.getAllProducts();
     },
     showCategoryProducts() {
-      this.allProducts = [];
+      let inCaterogy = [];
       this.forCategoryAllProducts.filter((item) => {
         if (item.category === this.currentCategory) {
-          this.allProducts.push(item);
+          inCaterogy.push(item);
         }
       });
+      this.allProducts = inCaterogy;
+      this.pushBuyQtyId();
     },
     getAllProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
         if (res.data.success) {
           this.forCategoryAllProducts = res.data.products;
-          this.forCategoryAllProducts.forEach((item) => {
-            this.carts.forEach((cartItem) => {
-              if (item.id === cartItem.product_id) {
-                item.buyQty = cartItem.qty;
-                item.pushCartId = cartItem.id;
-              }
-            });
-          });
-          this.showCategoryProducts();
         }
+        this.showCategoryProducts();
       });
     },
     handleLoadmore() {
