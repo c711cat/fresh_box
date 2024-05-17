@@ -11,20 +11,25 @@
       </div>
 
       <div
-        v-for="(item, index) in order.products"
-        :key="index"
+        v-for="(item, id) in order.products"
+        :key="id"
         class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
       >
-        <div class="d-none d-sm-block col-sm-2 col-xxl-1 m-0 text-center">
+        <router-link
+          :to="`/product/${item.product.id}`"
+          class="d-none d-sm-block col-sm-2 col-xxl-1 m-0 text-center p-0"
+        >
           <img class="imgBody" :src="item.product.imageUrl" alt="" />
-        </div>
-
+        </router-link>
         <div
           class="col-7 col-sm-6 col-md-4 col-lg-5 col-xl-4 col-xxl-7 row mx-0 my-1 align-items-center"
         >
-          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4">
+          <router-link
+            :to="`/product/${item.product.id}`"
+            class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 titleLink"
+          >
             {{ item.product.title }}
-          </div>
+          </router-link>
           <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4">
             {{ item.product.content }}／{{ item.product.unit }}
           </div>
@@ -97,7 +102,7 @@
         </div>
 
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ $filters.currency(order.shippingFee) }}
+          NT$ {{ order.shippingFee }}
         </div>
 
         <strong
@@ -253,11 +258,22 @@ export default {
 .detailsText {
   font-size: 14px;
 }
+
 .imgBody {
   width: 50px;
   object-fit: cover;
 }
+
 .orderId {
   font-size: 12px;
+}
+
+.titleLink {
+  text-decoration: none;
+  color: #212529;
+}
+
+.titleLink:hover {
+  font-weight: bold;
 }
 </style>

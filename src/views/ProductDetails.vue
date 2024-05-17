@@ -49,7 +49,7 @@
             }"
             class="text-secondary fs-5 w-50"
           >
-            NT$ {{ $filters.currency(product.origin_price) }}</strong
+            NT$ {{ product.origin_price }}</strong
           >
           <strong
             v-if="product.origin_price !== product.price"
@@ -102,6 +102,9 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
       this.$http.get(api).then((res) => {
         this.product = res.data.product;
+        this.product.origin_price = this.$filters.currency(
+          this.product.origin_price
+        );
         this.pushImg();
         this.getMyFavorite();
       });

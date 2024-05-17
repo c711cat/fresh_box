@@ -3,8 +3,8 @@
   <div
     class="categoryWrap row m-0 flex-wrap justify-content-center align-items-center"
   >
-    <div
-      @click="goToCategoryItems(categoryList.veleafy_vegetable)"
+    <router-link
+      :to="`/user-products/${categoryList.veleafy_vegetable}`"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -28,9 +28,9 @@
       >
         {{ categoryList.veleafy_vegetable }}
       </div>
-    </div>
-    <div
-      @click="goToCategoryItems(categoryList.melon_root_bulb)"
+    </router-link>
+    <router-link
+      :to="`/user-products/${categoryList.melon_root_bulb}`"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -51,9 +51,9 @@
       >
         {{ categoryList.melon_root_bulb }}
       </div>
-    </div>
-    <div
-      @click="goToCategoryItems(categoryList.mushroom)"
+    </router-link>
+    <router-link
+      :to="`/user-products/${categoryList.mushroom}`"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -74,9 +74,9 @@
       >
         {{ categoryList.mushroom }}
       </div>
-    </div>
-    <div
-      @click="goToCategoryItems(categoryList.fruit)"
+    </router-link>
+    <router-link
+      :to="`/user-products/${categoryList.fruit}`"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -92,9 +92,9 @@
       >
         {{ categoryList.fruit }}
       </div>
-    </div>
-    <div
-      @click="goToCategoryItems(categoryList.spice)"
+    </router-link>
+    <router-link
+      :to="`/user-products/${categoryList.spice}`"
       data-aos="zoom-in"
       data-aos-duration="600"
       class="m-1 categoryLink col-2 col-lg-1"
@@ -110,7 +110,7 @@
       >
         {{ categoryList.spice }}
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 <script>
@@ -126,14 +126,6 @@ export default {
       },
     };
   },
-  inject: ["emitter"],
-  methods: {
-    goToCategoryItems(category) {
-      console.log(category);
-      this.emitter.emit("goToCategory", category);
-      this.$router.push("/user-products");
-    },
-  },
 };
 </script>
 <style lang="scss" scoped>
@@ -148,7 +140,6 @@ export default {
 }
 
 .categoryLink {
-  cursor: pointer;
   padding: 5px 0px;
   display: flex;
   flex-direction: column;

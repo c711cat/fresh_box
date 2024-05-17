@@ -3,7 +3,7 @@
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
   >
     <ul class="mt-1 nav d-flex align-items-center">
-      <li @click="getPage1Products" class="nav-item nav-link border-0">
+      <li @click="goToAllProducts" class="nav-item nav-link border-0">
         所有產品
       </li>
       <li>／</li>
@@ -19,7 +19,7 @@
         </a>
         <ul class="dropdown-menu">
           <li
-            @click="chooseCategory(item)"
+            @click="goToTheCategory(item)"
             v-for="(item, index) in categoryList"
             :key="index"
             class="dropdown-item"
@@ -188,14 +188,21 @@ export default {
   components: { Observer },
   inject: ["emitter"],
   methods: {
+    goToAllProducts() {
+      this.$router.push("/user-products");
+      this.getCart();
+      this.getPage1Products();
+    },
+    goToTheCategory(category) {
+      this.$router.push(`/user-products/${category}`);
+      this.chooseCategory(category);
+    },
     chooseCategory(category) {
-      console.log("chooseCategory", category);
       this.currentCategory = category;
       this.pagination.total_pages = 0;
       this.getAllProducts();
     },
     showCategoryProducts() {
-      console.log("showCategoryProducts");
       let inCaterogy = [];
       this.forCategoryAllProducts.filter((item) => {
         if (item.category === this.currentCategory) {
@@ -203,13 +210,14 @@ export default {
         }
       });
       this.allProducts = inCaterogy;
-      console.log("showCategoryProducts:", this.allProducts);
+      this.pushBuyQtyId();
     },
     getAllProducts() {
-      console.log("getAllProducts");
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
-        this.forCategoryAllProducts = res.data.products;
+        if (res.data.success) {
+          this.forCategoryAllProducts = res.data.products;
+        }
         this.showCategoryProducts();
       });
     },
@@ -231,7 +239,6 @@ export default {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         this.pushBuyQtyId();
-        this.getMyFavorite();
       });
     },
     addCart(item) {
@@ -242,6 +249,12 @@ export default {
         this.status.addLoadingItem = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
+        if (this.$route.params.currentCategory) {
+          this.chooseCategory(this.$route.params.currentCategory);
+        } else {
+          this.getPage1Products();
+          this.getOtherPageProducts();
+        }
         this.emitter.emit("updateProductInCart");
       });
     },
@@ -249,9 +262,8 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = [...res.data.data.carts];
+        window.scrollTo(0, -100);
       });
-      this.getPage1Products();
-      this.getOtherPageProducts();
     },
     pushBuyQtyId() {
       const cart = [...this.carts];
@@ -276,6 +288,12 @@ export default {
           this.delItem(item.pushCartId);
         }
         this.getCart();
+        if (this.$route.params.currentCategory) {
+          this.chooseCategory(this.$route.params.currentCategory);
+        } else {
+          this.getPage1Products();
+          this.getOtherPageProducts();
+        }
         this.emitter.emit("updateProductInCart");
       });
     },
@@ -313,27 +331,30 @@ export default {
       });
       localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
     },
+    isFromCategory() {
+      if (this.$route.params.currentCategory) {
+        this.chooseCategory(this.$route.params.currentCategory);
+        this.getCart();
+      } else {
+        this.getCart();
+        this.getPage1Products();
+        this.getOtherPageProducts();
+      }
+    },
   },
   created() {
-    this.pagination.total_pages = 0;
+    this.isFromCategory();
+    this.getMyFavorite();
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
-
-    // this.getCart();
     this.emitter.on("searchResult", (data) => {
       this.pagination.total_pages = 0;
       this.allProducts = data;
     });
     this.emitter.on("userSearchNull", () => {
       this.getPage1Products();
-    });
-    this.emitter.on("goToCategory", (data) => {
-      this.pagination.total_pages = 0;
-      console.log("goToCategory", data);
-      this.chooseCategory(data);
-      this.emitter.off("goToCategory");
     });
   },
 };

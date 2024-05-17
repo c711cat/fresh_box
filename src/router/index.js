@@ -36,6 +36,10 @@ const routes = [
         component: () => import("../views/UserProducts.vue"),
       },
       {
+        path: "user-products/:currentCategory",
+        component: () => import("../views/UserProducts.vue"),
+      },
+      {
         path: "product/:id",
         component: () => import("../views/ProductDetails.vue"),
       },

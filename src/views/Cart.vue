@@ -19,13 +19,12 @@
           <i class="bi bi-x-lg"></i>
         </button>
       </div>
-
-      <img
-        class="imgBody col-6 col-sm-2 col-md-2 col-lg-2 col-xl-1 my-1"
-        :src="item.product.imageUrl"
-        alt=""
-      />
-
+      <router-link
+        :to="`/product/${item.product.id}`"
+        class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-1 my-1 text-center"
+      >
+        <img class="imgBody" :src="item.product.imageUrl" alt="" />
+      </router-link>
       <div
         class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5 row mx-0 my-1 align-items-center text-sm-start text-center"
       >

@@ -2,7 +2,7 @@
 <template>
   <Loading v-if="isLoading"></Loading>
   <div v-else>
-    <div class="mx-2 pt-4">
+    <div class="mx-2 userOrderWrap">
       <Order :transOrder="order"></Order>
     </div>
     <div class="text-end col-12 col-lg-7 pe-4 pb-5">
@@ -64,4 +64,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.userOrderWrap {
+  margin-top: 150px;
+}
+</style>
