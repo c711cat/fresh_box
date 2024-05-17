@@ -256,8 +256,6 @@ export default {
       this.$http.get(api).then((res) => {
         this.carts = [...res.data.data.carts];
       });
-      this.getPage1Products();
-      this.getOtherPageProducts();
     },
     pushBuyQtyId() {
       const cart = [...this.carts];
@@ -322,8 +320,11 @@ export default {
     isFromCategory() {
       if (this.$route.params.currentCategory) {
         this.chooseCategory(this.$route.params.currentCategory);
+        this.getCart();
       } else {
         this.getCart();
+        this.getPage1Products();
+        this.getOtherPageProducts();
       }
     },
   },
