@@ -248,6 +248,8 @@ export default {
         this.status.addLoadingItem = "";
         this.$pushMsg(res, "加入購物車");
         this.getCart();
+        this.getPage1Products();
+        this.getOtherPageProducts();
         this.emitter.emit("updateProductInCart");
       });
     },
@@ -255,6 +257,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(api).then((res) => {
         this.carts = [...res.data.data.carts];
+        window.scrollTo(0, -100);
       });
     },
     pushBuyQtyId() {
@@ -280,6 +283,8 @@ export default {
           this.delItem(item.pushCartId);
         }
         this.getCart();
+        this.getPage1Products();
+        this.getOtherPageProducts();
         this.emitter.emit("updateProductInCart");
       });
     },
