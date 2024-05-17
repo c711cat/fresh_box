@@ -189,13 +189,11 @@ export default {
   inject: ["emitter"],
   methods: {
     chooseCategory(category) {
-      console.log("chooseCategory", category);
       this.currentCategory = category;
       this.pagination.total_pages = 0;
       this.getAllProducts();
     },
     showCategoryProducts() {
-      console.log("showCategoryProducts");
       let inCaterogy = [];
       this.forCategoryAllProducts.filter((item) => {
         if (item.category === this.currentCategory) {
@@ -203,10 +201,8 @@ export default {
         }
       });
       this.allProducts = inCaterogy;
-      console.log("showCategoryProducts:", this.allProducts);
     },
     getAllProducts() {
-      console.log("getAllProducts");
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(api).then((res) => {
         this.forCategoryAllProducts = res.data.products;
@@ -313,27 +309,27 @@ export default {
       });
       localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
     },
+    isFromCategory() {
+      if (this.$route.params.currentCategory) {
+        this.chooseCategory(this.$route.params.currentCategory);
+      } else {
+        this.getCart();
+      }
+    },
   },
   created() {
-    this.pagination.total_pages = 0;
+    this.isFromCategory();
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
 
-    // this.getCart();
     this.emitter.on("searchResult", (data) => {
       this.pagination.total_pages = 0;
       this.allProducts = data;
     });
     this.emitter.on("userSearchNull", () => {
       this.getPage1Products();
-    });
-    this.emitter.on("goToCategory", (data) => {
-      this.pagination.total_pages = 0;
-      console.log("goToCategory", data);
-      this.chooseCategory(data);
-      this.emitter.off("goToCategory");
     });
   },
 };

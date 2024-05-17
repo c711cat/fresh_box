@@ -208,5 +208,4 @@ export default {
   padding: 3px;
   border: 2px solid #b5b9be;
 }
-
 </style>
