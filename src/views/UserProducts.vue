@@ -29,7 +29,11 @@
         </ul>
       </li>
     </ul>
+    <div v-if="allProducts.length === 0" class="mt-4">
+      <h3>目前無收藏的商品</h3>
+    </div>
     <div
+      v-else
       v-for="(item, index) in allProducts"
       :key="index"
       class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
