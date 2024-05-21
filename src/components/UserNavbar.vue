@@ -61,6 +61,7 @@
       <ul class="navbar-nav px-5 align-items-center col-lg-6">
         <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
           <router-link
+            @click="goToUserProducts"
             to="/user-products"
             class="nav-link text-center navbarText"
             >所有產品
@@ -130,6 +131,9 @@ export default {
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
       });
+    },
+    goToUserProducts() {
+      this.emitter.emit("goToUserProducts");
     },
   },
   computed: {

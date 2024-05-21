@@ -336,9 +336,16 @@ export default {
         this.chooseCategory(this.$route.params.currentCategory);
         this.getCart();
       } else {
-        this.getCart();
-        this.getPage1Products();
-        this.getOtherPageProducts();
+        if (this.$route.path === "/favorite") {
+          this.getCart();
+          setTimeout(() => {
+            this.allProducts = this.myFavoriteList;
+          }, 3000);
+        } else {
+          this.getCart();
+          this.getPage1Products();
+          this.getOtherPageProducts();
+        }
       }
     },
   },
@@ -356,6 +363,15 @@ export default {
     this.emitter.on("userSearchNull", () => {
       this.getPage1Products();
     });
+    this.emitter.on("goToUserProducts", () => {
+      this.getPage1Products();
+      this.getOtherPageProducts();
+    });
+  },
+  updated() {
+    if (this.$route.path === "/favorite") {
+      this.allProducts = this.myFavoriteList;
+    }
   },
 };
 </script>
