@@ -63,17 +63,24 @@
           <router-link
             @click="goToUserProducts"
             to="/user-products"
+            :class="{ isCurrentNavbarItem: currentPath === '/user-products' }"
             class="nav-link text-center navbarText"
             >所有產品
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link to="/order-list" class="nav-link text-center navbarText"
+          <router-link
+            to="/order-list"
+            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
+            class="nav-link text-center navbarText"
             >訂單
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link to="/favorite" class="nav-link text-center navbarText"
+          <router-link
+            to="/favorite"
+            :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
+            class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>
@@ -104,6 +111,9 @@ export default {
     };
   },
   inject: ["emitter"],
+  props: {
+    currentPath: {},
+  },
   watch: {
     searchText() {
       if (this.searchText === "") {
@@ -239,5 +249,9 @@ export default {
 .numInCart {
   background-color: rgb(249, 196, 6);
   color: #000;
+}
+
+.isCurrentNavbarItem {
+  color: rgb(249, 196, 6);
 }
 </style>
