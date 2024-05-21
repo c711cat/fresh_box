@@ -145,7 +145,7 @@ export default {
       allProducts: [],
       pagination: {
         current_page: 1,
-        total_pages: 2,
+        total_pages: 0,
       },
       isInView: false,
       carts: [],
