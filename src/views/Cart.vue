@@ -23,10 +23,11 @@
         </div>
         <router-link
           :to="`/product/${item.product.id}`"
-          class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-1 my-1 text-center"
+          class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-1 my-1 text-center p-0"
         >
-          <img class="imgBody" :src="item.product.imageUrl" alt="" />
+          <img class="imgBody" :src="item.product.imageUrl" alt="product_img" />
         </router-link>
+
         <div
           class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5 row mx-0 my-1 align-items-center text-sm-start text-center"
         >
@@ -319,6 +320,7 @@ export default {
 
 <style lang="scss" scoped>
 .imgBody {
+  width: 100%;
   height: 100px;
   object-fit: cover;
 }
@@ -329,5 +331,9 @@ export default {
 
 .cartContainer {
   padding-top: 100px;
+}
+
+.imgBody:hover {
+  padding: 1px;
 }
 </style>
