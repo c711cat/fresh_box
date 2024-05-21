@@ -7,7 +7,7 @@
       <span class="loader1 position-absolute"></span>
       <span class="loader2 position-absolute"></span>
       <span class="loader3 position-absolute"></span>
-      <text class="text-body-tertiary">Loading...</text>
+      <text class="textBody">Loading...</text>
     </div>
   </div>
 </template>
@@ -27,28 +27,31 @@
   width: 100%;
   height: 100%;
   top: 0;
-  left: o;
+  left: 0;
   pointer-events: none;
-  animation: loading 5s linear infinite;
+  animation: loading 6s linear infinite;
 }
 
 .loader .loader1 {
-  border: 1px solid rgb(248, 180, 191);
-  border-radius: 100% 30% 90% 40% / 90% 30% 90% 30%;
+  border: 1px solid #ccaf3c;
+  border-radius: 66% 34% 69% 31% / 31% 71% 29% 69%;
 }
 
 .loader .loader2 {
-  border: 1px solid rgb(240, 207, 100);
+  border: 1px solid #ccaf3c;
   animation-direction: reverse;
-  border-radius: 35% 90% 50% 60% / 55% 80% 40% 70%;
+  border-radius: 73% 27% 68% 32% / 31% 71% 29% 69%;
 }
 
 .loader .loader3 {
-  border: 1px solid rgb(142, 203, 247);
-  animation-duration: 3s;
-  border-radius: 78% 66% 80% 50% / 90% 40% 90% 55%;
+  border: 1px solid #ccaf3c;
+  animation-duration: 10s;
+  border-radius: 37% 63% 27% 73% / 67% 43% 57% 33%;
 }
 
+.textBody {
+  color: #6c757d;
+}
 @keyframes loading {
   0% {
     transform: rotate(0deg);
