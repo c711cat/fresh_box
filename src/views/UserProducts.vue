@@ -1,5 +1,7 @@
 <template>
+  <Loading v-if="isLoading"></Loading>
   <div
+    v-else
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
   >
     <ul class="mt-1 nav d-flex align-items-center">
@@ -145,6 +147,7 @@ import Dropdown from "bootstrap/js/dist/dropdown";
 export default {
   data() {
     return {
+      isLoading: false,
       newPage: [],
       allProducts: [],
       pagination: {
@@ -214,6 +217,7 @@ export default {
       });
       this.allProducts = inCaterogy;
       this.pushBuyQtyId();
+      this.isLoading = false;
     },
     getAllProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
@@ -242,6 +246,7 @@ export default {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         this.pushBuyQtyId();
+        this.isLoading = false;
       });
     },
     addCart(item) {
@@ -343,6 +348,7 @@ export default {
           this.getCart();
           setTimeout(() => {
             this.allProducts = this.myFavoriteList;
+            this.isLoading = false;
           }, 3000);
         } else {
           this.getCart();
@@ -353,6 +359,7 @@ export default {
     },
   },
   created() {
+    this.isLoading = true;
     this.isFromCategory();
     this.getMyFavorite();
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
