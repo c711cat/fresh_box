@@ -49,7 +49,7 @@ const routes = [
       },
       {
         path: "favorite",
-        component: () => import("../views/Favorite.vue"),
+        component: () => import("../views/UserProducts.vue"),
       },
       {
         path: "order/:orderId",

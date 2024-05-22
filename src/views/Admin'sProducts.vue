@@ -1,77 +1,70 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else>
-    <div class="d-flex justify-content-between align-items-center">
-      <h3 class="titleStyle py-4 mb-0">後台產品列表</h3>
-      <div>
+  <div v-else class="px-5 d-flex flex-column align-items-center">
+    <div
+      class="row m-0 p-2 col-12 col-xxl-11 justify-content-between align-items-center"
+    >
+      <h3 class="col-12 col-sm-6 m-0 p-1">後台產品列表</h3>
+      <div class="col-auto p-1">
         <button
           @click="openModal(true)"
           type="button"
-          class="btn btn-outline-primary me-5"
+          class="btn btn-outline-primary"
         >
           新增產品
         </button>
       </div>
     </div>
-    <div class="container">
-      <div
-        v-for="item in products"
-        :key="item.id"
-        class="row align-items-center border-top py-4"
-      >
-        <router-link
-          :to="`/product/${item.id}`"
-          class="imgLinkContainer text-center col-12 col-sm-2"
-        >
-          <img :src="item.imageUrl" class="img-fluid" />
+    <div
+      v-for="item in products"
+      :key="item.id"
+      class="row m-0 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
+    >
+      <div class="text-center col-4 col-sm-6 col-md-3 col-lg-2">
+        <router-link :to="`/product/${item.id}`" class="">
+          <img :src="item.imageUrl" class="img-fluid linkStyle" />
         </router-link>
-        <div class="col-12 col-sm-10">
-          <div class="row align-items-center">
-            <div class="col-12 col-sm-6 col-lg-3">
-              <div>{{ item.title }}</div>
-              <div>{{ item.content }}／{{ item.unit }}</div>
-            </div>
-            <div class="col-4 col-sm-3 col-lg">
-              <div>原價</div>
-              <div>NT$ {{ $filters.currency(item.origin_price) }}</div>
-            </div>
-            <div class="col-4 col-sm-3 col-lg">
-              <div>售價</div>
-              <div>NT$ {{ $filters.currency(item.price) }}</div>
-            </div>
-            <div class="col-4 col-sm-6 col-lg">
-              數量：{{ item.qty }} {{ item.unit }}
-            </div>
-            <div
-              v-if="item.is_enabled"
-              class="col-8 col-sm-3 col-lg text-success"
-            >
-              販售中
-            </div>
-            <div v-else class="col-8 col-sm-3 col-lg text-secondary">
-              未販售
-            </div>
-            <div
-              class="col-auto col-sm-3 col-lg-auto d-flex justify-content-start flex-wrap"
-            >
-              <button
-                @click="openModal(false, item)"
-                type="button"
-                class="btn btn-outline-primary rounded-1 me-1 my-1"
-              >
-                編輯
-              </button>
-              <button
-                @click="openDelModal(item)"
-                type="button"
-                class="btn btn-outline-danger rounded-1 me-1 my-1"
-              >
-                刪除
-              </button>
-            </div>
-          </div>
-        </div>
+      </div>
+
+      <div class="text-start col-8 col-sm-6 col-md-3 col-lg-3 col-xl-2">
+        <div>{{ item.title }}</div>
+        <div>{{ item.content }}／{{ item.unit }}</div>
+      </div>
+      <div class="col-4 col-sm-3 col-md-2 col-lg-2">
+        <div>原價</div>
+        <div>NT$ {{ $filters.currency(item.origin_price) }}</div>
+      </div>
+      <div class="col-4 col-sm-3 col-md-2 col-lg-2">
+        <div>售價</div>
+        <div>NT$ {{ $filters.currency(item.price) }}</div>
+      </div>
+      <div class="col-4 col-sm-3 col-md-2 col-lg-2 col-xl-1">
+        <div>數量</div>
+        <div>{{ item.qty }} {{ item.unit }}</div>
+      </div>
+      <div
+        v-if="item.is_enabled"
+        class="py-3 col-12 col-sm-3 col-md-3 col-lg-1 text-success text-end text-md-center"
+      >
+        販售中
+      </div>
+      <div v-else class="col-6 col-sm-3 col-lg-2 text-secondary">未販售</div>
+      <div class="px-0 text-end col-12 col-md-9 col-lg-12 col-xl-2">
+        <button
+          @click="openModal(false, item)"
+          type="button"
+          class="btn btn-outline-primary rounded-1 me-1 my-1"
+        >
+          編輯
+        </button>
+        <button
+          @click="openDelModal(item)"
+          type="button"
+          class="btn btn-outline-danger rounded-1 my-1"
+        >
+          刪除
+        </button>
       </div>
     </div>
   </div>
@@ -198,14 +191,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.titleStyle {
-  padding-left: 6%;
-}
-.imgLinkContainer {
-  padding: 5px;
-}
-.imgLinkContainer:hover {
+.linkStyle {
   padding: 3px;
-  border: 2px solid #b5b9be;
+}
+
+.linkStyle:hover {
+  padding: 0px;
+  border: 3px solid #dee2e6;
 }
 </style>

@@ -15,7 +15,7 @@
       </span>
       <!-- xs 可見：字體縮小 及 調整視覺置中 -->
       <span
-        class="fs-5 pt-1 logoText d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
+        class="fs-5 pt-2 logoText d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         FRESH BOX
       </span>
@@ -33,15 +33,16 @@
         <i class="bi bi-list fs-1 px-2 navbarText"></i>
       </button>
       <router-link to="/cart" class="nav-link d-flex flex-row-reverse">
+        <!-- 購物車 sm 以上版面 -->
         <div
           style="height: 75px"
-          class="h-100 d-flex flex-column align-items-center"
+          class="h-100 d-flex flex-column align-items-center text-center d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
         >
           <div class="h-auto position-relative">
             <i class="bi bi-cart2 fs-2 iconLink"></i>
             <span
               v-if="carts.length >= 1"
-              class="position-absolute translate-middle badge rounded-pill numInCart"
+              class="xs_cart_num_position translate-middle badge rounded-pill numInCart"
             >
               {{ carts.length }}
               <span class="visually-hidden">cart items</span>
@@ -49,10 +50,34 @@
           </div>
 
           <h5 class="m-0 d-flex align-items-center">
-            <span class="amountText badge"
+            <span class="amountText sm_amountText badge"
               >NT$ {{ $filters.currency(undiscountedAmount) }}
             </span>
           </h5>
+        </div>
+        <!-- 購物車 xs 以下版面 -->
+        <div
+          class="h-100 d-flex flex-column align-items-center pe-1 d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
+        >
+          <div class="h-auto position-relative">
+            <i class="bi bi-cart2 fs-2 iconLink"></i>
+            <span
+              v-if="carts.length >= 1"
+              class="sm_cart_num_position translate-middle badge rounded-pill numInCart"
+            >
+              {{ carts.length }}
+              <span class="visually-hidden">cart items</span>
+            </span>
+          </div>
+
+          <div
+            class="m-0 d-flex flex-column justify-content-center align-items-center"
+          >
+            <span class="amountText xs_amountText badge">NT$ </span>
+            <span class="amountText xs_amountText badge"
+              >{{ $filters.currency(undiscountedAmount) }}
+            </span>
+          </div>
         </div>
       </router-link>
     </div>
@@ -61,18 +86,26 @@
       <ul class="navbar-nav px-5 align-items-center col-lg-6">
         <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
           <router-link
+            @click="goToUserProducts"
             to="/user-products"
+            :class="{ isCurrentNavbarItem: currentPath === '/user-products' }"
             class="nav-link text-center navbarText"
             >所有產品
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link to="/order-list" class="nav-link text-center navbarText"
+          <router-link
+            to="/order-list"
+            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
+            class="nav-link text-center navbarText"
             >訂單
           </router-link>
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link to="/favorite" class="nav-link text-center navbarText"
+          <router-link
+            to="/favorite"
+            :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
+            class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>
@@ -103,6 +136,9 @@ export default {
     };
   },
   inject: ["emitter"],
+  props: {
+    currentPath: {},
+  },
   watch: {
     searchText() {
       if (this.searchText === "") {
@@ -130,6 +166,9 @@ export default {
       this.$http.get(api).then((res) => {
         this.carts = res.data.data.carts;
       });
+    },
+    goToUserProducts() {
+      this.emitter.emit("goToUserProducts");
     },
   },
   computed: {
@@ -212,9 +251,16 @@ export default {
   color: rgb(249, 196, 6);
 }
 
-.position-absolute {
-  top: 13px;
-  left: 38px;
+.xs_cart_num_position {
+  position: absolute;
+  top: 14px;
+  left: 70px;
+}
+
+.sm_cart_num_position {
+  position: absolute;
+  top: 10px;
+  left: 28px;
 }
 
 .form-control:focus {
@@ -228,12 +274,26 @@ export default {
 }
 
 .amountText {
-  width: 120px;
+  padding: 5px 0px;
   color: rgb(249, 196, 6);
 }
 
+.sm_amountText {
+  width: 120px;
+}
+
+.xs_amountText {
+  width: 60px;
+}
 .numInCart {
   background-color: rgb(249, 196, 6);
   color: #000;
+}
+
+.isCurrentNavbarItem {
+  color: rgb(249, 196, 6);
+}
+* {
+  // border: 1px solid;
 }
 </style>

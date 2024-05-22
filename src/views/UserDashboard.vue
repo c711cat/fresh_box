@@ -2,7 +2,7 @@
 <template>
   <div class="userViewContainer">
     <div>
-      <UserNavbar></UserNavbar>
+      <UserNavbar :currentPath="this.$route.path"></UserNavbar>
       <Messages></Messages>
       <router-view />
     </div>

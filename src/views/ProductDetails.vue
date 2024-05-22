@@ -55,7 +55,7 @@
             v-if="product.origin_price !== product.price"
             class="text-danger fs-5 w-50 text-end"
           >
-            NT$ {{ $filters.currency(product.price) }}</strong
+            NT$ {{ product.price }}</strong
           >
         </div>
         <div class="d-flex mb-3">
@@ -105,6 +105,7 @@ export default {
         this.product.origin_price = this.$filters.currency(
           this.product.origin_price
         );
+        this.product.price = this.$filters.currency(this.product.price);
         this.pushImg();
         this.getMyFavorite();
       });

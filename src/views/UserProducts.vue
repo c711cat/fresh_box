@@ -1,5 +1,7 @@
 <template>
+  <Loading v-if="isLoading"></Loading>
   <div
+    v-else
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
   >
     <ul class="mt-1 nav d-flex align-items-center">
@@ -29,7 +31,11 @@
         </ul>
       </li>
     </ul>
+    <div v-if="allProducts.length === 0" class="mt-4">
+      <h3>目前無收藏的商品</h3>
+    </div>
     <div
+      v-else
       v-for="(item, index) in allProducts"
       :key="index"
       class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
@@ -141,11 +147,12 @@ import Dropdown from "bootstrap/js/dist/dropdown";
 export default {
   data() {
     return {
+      isLoading: false,
       newPage: [],
       allProducts: [],
       pagination: {
         current_page: 1,
-        total_pages: 2,
+        total_pages: 0,
       },
       isInView: false,
       carts: [],
@@ -158,7 +165,6 @@ export default {
       categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
       forCategoryAllProducts: [],
       currentCategory: "選擇類別",
-      transCategory: "",
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -211,6 +217,7 @@ export default {
       });
       this.allProducts = inCaterogy;
       this.pushBuyQtyId();
+      this.isLoading = false;
     },
     getAllProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
@@ -239,6 +246,7 @@ export default {
         this.allProducts = res.data.products;
         this.pagination = res.data.pagination;
         this.pushBuyQtyId();
+        this.isLoading = false;
       });
     },
     addCart(item) {
@@ -331,19 +339,28 @@ export default {
       });
       localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
     },
-    isFromCategory() {
+    whereComeFrom() {
       if (this.$route.params.currentCategory) {
         this.chooseCategory(this.$route.params.currentCategory);
         this.getCart();
       } else {
-        this.getCart();
-        this.getPage1Products();
-        this.getOtherPageProducts();
+        if (this.$route.path === "/favorite") {
+          this.getCart();
+          setTimeout(() => {
+            this.allProducts = this.myFavoriteList;
+            this.isLoading = false;
+          }, 3000);
+        } else {
+          this.getCart();
+          this.getPage1Products();
+          this.getOtherPageProducts();
+        }
       }
     },
   },
   created() {
-    this.isFromCategory();
+    this.isLoading = true;
+    this.whereComeFrom();
     this.getMyFavorite();
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
     this.dropdownList = [...dropdownElementList].map(
@@ -356,6 +373,15 @@ export default {
     this.emitter.on("userSearchNull", () => {
       this.getPage1Products();
     });
+    this.emitter.on("goToUserProducts", () => {
+      this.getPage1Products();
+      this.getOtherPageProducts();
+    });
+  },
+  updated() {
+    if (this.$route.path === "/favorite") {
+      this.allProducts = this.myFavoriteList;
+    }
   },
 };
 </script>
