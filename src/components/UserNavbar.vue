@@ -111,19 +111,19 @@
         </li>
         <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
           <input
-            v-if="currentPath === '/user-products'"
-            v-model="productSearchText"
-            class="form-control searchText"
-            type="search"
-            placeholder="Search product name"
-            aria-label="Search"
-          />
-          <input
             v-if="currentPath === '/order-list'"
             v-model="orderSearchText"
             class="form-control searchText"
             type="search"
             placeholder="Search order name"
+            aria-label="Search"
+          />
+          <input
+            v-else
+            v-model="productSearchText"
+            class="form-control searchText"
+            type="search"
+            placeholder="Search product name"
             aria-label="Search"
           />
         </form>
@@ -155,17 +155,20 @@ export default {
   },
   watch: {
     productSearchText() {
-      if (this.productSearchText === "") {
-        this.emitter.emit("productSearchNull");
-      } else {
-        this.products.filter((item) => {
-          if (item.title.match(this.productSearchText)) {
-            this.searchResult.push(item);
-          }
-        });
-        this.emitter.emit("productSearchResult", this.searchResult);
-        this.searchResult = [];
-      }
+      this.$router.push("/user-products");
+      setTimeout(() => {
+        if (this.productSearchText === "") {
+          this.emitter.emit("productSearchNull");
+        } else {
+          this.products.filter((item) => {
+            if (item.title.match(this.productSearchText)) {
+              this.searchResult.push(item);
+            }
+          });
+          this.emitter.emit("productSearchResult", this.searchResult);
+          this.searchResult = [];
+        }
+      }, 1500);
     },
     orderSearchText() {
       this.orderSearchResult = [];
