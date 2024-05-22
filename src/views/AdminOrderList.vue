@@ -72,6 +72,7 @@ export default {
   components: { Order, delModal, Pagination },
   methods: {
     getOrders(page = 1) {
+      this.orderList = {};
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };

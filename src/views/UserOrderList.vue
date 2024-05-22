@@ -48,6 +48,7 @@ export default {
   components: { Order, Pagination },
   methods: {
     getOrders(page = 1) {
+      this.orderList = {};
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
