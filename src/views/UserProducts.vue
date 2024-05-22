@@ -339,7 +339,7 @@ export default {
       });
       localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
     },
-    isFromCategory() {
+    whereComeFrom() {
       if (this.$route.params.currentCategory) {
         this.chooseCategory(this.$route.params.currentCategory);
         this.getCart();
@@ -360,7 +360,7 @@ export default {
   },
   created() {
     this.isLoading = true;
-    this.isFromCategory();
+    this.whereComeFrom();
     this.getMyFavorite();
     const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
     this.dropdownList = [...dropdownElementList].map(
