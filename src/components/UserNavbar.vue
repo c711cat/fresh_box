@@ -111,10 +111,19 @@
         </li>
         <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
           <input
-            v-model="searchText"
+            v-if="currentPath === '/user-products'"
+            v-model="productSearchText"
             class="form-control searchText"
             type="search"
             placeholder="Search for products"
+            aria-label="Search"
+          />
+          <input
+            v-if="currentPath === '/order-list'"
+            v-model="orderSearchText"
+            class="form-control searchText"
+            type="search"
+            placeholder="search"
             aria-label="Search"
           />
         </form>
@@ -129,10 +138,15 @@ export default {
   data() {
     return {
       userNavbar: {},
-      searchText: "",
+      productSearchText: "",
+      orderSearchText: "",
       products: [],
       searchResult: [],
+      orderSearchResult: [],
       carts: [],
+      orders: [],
+      orderPage: 1,
+      ordersPageContent: {},
     };
   },
   inject: ["emitter"],
@@ -140,17 +154,31 @@ export default {
     currentPath: {},
   },
   watch: {
-    searchText() {
-      if (this.searchText === "") {
-        this.emitter.emit("userSearchNull");
+    productSearchText() {
+      if (this.productSearchText === "") {
+        this.emitter.emit("productSearchNull");
       } else {
         this.products.filter((item) => {
-          if (item.title.match(this.searchText)) {
+          if (item.title.match(this.productSearchText)) {
             this.searchResult.push(item);
           }
         });
-        this.emitter.emit("searchResult", this.searchResult);
+        this.emitter.emit("productSearchResult", this.searchResult);
         this.searchResult = [];
+      }
+    },
+    orderSearchText() {
+      this.orderSearchResult = [];
+      if (this.orderSearchText === "") {
+        this.emitter.emit("orderSearchNull");
+      } else {
+        this.orders.filter((item) => {
+          if (item.user.name.match(this.orderSearchText)) {
+            this.orderSearchResult.push(item);
+          }
+        });
+        this.emitter.emit("orderSearchResult", this.orderSearchResult);
+        this.orderSearchResult = [];
       }
     },
   },
@@ -170,6 +198,21 @@ export default {
     goToUserProducts() {
       this.emitter.emit("goToUserProducts");
     },
+    getOrders() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+      this.$http.get(api).then((res) => {
+        this.orderPage = this.orderPage + 1;
+        this.orders = res.data.orders;
+        this.ordersPageContent = res.data.pagination;
+
+        if (this.orderPage <= this.ordersPageContent.total_pages) {
+          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+          this.$http.get(api).then((res) => {
+            this.orders = [...this.orders, ...res.data.orders];
+          });
+        }
+      });
+    },
   },
   computed: {
     undiscountedAmount() {
@@ -181,6 +224,7 @@ export default {
     },
   },
   created() {
+    this.getOrders();
     this.getCart();
     this.getProducts();
     const collapseElementList = document.querySelectorAll(".collapse");

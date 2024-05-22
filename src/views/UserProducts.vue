@@ -366,11 +366,11 @@ export default {
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
-    this.emitter.on("searchResult", (data) => {
+    this.emitter.on("productSearchResult", (data) => {
       this.pagination.total_pages = 0;
       this.allProducts = data;
     });
-    this.emitter.on("userSearchNull", () => {
+    this.emitter.on("productSearchNull", () => {
       this.getPage1Products();
     });
     this.emitter.on("goToUserProducts", () => {

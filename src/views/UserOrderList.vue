@@ -31,7 +31,11 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
+  <Pagination
+    v-if="pageSwitch"
+    :pages="pagination"
+    @emit-pages="getOrders"
+  ></Pagination>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
@@ -43,12 +47,15 @@ export default {
     return {
       orderList: {},
       pagination: {},
+      pageSwitch: true,
     };
   },
+  inject: ["emitter"],
   components: { Order, Pagination },
   methods: {
     getOrders(page = 1) {
       this.orderList = {};
+      this.pageSwitch = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
@@ -65,6 +72,14 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
+    this.emitter.on("orderSearchResult", (data) => {
+      this.pageSwitch = false;
+      this.orderList = [];
+      this.orderList = data;
+    });
+    this.emitter.on("orderSearchNull", () => {
+      this.getOrders();
+    });
   },
 };
 </script>
