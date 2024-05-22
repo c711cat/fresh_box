@@ -1,5 +1,10 @@
 <template>
-  <div class="listContainer mx-auto mb-5 px-3">
+  <div class="col-12 col-xl-10 mx-auto mb-5 px-3">
+    <div class="p-1 mb-2 text-end">
+      <button @click="openDelModal" class="btn btn-danger" type="button">
+        刪除全部訂單
+      </button>
+    </div>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -41,7 +46,13 @@
     </div>
   </div>
   <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
-  <delModal ref="delModal" :order="tempOrder" @del-order="delOrder"></delModal>
+  <delModal
+    ref="delModal"
+    :order="tempOrder"
+    @del-order="delOrder"
+    :allOrders="true"
+    @del-all-orders="delAllOrders"
+  ></delModal>
 </template>
 
 <script>
@@ -86,6 +97,13 @@ export default {
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
+    delAllOrders() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
+      this.$http.delete(api).then((res) => {
+        console.log(res);
+        this.$refs.delModal.hideModal();
+      });
+    },
   },
   created() {
     this.getOrders();
@@ -110,10 +128,5 @@ export default {
 
 .accordion-button:hover {
   color: black;
-}
-
-.listContainer {
-  padding-top: 40px;
-  max-width: 1300px;
 }
 </style>
