@@ -164,7 +164,10 @@ export default {
               this.searchResult.push(item);
             }
           });
-          this.emitter.emit("productSearchResult", this.searchResult);
+          this.emitter.emit("productSearchResult", {
+            data: this.searchResult,
+            ...this.productSearchText,
+          });
           this.searchResult = [];
         }
       }, 1500);
