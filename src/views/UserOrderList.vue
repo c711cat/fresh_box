@@ -31,11 +31,8 @@
       </div>
     </div>
   </div>
-  <Pagination
-    v-if="pageSwitch"
-    :pages="pagination"
-    @emit-pages="getOrders"
-  ></Pagination>
+  <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
+  </Pagination>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
