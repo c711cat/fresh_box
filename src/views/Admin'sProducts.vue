@@ -5,11 +5,11 @@
     <div
       class="row m-0 p-2 col-12 col-xxl-11 justify-content-between align-items-center"
     >
-      <h3 v-if="products.length === 0">查無相關商品</h3>
-      <h3 v-if="products.length >= 1" class="col-12 col-sm-6 m-0 p-1">
+      <h3 v-if="noResults">查無相關商品</h3>
+      <h3 v-if="itemsInProducts" class="col-12 col-sm-6 m-0 p-1">
         後台產品列表
       </h3>
-      <div v-if="products.length >= 1" class="col-auto p-1">
+      <div v-if="itemsInProducts" class="col-auto p-1">
         <button
           @click="openModal(true)"
           type="button"
@@ -178,6 +178,14 @@ export default {
           return;
         }
       });
+    },
+  },
+  computed: {
+    noResults() {
+      return this.products.length === 0;
+    },
+    itemsInProducts() {
+      return this.products.length >= 1;
     },
   },
   created() {
