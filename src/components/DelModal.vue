@@ -37,6 +37,9 @@
               訂單日期 {{ turnDate(tempOrder.create_at) }}
             </div>
           </strong>
+          <strong v-if="allOrders" class="text-danger">
+            確定刪除全部訂單？
+          </strong>
           <span v-else>
             確定刪除
             <span class="text-danger fw-bold fs-5">
@@ -64,6 +67,14 @@
           <button
             v-if="tempOrder.id"
             @click="$emit('del-order', tempOrder)"
+            type="button"
+            class="btn btn-danger"
+          >
+            確定刪除
+          </button>
+          <button
+            v-if="allOrders"
+            @click="$emit('del-all-orders')"
             type="button"
             class="btn btn-danger"
           >
@@ -113,6 +124,7 @@ export default {
         return {};
       },
     },
+    allOrders: {},
     pages: {},
   },
   methods: {

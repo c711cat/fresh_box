@@ -95,26 +95,35 @@
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
           <router-link
-            to="/order-list"
-            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
-            class="nav-link text-center navbarText"
-            >訂單
-          </router-link>
-        </li>
-        <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
             to="/favorite"
             :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
             class="nav-link text-center navbarText"
             >收藏
           </router-link>
         </li>
+        <li class="nav-item col-12 col-lg-auto px-2">
+          <router-link
+            to="/order-list"
+            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
+            class="nav-link text-center navbarText"
+            >訂單
+          </router-link>
+        </li>
         <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
           <input
-            v-model="searchText"
+            v-if="currentPath === '/order-list'"
+            v-model="orderSearchText"
             class="form-control searchText"
             type="search"
-            placeholder="Search for products"
+            placeholder="Search for name on orders"
+            aria-label="Search"
+          />
+          <input
+            v-else
+            v-model="productSearchText"
+            class="form-control searchText"
+            type="search"
+            placeholder="Search for product name"
             aria-label="Search"
           />
         </form>
@@ -129,10 +138,14 @@ export default {
   data() {
     return {
       userNavbar: {},
-      searchText: "",
+      productSearchText: "",
+      orderSearchText: "",
       products: [],
       searchResult: [],
+      orderSearchResult: [],
       carts: [],
+      orders: [],
+      orderPage: 1,
     };
   },
   inject: ["emitter"],
@@ -140,17 +153,37 @@ export default {
     currentPath: {},
   },
   watch: {
-    searchText() {
-      if (this.searchText === "") {
-        this.emitter.emit("userSearchNull");
+    productSearchText() {
+      this.$router.push("/user-products");
+      setTimeout(() => {
+        if (this.productSearchText === "") {
+          this.emitter.emit("productSearchNull");
+        } else {
+          this.products.filter((item) => {
+            if (item.title.match(this.productSearchText)) {
+              this.searchResult.push(item);
+            }
+          });
+          this.emitter.emit("productSearchResult", {
+            data: this.searchResult,
+            ...this.productSearchText,
+          });
+          this.searchResult = [];
+        }
+      }, 1500);
+    },
+    orderSearchText() {
+      this.orderSearchResult = [];
+      if (this.orderSearchText === "") {
+        this.emitter.emit("orderSearchNull");
       } else {
-        this.products.filter((item) => {
-          if (item.title.match(this.searchText)) {
-            this.searchResult.push(item);
+        this.orders.filter((item) => {
+          if (item.user.name.match(this.orderSearchText)) {
+            this.orderSearchResult.push(item);
           }
         });
-        this.emitter.emit("searchResult", this.searchResult);
-        this.searchResult = [];
+        this.emitter.emit("orderSearchResult", this.orderSearchResult);
+        this.orderSearchResult = [];
       }
     },
   },
@@ -170,6 +203,19 @@ export default {
     goToUserProducts() {
       this.emitter.emit("goToUserProducts");
     },
+    getOrders() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+      this.$http.get(api).then((res) => {
+        this.orderPage = this.orderPage + 1;
+        this.orders = res.data.orders;
+        if (this.orderPage <= res.data.pagination.total_pages) {
+          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+          this.$http.get(api).then((res) => {
+            this.orders = [...this.orders, ...res.data.orders];
+          });
+        }
+      });
+    },
   },
   computed: {
     undiscountedAmount() {
@@ -181,6 +227,7 @@ export default {
     },
   },
   created() {
+    this.getOrders();
     this.getCart();
     this.getProducts();
     const collapseElementList = document.querySelectorAll(".collapse");
@@ -291,9 +338,7 @@ export default {
 }
 
 .isCurrentNavbarItem {
+  font-weight: bold;
   color: rgb(249, 196, 6);
-}
-* {
-  // border: 1px solid;
 }
 </style>

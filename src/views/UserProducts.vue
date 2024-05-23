@@ -31,11 +31,13 @@
         </ul>
       </li>
     </ul>
-    <div v-if="allProducts.length === 0" class="mt-4">
+    <div v-if="noResults" class="mt-4">
+      <h3>查無相符商品</h3>
+    </div>
+    <div v-if="noFavorites" class="mt-4">
       <h3>目前無收藏的商品</h3>
     </div>
     <div
-      v-else
       v-for="(item, index) in allProducts"
       :key="index"
       class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
@@ -165,6 +167,7 @@ export default {
       categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
       forCategoryAllProducts: [],
       currentCategory: "選擇類別",
+      searchText: "",
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -358,6 +361,18 @@ export default {
       }
     },
   },
+  computed: {
+    noResults() {
+      return this.allProducts.length === 0 && this.searchText !== "";
+    },
+    noFavorites() {
+      return (
+        this.myFavoriteList.length === 0 &&
+        this.allProducts.length === 0 &&
+        this.searchText === ""
+      );
+    },
+  },
   created() {
     this.isLoading = true;
     this.whereComeFrom();
@@ -366,11 +381,13 @@ export default {
     this.dropdownList = [...dropdownElementList].map(
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
-    this.emitter.on("searchResult", (data) => {
+    this.emitter.on("productSearchResult", (searchResult) => {
+      this.searchText = searchResult[0];
       this.pagination.total_pages = 0;
-      this.allProducts = data;
+      this.allProducts = searchResult.data;
+      this.pushBuyQtyId();
     });
-    this.emitter.on("userSearchNull", () => {
+    this.emitter.on("productSearchNull", () => {
       this.getPage1Products();
     });
     this.emitter.on("goToUserProducts", () => {

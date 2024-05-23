@@ -1,5 +1,11 @@
 <template>
-  <div class="listContainer mx-auto mb-5 px-3">
+  <div class="col-12 col-xl-10 mx-auto mb-5 px-3">
+    <h3 v-if="noResults">查無此收件人姓名</h3>
+    <div v-else class="p-1 mb-2 text-end">
+      <button @click="openDelModal" class="btn btn-danger" type="button">
+        刪除全部訂單
+      </button>
+    </div>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -40,8 +46,16 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
-  <delModal ref="delModal" :order="tempOrder" @del-order="delOrder"></delModal>
+  <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
+  </Pagination>
+  <delModal
+    ref="delModal"
+    :order="tempOrder"
+    @del-order="delOrder"
+    :allOrders="true"
+    @del-all-orders="delAllOrders"
+  >
+  </delModal>
 </template>
 
 <script>
@@ -56,11 +70,15 @@ export default {
       orderList: {},
       tempOrder: {},
       pagination: {},
+      pageSwitch: true,
     };
   },
+  inject: ["emitter"],
   components: { Order, delModal, Pagination },
   methods: {
     getOrders(page = 1) {
+      this.orderList = {};
+      this.pageSwitch = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
@@ -86,6 +104,18 @@ export default {
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
+    delAllOrders() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
+      this.$http.delete(api).then((res) => {
+        this.$pushMsg(res, "刪除全部訂單");
+        this.$refs.delModal.hideModal();
+      });
+    },
+  },
+  computed: {
+    noResults() {
+      return this.orderList.length === 0;
+    },
   },
   created() {
     this.getOrders();
@@ -93,6 +123,15 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
+    this.emitter.on("adminOrderSearchResult", (data) => {
+      this.pageSwitch = false;
+      this.orderList = [];
+
+      this.orderList = data;
+    });
+    this.emitter.on("adminOrderSearchNull", () => {
+      this.getOrders();
+    });
   },
 };
 </script>
@@ -110,10 +149,5 @@ export default {
 
 .accordion-button:hover {
   color: black;
-}
-
-.listContainer {
-  padding-top: 40px;
-  max-width: 1300px;
 }
 </style>

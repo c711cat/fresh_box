@@ -1,5 +1,6 @@
 <template>
   <div class="listContainer mx-auto mb-5 px-4">
+    <h3 v-if="noResults" class="pt-4">查無此收件人姓名</h3>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -31,7 +32,8 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
+  <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
+  </Pagination>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
@@ -43,11 +45,15 @@ export default {
     return {
       orderList: {},
       pagination: {},
+      pageSwitch: true,
     };
   },
+  inject: ["emitter"],
   components: { Order, Pagination },
   methods: {
     getOrders(page = 1) {
+      this.orderList = {};
+      this.pageSwitch = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
@@ -58,12 +64,25 @@ export default {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
   },
+  computed: {
+    noResults() {
+      return this.orderList.length === 0;
+    },
+  },
   created() {
     this.getOrders();
     const collapseElementList = document.querySelectorAll(".collapse");
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
+    this.emitter.on("orderSearchResult", (data) => {
+      this.pageSwitch = false;
+      this.orderList = [];
+      this.orderList = data;
+    });
+    this.emitter.on("orderSearchNull", () => {
+      this.getOrders();
+    });
   },
 };
 </script>

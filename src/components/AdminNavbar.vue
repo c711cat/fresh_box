@@ -23,10 +23,14 @@
       </router-link>
     </div>
     <div class="collapse navbar-collapse" id="user_navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav col-lg-10">
         <li class="nav-item">
           <router-link
             to="/dashboard/admin's-products"
+            :class="{
+              isCurrentNavbarItem:
+                this.$route.path === `/dashboard/admin's-products`,
+            }"
             class="nav-link text-center navbarText px-4"
             >產品清單
           </router-link>
@@ -34,6 +38,9 @@
         <li class="nav-item">
           <router-link
             to="/dashboard/coupons"
+            :class="{
+              isCurrentNavbarItem: this.$route.path === '/dashboard/coupons',
+            }"
             class="nav-link text-center navbarText px-4"
             >優惠券
           </router-link>
@@ -41,6 +48,9 @@
         <li class="nav-item">
           <router-link
             to="/dashboard/order-list"
+            :class="{
+              isCurrentNavbarItem: this.$route.path === '/dashboard/order-list',
+            }"
             class="nav-link text-center navbarText px-4"
             >訂單
           </router-link>
@@ -52,13 +62,22 @@
             >登出</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item col-lg-5 col-xl-4">
           <form class="px-4" role="search">
             <input
-              v-model="searchText"
+              v-if="this.$route.path === `/dashboard/admin's-products`"
+              v-model="productSearchText"
               class="form-control me-2"
               type="search"
               placeholder="Search for products"
+              aria-label="Search"
+            />
+            <input
+              v-if="this.$route.path === '/dashboard/order-list'"
+              v-model="orderSearchText"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search for name on orders"
               aria-label="Search"
             />
           </form>
@@ -74,24 +93,41 @@ export default {
   data() {
     return {
       adminNavbar: {},
-      searchText: "",
+      productSearchText: "",
+      orderSearchText: "",
       searchResult: [],
       products: [],
+      orderPage: 1,
+      orders: [],
+      orderSearchResult: [],
     };
   },
   inject: ["emitter"],
   watch: {
-    searchText() {
-      if (this.searchText === "") {
-        this.emitter.emit("adminSearchNull");
+    productSearchText() {
+      if (this.productSearchText === "") {
+        this.emitter.emit("adminSearchProductNull");
       } else {
         Object.values(this.products).filter((item) => {
-          if (item.title.match(this.searchText)) {
+          if (item.title.match(this.productSearchText)) {
             this.searchResult.push(item);
           }
-          this.emitter.emit("adminSearchResult", this.searchResult);
+          this.emitter.emit("adminSearchProductResult", this.searchResult);
         });
         this.searchResult = [];
+      }
+    },
+    orderSearchText() {
+      this.orderSearchResult = [];
+      if (this.orderSearchText === "") {
+        this.emitter.emit("adminOrderSearchNull");
+      } else {
+        this.orders.filter((item) => {
+          if (item.user.name.match(this.orderSearchText)) {
+            this.orderSearchResult.push(item);
+          }
+        });
+        this.emitter.emit("adminOrderSearchResult", this.orderSearchResult);
       }
     },
   },
@@ -114,8 +150,22 @@ export default {
         window.scrollTo(0, -100);
       });
     },
+    getOrders() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+      this.$http.get(api).then((res) => {
+        this.orders = res.data.orders;
+        this.orderPage = this.orderPage + 1;
+        if (this.orderPage <= res.data.pagination.total_pages) {
+          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+          this.$http.get(api).then((res) => {
+            this.orders = [...this.orders, ...res.data.orders];
+          });
+        }
+      });
+    },
   },
   created() {
+    this.getOrders();
     const collapseElementList = document.querySelectorAll(".collapse");
     this.adminNavbar = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
@@ -151,5 +201,10 @@ export default {
 
 .logOutLink:hover {
   cursor: pointer;
+}
+
+.isCurrentNavbarItem {
+  color: black;
+  font-weight: bold;
 }
 </style>
