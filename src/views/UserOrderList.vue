@@ -1,5 +1,6 @@
 <template>
   <div class="listContainer mx-auto mb-5 px-4">
+    <h3 v-if="noResults" class="pt-4">查無此收件人姓名</h3>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -61,6 +62,11 @@ export default {
     },
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+    },
+  },
+  computed: {
+    noResults() {
+      return this.orderList.length === 0;
     },
   },
   created() {

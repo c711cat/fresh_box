@@ -1,6 +1,7 @@
 <template>
   <div class="col-12 col-xl-10 mx-auto mb-5 px-3">
-    <div class="p-1 mb-2 text-end">
+    <h3 v-if="noResults">查無此收件人姓名</h3>
+    <div v-else class="p-1 mb-2 text-end">
       <button @click="openDelModal" class="btn btn-danger" type="button">
         刪除全部訂單
       </button>
@@ -109,6 +110,11 @@ export default {
         this.$pushMsg(res, "刪除全部訂單");
         this.$refs.delModal.hideModal();
       });
+    },
+  },
+  computed: {
+    noResults() {
+      return this.orderList.length === 0;
     },
   },
   created() {
