@@ -115,7 +115,7 @@
             v-model="orderSearchText"
             class="form-control searchText"
             type="search"
-            placeholder="Search order name"
+            placeholder="Search for name on orders"
             aria-label="Search"
           />
           <input
@@ -123,7 +123,7 @@
             v-model="productSearchText"
             class="form-control searchText"
             type="search"
-            placeholder="Search product name"
+            placeholder="Search for product name"
             aria-label="Search"
           />
         </form>
