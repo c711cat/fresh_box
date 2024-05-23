@@ -27,6 +27,10 @@
         <li class="nav-item">
           <router-link
             to="/dashboard/admin's-products"
+            :class="{
+              isCurrentNavbarItem:
+                this.$route.path === `/dashboard/admin's-products`,
+            }"
             class="nav-link text-center navbarText px-4"
             >產品清單
           </router-link>
@@ -34,6 +38,9 @@
         <li class="nav-item">
           <router-link
             to="/dashboard/coupons"
+            :class="{
+              isCurrentNavbarItem: this.$route.path === '/dashboard/coupons',
+            }"
             class="nav-link text-center navbarText px-4"
             >優惠券
           </router-link>
@@ -41,6 +48,9 @@
         <li class="nav-item">
           <router-link
             to="/dashboard/order-list"
+            :class="{
+              isCurrentNavbarItem: this.$route.path === '/dashboard/order-list',
+            }"
             class="nav-link text-center navbarText px-4"
             >訂單
           </router-link>
@@ -191,5 +201,10 @@ export default {
 
 .logOutLink:hover {
   cursor: pointer;
+}
+
+.isCurrentNavbarItem {
+  color: black;
+  font-weight: bold;
 }
 </style>
