@@ -146,7 +146,6 @@ export default {
       carts: [],
       orders: [],
       orderPage: 1,
-      ordersPageContent: {},
     };
   },
   inject: ["emitter"],
@@ -206,9 +205,7 @@ export default {
       this.$http.get(api).then((res) => {
         this.orderPage = this.orderPage + 1;
         this.orders = res.data.orders;
-        this.ordersPageContent = res.data.pagination;
-
-        if (this.orderPage <= this.ordersPageContent.total_pages) {
+        if (this.orderPage <= res.data.pagination.total_pages) {
           const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
           this.$http.get(api).then((res) => {
             this.orders = [...this.orders, ...res.data.orders];
@@ -339,8 +336,5 @@ export default {
 
 .isCurrentNavbarItem {
   color: rgb(249, 196, 6);
-}
-* {
-  // border: 1px solid;
 }
 </style>
