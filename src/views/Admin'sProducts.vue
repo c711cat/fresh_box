@@ -179,10 +179,10 @@ export default {
   },
   created() {
     this.getProducts();
-    this.emitter.on("adminSearchNull", () => {
+    this.emitter.on("adminSearchProductNull", () => {
       this.getProducts();
     });
-    this.emitter.on("adminSearchResult", (data) => {
+    this.emitter.on("adminSearchProductResult", (data) => {
       this.products = data;
       this.openPagination = false;
     });

@@ -45,14 +45,16 @@
       </div>
     </div>
   </div>
-  <Pagination :pages="pagination" @emit-pages="getOrders"></Pagination>
+  <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
+  </Pagination>
   <delModal
     ref="delModal"
     :order="tempOrder"
     @del-order="delOrder"
     :allOrders="true"
     @del-all-orders="delAllOrders"
-  ></delModal>
+  >
+  </delModal>
 </template>
 
 <script>
@@ -67,12 +69,15 @@ export default {
       orderList: {},
       tempOrder: {},
       pagination: {},
+      pageSwitch: true,
     };
   },
+  inject: ["emitter"],
   components: { Order, delModal, Pagination },
   methods: {
     getOrders(page = 1) {
       this.orderList = {};
+      this.pageSwitch = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http.get(api).then((res) => {
         this.orderList = { ...res.data.orders };
@@ -101,7 +106,7 @@ export default {
     delAllOrders() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
       this.$http.delete(api).then((res) => {
-        console.log(res);
+        this.$pushMsg(res, "刪除全部訂單");
         this.$refs.delModal.hideModal();
       });
     },
@@ -112,6 +117,15 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
+    this.emitter.on("adminOrderSearchResult", (data) => {
+      this.pageSwitch = false;
+      this.orderList = [];
+
+      this.orderList = data;
+    });
+    this.emitter.on("adminOrderSearchNull", () => {
+      this.getOrders();
+    });
   },
 };
 </script>

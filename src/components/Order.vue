@@ -180,7 +180,10 @@ export default {
       this.order = { ...this.transOrder };
       this.getSubtotal();
     },
-    oneOrder() {},
+    oneOrder() {
+      this.order = { ...this.oneOrder };
+      this.getSubtotal();
+    },
   },
   methods: {
     getOrder() {
