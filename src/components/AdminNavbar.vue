@@ -23,7 +23,7 @@
       </router-link>
     </div>
     <div class="collapse navbar-collapse" id="user_navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav col-lg-10">
         <li class="nav-item">
           <router-link
             to="/dashboard/admin's-products"
@@ -62,7 +62,7 @@
             >登出</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item col-lg-5 col-xl-4">
           <form class="px-4" role="search">
             <input
               v-if="this.$route.path === '/dashboard/order-list'"
