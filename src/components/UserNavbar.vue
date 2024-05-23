@@ -95,18 +95,18 @@
         </li>
         <li class="nav-item col-12 col-lg-auto px-2">
           <router-link
-            to="/order-list"
-            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
-            class="nav-link text-center navbarText"
-            >訂單
-          </router-link>
-        </li>
-        <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
             to="/favorite"
             :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
             class="nav-link text-center navbarText"
             >收藏
+          </router-link>
+        </li>
+        <li class="nav-item col-12 col-lg-auto px-2">
+          <router-link
+            to="/order-list"
+            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
+            class="nav-link text-center navbarText"
+            >訂單
           </router-link>
         </li>
         <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
