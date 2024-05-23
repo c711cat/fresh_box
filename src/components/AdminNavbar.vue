@@ -65,19 +65,19 @@
         <li class="nav-item col-lg-5 col-xl-4">
           <form class="px-4" role="search">
             <input
+              v-if="this.$route.path === `/dashboard/admin's-products`"
+              v-model="productSearchText"
+              class="form-control me-2"
+              type="search"
+              placeholder="Search for products"
+              aria-label="Search"
+            />
+            <input
               v-if="this.$route.path === '/dashboard/order-list'"
               v-model="orderSearchText"
               class="form-control me-2"
               type="search"
               placeholder="Search for name on orders"
-              aria-label="Search"
-            />
-            <input
-              v-else
-              v-model="productSearchText"
-              class="form-control me-2"
-              type="search"
-              placeholder="Search for products"
               aria-label="Search"
             />
           </form>
