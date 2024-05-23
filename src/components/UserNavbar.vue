@@ -335,6 +335,7 @@ export default {
 }
 
 .isCurrentNavbarItem {
+  font-weight: bold;
   color: rgb(249, 196, 6);
 }
 </style>
