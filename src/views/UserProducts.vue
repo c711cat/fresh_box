@@ -385,6 +385,7 @@ export default {
       this.searchText = searchResult[0];
       this.pagination.total_pages = 0;
       this.allProducts = searchResult.data;
+      this.pushBuyQtyId();
     });
     this.emitter.on("productSearchNull", () => {
       this.getPage1Products();
