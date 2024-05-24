@@ -115,13 +115,22 @@ export default {
     getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
       this.isLoading = true;
-      this.$http.get(api).then((res) => {
-        this.pagination = res.data.pagination;
-        this.isLoading = false;
-        this.products = res.data.products;
-        this.openPagination = true;
-        window.scrollTo(0, -100);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.pagination = res.data.pagination;
+            this.products = res.data.products;
+            this.openPagination = true;
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+          window.scrollTo(0, -100);
+        });
     },
     openModal(isNew, item) {
       if (isNew) {
@@ -136,30 +145,45 @@ export default {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
       this.isLoading = true;
-      this.$http.post(api, { data: this.tempProduct }).then((res) => {
-        this.$pushMsg(res, "新增產品");
-        this.getProducts();
-        if (res.data.success) {
-          this.$refs.productModal.hideModal();
-        } else {
-          return;
-        }
-      });
+      this.$http
+        .post(api, { data: this.tempProduct })
+        .then((res) => {
+          if (res.data.success) {
+            this.getProducts();
+            this.$refs.productModal.hideModal();
+            this.$pushMsg.status200(res, "新增產品成功");
+          } else {
+            this.$pushMsg.status200(res, "新增產品失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     editProduct(item, current_page) {
       this.tempProduct = item;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.isLoading = true;
-      this.$http.put(api, { data: this.tempProduct }).then((res) => {
-        this.isLoading = false;
-        this.$pushMsg(res, "更新產品");
-        this.getProducts(current_page);
-        if (res.data.success) {
-          this.$refs.productModal.hideModal();
-        } else {
-          return;
-        }
-      });
+      this.$http
+        .put(api, { data: this.tempProduct })
+        .then((res) => {
+          if (res.data.success) {
+            this.getProducts(current_page);
+            this.$refs.productModal.hideModal();
+            this.$pushMsg.status200(res, "更新產品成功");
+          } else {
+            this.$pushMsg.status200(res, "更新產品失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     openDelModal(item) {
       this.$refs.delModal.showModal();
@@ -168,16 +192,23 @@ export default {
     delProduct(item, current_page) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.isLoading = true;
-      this.$http.delete(api).then((res) => {
-        this.isLoading = false;
-        this.$pushMsg(res, "刪除產品");
-        this.getProducts(current_page);
-        if (res.data.success) {
-          this.$refs.delModal.hideModal();
-        } else {
-          return;
-        }
-      });
+      this.$http
+        .delete(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.getProducts(current_page);
+            this.$refs.delModal.hideModal();
+            this.$pushMsg.status200(res, "已刪除產品");
+          } else {
+            this.$pushMsg.status200(res, "刪除產品失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
   computed: {

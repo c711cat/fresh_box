@@ -102,23 +102,38 @@ export default {
       const page = 1;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`;
       this.isLoading = true;
-      this.$http.get(api).then((res) => {
-        this.coupons = res.data.coupons;
-        this.isLoading = false;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.coupons = res.data.coupons;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     addCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
       this.isLoading = true;
-      this.$http.post(api, { data: coupon }).then((res) => {
-        this.$pushMsg(res, "新增優惠券");
-        this.getCoupons();
-        if (res.data.success) {
-          this.$refs.couponModal.hideModal();
-        } else {
-          return;
-        }
-      });
+      this.$http
+        .post(api, { data: coupon })
+        .then((res) => {
+          if (res.data.success) {
+            this.$refs.couponModal.hideModal();
+            this.getCoupons();
+            this.$pushMsg.status200(res, "新增優惠券成功");
+          } else {
+            this.$pushMsg.status200(res, "新增優惠券失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     openCouponModal(isNew, coupon) {
       this.$refs.couponModal.showModal();
@@ -131,15 +146,23 @@ export default {
     updateCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
       this.isLoading = true;
-      this.$http.put(api, { data: coupon }).then((res) => {
-        this.$pushMsg(res, "更新優惠券");
-        this.getCoupons();
-        if (res.data.success) {
-          this.$refs.couponModal.hideModal();
-        } else {
-          return;
-        }
-      });
+      this.$http
+        .put(api, { data: coupon })
+        .then((res) => {
+          this.getCoupons();
+          if (res.data.success) {
+            this.$refs.couponModal.hideModal();
+            this.$pushMsg.status200(res, "更新優惠券成功");
+          } else {
+            this.$pushMsg.status200(res, "更新優惠券失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     openDelModal(coupon) {
       this.$refs.delModal.showModal();
@@ -148,15 +171,23 @@ export default {
     delCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
       this.isLoading = true;
-      this.$http.delete(api).then((res) => {
-        this.$pushMsg(res, "刪除優惠券");
-        this.getCoupons();
-        if (res.data.success) {
-          this.$refs.delModal.hideModal();
-        } else {
-          return;
-        }
-      });
+      this.$http
+        .delete(api)
+        .then((res) => {
+          this.getCoupons();
+          if (res.data.success) {
+            this.$refs.delModal.hideModal();
+            this.$pushMsg.status200(res, "已刪除優惠券");
+          } else {
+            this.$pushMsg.status200(res, "刪除優惠券失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
   created() {

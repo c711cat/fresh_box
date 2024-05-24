@@ -99,13 +99,20 @@ export default {
       },
     };
   },
+  inject: ["emitter"],
   components: { Field, Form, ErrorMessage },
   methods: {
     createOrder() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
-      this.$http.post(api, { data: this.form }).then((res) => {
-        this.$router.push(`/order/${res.data.orderId}`);
-      });
+      this.$http
+        .post(api, { data: this.form })
+        .then((res) => {
+          this.emitter.emit("clearCart");
+          this.$router.push(`/order/${res.data.orderId}`);
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
   },
 };

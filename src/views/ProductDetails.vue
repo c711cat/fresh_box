@@ -100,15 +100,20 @@ export default {
   methods: {
     getProduct() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
-      this.$http.get(api).then((res) => {
-        this.product = res.data.product;
-        this.product.origin_price = this.$filters.currency(
-          this.product.origin_price
-        );
-        this.product.price = this.$filters.currency(this.product.price);
-        this.pushImg();
-        this.getMyFavorite();
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.product = res.data.product;
+          this.product.origin_price = this.$filters.currency(
+            this.product.origin_price
+          );
+          this.product.price = this.$filters.currency(this.product.price);
+          this.pushImg();
+          this.getMyFavorite();
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     addQty() {
       this.productQty = this.productQty + 1;
@@ -123,8 +128,15 @@ export default {
           data: { product_id: this.product.id, qty: Number(this.productQty) },
         })
         .then((res) => {
-          this.$pushMsg(res, "加入購物車");
-          this.productQty = 1;
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已加入購物車");
+            this.productQty = 1;
+          } else {
+            this.$pushMsg.statue200(res, "加入購物車失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
         });
     },
     changeImg(img) {

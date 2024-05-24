@@ -40,7 +40,7 @@
           <strong v-if="allOrders" class="text-danger">
             確定刪除全部訂單？
           </strong>
-          <span v-else>
+          <span v-if="tempProduct.id">
             確定刪除
             <span class="text-danger fw-bold fs-5">
               {{ tempProduct.title }}
@@ -66,7 +66,7 @@
           </button>
           <button
             v-if="tempOrder.id"
-            @click="$emit('del-order', tempOrder)"
+            @click="$emit('del-order', tempOrder, pages.current_page)"
             type="button"
             class="btn btn-danger"
           >
@@ -81,7 +81,7 @@
             確定刪除
           </button>
           <button
-            v-else
+            v-if="tempProduct.id"
             @click="$emit('del-product', tempProduct, pages.current_page)"
             type="button"
             class="btn btn-danger"

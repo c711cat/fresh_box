@@ -157,7 +157,4 @@ export default {
 .smFontSize {
   font-size: 12px;
 }
-* {
-  // border: 1px solid;
-}
 </style>

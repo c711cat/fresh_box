@@ -7,12 +7,12 @@ import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { currency, changeDateStyle } from "./methods/filters";
-import $pushMsg from "./methods/PushMsg";
+import { status200, status404 } from "./methods/PushMsg";
 import vSelect from "vue-select";
 
 const app = createApp(App);
 app.config.globalProperties.$filters = { currency, changeDateStyle };
-app.config.globalProperties.$pushMsg = $pushMsg;
+app.config.globalProperties.$pushMsg = { status200, status404 };
 app.use(VueAxios, axios);
 app.use(router);
 app.component("Loading", Loading);

@@ -44,18 +44,34 @@ export default {
     getOrder() {
       const orderId = this.$route.params.orderId || this.OrderId;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${orderId}`;
-      this.$http.get(api).then((res) => {
-        this.order = { ...res.data.order };
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.order = res.data.order;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     toPay() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`;
       this.isLoading = true;
-      this.$http.post(api).then((res) => {
-        this.isLoading = false;
-        this.$pushMsg(res, "付款");
-        this.getOrder();
-      });
+      this.$http
+        .post(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "付款成功");
+            this.getOrder();
+          } else {
+            this.$pushMsg.status200(res, "付款失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
   created() {

@@ -55,10 +55,15 @@ export default {
       this.orderList = {};
       this.pageSwitch = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.orderList = { ...res.data.orders };
-        this.pagination = res.data.pagination;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orderList = { ...res.data.orders };
+          this.pagination = res.data.pagination;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });

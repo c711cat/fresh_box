@@ -134,34 +134,52 @@ export default {
   methods: {
     logOut() {
       const api = `${process.env.VUE_APP_API}logout`;
-      this.$http.post(api).then((res) => {
-        this.$pushMsg(res, "登出");
-        if (res.data.success) {
-          this.$router.push("/dashboard/login");
-        }
-      });
+      this.$http
+        .post(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.$router.push("/dashboard/login");
+            this.$pushMsg.status200(res, "已登出");
+          } else {
+            this.$pushMsg.status200(res, "登出失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
       this.isLoading = true;
-      this.$http.get(api).then((res) => {
-        this.isLoading = false;
-        this.products = res.data.products;
-        window.scrollTo(0, -100);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.products = res.data.products;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     getOrders() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
-      this.$http.get(api).then((res) => {
-        this.orders = res.data.orders;
-        this.orderPage = this.orderPage + 1;
-        if (this.orderPage <= res.data.pagination.total_pages) {
-          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
-          this.$http.get(api).then((res) => {
-            this.orders = [...this.orders, ...res.data.orders];
-          });
-        }
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orders = res.data.orders;
+          this.orderPage = this.orderPage + 1;
+          if (this.orderPage <= res.data.pagination.total_pages) {
+            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+            this.$http.get(api).then((res) => {
+              this.orders = [...this.orders, ...res.data.orders];
+            });
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
   },
   created() {

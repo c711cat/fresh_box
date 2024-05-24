@@ -1,10 +1,10 @@
 import emitter from "@/methods/emitter";
 
-export default function (res, title) {
+export function status200(res, title) {
   if (res.data.success) {
     emitter.emit("push-message", {
       style: "success",
-      title: `${title}成功`,
+      title: title,
     });
   } else {
     const msg = [];
@@ -84,8 +84,15 @@ export default function (res, title) {
     });
     emitter.emit("push-message", {
       style: "failure",
-      title: `${title}失敗`,
+      title: title,
       content: msg.join("、"),
     });
   }
+}
+
+export function status404(msg) {
+  emitter.emit("push-message", {
+    style: "failure",
+    title: msg,
+  });
 }
