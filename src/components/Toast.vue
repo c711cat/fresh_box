@@ -2,15 +2,15 @@
 <template>
   <div
     ref="toast"
-    :class="successBorder"
     class="toast mb-2 shadow-none"
     role="alert"
     aria-live="assertive"
     aria-atomic="true"
   >
-    <div :class="toastBgColor" class="d-flex">
-      <div class="border-0 ms-2 p-2">
-        <div :class="textColor" class="fs-6">{{ msg.title }}</div>
+    <div class="d-flex">
+      <div class="d-flex align-items-center ms-2 px-2 py-1">
+        <div :class="iconStyle" class="me-3 fs-3"></div>
+        <div class="text_color fs-6">{{ msg.title }}</div>
       </div>
       <button
         type="button"
@@ -19,7 +19,7 @@
         aria-label="Close"
       ></button>
     </div>
-    <div v-if="msg.content" class="toast-body ms-2 text-danger">
+    <div v-if="msg.content" class="toast-body text-danger border-top ps-4">
       <strong>必填欄位：</strong>{{ msg.content }}
     </div>
   </div>
@@ -34,25 +34,11 @@ export default {
   },
   props: ["msg"],
   computed: {
-    toastBgColor() {
+    iconStyle() {
       if (this.msg.style === "success") {
-        return "success_color";
+        return "bi bi-check-circle-fill text-success";
       } else {
-        return "failure_color";
-      }
-    },
-    successBorder() {
-      if (this.msg.style === "success") {
-        return "success_border";
-      } else {
-        return "";
-      }
-    },
-    textColor() {
-      if (this.msg.style === "success") {
-        return "text_success_color";
-      } else {
-        return "text_failure_color";
+        return "bi bi-x-circle-fill text-danger";
       }
     },
   },
@@ -67,23 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.success_color {
-  background-color: rgb(199, 243, 199);
-}
-
-.failure_color {
-  background-color: #dc3545;
-}
-
-.success_border {
-  border: 1px solid rgb(199, 243, 199);
-}
-
-.text_success_color {
+.text_color {
   color: #727272;
-}
-
-.text_failure_color {
-  color: white;
 }
 </style>
