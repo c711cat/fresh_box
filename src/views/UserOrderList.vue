@@ -1,5 +1,6 @@
 <template>
-  <div class="listContainer mx-auto mb-5 px-4">
+  <Loading v-if="isLoading"></Loading>
+  <div v-else class="listContainer mx-auto mb-5 px-4">
     <h3 v-if="noResults" class="pt-4">查無此收件人姓名</h3>
     <div
       v-for="(item, index) in orderList"
@@ -43,6 +44,7 @@ import Pagination from "@/components/Pagination.vue";
 export default {
   data() {
     return {
+      isLoading: false,
       orderList: {},
       pagination: {},
       pageSwitch: true,
@@ -54,6 +56,7 @@ export default {
     getOrders(page = 1) {
       this.orderList = {};
       this.pageSwitch = true;
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http
         .get(api)
@@ -63,6 +66,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
     turnDate(date) {
