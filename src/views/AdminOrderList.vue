@@ -79,7 +79,7 @@ export default {
       pagination: {},
       pageSwitch: true,
       allOrdersSwitch: false,
-      searchContent: "",
+      searchContent: null,
     };
   },
   inject: ["emitter"],
@@ -161,7 +161,7 @@ export default {
       if (this.searchContent) {
         text = "查無此收件人姓名";
       }
-      if (this.searchContent === "") {
+      if (this.searchContent === null) {
         text = "無訂單";
       }
       return text;
@@ -181,6 +181,7 @@ export default {
     });
     this.emitter.on("adminOrderSearchNull", () => {
       this.getOrders();
+      this.searchContent = null;
     });
   },
 };

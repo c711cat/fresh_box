@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="isLoading"></Loading>
   <div v-else class="listContainer mx-auto mb-5 px-4">
-    <h3 v-if="noResults" class="pt-4">{{ noResultsContent }}</h3>
+    <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -48,7 +48,7 @@ export default {
       orderList: {},
       pagination: {},
       pageSwitch: true,
-      searchContent: "",
+      searchContent: null,
     };
   },
   inject: ["emitter"],
@@ -85,7 +85,7 @@ export default {
       if (this.searchContent) {
         text = "查無此收件人姓名";
       }
-      if (this.searchContent === "") {
+      if (this.searchContent === null) {
         text = "無訂單";
       }
       return text;
@@ -105,6 +105,7 @@ export default {
     });
     this.emitter.on("orderSearchNull", () => {
       this.getOrders();
+      this.searchContent = null;
     });
   },
 };
