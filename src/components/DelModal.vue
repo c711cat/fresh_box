@@ -110,7 +110,6 @@ export default {
   computed: {
     delText() {
       if (this.coupon.id) {
-        console.log(this.coupon);
         return `確定刪除 ${this.coupon.title} 這張優惠券？`;
       }
       if (this.tempOrder.id) {
