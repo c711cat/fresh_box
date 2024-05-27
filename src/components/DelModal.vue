@@ -21,32 +21,9 @@
           ></button>
         </div>
         <div class="modal-body">
-          <span v-if="tempCoupon.id">
-            確定刪除
-            <span class="text-danger fw-bold fs-5">
-              {{ tempCoupon.title }}
-            </span>
-            這張優惠券？
-          </span>
-          <strong v-if="tempOrder.id">
-            確定刪除這張訂單？
-            <div class="text-danger fw-bold fs-5">
-              訂單編號 {{ tempOrder.id }}
-            </div>
-            <div class="text-danger fw-bold fs-5">
-              訂單日期 {{ turnDate(tempOrder.create_at) }}
-            </div>
-          </strong>
-          <strong v-if="allOrders" class="text-danger">
-            確定刪除全部訂單？
-          </strong>
-          <span v-if="tempProduct.id">
-            確定刪除
-            <span class="text-danger fw-bold fs-5">
-              {{ tempProduct.title }}
-            </span>
-            這個產品？
-          </span>
+          <strong> {{ delText }} </strong><br />
+          <strong v-if="tempOrder.id"> {{ delItemId }} </strong><br />
+          <strong v-if="tempOrder.id"> {{ delItemTime }} </strong>
         </div>
         <div class="modal-footer">
           <button
@@ -56,36 +33,8 @@
           >
             取消
           </button>
-          <button
-            v-if="tempCoupon.id"
-            @click="$emit('del-coupon', tempCoupon)"
-            type="button"
-            class="btn btn-danger"
-          >
-            確定刪除
-          </button>
-          <button
-            v-if="tempOrder.id"
-            @click="$emit('del-order', tempOrder, pages.current_page)"
-            type="button"
-            class="btn btn-danger"
-          >
-            確定刪除
-          </button>
-          <button
-            v-if="allOrders"
-            @click="$emit('del-all-orders')"
-            type="button"
-            class="btn btn-danger"
-          >
-            確定刪除
-          </button>
-          <button
-            v-if="tempProduct.id"
-            @click="$emit('del-product', tempProduct, pages.current_page)"
-            type="button"
-            class="btn btn-danger"
-          >
+          <!-- 優惠券 -->
+          <button @click="delItem" type="button" class="btn btn-danger">
             確定刪除
           </button>
         </div>
@@ -131,6 +80,20 @@ export default {
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
+    delItem() {
+      if (this.coupon.id) {
+        this.$emit("del-coupon", this.tempCoupon);
+      }
+      if (this.tempProduct.id) {
+        this.$emit("del-product", this.tempProduct, this.pages.current_page);
+      }
+      if (this.tempOrder.id) {
+        this.$emit("del-order", this.tempOrder, this.pages.current_page);
+      }
+      if (this.allOrders) {
+        this.$emit("del-all-orders");
+      }
+    },
   },
   watch: {
     product() {
@@ -144,5 +107,38 @@ export default {
     },
   },
   mixins: [ModalMixin],
+  computed: {
+    delText() {
+      if (this.coupon.id) {
+        console.log(this.coupon);
+        return `確定刪除 ${this.coupon.title} 這張優惠券？`;
+      }
+      if (this.tempOrder.id) {
+        return "確定刪除這張訂單？";
+      }
+      if (this.allOrders) {
+        return "確定刪除全部訂單？";
+      }
+      if (this.tempProduct.id) {
+        return `確定刪除 ${this.tempProduct.title} 這個產品？`;
+      } else {
+        return "";
+      }
+    },
+    delItemId() {
+      if (this.tempOrder) {
+        return `訂單編號： ${this.tempOrder.id}`;
+      } else {
+        return "";
+      }
+    },
+    delItemTime() {
+      if (this.tempOrder) {
+        return `訂單時間： ${this.turnDate(this.tempOrder.create_at)}`;
+      } else {
+        return "";
+      }
+    },
+  },
 };
 </script>

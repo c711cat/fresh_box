@@ -47,7 +47,7 @@
             </div>
             <div
               v-else
-              class="col-12 col-sm-2 col-md-8 col-lg-1 text-success py-2"
+              class="col-12 col-sm-2 col-md-8 col-lg-1 text-secondary py-2"
             >
               未啟用
             </div>

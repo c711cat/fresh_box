@@ -57,7 +57,7 @@
     ref="delModal"
     :order="tempOrder"
     @del-order="delOrder"
-    :allOrders="allOrdersSwitch"
+    :allOrders="allOrders"
     @del-all-orders="delAllOrders"
     :pages="pagination"
   >
@@ -77,7 +77,7 @@ export default {
       orderList: {},
       tempOrder: {},
       pagination: {},
-      allOrdersSwitch: false,
+      allOrders: false,
       searchContent: null,
     };
   },
@@ -102,11 +102,13 @@ export default {
         });
     },
     openDelModal(item) {
+      this.allOrders = false;
       this.tempOrder = { ...item };
       this.$refs.delModal.showModal();
     },
     openDelAllOrdersModal() {
-      this.allOrdersSwitch = true;
+      this.allOrders = true;
+      this.tempOrder = {};
       this.$refs.delModal.showModal();
     },
     delOrder(order, page) {
