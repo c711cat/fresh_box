@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="isLoading"></Loading>
   <div v-else class="col-12 col-xl-10 mx-auto mb-5 px-3">
-    <h3 v-if="noResults">查無此收件人姓名</h3>
+    <h3 v-if="noResults">{{ noResultsContent }}</h3>
     <div v-else class="p-1 mb-2 text-end">
       <button
         @click="openDelAllOrdersModal"
@@ -79,6 +79,7 @@ export default {
       pagination: {},
       pageSwitch: true,
       allOrdersSwitch: false,
+      searchContent: "",
     };
   },
   inject: ["emitter"],
@@ -147,12 +148,23 @@ export default {
         })
         .finally(() => {
           this.allOrdersSwitch = false;
+          this.getOrders();
         });
     },
   },
   computed: {
     noResults() {
       return this.orderList.length === 0;
+    },
+    noResultsContent() {
+      let text = "";
+      if (this.searchContent) {
+        text = "查無此收件人姓名";
+      }
+      if (this.searchContent === "") {
+        text = "無訂單";
+      }
+      return text;
     },
   },
   created() {
@@ -161,11 +173,11 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
-    this.emitter.on("adminOrderSearchResult", (data) => {
+    this.emitter.on("adminOrderSearchResult", (searchResult) => {
+      this.searchContent = searchResult[0];
       this.pageSwitch = false;
       this.orderList = [];
-
-      this.orderList = data;
+      this.orderList = searchResult.data;
     });
     this.emitter.on("adminOrderSearchNull", () => {
       this.getOrders();
