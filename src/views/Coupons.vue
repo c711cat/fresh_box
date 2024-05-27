@@ -1,9 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else>
+  <div
+    v-else
+    class="mx-auto col-10 col-sm-11 col-md-10 col-lg-11 col-xl-11 col-xxl-10"
+  >
     <div
-      class="pt-4 d-flex justify-content-between align-items-center headerStyle"
+      class="pt-4 pb-3 d-flex flex-wrap justify-content-between align-items-center"
     >
       <h3>後台優惠券列表</h3>
       <div>
@@ -16,40 +19,40 @@
         </button>
       </div>
     </div>
-    <div class="container">
-      <div class="row align-items-center py-4">
+    <div>
+      <div class="row m-0 align-items-center">
         <div class="col-12">
           <div
             v-for="(coupon, index) in coupons"
             :key="index"
-            class="row align-items-center text-center border-top"
+            class="row align-items-center border-top py-2"
           >
-            <div class="col-12 col-sm-4 col-lg-2 py-2">
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2 py-2">
               名稱：{{ coupon.title }}
             </div>
-            <div class="col-12 col-sm-4 col-lg-2 py-2">
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2 py-2">
               折扣碼：{{ coupon.code }}
             </div>
-            <div class="col-12 col-sm-4 col-lg-2 text-center py-2">
+            <div class="col-12 col-sm-4 col-md-3 col-lg-2 py-2">
               總金額乘以 {{ coupon.percent }} ％
             </div>
-            <div class="col-12 col-sm-4 col-lg-2 py-2">
+            <div class="col-12 col-sm-5 col-md-3 col-lg-3 py-2">
               使用期限：{{ $filters.changeDateStyle(coupon.due_date) }}
             </div>
             <div
               v-if="coupon.is_enabled"
-              class="col-12 col-sm-4 col-lg-2 text-success py-2"
+              class="col-12 col-sm-2 col-md-8 col-lg-1 text-success py-2"
             >
               啟用
             </div>
             <div
               v-else
-              class="col-12 col-sm-4 col-lg-2 text-secondary text-center py-2"
+              class="col-12 col-sm-2 col-md-8 col-lg-1 text-success py-2"
             >
               未啟用
             </div>
             <div
-              class="col-12 col-sm-4 col-lg-2 d-flex justify-content-center flex-wrap"
+              class="col-12 col-sm-5 col-md-4 col-lg-2 d-flex justify-content-end flex-wrap"
             >
               <button
                 @click="openCouponModal(isNew, coupon)"
@@ -195,10 +198,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.headerStyle {
-  padding-left: 6%;
-  padding-right: 6%;
-}
-</style>
