@@ -123,10 +123,7 @@ export default {
         this.emitter.emit("adminOrderSearchNull");
       } else {
         this.orders.filter((item) => {
-          console.log(this.orderSearchText);
-          console.log(item.user.name);
           if (item.user.name.match(this.orderSearchText)) {
-            console.log("p");
             this.orderSearchResult.push(item);
           }
         });
