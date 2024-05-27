@@ -182,7 +182,10 @@ export default {
             this.orderSearchResult.push(item);
           }
         });
-        this.emitter.emit("orderSearchResult", this.orderSearchResult);
+        this.emitter.emit("orderSearchResult", {
+          data: this.orderSearchResult,
+          ...this.orderSearchText,
+        });
         this.orderSearchResult = [];
       }
     },

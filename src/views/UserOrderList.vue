@@ -1,7 +1,7 @@
 <template>
   <Loading v-if="isLoading"></Loading>
   <div v-else class="listContainer mx-auto mb-5 px-4">
-    <h3 v-if="noResults" class="pt-4">查無此收件人姓名</h3>
+    <h3 v-if="noResults" class="pt-4">{{ noResultsContent }}</h3>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -48,6 +48,7 @@ export default {
       orderList: {},
       pagination: {},
       pageSwitch: true,
+      searchContent: "",
     };
   },
   inject: ["emitter"],
@@ -77,7 +78,17 @@ export default {
   },
   computed: {
     noResults() {
-      return this.orderList.length === 0;
+      return Object.values(this.orderList).length === 0;
+    },
+    noResultsContent() {
+      let text = "";
+      if (this.searchContent) {
+        text = "查無此收件人姓名";
+      }
+      if (this.searchContent === "") {
+        text = "無訂單";
+      }
+      return text;
     },
   },
   created() {
@@ -86,10 +97,11 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
-    this.emitter.on("orderSearchResult", (data) => {
+    this.emitter.on("orderSearchResult", (SearchResult) => {
+      this.searchContent = SearchResult[0];
       this.pageSwitch = false;
       this.orderList = [];
-      this.orderList = data;
+      this.orderList = SearchResult.data;
     });
     this.emitter.on("orderSearchNull", () => {
       this.getOrders();
