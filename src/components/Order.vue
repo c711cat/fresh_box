@@ -2,9 +2,9 @@
 <template>
   <div class="row m-0 p-0">
     <div class="detailsText pb-2 col-lg-7">
-      <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-between flex-wrap">
         <h3 class="ps-3">訂單明細</h3>
-        <div>
+        <div class="ps-3">
           <div class="orderId">訂單日期 {{ turnDate(order.create_at) }}</div>
           <div class="orderId">訂單編號 {{ order.id }}</div>
         </div>

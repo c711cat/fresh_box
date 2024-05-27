@@ -1,22 +1,26 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else>
-    <div class="mx-2 userOrderWrap">
-      <Order :transOrder="order"></Order>
+  <div v-else class="mt-5 pt-4">
+    <div
+      class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
+    >
+      <Order class="pt-2" :transOrder="order"></Order>
     </div>
-    <div class="text-end col-12 col-lg-7 pe-4 pb-5">
+    <div
+      class="text-end col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 pb-5 my-0 mx-auto"
+    >
       <router-link v-if="order.is_paid" to="/user-products" class="border-0">
         <button type="button" class="btn btn-outline-primary px-4 me-3">
           繼續逛逛
         </button>
       </router-link>
-      <router-link v-if="order.is_paid" to="/order-list" class="border-0">
+      <router-link v-if="order.is_paid" to="/order-list" class="border-0 pe-4">
         <button type="button" class="btn btn-outline-success px-4">
           查看訂單
         </button>
       </router-link>
-      <div v-else>
+      <div v-else class="pe-4">
         <button
           @click="toPay"
           :disabled="isLoading"
@@ -79,9 +83,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.userOrderWrap {
-  margin-top: 150px;
-}
-</style>
