@@ -47,7 +47,6 @@ export default {
       isLoading: false,
       orderList: {},
       pagination: {},
-      pageSwitch: true,
       searchContent: null,
     };
   },
@@ -56,7 +55,6 @@ export default {
   methods: {
     getOrders(page = 1) {
       this.orderList = {};
-      this.pageSwitch = true;
       this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http
@@ -90,6 +88,13 @@ export default {
       }
       return text;
     },
+    pageSwitch() {
+      if (this.searchContent || Object.values(this.orderList).length <= 10) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   created() {
     this.getOrders();
@@ -99,7 +104,6 @@ export default {
     );
     this.emitter.on("orderSearchResult", (SearchResult) => {
       this.searchContent = SearchResult[0];
-      this.pageSwitch = false;
       this.orderList = [];
       this.orderList = SearchResult.data;
     });
