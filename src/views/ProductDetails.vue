@@ -183,7 +183,7 @@ export default {
 
 <style lang="scss" scoped>
 .imgBody {
-  height: 40vh;
+  height: 50vh;
   object-fit: cover;
 }
 
