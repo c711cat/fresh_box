@@ -33,7 +33,6 @@
           >
             取消
           </button>
-          <!-- 優惠券 -->
           <button @click="delItem" type="button" class="btn btn-danger">
             確定刪除
           </button>
