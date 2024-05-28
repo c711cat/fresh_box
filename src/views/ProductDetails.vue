@@ -1,7 +1,7 @@
 <template>
-  <div class="row my-4 mx-auto justify-content-center productDetailsContainer">
+  <div class="row mb-5 mx-auto justify-content-center productDetailsContainer">
     <div class="row m-0 d-cloumn justify-content-center">
-      <div class="p-1 col-12 col-md-5 position-relative">
+      <div class="p-1 col-12 col-md-5 position-relative mb-2">
         <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
         <h2
           v-if="isMyFavorite"
@@ -14,13 +14,13 @@
           @click="addMyFavorite"
           class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
         ></h2>
-        <div class="row m-0 overflow-x-auto flex-nowrap">
+        <div class="row m-0 overflow-x-auto align-items-center flex-nowrap">
           <img
             v-for="(img, index) in product.images"
             :key="index"
             @click="changeImg(img)"
             :src="img"
-            class="imgItems col-3 mb-3"
+            class="imgItems col-3"
             alt=""
           />
         </div>
@@ -183,12 +183,12 @@ export default {
 
 <style lang="scss" scoped>
 .imgBody {
-  height: 600px;
+  height: 40vh;
   object-fit: cover;
 }
 
 .imgItems {
-  height: 100px;
+  height: 8vh;
   object-fit: cover;
 }
 
@@ -205,22 +205,26 @@ export default {
 .btn {
   border: 1px solid #dee2e6;
 }
+
 .delmyFavoriteIcon {
   right: 5px;
   top: 5px;
   padding: 8px 12px;
   color: #f52424b3;
 }
+
 .delmyFavoriteIcon:hover {
   cursor: pointer;
   color: #dc3545;
 }
+
 .myFavoriteIcon {
   right: 5px;
   top: 5px;
   padding: 8px 12px;
   color: #ffffffb3;
 }
+
 .myFavoriteIcon:hover {
   cursor: pointer;
   color: #f52424;
