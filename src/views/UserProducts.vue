@@ -174,19 +174,24 @@ export default {
           if (this.isInView === true && current_page < total_pages) {
             const page = current_page + 1;
             const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-            this.$http.get(api).then((res) => {
-              this.pagination = { ...res.data.pagination };
-              this.newPage = [...res.data.products];
-              this.allProducts = [...this.allProducts, ...this.newPage];
-              this.allProducts.forEach((item) => {
-                this.carts.forEach((cartItem) => {
-                  if (item.id === cartItem.product_id) {
-                    item.buyQty = cartItem.qty;
-                    item.pushCartId = cartItem.id;
-                  }
+            this.$http
+              .get(api)
+              .then((res) => {
+                this.pagination = { ...res.data.pagination };
+                this.newPage = [...res.data.products];
+                this.allProducts = [...this.allProducts, ...this.newPage];
+                this.allProducts.forEach((item) => {
+                  this.carts.forEach((cartItem) => {
+                    if (item.id === cartItem.product_id) {
+                      item.buyQty = cartItem.qty;
+                      item.pushCartId = cartItem.id;
+                    }
+                  });
                 });
+              })
+              .catch((error) => {
+                this.$pushMsg.status404(error.response.data.message);
               });
-            });
           }
         },
         500,
@@ -224,12 +229,17 @@ export default {
     },
     getAllProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
-      this.$http.get(api).then((res) => {
-        if (res.data.success) {
-          this.forCategoryAllProducts = res.data.products;
-        }
-        this.showCategoryProducts();
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.forCategoryAllProducts = res.data.products;
+            this.showCategoryProducts();
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     handleLoadmore() {
       this.getOtherPageProducts();
@@ -245,36 +255,59 @@ export default {
       this.pagination.current_page = 1;
       this.currentCategory = "選擇類別";
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.allProducts = res.data.products;
-        this.pagination = res.data.pagination;
-        this.pushBuyQtyId();
-        this.isLoading = false;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.allProducts = res.data.products;
+          this.pagination = res.data.pagination;
+          this.pushBuyQtyId();
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     addCart(item) {
       const addItem = { product_id: item.id, qty: 1 };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.status.addLoadingItem = item.id;
-      this.$http.post(api, { data: addItem }).then((res) => {
-        this.status.addLoadingItem = "";
-        this.$pushMsg(res, "加入購物車");
-        this.getCart();
-        if (this.$route.params.currentCategory) {
-          this.chooseCategory(this.$route.params.currentCategory);
-        } else {
-          this.getPage1Products();
-          this.getOtherPageProducts();
-        }
-        this.emitter.emit("updateProductInCart");
-      });
+      this.$http
+        .post(api, { data: addItem })
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已加入購物車");
+            this.getCart();
+            if (this.$route.params.currentCategory) {
+              this.chooseCategory(this.$route.params.currentCategory);
+            } else {
+              this.getPage1Products();
+              this.getOtherPageProducts();
+            }
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "加入購物車失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.addLoadingItem = "";
+        });
     },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.$http.get(api).then((res) => {
-        this.carts = [...res.data.data.carts];
-        window.scrollTo(0, -100);
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.carts = res.data.data.carts;
+          window.scrollTo(0, -100);
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     pushBuyQtyId() {
       const cart = [...this.carts];
@@ -292,30 +325,46 @@ export default {
       const delItem = { product_id: item.id, qty: updateQty };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushCartId}`;
       this.status.delLoadingItem = item.id;
-      this.$http.put(api, { data: delItem }).then((res) => {
-        this.status.delLoadingItem = "";
-        this.$pushMsg(res, "刪除 1 個品項");
-        if (res.data.data.qty === 0) {
-          this.delItem(item.pushCartId);
-        }
-        this.getCart();
-        if (this.$route.params.currentCategory) {
-          this.chooseCategory(this.$route.params.currentCategory);
-        } else {
-          this.getPage1Products();
-          this.getOtherPageProducts();
-        }
-        this.emitter.emit("updateProductInCart");
-      });
+      this.$http
+        .put(api, { data: delItem })
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已刪除 1 個品項");
+            if (res.data.data.qty === 0) {
+              this.delItem(item.pushCartId);
+            }
+            this.getCart();
+            if (this.$route.params.currentCategory) {
+              this.chooseCategory(this.$route.params.currentCategory);
+            } else {
+              this.getPage1Products();
+              this.getOtherPageProducts();
+            }
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "刪除失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.delLoadingItem = "";
+        });
     },
     goToProduct(item) {
       this.$router.push(`/product/${item.id}`);
     },
     delItem(id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-      this.$http.delete(api).then((res) => {
-        return res;
-      });
+      this.$http
+        .delete(api)
+        .then((res) => {
+          return res;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     getMyFavorite() {
       this.myFavoriteList =
@@ -355,8 +404,10 @@ export default {
           }, 3000);
         } else {
           this.getCart();
-          this.getPage1Products();
-          this.getOtherPageProducts();
+          setTimeout(() => {
+            this.getPage1Products();
+            this.getOtherPageProducts();
+          }, 600);
         }
       }
     },

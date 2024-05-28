@@ -182,7 +182,10 @@ export default {
             this.orderSearchResult.push(item);
           }
         });
-        this.emitter.emit("orderSearchResult", this.orderSearchResult);
+        this.emitter.emit("orderSearchResult", {
+          data: this.orderSearchResult,
+          ...this.orderSearchText,
+        });
         this.orderSearchResult = [];
       }
     },
@@ -190,31 +193,46 @@ export default {
   methods: {
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
-      this.$http.get(api).then((res) => {
-        this.products = res.data.products;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.products = res.data.products;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.$http.get(api).then((res) => {
-        this.carts = res.data.data.carts;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.carts = res.data.data.carts;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     goToUserProducts() {
       this.emitter.emit("goToUserProducts");
     },
     getOrders() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
-      this.$http.get(api).then((res) => {
-        this.orderPage = this.orderPage + 1;
-        this.orders = res.data.orders;
-        if (this.orderPage <= res.data.pagination.total_pages) {
-          const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
-          this.$http.get(api).then((res) => {
-            this.orders = [...this.orders, ...res.data.orders];
-          });
-        }
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orderPage = this.orderPage + 1;
+          this.orders = res.data.orders;
+          if (this.orderPage <= res.data.pagination.total_pages) {
+            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+            this.$http.get(api).then((res) => {
+              this.orders = [...this.orders, ...res.data.orders];
+            });
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
   },
   computed: {
@@ -236,6 +254,9 @@ export default {
     );
     this.getProducts();
     this.emitter.on("updateProductInCart", () => {
+      this.getCart();
+    });
+    this.emitter.on("clearCart", () => {
       this.getCart();
     });
   },

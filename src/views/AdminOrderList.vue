@@ -1,8 +1,13 @@
 <template>
-  <div class="col-12 col-xl-10 mx-auto mb-5 px-3">
-    <h3 v-if="noResults">查無此收件人姓名</h3>
+  <Loading v-if="isLoading"></Loading>
+  <div v-else class="col-12 col-xl-10 mx-auto mb-5 px-3">
+    <h3 v-if="noResults">{{ noResultsContent }}</h3>
     <div v-else class="p-1 mb-2 text-end">
-      <button @click="openDelModal" class="btn btn-danger" type="button">
+      <button
+        @click="openDelAllOrdersModal"
+        class="btn btn-danger"
+        type="button"
+      >
         刪除全部訂單
       </button>
     </div>
@@ -52,8 +57,9 @@
     ref="delModal"
     :order="tempOrder"
     @del-order="delOrder"
-    :allOrders="true"
+    :allOrders="allOrders"
     @del-all-orders="delAllOrders"
+    :pages="pagination"
   >
   </delModal>
 </template>
@@ -67,10 +73,12 @@ import Pagination from "@/components/Pagination.vue";
 export default {
   data() {
     return {
+      isLoading: false,
       orderList: {},
       tempOrder: {},
       pagination: {},
-      pageSwitch: true,
+      allOrders: false,
+      searchContent: null,
     };
   },
   inject: ["emitter"],
@@ -78,43 +86,92 @@ export default {
   methods: {
     getOrders(page = 1) {
       this.orderList = {};
-      this.pageSwitch = true;
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.orderList = { ...res.data.orders };
-        this.pagination = res.data.pagination;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orderList = res.data.orders;
+          this.pagination = res.data.pagination;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     openDelModal(item) {
+      this.allOrders = false;
       this.tempOrder = { ...item };
       this.$refs.delModal.showModal();
     },
-    delOrder(order) {
+    openDelAllOrdersModal() {
+      this.allOrders = true;
+      this.tempOrder = {};
+      this.$refs.delModal.showModal();
+    },
+    delOrder(order, page) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`;
-      this.$http.delete(api).then((res) => {
-        this.$pushMsg(res, "刪除訂單");
-        if (res.data.success) {
-          this.$refs.delModal.hideModal();
-        } else {
-          return;
-        }
-        window.location.reload();
-      });
+      this.$http
+        .delete(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.getOrders(page);
+            this.$refs.delModal.hideModal();
+            this.$pushMsg.status200(res, "已刪除訂單");
+          } else {
+            this.$pushMsg.status200(res, "刪除訂單失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
     delAllOrders() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
-      this.$http.delete(api).then((res) => {
-        this.$pushMsg(res, "刪除全部訂單");
-        this.$refs.delModal.hideModal();
-      });
+      this.$http
+        .delete(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.$refs.delModal.hideModal();
+            this.$pushMsg.status200(res, "成功刪除全部訂單");
+          } else {
+            this.$pushMsg.status200(res, "刪除全部訂單失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.allOrdersSwitch = false;
+          this.getOrders();
+        });
     },
   },
   computed: {
     noResults() {
       return this.orderList.length === 0;
+    },
+    noResultsContent() {
+      let text = "";
+      if (this.searchContent) {
+        text = "查無此收件人姓名";
+      }
+      if (this.searchContent === null) {
+        text = "無訂單";
+      }
+      return text;
+    },
+    pageSwitch() {
+      if (this.searchContent || this.orderList.length <= 10) {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
   created() {
@@ -123,14 +180,14 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
-    this.emitter.on("adminOrderSearchResult", (data) => {
-      this.pageSwitch = false;
+    this.emitter.on("adminOrderSearchResult", (searchResult) => {
+      this.searchContent = searchResult[0];
       this.orderList = [];
-
-      this.orderList = data;
+      this.orderList = searchResult.data;
     });
     this.emitter.on("adminOrderSearchNull", () => {
       this.getOrders();
+      this.searchContent = null;
     });
   },
 };

@@ -195,51 +195,89 @@ export default {
   methods: {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.$http.get(api).then((res) => {
-        this.carts = res.data.data.carts;
-        this.getshippingFee();
-        this.carts.forEach((item) => {
-          if (item.qty === 0) {
-            this.delItem(item);
-          } else {
-            return;
-          }
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.carts = res.data.data.carts;
+          this.getshippingFee();
+          this.carts.forEach((item) => {
+            if (item.qty === 0) {
+              this.delItem(item);
+            } else {
+              return;
+            }
+          });
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
-        this.isLoading = false;
-      });
     },
     delItem(item) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
-      this.$http.delete(api).then((res) => {
-        this.$pushMsg(res, "刪除");
-        this.getCart();
-        this.emitter.emit("updateProductInCart");
-      });
+      this.$http
+        .delete(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "刪除商品成功");
+            this.getCart();
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "刪除商品失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     addOneToCart(item) {
       const addItem = { product_id: item.product.id, qty: 1 };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.status.addLoadingItem = item.id;
-      this.$http.post(api, { data: addItem }).then((res) => {
-        this.status.addLoadingItem = "";
-        this.couponCode = "";
-        this.used_coupon = false;
-        this.$pushMsg(res, "加入購物車");
-        this.getCart();
-        this.emitter.emit("updateProductInCart");
-      });
+      this.$http
+        .post(api, { data: addItem })
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已加入購物車");
+            this.getCart();
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "加入購物車失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.addLoadingItem = "";
+          this.couponCode = "";
+          this.used_coupon = false;
+        });
     },
     delOneQty(item) {
       const updateQty = item.qty - 1;
       const delItem = { product_id: item.product.id, qty: updateQty };
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.status.delLoadingItem = item.id;
-      this.$http.put(api, { data: delItem }).then((res) => {
-        this.status.delLoadingItem = "";
-        this.$pushMsg(res, "刪除");
-        this.getCart();
-        this.emitter.emit("updateProductInCart");
-      });
+      this.$http
+        .put(api, { data: delItem })
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已刪除 1 個品項");
+            this.getCart();
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "刪除失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.delLoadingItem = "";
+        });
     },
     updateQtyOfInput(item) {
       if (item.qty < 0) {
@@ -251,22 +289,38 @@ export default {
       this.$http
         .put(api, { data: { product_id: item.product.id, qty: updateQty } })
         .then((res) => {
-          this, (this.status.updateLoadingItem = "");
-          this.$pushMsg(res, "更新數量");
-          this.getCart();
-          this.emitter.emit("updateProductInCart");
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已更新數量");
+            this.getCart();
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "更新數量失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.updateLoadingItem = "";
         });
     },
     useCoupon() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
-      this.$http.post(api, { data: { code: this.couponCode } }).then((res) => {
-        this.$pushMsg(res, "套用優惠券");
-        if (res.data.success) {
-          this.used_coupon = true;
-        }
-        this.getCart();
-        this.emitter.emit("updateProductInCart");
-      });
+      this.$http
+        .post(api, { data: { code: this.couponCode } })
+        .then((res) => {
+          if (res.data.success) {
+            this.used_coupon = true;
+            this.$pushMsg.status200(res, "套用優惠券成功");
+            this.getCart();
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "套用優惠券失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     getshippingFee() {
       if (!this.couponCode && this.subtotal >= 1000) {

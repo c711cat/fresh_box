@@ -301,11 +301,16 @@ export default {
       const formData = new FormData();
       formData.append("file-to-upload", uploadFile);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
-      this.$http.post(url, formData).then((res) => {
-        if (res.data.success) {
-          this.tempProduct.imageUrl = res.data.imageUrl;
-        }
-      });
+      this.$http
+        .post(url, formData)
+        .then((res) => {
+          if (res.data.success) {
+            this.tempProduct.imageUrl = res.data.imageUrl;
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     uploadMultipleImgs() {
       const imgOfIndex = this.tempProduct.images.length - 1;
@@ -313,11 +318,16 @@ export default {
       const formData = new FormData();
       formData.append("file-to-upload", multipleFile);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
-      this.$http.post(url, formData).then((res) => {
-        if (res.data.success) {
-          this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
-        }
-      });
+      this.$http
+        .post(url, formData)
+        .then((res) => {
+          if (res.data.success) {
+            this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
     delCoverImg() {
       this.tempProduct.imageUrl = "";

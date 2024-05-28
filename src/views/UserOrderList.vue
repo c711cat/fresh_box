@@ -1,6 +1,7 @@
 <template>
-  <div class="listContainer mx-auto mb-5 px-4">
-    <h3 v-if="noResults" class="pt-4">查無此收件人姓名</h3>
+  <Loading v-if="isLoading"></Loading>
+  <div v-else class="listContainer mx-auto mb-5 px-4">
+    <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
     <div
       v-for="(item, index) in orderList"
       :key="index"
@@ -43,9 +44,10 @@ import Pagination from "@/components/Pagination.vue";
 export default {
   data() {
     return {
+      isLoading: false,
       orderList: {},
       pagination: {},
-      pageSwitch: true,
+      searchContent: null,
     };
   },
   inject: ["emitter"],
@@ -53,12 +55,20 @@ export default {
   methods: {
     getOrders(page = 1) {
       this.orderList = {};
-      this.pageSwitch = true;
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
-      this.$http.get(api).then((res) => {
-        this.orderList = { ...res.data.orders };
-        this.pagination = res.data.pagination;
-      });
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.orderList = { ...res.data.orders };
+          this.pagination = res.data.pagination;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
@@ -66,7 +76,24 @@ export default {
   },
   computed: {
     noResults() {
-      return this.orderList.length === 0;
+      return Object.values(this.orderList).length === 0;
+    },
+    noResultsContent() {
+      let text = "";
+      if (this.searchContent) {
+        text = "查無此收件人姓名";
+      }
+      if (this.searchContent === null) {
+        text = "無訂單";
+      }
+      return text;
+    },
+    pageSwitch() {
+      if (this.searchContent || Object.values(this.orderList).length <= 10) {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
   created() {
@@ -75,13 +102,14 @@ export default {
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     );
-    this.emitter.on("orderSearchResult", (data) => {
-      this.pageSwitch = false;
+    this.emitter.on("orderSearchResult", (SearchResult) => {
+      this.searchContent = SearchResult[0];
       this.orderList = [];
-      this.orderList = data;
+      this.orderList = SearchResult.data;
     });
     this.emitter.on("orderSearchNull", () => {
       this.getOrders();
+      this.searchContent = null;
     });
   },
 };

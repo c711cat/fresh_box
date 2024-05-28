@@ -53,15 +53,22 @@ export default {
   methods: {
     signIn() {
       const api = `${process.env.VUE_APP_API}admin/signin`;
-      this.$http.post(api, this.user).then((res) => {
-        this.$pushMsg(res, "登入");
-        if (res.data.success) {
-          const token = res.data.token;
-          const expired = new Date(res.data.expired);
-          Cookies.set("freshBoxToken", token, { expires: expired });
-          this.$router.push("/dashboard/admin's-products");
-        }
-      });
+      this.$http
+        .post(api, this.user)
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "登入成功");
+            const token = res.data.token;
+            const expired = new Date(res.data.expired);
+            Cookies.set("freshBoxToken", token, { expires: expired });
+            this.$router.push("/dashboard/admin's-products");
+          } else {
+            this.$pushMsg.status200(res, "登入失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
     },
   },
 };
