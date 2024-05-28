@@ -97,6 +97,7 @@ export default {
       myFavoriteList: [],
     };
   },
+  inject: ["emitter"],
   methods: {
     getProduct() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
@@ -131,6 +132,7 @@ export default {
           if (res.data.success) {
             this.$pushMsg.status200(res, "已加入購物車");
             this.productQty = 1;
+            this.emitter.emit("updateProductInCart");
           } else {
             this.$pushMsg.statue200(res, "加入購物車失敗");
           }
