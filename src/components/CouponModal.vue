@@ -87,7 +87,7 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             取消
@@ -104,7 +104,7 @@
             v-else
             @click="$emit('add-coupon', tempCoupon)"
             type="button"
-            class="btn btn-primary"
+            class="btn btn-yellow-200"
           >
             新增優惠券
           </button>

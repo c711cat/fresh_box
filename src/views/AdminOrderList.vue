@@ -21,7 +21,7 @@
         <h2 class="accordion-header">
           <button
             @click="open"
-            class="accordion-button"
+            class="accordion-button text-black"
             type="button"
             data-bs-toggle="collapse"
             :data-bs-target="`#accordion-collapse-collapse` + `${index}`"
@@ -194,17 +194,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.accordion-button {
-  color: #000000a6;
+.accordion-button:hover {
+  color: #ccaf3c !important;
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: rgba(248, 249, 250);
-  color: #000000a6;
+  background-color: #f8f9fa;
+  color: #000;
   font-weight: bolder;
-}
-
-.accordion-button:hover {
-  color: black;
 }
 </style>

@@ -95,7 +95,7 @@
 
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
           冷藏宅配
-          <div class="col-12 text-success">
+          <div class="col-12 text-yellow-600">
             <i class="bi bi-info-circle"></i>
             滿 NT$ 1,000 免運
           </div>

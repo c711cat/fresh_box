@@ -4,9 +4,9 @@
     <div
       class="loader position-absolute top-50 start-50 translate-middle d-flex justify-content-center align-items-center"
     >
-      <span class="loader1 position-absolute"></span>
-      <span class="loader2 position-absolute"></span>
-      <span class="loader3 position-absolute"></span>
+      <span class="loader1 border border-primary position-absolute"></span>
+      <span class="loader2 border border-primary position-absolute"></span>
+      <span class="loader3 border border-primary position-absolute"></span>
       <text class="textBody">Loading...</text>
     </div>
   </div>
@@ -33,18 +33,15 @@
 }
 
 .loader .loader1 {
-  border: 1px solid #ccaf3c;
   border-radius: 66% 34% 69% 31% / 31% 71% 29% 69%;
 }
 
 .loader .loader2 {
-  border: 1px solid #ccaf3c;
   animation-direction: reverse;
-  border-radius: 73% 27% 68% 32% / 31% 71% 29% 69%;
+  border-radius: 73% 27% 68% 32% / 31% 71% 29% 75%;
 }
 
 .loader .loader3 {
-  border: 1px solid #ccaf3c;
   animation-duration: 10s;
   border-radius: 37% 63% 27% 73% / 67% 43% 57% 33%;
 }

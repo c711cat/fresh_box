@@ -10,7 +10,7 @@
     <div class="d-flex">
       <div class="d-flex align-items-center ms-2 px-2 py-1">
         <div :class="iconStyle" class="me-3 fs-3"></div>
-        <div class="text_color fs-6">{{ msg.title }}</div>
+        <div class="text-dark fs-6">{{ msg.title }}</div>
       </div>
       <button
         type="button"
@@ -51,9 +51,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.text_color {
-  color: #727272;
-}
-</style>

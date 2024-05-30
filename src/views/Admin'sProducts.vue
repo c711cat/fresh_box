@@ -13,7 +13,7 @@
         <button
           @click="openModal(true)"
           type="button"
-          class="btn btn-outline-primary"
+          class="btn btn-yellow-200"
         >
           新增產品
         </button>

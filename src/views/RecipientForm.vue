@@ -66,7 +66,7 @@
       ></textarea>
     </div>
     <div class="text-end">
-      <button class="btn btn-danger px-5">送出訂單</button>
+      <button class="btn btn-yellow-200 px-5">送出訂單</button>
     </div>
   </Form>
 </template>

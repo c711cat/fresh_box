@@ -10,17 +10,20 @@
     <div
       class="text-end col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 pb-5 my-0 mx-auto"
     >
-      <router-link v-if="order.is_paid" to="/user-products" class="border-0">
-        <button type="button" class="btn btn-outline-primary px-4 me-3">
-          繼續逛逛
-        </button>
-      </router-link>
-      <router-link v-if="order.is_paid" to="/order-list" class="border-0 pe-4">
-        <button type="button" class="btn btn-outline-success px-4">
-          查看訂單
-        </button>
-      </router-link>
-      <div v-else class="pe-4">
+      <div v-if="order.is_paid" class="col-lg-7">
+        <router-link to="/user-products" class="border-0">
+          <button type="button" class="btn btn-outline-dark px-4 me-3">
+            繼續逛逛
+          </button>
+        </router-link>
+        <router-link to="/order-list" class="border-0 pe-4">
+          <button type="button" class="btn btn-outline-primary px-4">
+            查看訂單
+          </button>
+        </router-link>
+      </div>
+
+      <div v-else class="col-lg-7 pe-3">
         <button
           @click="toPay"
           :disabled="isLoading"
@@ -83,3 +86,8 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+* {
+  border: 1px solid;
+}
+</style>

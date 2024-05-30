@@ -1,13 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
-    class="categoryWrap row m-0 flex-wrap justify-content-center align-items-center"
+    class="categoryWrap bg-light-gray row m-0 flex-wrap justify-content-center align-items-center"
   >
     <router-link
       :to="`/user-products/${categoryList.veleafy_vegetable}`"
       data-aos="zoom-in"
       data-aos-duration="600"
-      class="m-1 categoryLink col-2 col-lg-1"
+      class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img
         class="categoryImg"
@@ -33,7 +33,7 @@
       :to="`/user-products/${categoryList.melon_root_bulb}`"
       data-aos="zoom-in"
       data-aos-duration="600"
-      class="m-1 categoryLink col-2 col-lg-1"
+      class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img
         class="categoryImg"
@@ -56,7 +56,7 @@
       :to="`/user-products/${categoryList.mushroom}`"
       data-aos="zoom-in"
       data-aos-duration="600"
-      class="m-1 categoryLink col-2 col-lg-1"
+      class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img
         class="categoryImg"
@@ -79,7 +79,7 @@
       :to="`/user-products/${categoryList.fruit}`"
       data-aos="zoom-in"
       data-aos-duration="600"
-      class="m-1 categoryLink col-2 col-lg-1"
+      class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img class="categoryImg" src="@/assets/img/fruit.png" alt="fruit_img" />
       <div
@@ -97,7 +97,7 @@
       :to="`/user-products/${categoryList.spice}`"
       data-aos="zoom-in"
       data-aos-duration="600"
-      class="m-1 categoryLink col-2 col-lg-1"
+      class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img class="categoryImg" src="@/assets/img/spice.png" alt="spice_img" />
       <div
@@ -131,7 +131,6 @@ export default {
 <style lang="scss" scoped>
 .categoryWrap {
   padding: 10px 0px;
-  background-color: rgba(252, 251, 251, 0.832);
 }
 
 .categoryImg {
@@ -146,12 +145,12 @@ export default {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  color: #6c757d;
 }
 
 .categoryLink:hover {
   border-radius: 5%;
   background-color: rgba(249, 196, 6, 0.292);
+  color: #000 !important;
 }
 
 .smFontSize {

@@ -117,8 +117,8 @@ export default {
 
 <style lang="scss" scoped>
 .accordion-button {
-  background-color: rgba(248, 249, 250, 1);
-  color: #a59b72;
+  background-color: #f8f9fa;
+  color: #6c757d;
 }
 
 .accordion-button:not(.collapsed) {
@@ -126,8 +126,13 @@ export default {
   color: #ccaf3c;
   font-weight: bolder;
 }
-.accordion-button:hover {
+
+.accordion-button:not(.collapsed):hover {
   color: #f9c406;
+}
+
+.accordion-button:hover {
+  color: #212529;
 }
 
 .listContainer {

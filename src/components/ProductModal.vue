@@ -114,7 +114,7 @@
               </div>
             </div>
             <div class="rightContainer col-lg-8 row g-3 mx-0">
-              <div class="col-lg-5">
+              <div class="col-xl-5">
                 <div class="d-inline text-danger">＊</div>
                 <label for="name" class="form-label">產品名稱</label>
                 <input
@@ -124,7 +124,7 @@
                   id="name"
                 />
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-6 col-xl-3">
                 <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">類別</label>
                 <v-select
@@ -133,7 +133,7 @@
                   :options="options"
                 ></v-select>
               </div>
-              <div class="col-lg-4">
+              <div class="col-lg-6 col-xl-4">
                 <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">保存方式</label>
                 <v-select
@@ -142,7 +142,7 @@
                   :options="preservationMethods"
                 ></v-select>
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-6 col-xl-3">
                 <label for="unit_description" class="form-label">產地</label>
                 <input
                   v-model="tempProduct.origin_place"
@@ -152,7 +152,7 @@
                   placeholder="例如：台灣"
                 />
               </div>
-              <div class="col-lg-4">
+              <div class="col-lg-6 col-xl-4">
                 <label for="unit_description" class="form-label"
                   >重量規格</label
                 >
@@ -164,7 +164,7 @@
                   placeholder="例如：600g±5%"
                 />
               </div>
-              <div class="col-lg-2">
+              <div class="col-lg-6 col-xl-2">
                 <div class="d-inline text-danger">＊</div>
                 <label for="unit" class="form-label">單位</label>
                 <input
@@ -175,7 +175,7 @@
                   placeholder="例如：份"
                 />
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-6 col-xl-3">
                 <label for="number" class="form-label">數量</label>
                 <input
                   v-model="tempProduct.qty"
@@ -239,7 +239,7 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-secondary"
+            class="btn btn-outline-dark"
             data-bs-dismiss="modal"
           >
             取消
@@ -256,7 +256,7 @@
             v-else
             @click="$emit('add-product', tempProduct)"
             type="button"
-            class="btn btn-primary"
+            class="btn btn-yellow-200"
           >
             新增產品
           </button>

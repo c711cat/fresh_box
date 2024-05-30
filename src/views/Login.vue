@@ -26,10 +26,7 @@
         />
       </div>
       <div class="d-grid gap-2">
-        <button
-          class="btn btn-lg btn-primary btn-block rounded-1"
-          type="submit"
-        >
+        <button class="btn btn-lg btn-dark btn-block rounded-1" type="submit">
           登入
         </button>
       </div>
