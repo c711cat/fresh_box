@@ -32,8 +32,8 @@
       </div>
     </div>
     <div class="row m-0 col-12">
-      <span class="col-sm-auto">
-        此網站為個人作品展示，非商業用途。
+      <span class="col-auto"> 此網站為個人作品展示，非商業用途。 </span>
+      <div class="col-auto">
         <a
           class="text-decoration-none"
           target="_blank"
@@ -49,8 +49,8 @@
         >
           Icons8
         </a>
-      </span>
-      <div class="textStyle fs-6 col-sm">© 2024 FRESH BOX</div>
+      </div>
+      <div class="textStyle fs-6 col-auto">© 2024 FRESH BOX</div>
     </div>
   </div>
 </template>
