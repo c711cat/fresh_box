@@ -27,17 +27,17 @@
       </div>
 
       <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
-        <h4 class="mb-3 border-bottom pb-3">{{ product.title }}</h4>
-        <div v-if="product.description" class="productContent mb-4">
+        <h4 class="mb-3 border-bottom pb-3 px-1">{{ product.title }}</h4>
+        <div v-if="product.description" class="productContent px-1 mb-2">
           {{ product.description }}
         </div>
-        <div class="productContent">
+        <div class="productContent p-1">
           規格：{{ product.content }} / {{ product.unit }}
         </div>
-        <div v-if="product.origin_place" class="productContent">
+        <div v-if="product.origin_place" class="productContent p-1">
           產地：{{ product.origin_place }}
         </div>
-        <div v-if="product.preservation_methods" class="productContent">
+        <div v-if="product.preservation_methods" class="productContent p-1">
           保存方式：{{ product.preservation_methods }}
         </div>
 
@@ -63,7 +63,7 @@
             :disabled="productQty === 1"
             @click="delQty"
             type="button"
-            class="btn btn-light rounded-0 rounded-start"
+            class="btn btn-light rounded-0 rounded-start border border-gray-light"
           >
             <i class="bi bi-dash-lg"></i>
           </button>
@@ -75,12 +75,16 @@
           <button
             @click="addQty"
             type="button"
-            class="btn btn-light rounded-0 rounded-end"
+            class="btn btn-light rounded-0 rounded-end border border-gray-light"
           >
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
-        <button @click="addToCart" type="button" class="btn btn-light w-100">
+        <button
+          @click="addToCart"
+          type="button"
+          class="btn btn-light w-100 border border-gray-light"
+        >
           加入購物車
         </button>
       </div>
@@ -195,15 +199,6 @@ export default {
 .imgItems:hover {
   cursor: pointer;
   padding: 0px;
-}
-
-.productContent {
-  color: #9c9ea1;
-  margin-bottom: 10px;
-}
-
-.btn {
-  border: 1px solid #dee2e6;
 }
 
 .delmyFavoriteIcon {

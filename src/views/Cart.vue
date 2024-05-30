@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div>
+  <div v-else>
     <div v-if="!carts.length" class="m-5 cartContainer">
       <h3 class="ps-2">購物車空了</h3>
     </div>
@@ -113,7 +113,7 @@
           <button
             @click="useCoupon"
             type="button"
-            class="btn btn-outline-secondary btn-sm col-auto"
+            class="btn btn-yellow-200 btn-sm col-auto"
           >
             送出
           </button>
@@ -146,7 +146,7 @@
 
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
           冷藏宅配
-          <div class="infoText col-12 text-success">
+          <div class="infoText col-12 text-yellow-600">
             <i class="bi bi-info-circle"></i>
             滿 NT$ 1,000 免運
           </div>
@@ -161,9 +161,7 @@
         >
           付款金額
         </strong>
-        <strong
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end mb-3 text-danger"
-        >
+        <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end text-danger">
           NT$ {{ $filters.currency(paymentAmount) }}
         </strong>
       </div>

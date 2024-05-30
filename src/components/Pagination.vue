@@ -5,9 +5,11 @@
       <li class="page-item">
         <a
           @click.prevent="goToPrePage(pages.current_page)"
-          :class="{ 'disabledPreNext disabled': pages.current_page === 1 }"
+          :class="{
+            'disabledPreNext disabled': pages.current_page === 1,
+          }"
           aria-hidden="true"
-          class="page-link bi bi-chevron-double-left mx-1"
+          class="page-link text-black bi bi-chevron-double-left mx-1"
           href="#"
         ></a>
       </li>
@@ -16,7 +18,7 @@
         <a
           @click.prevent="updatePage(page)"
           :class="{ 'currentPageStyle disabled': page === pages.current_page }"
-          class="page-link mx-1"
+          class="page-link text-black mx-1"
           href="#"
           >{{ page }}</a
         >
@@ -29,7 +31,7 @@
             'disabledPreNext disabled':
               pages.current_page === pages.total_pages,
           }"
-          class="page-link bi bi-chevron-double-right mx-1"
+          class="page-link text-black bi bi-chevron-double-right mx-1"
           href="#"
         ></a>
       </li>
@@ -65,7 +67,6 @@ export default {
   height: 36px;
   border-radius: 50%;
   text-align: center;
-  color: #000;
   border: none;
 }
 
@@ -78,29 +79,21 @@ export default {
 }
 
 .page-link:hover {
-  color: #000;
-  outline: 1px auto #000;
+  background-color: #b8b8b85a;
 }
 
 .currentPageStyle {
   background-color: #000;
-  color: #fff;
+  color: #fff !important;
   cursor: default;
-}
-
-.currentPageStyle:hover {
-  background-color: #000;
-  color: #fff;
-  cursor: default;
-  outline: none;
 }
 
 .page-link:focus-visible {
-  outline: 1px auto #000000ae;
+  outline: 1px auto #000;
 }
 
 .disabledPreNext {
-  color: #b8b8b8;
+  color: #b8b8b8 !important;
   cursor: default;
   background-color: #fff;
 }

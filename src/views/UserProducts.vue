@@ -303,7 +303,6 @@ export default {
         .get(api)
         .then((res) => {
           this.carts = res.data.data.carts;
-          window.scrollTo(0, -100);
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

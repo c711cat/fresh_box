@@ -1,11 +1,11 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="row m-0 py-2 ps-4 footerContainer fw-light">
+  <div class="row m-0 py-2 ps-4 bg-light fw-light">
     <div class="row m-0 align-items-center justify-content-between col-12">
       <div class="col-12 col-sm-6">
         <router-link
           to="/"
-          class="text-decoration-none textStyle fs-5 logoStyle"
+          class="text-decoration-none text-dark textStyle fs-5 logoStyle"
         >
           FRESH BOX
         </router-link>
@@ -17,7 +17,7 @@
         <div style="min-width: 145px" class="text-sm-end py-2 col">
           <router-link
             to="/dashboard/login"
-            class="text-decoration-none rounded-pill text-center adminLogin py-2 px-4"
+            class="text-decoration-none rounded-pill text-center bg-black text-light py-2 px-4 adminLogin"
           >
             後台登入
           </router-link>
@@ -27,7 +27,7 @@
           class="text-center text-sm-end col-auto"
           href="https://github.com/c711cat/fresh_box"
         >
-          <i class="bi bi-github fs-1"></i>
+          <i class="bi bi-github text-dark fs-1"></i>
         </a>
       </div>
     </div>
@@ -56,38 +56,17 @@
 </template>
 
 <style lang="scss" scoped>
-.footerContainer {
-  background-color: #34343411;
-}
-
 .textStyle {
   font-family: "Times New Roman", Times, serif;
 }
 
-.logoStyle {
-  color: #212529;
-}
-
-.bi-github {
-  color: #212529;
-}
-
-.bi-github:hover,
-.logoStyle:hover {
-  cursor: pointer;
-  color: rgb(249, 196, 6);
-}
-
-.adminLogin {
-  border: 1px solid black;
-  color: #d0d0d0;
-  background-color: black;
+.logoStyle:hover,
+.bi-github:hover {
+  color: #ccaf3c !important;
 }
 
 .adminLogin:hover {
-  cursor: pointer;
-  background-color: rgb(249, 196, 6);
-  border: 1px solid rgb(249, 196, 6);
-  color: #212529;
+  background-color: #ccaf3c !important;
+  color: black !important;
 }
 </style>
