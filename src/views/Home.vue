@@ -83,9 +83,11 @@
       <div class="goShopping fw-lighter fs-5">去 逛 逛</div>
     </router-link>
   </div>
+  <Carousel></Carousel>
 </template>
 <script>
 import Category from "@/components/Category.vue";
+import Carousel from "@/components/Carousel.vue";
 export default {
   data() {
     return {
@@ -129,7 +131,7 @@ export default {
       ],
     };
   },
-  components: { Category },
+  components: { Category, Carousel },
   inject: ["emitter"],
   methods: {
     addCart(item) {
