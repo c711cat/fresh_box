@@ -40,7 +40,7 @@
     <div
       v-for="(item, index) in allProducts"
       :key="index"
-      class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
+      class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
     >
       <div class="card my-3 mx-auto">
         <h3
@@ -64,19 +64,49 @@
         <div class="card-body d-flex flex-column justify-content-between">
           <div>
             <div class="d-flex justify-content-between">
-              <h5 class="card-title">{{ item.title }}</h5>
+              <!-- md以上字體 -->
+              <h5
+                class="card-title d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+              >
+                {{ item.title }}
+              </h5>
+              <!-- sm以下字體 -->
+              <h5
+                class="card-title sm_title_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+              >
+                {{ item.title }}
+              </h5>
+              <!-- md以上字體 -->
               <span
                 v-if="item.buyQty >= 1"
-                class="badge text-bg-danger rounded-pill fs-6"
+                class="badge text-bg-danger rounded-pill fs-6 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+              >
+                {{ item.buyQty }}
+              </span>
+              <!-- sm以下字體 -->
+              <span
+                v-if="item.buyQty >= 1"
+                class="badge text-bg-danger rounded-pill sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
               >
                 {{ item.buyQty }}
               </span>
             </div>
-
-            <p class="card-text">{{ item.content }} / {{ item.unit }}</p>
-            <div class="d-flex justify-content-between mb-2">
+            <!-- md以上字體 -->
+            <p
+              class="card-text d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+            >
+              {{ item.content }} / {{ item.unit }}
+            </p>
+            <!-- sm以下字體 -->
+            <p
+              class="card-text sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+            >
+              {{ item.content }} / {{ item.unit }}
+            </p>
+            <div class="d-flex justify-content-between flex-wrap mb-2">
+              <!-- md以上字體 -->
               <strong
-                class="card-text text-secondary fs-6"
+                class="col-12 col-sm-auto card-text text-secondary fs-6 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
                 :class="{
                   'text-decoration-line-through':
                     item.price !== item.origin_price,
@@ -84,9 +114,26 @@
               >
                 NT$ {{ $filters.currency(item.origin_price) }}
               </strong>
+              <!-- sm以下字體 -->
+              <strong
+                class="col-12 col-sm-auto card-text text-secondary sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+                :class="{
+                  'text-decoration-line-through':
+                    item.price !== item.origin_price,
+                }"
+              >
+                NT$ {{ $filters.currency(item.origin_price) }}
+              </strong>
+              <!-- md以上字體 -->
               <strong
                 v-if="item.price !== item.origin_price"
-                class="card-text text-danger fs-6"
+                class="col-12 col-sm-auto card-text text-danger fs-6 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+                >NT$ {{ $filters.currency(item.price) }}
+              </strong>
+              <!-- sm以下字體 -->
+              <strong
+                v-if="item.price !== item.origin_price"
+                class="col-12 col-sm-auto card-text text-danger sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
                 >NT$ {{ $filters.currency(item.price) }}
               </strong>
             </div>
@@ -455,7 +502,8 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  height: 190px;
+  height: 19vh;
+
   object-fit: cover;
 }
 
@@ -521,5 +569,13 @@ img {
 .dropdown-item:focus-visible {
   outline: 2px solid #ccaf3c;
   border-radius: 3%;
+}
+
+.sm_title_text {
+  font-size: 14px;
+}
+
+.sm_text {
+  font-size: 12px;
 }
 </style>
