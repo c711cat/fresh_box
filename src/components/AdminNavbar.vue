@@ -112,7 +112,10 @@ export default {
           if (item.title.match(this.productSearchText)) {
             this.searchResult.push(item);
           }
-          this.emitter.emit("adminSearchProductResult", this.searchResult);
+          this.emitter.emit("adminSearchProductResult", {
+            data: this.searchResult,
+            data2: this.productSearchText,
+          });
         });
         this.searchResult = [];
       }

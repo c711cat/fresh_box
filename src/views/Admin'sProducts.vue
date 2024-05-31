@@ -107,6 +107,7 @@ export default {
       isLoading: false,
       pagination: {},
       openPagination: true,
+      searchText: null,
     };
   },
   components: { ProductModal, DelModal, Pagination },
@@ -213,7 +214,11 @@ export default {
   },
   computed: {
     noResults() {
-      return this.products.length === 0;
+      if (this.searchText !== null && this.products.length === 0) {
+        return true;
+      } else {
+        return false;
+      }
     },
     itemsInProducts() {
       return this.products.length >= 1;
@@ -222,10 +227,12 @@ export default {
   created() {
     this.getProducts();
     this.emitter.on("adminSearchProductNull", () => {
+      this.searchText = null;
       this.getProducts();
     });
-    this.emitter.on("adminSearchProductResult", (data) => {
-      this.products = data;
+    this.emitter.on("adminSearchProductResult", (searchResult) => {
+      this.products = searchResult.data;
+      this.searchText = searchResult.data2;
       this.openPagination = false;
     });
   },
