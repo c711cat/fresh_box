@@ -15,7 +15,7 @@
         <i class="bi bi-list fs-2 px-2"></i>
       </button>
       <div
-        class="offcanvas offcanvas-start"
+        class="offcanvas offcanvas-start w-50"
         tabindex="-1"
         id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel"
@@ -23,7 +23,7 @@
         <div class="offcanvas-header px-4">
           <router-link
             to="/"
-            class="offcanvas-title logoText text-decoration-none fs-4"
+            class="offcanvas-title logoText text-decoration-none"
             id="offcanvasNavbarLabel"
           >
             FRESH BOX
