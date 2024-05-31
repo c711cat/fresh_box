@@ -578,4 +578,8 @@ img {
 .sm_text {
   font-size: 12px;
 }
+
+.card {
+  height: 40vh;
+}
 </style>
