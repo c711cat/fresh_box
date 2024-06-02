@@ -68,7 +68,7 @@
               </router-link>
             </li>
           </ul>
-          <form class="col-lg-4 col-xl-3" role="search">
+          <form class="col-lg-4 col-xxl-3" role="search">
             <input
               v-if="currentPath === '/order-list'"
               v-model="orderSearchText"
