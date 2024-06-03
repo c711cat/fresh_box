@@ -35,7 +35,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body ps-4">
+        <div class="offcanvas-body px-4">
           <ul class="navbar-nav flex-grow-1 pe-3">
             <li class="nav-item">
               <router-link
@@ -68,7 +68,7 @@
               </router-link>
             </li>
           </ul>
-          <form class="col-lg-4 col-xl-4 col-xxl-3" role="search">
+          <form class="col-lg-3 col-xl-4 col-xxl-3" role="search">
             <input
               v-if="currentPath === '/order-list'"
               v-model="orderSearchText"
