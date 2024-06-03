@@ -148,7 +148,7 @@
 
 <script>
 import Offcanvas from "bootstrap/js/dist/offcanvas";
-import "bootstrap";
+
 export default {
   data() {
     return {
