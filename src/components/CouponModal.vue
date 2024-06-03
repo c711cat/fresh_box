@@ -68,6 +68,7 @@
                 type="date"
                 class="form-control"
                 id="dueDate"
+                :min="minDate"
               />
             </div>
 
@@ -156,6 +157,14 @@ export default {
     },
   },
   mixins: [ModalMixin],
+  computed: {
+    minDate() {
+      let min = "";
+      const date = new Date().toISOString().split("T");
+      min = date[0];
+      return min;
+    },
+  },
 };
 </script>
 

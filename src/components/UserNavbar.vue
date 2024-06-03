@@ -1,39 +1,99 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <nav
-    class="bg-black navbar navbar-expand-lg flex-row-reverse justify-content-between fixed-top"
-  >
-    <router-link
-      to="/"
-      class="align-baseline text-center text-decoration-none logoRouterLink"
+  <nav class="navbar navbar-expand-lg bg-black fixed-top">
+    <div
+      class="col-12 px-3 d-flex justify-content-between align-items-center flex-wrap"
     >
-      <!-- sm（含）以上可見 -->
-      <span
-        class="fs-3 logoText text-primary d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
-      >
-        FRESH BOX
-      </span>
-      <!-- xs 可見：字體縮小 及 調整視覺置中 -->
-      <span
-        class="fs-5 pt-2 logoText text-primary d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
-      >
-        FRESH BOX
-      </span>
-    </router-link>
-    <div class="container-fluid">
       <button
-        class="navbar-toggler border-0"
+        class="navbar-toggler border-0 col-auto"
         type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#user_navbarNav"
-        aria-controls="user_navbarNav"
-        aria-expanded="false"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar"
         aria-label="Toggle navigation"
       >
-        <i class="bi bi-list fs-1 px-2 text-primary"></i>
+        <i class="bi bi-list fs-2 px-2 text-primary"></i>
       </button>
+      <div
+        class="offcanvas offcanvas-start bg-black w-50"
+        tabindex="-1"
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header px-4">
+          <router-link
+            to="/"
+            class="offcanvas-title logoText text-decoration-none"
+            id="offcanvasNavbarLabel"
+          >
+            FRESH BOX
+          </router-link>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body px-4">
+          <ul class="navbar-nav flex-grow-1 pe-3">
+            <li class="nav-item">
+              <router-link
+                @click="goToUserProducts"
+                to="/user-products"
+                class="nav-link text-primary"
+                :class="{
+                  isCurrentNavbarItem: currentPath === '/user-products',
+                }"
+              >
+                所有產品
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/favorite"
+                :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
+                class="nav-link text-primary"
+              >
+                收藏
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/order-list"
+                :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
+                class="nav-link text-primary"
+              >
+                訂單
+              </router-link>
+            </li>
+          </ul>
+          <form class="col-lg-3 col-xl-4 col-xxl-3" role="search">
+            <input
+              v-if="currentPath === '/order-list'"
+              v-model="orderSearchText"
+              class="form-control"
+              type="search"
+              placeholder="Search for name on orders"
+              aria-label="Search"
+            />
+            <input
+              v-else
+              v-model="productSearchText"
+              class="form-control col-1"
+              type="search"
+              placeholder="Search for product name"
+              aria-label="Search"
+            />
+          </form>
+        </div>
+      </div>
+
+      <router-link to="/" class="logoTextLink navbar-brand text-center p-0 m-0">
+        <span class="logoText text-center text-primary fs-3">FRESH BOX</span>
+      </router-link>
+
       <router-link to="/cart" class="nav-link d-flex flex-row-reverse">
-        <!-- 購物車 sm 以上版面 -->
         <div
           style="height: 75px"
           class="h-100 d-flex flex-column align-items-center text-center d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
@@ -55,7 +115,7 @@
             </span>
           </h5>
         </div>
-        <!-- 購物車 xs 以下版面 -->
+
         <div
           class="h-100 d-flex flex-column align-items-center pe-1 d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
         >
@@ -83,59 +143,12 @@
         </div>
       </router-link>
     </div>
-
-    <div class="collapse navbar-collapse col-lg-11" id="user_navbarNav">
-      <ul class="navbar-nav px-5 align-items-center col-lg-6">
-        <li class="nav-item col-12 col-lg-auto ps-4 pe-2">
-          <router-link
-            @click="goToUserProducts"
-            to="/user-products"
-            :class="{ isCurrentNavbarItem: currentPath === '/user-products' }"
-            class="nav-link text-center text-primary"
-            >所有產品
-          </router-link>
-        </li>
-        <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
-            to="/favorite"
-            :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
-            class="nav-link text-center text-primary"
-            >收藏
-          </router-link>
-        </li>
-        <li class="nav-item col-12 col-lg-auto px-2">
-          <router-link
-            to="/order-list"
-            :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
-            class="nav-link text-center text-primary"
-            >訂單
-          </router-link>
-        </li>
-        <form class="col-12 col-lg-5 col-xl-5 ps-4" role="search">
-          <input
-            v-if="currentPath === '/order-list'"
-            v-model="orderSearchText"
-            class="form-control"
-            type="search"
-            placeholder="Search for name on orders"
-            aria-label="Search"
-          />
-          <input
-            v-else
-            v-model="productSearchText"
-            class="form-control"
-            type="search"
-            placeholder="Search for product name"
-            aria-label="Search"
-          />
-        </form>
-      </ul>
-    </div>
   </nav>
 </template>
 
 <script>
-import Collapse from "bootstrap/js/dist/collapse";
+import Offcanvas from "bootstrap/js/dist/offcanvas";
+
 export default {
   data() {
     return {
@@ -148,6 +161,7 @@ export default {
       carts: [],
       orders: [],
       orderPage: 1,
+      searchInput: false,
     };
   },
   inject: ["emitter"],
@@ -250,9 +264,9 @@ export default {
     this.getOrders();
     this.getCart();
     this.getProducts();
-    const collapseElementList = document.querySelectorAll(".collapse");
-    this.userNavbar = [...collapseElementList].map(
-      (collapseEl) => new Collapse(collapseEl)
+    const offcanvasElementList = document.querySelectorAll(".offcanvas");
+    this.userNavbar = [...offcanvasElementList].map(
+      (offcanvasEl) => new Offcanvas(offcanvasEl)
     );
     this.getProducts();
     this.emitter.on("updateProductInCart", () => {
@@ -266,22 +280,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logoRouterLink {
+.logoTextLink {
   width: 1px;
   position: absolute;
   right: 50%;
-  top: 40px;
+  display: flex;
+  justify-content: center;
 }
-
 .logoText {
-  position: absolute;
-  margin: -19px -80px;
-  width: 170px;
+  width: fit-content;
   font-family: "Times New Roman", Times, serif;
-}
-
-.navbar-toggler:focus {
-  box-shadow: none;
 }
 
 .iconLink {

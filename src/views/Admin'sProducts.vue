@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else class="px-5 d-flex flex-column align-items-center">
+  <div v-else class="px-3 mb-5 d-flex flex-column align-items-center">
     <div
       class="row m-0 p-2 col-12 col-xxl-11 justify-content-between align-items-center"
     >
       <h3 v-if="noResults">查無相關商品</h3>
-      <h3 v-if="itemsInProducts" class="col-12 col-sm-6 m-0 p-1">
+      <h3 v-if="itemsInProducts" class="col-auto col-sm-6 m-0 p-1">
         後台產品列表
       </h3>
       <div v-if="itemsInProducts" class="col-auto p-1">
@@ -107,6 +107,7 @@ export default {
       isLoading: false,
       pagination: {},
       openPagination: true,
+      searchText: null,
     };
   },
   components: { ProductModal, DelModal, Pagination },
@@ -213,7 +214,11 @@ export default {
   },
   computed: {
     noResults() {
-      return this.products.length === 0;
+      if (this.searchText !== null && this.products.length === 0) {
+        return true;
+      } else {
+        return false;
+      }
     },
     itemsInProducts() {
       return this.products.length >= 1;
@@ -222,10 +227,12 @@ export default {
   created() {
     this.getProducts();
     this.emitter.on("adminSearchProductNull", () => {
+      this.searchText = null;
       this.getProducts();
     });
-    this.emitter.on("adminSearchProductResult", (data) => {
-      this.products = data;
+    this.emitter.on("adminSearchProductResult", (searchResult) => {
+      this.products = searchResult.data;
+      this.searchText = searchResult.data2;
       this.openPagination = false;
     });
   },

@@ -1,18 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else>
+  <div v-else class="mx-auto col-12 col-lg-10">
     <div v-if="!carts.length" class="m-5 cartContainer">
       <h3 class="ps-2">購物車空了</h3>
     </div>
-    <div v-else class="m-5 cartContainer">
+    <div v-else class="m-3 cartContainer">
       <h3 class="ps-2">購物車清單</h3>
       <div
         v-for="(item, index) in carts"
         :key="index"
-        class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
+        class="row m-0 col-12 justify-content-center align-items-center border-top pt-3 pb-3"
       >
-        <div class="col-12 col-sm-1 col-md-1 text-center p-0">
+        <div class="col-auto col-sm-1 p-0">
           <button
             @click="delItem(item)"
             type="button"
@@ -23,13 +23,33 @@
         </div>
         <router-link
           :to="`/product/${item.product.id}`"
-          class="col-6 col-sm-2 col-md-2 col-lg-2 col-xl-1 my-1 text-center p-0"
+          class="col-3 col-sm-2 col-md-2 col-lg-2 col-xl-1 my-1 text-center"
         >
           <img class="imgBody" :src="item.product.imageUrl" alt="product_img" />
         </router-link>
-
+        <!-- 包含 sm 以上字體 -->
         <div
-          class="col-12 col-sm-5 col-md-4 col-lg-3 col-xl-5 row mx-0 my-1 align-items-center text-sm-start text-center"
+          class="col-sm-4 col-md-3 col-lg-4 col-xl-5 d-flex my-1 align-items-center d-none d-sm-block d-md-block d-lg-block d-xl-flex d-xxl-flex"
+        >
+          <div class="col-md-12 col-lg-12 col-xl-4">
+            {{ item.product.title }}
+          </div>
+          <div class="col-md-12 col-lg-12 col-xl-4">
+            {{ item.product.content }}／{{ item.product.unit }}
+          </div>
+          <div
+            v-if="item.product.origin_price === item.product.price"
+            class="text-secondary col-md-12 col-lg-12 col-xl-4"
+          >
+            NT$ {{ $filters.currency(item.product.origin_price) }}
+          </div>
+          <div v-else class="text-danger fw-bold col-md-12 col-lg-12 col-xl-4">
+            NT$ {{ $filters.currency(item.product.price) }}
+          </div>
+        </div>
+        <!-- xs 字體 -->
+        <div
+          class="col-7 row mx-0 my-1 align-items-center xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
         >
           <div class="col-md-12 col-lg-12 col-xl-4">
             {{ item.product.title }}
@@ -49,9 +69,9 @@
         </div>
 
         <div
-          class="row m-0 align-items-center col-11 col-sm-4 col-md-5 col-lg-5 col-xl-4"
+          class="row m-0 align-items-center col-12 col-sm-5 col-md-6 col-lg-5 col-xl-4"
         >
-          <div class="py-2 d-flex col-12 col-md-6 col-lg-6 col-xl-6">
+          <div class="py-2 d-flex col-6 col-sm-12 col-md-6 col-lg-6 col-xl-6">
             <button
               @click="delOneQty(item)"
               :disabled="item.id === status.delLoadingItem"
@@ -78,9 +98,15 @@
               <i class="bi bi-plus-lg"></i>
             </button>
           </div>
-
+          <!-- 包含 sm 以上字體 -->
           <div
-            class="my-2 text-center text-md-end col-12 col-md-6 col-lg-6 col-xl-6"
+            class="my-2 text-center text-sm-end col-sm-12 col-md-6 col-lg-6 col-xl-6 d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
+          >
+            NT$ {{ $filters.currency(item.total) }}
+          </div>
+          <!-- xs 字體 -->
+          <div
+            class="my-2 text-center text-sm-end col-6 xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
           >
             NT$ {{ $filters.currency(item.total) }}
           </div>
@@ -89,23 +115,23 @@
       <div
         class="row g-1 m-0 border-top pt-3 pb-5 justify-content-center align-items-center"
       >
-        <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
+        <div class="col-6 col-sm-6 col-lg-8 col-xl-8 text-sm-end pe-3">
           小計
         </div>
-        <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        <div class="col-5 col-sm-5 col-lg-3 col-xl-3 text-end">
           NT$ {{ $filters.currency(subtotal) }}
         </div>
 
         <label
-          class="form-label col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end mt-3 pe-3"
+          class="form-label col-4 col-sm-6 col-lg-8 col-xl-8 text-sm-end mt-3 pe-3"
           for="couponCode"
         >
           優惠碼
         </label>
-        <div class="d-flex col-5 col-sm-4 col-lg-3 col-xl-2">
+        <div class="d-flex col-7 col-sm-5 col-lg-3 col-xl-3">
           <v-select
             :disabled="used_coupon"
-            class="col-9 col-md-10"
+            class="col-10 col-sm-9 col-md-10"
             v-model="couponCode"
             label="Select"
             :options="couponOption"
@@ -121,30 +147,30 @@
 
         <div
           v-if="used_coupon"
-          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
+          class="col-6 col-sm-6 col-lg-8 col-xl-8 text-sm-end pe-3"
         >
           優惠碼折抵
         </div>
         <div
           v-if="used_coupon"
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
+          class="col-5 col-sm-5 col-lg-3 col-xl-3 text-end"
         >
           - NT$ {{ $filters.currency(discount) }}
         </div>
         <div
           v-if="used_coupon"
-          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3"
+          class="col-6 col-sm-6 col-lg-8 col-xl-8 text-sm-end pe-3"
         >
           折抵後小計
         </div>
         <div
           v-if="used_coupon"
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
+          class="col-5 col-sm-5 col-lg-3 col-xl-3 text-end"
         >
           NT$ {{ $filters.currency(afterDiscount) }}
         </div>
 
-        <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3">
+        <div class="col-6 col-sm-6 col-lg-8 col-xl-8 text-sm-end pe-3">
           冷藏宅配
           <div class="infoText col-12 text-yellow-600">
             <i class="bi bi-info-circle"></i>
@@ -152,16 +178,16 @@
           </div>
         </div>
 
-        <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
+        <div class="col-5 col-sm-5 col-lg-3 col-xl-3 text-end">
           NT$ {{ $filters.currency(shippingFee) }}
         </div>
 
         <strong
-          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end pe-3 text-danger"
+          class="col-6 col-sm-6 col-lg-8 col-xl-8 text-sm-end pe-3 text-danger"
         >
           付款金額
         </strong>
-        <strong class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end text-danger">
+        <strong class="col-5 col-sm-5 col-lg-3 col-xl-3 text-end text-danger">
           NT$ {{ $filters.currency(paymentAmount) }}
         </strong>
       </div>
@@ -373,8 +399,6 @@ export default {
 <style lang="scss" scoped>
 .imgBody {
   width: 100%;
-  height: 100px;
-  object-fit: cover;
 }
 
 .infoText {
@@ -387,5 +411,9 @@ export default {
 
 .imgBody:hover {
   padding: 1px;
+}
+
+.xs_text {
+  font-size: 12px;
 }
 </style>
