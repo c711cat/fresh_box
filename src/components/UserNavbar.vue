@@ -207,9 +207,6 @@ export default {
     },
   },
   methods: {
-    searchBtn() {
-      this.searchInput = !this.searchInput;
-    },
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http
