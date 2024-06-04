@@ -57,7 +57,7 @@
   </div>
 
   <div
-    class="newsContainer row col-12 mx-0 mb-5 justify-content-center align-items-center"
+    class="newsContainer row col-12 mx-0 justify-content-center align-items-center"
   >
     <img
       class="newsImg object-fit-cover col-lg-6 p-0"
@@ -83,11 +83,29 @@
       <div class="goShopping fw-lighter fs-5">去 逛 逛</div>
     </router-link>
   </div>
-  <Carousel></Carousel>
+  <div class="productsBg mx-auto col-11 py-5">
+    <div class="row my-0 mx-auto flex-row-reverse col-11">
+      <h3
+        class="writeStyle m-0 p-0 col-1"
+        data-aos="fade-in"
+        data-aos-easing="ease-out-sine"
+        data-aos-duration="1500"
+      >
+        <div class="straightLine writeStyle mt-3 me-2"></div>
+        精選商品
+      </h3>
+      <SwiperImgs
+        class="mx-auto overflow-x-hidden pt-3 col-10"
+        data-aos="fade-up"
+        data-aos-easing="ease-out-sine"
+        data-aos-duration="800"
+      ></SwiperImgs>
+    </div>
+  </div>
 </template>
 <script>
 import Category from "@/components/Category.vue";
-import Carousel from "@/components/Carousel.vue";
+import SwiperImgs from "@/components/SwiperImgs.vue";
 export default {
   data() {
     return {
@@ -131,7 +149,7 @@ export default {
       ],
     };
   },
-  components: { Category, Carousel },
+  components: { Category, SwiperImgs },
   inject: ["emitter"],
   methods: {
     addCart(item) {
@@ -156,6 +174,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+* {
+  // border: 1px solid;
+}
+.productsBg {
+  // background-image: url(https://images.unsplash.com/photo-1586603328377-f23a9d85fa35?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+}
 .homeImg {
   width: 100%;
   height: 100vh;
