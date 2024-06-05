@@ -125,6 +125,7 @@ export default {
       modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
     };
   },
+  inject: ["emitter"],
   methods: {
     getAllProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
@@ -133,6 +134,23 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.allProducts = res.data.products;
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
+    },
+    addCart(item) {
+      const addItem = { product_id: item.id, qty: 1 };
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.$http
+        .post(api, { data: addItem })
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已加入購物車");
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "加入購物車失敗");
           }
         })
         .catch((error) => {
