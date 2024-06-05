@@ -56,20 +56,18 @@
     </div>
   </div>
 
-  <div
-    class="newsContainer row col-12 mx-0 justify-content-center align-items-center"
-  >
+  <div class="row col-12 mx-0 justify-content-center align-items-center">
     <img
-      class="newsImg object-fit-cover col-lg-6 p-0"
+      class="newsImg object-fit-cover col-lg-12 p-0"
       data-aos="fade-right"
       data-aos-easing="ease-out-circ"
       data-aos-duration="1000"
-      src="../assets/img/5.jpg"
+      src="../assets/img/home_img2.jpg"
       alt="homeImg"
     />
     <router-link
       to="/user-products"
-      class="newsContent text-decoration-none text-secondary col-lg-5 d-flex flex-column justify-content-center align-items-center"
+      class="newsContent text-decoration-none text-black col-11 col-sm-9 col-lg-8 col-xl-6 d-flex flex-column justify-content-center align-items-center"
       data-aos="zoom-in-left"
       data-aos-easing="ease-out-sine"
       data-aos-duration="900"
@@ -77,13 +75,14 @@
       <div class="fs-1 fw-lighter mb-3">全館滿千免運</div>
       <div class="fs-4 fw-lighter text-center mb-3">
         結帳代入
-        <span class="border px-2 py-1">10%off</span>
+        <span class="border border-secondary px-2 py-1">10%off</span>
         享 9 折優惠
       </div>
       <div class="goShopping fw-lighter fs-5">去 逛 逛</div>
     </router-link>
   </div>
-  <div class="productsBg col-12">
+
+  <div class="py-5 col-12">
     <div class="mx-auto col-11 py-5">
       <div class="row my-0 mx-auto flex-row-reverse col-11">
         <h3
@@ -176,9 +175,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.productsBg {
-  // background-image: url(https://images.unsplash.com/photo-1555243896-c709bfa0b564?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-}
 .homeImg {
   width: 100%;
   height: 100vh;
@@ -205,30 +201,17 @@ export default {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511) !important;
 }
 
-.newsContainer {
-  width: 100%;
-  background-color: #34343411;
-  position: relative;
-  padding: 50px 0px 50px 30px;
-}
-
 .newsImg {
   height: 300px;
-  position: relative;
-  top: 0px;
-  left: 0px;
 }
 
 .newsContent {
   height: 250px;
   background-color: rgba(252, 251, 251, 0.832);
-  position: relative;
-  left: -30px;
+  position: absolute;
 }
 
 .goShopping {
-  position: absolute;
-  bottom: 30px;
   opacity: 0;
   transition: opacity 0.3s ease;
 }

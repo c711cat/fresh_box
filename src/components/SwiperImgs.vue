@@ -50,7 +50,7 @@
             alt="carouselImg"
           />
         </router-link>
-        <div class="bg-white">
+        <div>
           <div :class="{ 'fs-6 fw-bold': currentWidth < 600 }" class="p-2 fs-5">
             {{ item.title }}
           </div>
