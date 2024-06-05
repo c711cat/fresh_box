@@ -88,11 +88,14 @@
           加入購物車
         </button>
       </div>
+      <h3 class="mt-5 mb-4 pb-3 pt-5 col-10 border-bottom">推薦商品</h3>
+      <SwiperImgs class="col-lg-10"></SwiperImgs>
     </div>
   </div>
 </template>
 
 <script>
+import SwiperImgs from "@/components/SwiperImgs.vue";
 export default {
   data() {
     return {
@@ -102,6 +105,7 @@ export default {
     };
   },
   inject: ["emitter"],
+  components: { SwiperImgs },
   methods: {
     getProduct() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
