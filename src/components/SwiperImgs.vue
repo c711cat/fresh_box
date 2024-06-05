@@ -1,7 +1,7 @@
 <template>
   <div>
     <Swiper
-      style="padding: 0px 40px"
+      style="padding: 0px 35px"
       class="d-flex align-items-center"
       :modules="modules"
       :slides-per-view="5"
@@ -20,13 +20,13 @@
       :breakpoints="{
         '0': {
           slidesPerView: 1,
-          spaceBetween: 50,
+          spaceBetween: 45,
         },
         '500': {
           slidesPerView: 2,
           spaceBetween: 45,
         },
-        '750': {
+        '800': {
           slidesPerView: 3,
           spaceBetween: 45,
         },
@@ -45,17 +45,21 @@
       <SwiperSlide v-for="(item, index) in allProducts" :key="index">
         <router-link :to="`/product/${item.id}`" class="linkStyle">
           <img
-            class="img-fluid bestSellersImg"
+            class="img-fluid carouselImg"
             :src="item.imageUrl"
-            alt="bestSellerProductImg"
+            alt="carouselImg"
           />
         </router-link>
         <div class="bg-white">
-          <div class="p-2 fs-5">{{ item.title }}</div>
-          <div class="px-2">{{ item.content }}</div>
+          <div :class="{ 'fs-6 fw-bold': currentWidth < 600 }" class="p-2 fs-5">
+            {{ item.title }}
+          </div>
+          <div :class="{ 'smStyle fw-light': currentWidth < 600 }" class="px-2">
+            {{ item.content }}
+          </div>
           <div
-            style="height: 70px"
-            class="d-flex p-2 flex-wrap align-items-center"
+            :class="{ 'smStyle fw-light': currentWidth < 600 }"
+            class="priceContainer d-flex p-2 flex-wrap align-items-center"
           >
             <div
               class="text-secondary col-12"
@@ -75,6 +79,7 @@
           </div>
           <button
             @click="addCart(item)"
+            :class="{ 'btn-sm': currentWidth < 600 }"
             class="w-100 mb-0 btn btn-light rounded-0"
             type="button"
           >
@@ -104,6 +109,7 @@ export default {
   data() {
     return {
       allProducts: [],
+      currentWidth: "1000",
     };
   },
   components: {
@@ -133,21 +139,34 @@ export default {
           this.$pushMsg.status404(error.response.data.message);
         });
     },
+    isCurrentWidth() {
+      this.currentWidth = window.innerWidth;
+    },
   },
+
   created() {
+    this.isCurrentWidth();
     this.getAllProducts();
   },
 };
 </script>
 <style lang="scss" scoped>
-.bestSellersImg {
+.carouselImg {
   width: 100%;
   height: 150px;
   object-fit: cover;
 }
 
-.bestSellersImg:hover {
+.carouselImg:hover {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511) !important;
+}
+
+.smStyle {
+  font-size: 14px;
+}
+
+.priceContainer {
+  height: 65px;
 }
 
 :root .swiper-button-next,
