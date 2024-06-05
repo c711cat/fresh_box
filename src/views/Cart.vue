@@ -2,11 +2,26 @@
 <template>
   <Loading v-if="isLoading"></Loading>
   <div v-else class="mx-auto col-12 col-lg-10">
-    <div v-if="!carts.length" class="m-5 cartContainer">
-      <h3 class="ps-2">購物車空了</h3>
+    <div v-if="!carts.length" class="m-5 cartContainer pb-5">
+      <h3 class="ps-2 mb-4">購物車空了</h3>
+      <router-link
+        to="/user-products"
+        class="ms-2 p-2 fs-6 border border-primary text-decoration-none"
+      >
+        繼續逛逛
+      </router-link>
     </div>
     <div v-else class="m-3 cartContainer">
-      <h3 class="ps-2">購物車清單</h3>
+      <div
+        class="py-2 d-flex flex-wrap justify-content-between align-items-center"
+      >
+        <h3 class="ps-2 m-0">購物車清單</h3>
+
+        <button @click="cleanCart" class="btn btn-danger" type="button">
+          清空購物車
+        </button>
+      </div>
+
       <div
         v-for="(item, index) in carts"
         :key="index"
@@ -326,6 +341,23 @@ export default {
         })
         .finally(() => {
           this.status.updateLoadingItem = "";
+        });
+    },
+    cleanCart() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`;
+      this.$http
+        .delete(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "已清空購物車");
+            this.getCart();
+            this.emitter.emit("updateProductInCart");
+          } else {
+            this.$pushMsg.status200(res, "刪除失敗");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
         });
     },
     useCoupon() {
