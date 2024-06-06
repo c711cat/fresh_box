@@ -167,11 +167,7 @@ export default {
       return text;
     },
     pageSwitch() {
-      if (this.searchContent || this.orderList.length <= 10) {
-        return false;
-      } else {
-        return true;
-      }
+      return this.searchContent === null;
     },
   },
   created() {
