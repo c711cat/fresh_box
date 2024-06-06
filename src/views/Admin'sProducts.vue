@@ -130,7 +130,6 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
-          window.scrollTo(0, -100);
         });
     },
     openModal(isNew, item) {
@@ -240,12 +239,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.linkStyle {
-  padding: 3px;
-}
-
 .linkStyle:hover {
-  padding: 0px;
-  border: 3px solid #dee2e6;
+  box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
 }
 </style>
