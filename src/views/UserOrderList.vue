@@ -89,13 +89,10 @@ export default {
       return text;
     },
     pageSwitch() {
-      if (this.searchContent || Object.values(this.orderList).length <= 10) {
-        return false;
-      } else {
-        return true;
-      }
+      return this.searchContent === null;
     },
   },
+
   created() {
     this.getOrders();
     const collapseElementList = document.querySelectorAll(".collapse");
