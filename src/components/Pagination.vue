@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <nav class="mb-5" aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
+  <nav aria-label="Page navigation">
+    <ul class="pagination my-3 justify-content-center">
       <li class="page-item">
         <a
           @click.prevent="goToPrePage(pages.current_page)"

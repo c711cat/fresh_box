@@ -1,58 +1,64 @@
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else class="col-12 col-xl-10 mx-auto mb-5 px-3">
-    <h3 v-if="noResults">{{ noResultsContent }}</h3>
-    <div v-else class="p-1 mb-2 text-end">
-      <button
-        @click="openDelAllOrdersModal"
-        class="btn btn-danger"
-        type="button"
-      >
-        刪除全部訂單
-      </button>
-    </div>
-    <div
-      v-for="(item, index) in orderList"
-      :key="index"
-      class="accordion m-0"
-      id="accordionPanelsAdminOrderList"
-    >
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button
-            @click="open"
-            class="accordion-button text-black"
-            type="button"
-            data-bs-toggle="collapse"
-            :data-bs-target="`#accordion-collapse-collapse` + `${index}`"
-            aria-expanded="true"
-            :aria-controls="`accordion-collapse-collapse` + `${index}`"
-          >
-            訂單日期 {{ turnDate(item.create_at) }}
-          </button>
-        </h2>
-        <div
-          :id="`accordion-collapse-collapse` + `${index}`"
-          class="accordion-collapse collapse show"
+  <div
+    v-else
+    class="mx-auto containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
+  >
+    <div class="mb-5">
+      <h3 v-if="noResults">{{ noResultsContent }}</h3>
+      <div v-else class="p-1 mb-2 text-end">
+        <button
+          @click="openDelAllOrdersModal"
+          class="btn btn-danger"
+          type="button"
         >
-          <div class="accordion-body">
-            <Order :oneOrder="item"></Order>
-            <div class="text-end pe-5">
-              <button
-                @click="openDelModal(item)"
-                class="btn btn-danger"
-                type="button"
-              >
-                刪除訂單
-              </button>
+          刪除全部訂單
+        </button>
+      </div>
+      <div
+        v-for="(item, index) in orderList"
+        :key="index"
+        class="accordion m-0"
+        id="accordionPanelsAdminOrderList"
+      >
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button
+              @click="open"
+              class="accordion-button text-black"
+              type="button"
+              data-bs-toggle="collapse"
+              :data-bs-target="`#accordion-collapse-collapse` + `${index}`"
+              aria-expanded="true"
+              :aria-controls="`accordion-collapse-collapse` + `${index}`"
+            >
+              訂單日期 {{ turnDate(item.create_at) }}
+            </button>
+          </h2>
+          <div
+            :id="`accordion-collapse-collapse` + `${index}`"
+            class="accordion-collapse collapse"
+          >
+            <div class="accordion-body">
+              <Order :oneOrder="item"></Order>
+              <div class="text-end pe-5">
+                <button
+                  @click="openDelModal(item)"
+                  class="btn btn-danger"
+                  type="button"
+                >
+                  刪除訂單
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
+    </Pagination>
   </div>
-  <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
-  </Pagination>
+
   <delModal
     ref="delModal"
     :order="tempOrder"
@@ -190,6 +196,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.containerWrap {
+  min-height: 88vh;
+}
+
 .accordion-button:hover {
   color: #ccaf3c !important;
 }
