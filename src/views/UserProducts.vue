@@ -249,54 +249,76 @@ export default {
   components: { Observer },
   inject: ["emitter"],
   methods: {
-    goToAllProducts() {
-      this.$router.push("/user-products");
-      this.getCart();
-      this.getPage1Products();
+    whereComeFrom() {
+      if (this.$route.params.currentCategory) {
+        this.chooseCategory(this.$route.params.currentCategory);
+        this.getCart();
+      } else {
+        if (this.$route.path === "/favorite") {
+          this.getCart();
+          setTimeout(() => {
+            this.allProducts = this.myFavoriteList;
+            this.pushBuyQtyId();
+            this.isLoading = false;
+          }, 3000);
+        } else {
+          this.getCart();
+          setTimeout(() => {
+            this.getPage1Products();
+            this.getOtherPageProducts();
+          }, 600);
+        }
+      }
     },
-    goToTheCategory(category) {
-      this.$router.push(`/user-products/${category}`);
-      this.chooseCategory(category);
+    getMyFavorite() {
+      this.myFavoriteList =
+        JSON.parse(localStorage.getItem("myFavorite")) || [];
+      this.myFavoriteList.forEach((item) => {
+        item.buyQty = 0;
+      });
     },
-    chooseCategory(category) {
-      this.currentCategory = category;
-      this.pagination.total_pages = 0;
-      this.getAllProducts();
-    },
-    showCategoryProducts() {
-      let inCaterogy = [];
-      this.forCategoryAllProducts.filter((item) => {
-        if (item.category === this.currentCategory) {
-          inCaterogy.push(item);
+    isMyFavorite(item) {
+      let favorite = "";
+      this.myFavoriteList.forEach((listItem) => {
+        if (item.id === listItem.id) {
+          favorite = true;
         }
       });
-      this.allProducts = inCaterogy;
-      this.pushBuyQtyId();
-      this.isLoading = false;
+      return favorite;
     },
-    getAllProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+    addMyFavorite(addItem) {
+      this.myFavoriteList.push(addItem);
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+    },
+    delMyFavorite(delItem) {
+      this.myFavoriteList.filter((item, index) => {
+        if (delItem.id === item.id) {
+          return this.myFavoriteList.splice(index, 1);
+        }
+      });
+      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+    },
+    getCart() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http
         .get(api)
         .then((res) => {
-          if (res.data.success) {
-            this.forCategoryAllProducts = res.data.products;
-            this.showCategoryProducts();
-          }
+          this.carts = res.data.data.carts;
+          this.pushBuyQtyId();
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
         });
     },
-    handleLoadmore() {
-      this.getOtherPageProducts();
-    },
-    handleIsInView() {
-      this.isInView = true;
-      this.handleLoadmore();
-    },
-    handleIsOutsideView() {
-      this.isInView = false;
+    pushBuyQtyId() {
+      this.allProducts.forEach((item) => {
+        this.carts.forEach((cartItem) => {
+          if (item.id === cartItem.product_id) {
+            item.buyQty = cartItem.qty;
+            item.pushCartId = cartItem.id;
+          }
+        });
+      });
     },
     getPage1Products(page = 1) {
       this.pagination.current_page = 1;
@@ -315,6 +337,55 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
+    },
+    chooseCategory(category) {
+      this.currentCategory = category;
+      this.pagination.total_pages = 0;
+      this.getAllProducts();
+    },
+    getAllProducts() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http
+        .get(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.forCategoryAllProducts = res.data.products;
+            this.showCategoryProducts();
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
+    },
+    showCategoryProducts() {
+      let inCaterogy = [];
+      this.forCategoryAllProducts.filter((item) => {
+        if (item.category === this.currentCategory) {
+          inCaterogy.push(item);
+        }
+      });
+      this.allProducts = inCaterogy;
+      this.pushBuyQtyId();
+      this.isLoading = false;
+    },
+    goToAllProducts() {
+      this.$router.push("/user-products");
+      this.getCart();
+      this.getPage1Products();
+    },
+    goToTheCategory(category) {
+      this.$router.push(`/user-products/${category}`);
+      this.chooseCategory(category);
+    },
+    handleIsInView() {
+      this.isInView = true;
+      this.handleLoadmore();
+    },
+    handleLoadmore() {
+      this.getOtherPageProducts();
+    },
+    handleIsOutsideView() {
+      this.isInView = false;
     },
     addCart(item) {
       const addItem = { product_id: item.id, qty: 1 };
@@ -343,28 +414,6 @@ export default {
         .finally(() => {
           this.status.addLoadingItem = "";
         });
-    },
-    getCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.$http
-        .get(api)
-        .then((res) => {
-          this.carts = res.data.data.carts;
-        })
-        .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
-    },
-    pushBuyQtyId() {
-      const cart = [...this.carts];
-      this.allProducts.forEach((item) => {
-        cart.forEach((cartItem) => {
-          if (item.id === cartItem.product_id) {
-            item.buyQty = cartItem.qty;
-            item.pushCartId = cartItem.id;
-          }
-        });
-      });
     },
     delOne(item) {
       const updateQty = item.buyQty - 1;
@@ -398,9 +447,6 @@ export default {
           this.status.delLoadingItem = "";
         });
     },
-    goToProduct(item) {
-      this.$router.push(`/product/${item.id}`);
-    },
     delItem(id) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
       this.$http
@@ -410,52 +456,13 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          location.reload();
         });
     },
-    getMyFavorite() {
-      this.myFavoriteList =
-        JSON.parse(localStorage.getItem("myFavorite")) || [];
-    },
-    isMyFavorite(item) {
-      let favorite = "";
-      this.myFavoriteList.forEach((listItem) => {
-        if (item.id === listItem.id) {
-          favorite = true;
-        }
-      });
-      return favorite;
-    },
-    addMyFavorite(addItem) {
-      this.myFavoriteList.push(addItem);
-      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
-    },
-    delMyFavorite(delItem) {
-      this.myFavoriteList.filter((item, index) => {
-        if (delItem.id === item.id) {
-          return this.myFavoriteList.splice(index, 1);
-        }
-      });
-      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
-    },
-    whereComeFrom() {
-      if (this.$route.params.currentCategory) {
-        this.chooseCategory(this.$route.params.currentCategory);
-        this.getCart();
-      } else {
-        if (this.$route.path === "/favorite") {
-          this.getCart();
-          setTimeout(() => {
-            this.allProducts = this.myFavoriteList;
-            this.isLoading = false;
-          }, 3000);
-        } else {
-          this.getCart();
-          setTimeout(() => {
-            this.getPage1Products();
-            this.getOtherPageProducts();
-          }, 600);
-        }
-      }
+    goToProduct(item) {
+      this.$router.push(`/product/${item.id}`);
     },
   },
   computed: {
@@ -495,6 +502,7 @@ export default {
   updated() {
     if (this.$route.path === "/favorite") {
       this.allProducts = this.myFavoriteList;
+      this.pushBuyQtyId();
     }
   },
 };
