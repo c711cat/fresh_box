@@ -456,6 +456,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          location.reload();
         });
     },
     goToProduct(item) {
