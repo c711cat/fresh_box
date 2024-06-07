@@ -356,9 +356,8 @@ export default {
         });
     },
     pushBuyQtyId() {
-      const cart = [...this.carts];
       this.allProducts.forEach((item) => {
-        cart.forEach((cartItem) => {
+        this.carts.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
             item.buyQty = cartItem.qty;
             item.pushCartId = cartItem.id;
