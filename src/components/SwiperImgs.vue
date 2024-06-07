@@ -43,7 +43,11 @@
       @slideChange="onSlideChange"
     >
       <SwiperSlide v-for="(item, index) in allProducts" :key="index">
-        <router-link :to="`/product/${item.id}`" class="linkStyle">
+        <router-link
+          @click="goToProductPage"
+          :to="`/product/${item.id}`"
+          class="linkStyle"
+        >
           <img
             class="img-fluid carouselImg"
             :src="item.imageUrl"
@@ -159,6 +163,13 @@ export default {
     },
     isCurrentWidth() {
       this.currentWidth = window.innerWidth;
+    },
+    goToProductPage() {
+      if (this.$route.path !== "/") {
+        setTimeout(() => {
+          location.reload();
+        }, 500);
+      }
     },
   },
 
