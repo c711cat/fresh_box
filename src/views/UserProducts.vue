@@ -457,9 +457,6 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
-        })
-        .finally(() => {
-          location.reload();
         });
     },
     goToProduct(item) {
@@ -504,6 +501,9 @@ export default {
   updated() {
     if (this.$route.path === "/favorite") {
       this.allProducts = this.myFavoriteList;
+      this.getCart();
+      this.pushBuyQtyId();
+    }
     if (this.searchText !== "") {
       this.allProducts = this.searchResult;
       this.getCart();
