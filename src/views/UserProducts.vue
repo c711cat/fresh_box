@@ -350,6 +350,7 @@ export default {
         .get(api)
         .then((res) => {
           this.carts = res.data.data.carts;
+          this.pushBuyQtyId();
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -414,6 +415,9 @@ export default {
     getMyFavorite() {
       this.myFavoriteList =
         JSON.parse(localStorage.getItem("myFavorite")) || [];
+      this.myFavoriteList.forEach((item) => {
+        item.buyQty = 0;
+      });
     },
     isMyFavorite(item) {
       let favorite = "";
@@ -445,6 +449,7 @@ export default {
           this.getCart();
           setTimeout(() => {
             this.allProducts = this.myFavoriteList;
+            this.pushBuyQtyId();
             this.isLoading = false;
           }, 3000);
         } else {
