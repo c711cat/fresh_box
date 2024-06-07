@@ -499,6 +499,7 @@ export default {
   updated() {
     if (this.$route.path === "/favorite") {
       this.allProducts = this.myFavoriteList;
+      this.pushBuyQtyId();
     }
   },
 };
