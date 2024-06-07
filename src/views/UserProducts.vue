@@ -215,6 +215,7 @@ export default {
       forCategoryAllProducts: [],
       currentCategory: "選擇類別",
       searchText: "",
+      searchResult: [],
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -488,6 +489,7 @@ export default {
     this.emitter.on("productSearchResult", (searchResult) => {
       this.searchText = searchResult[0];
       this.pagination.total_pages = 0;
+      this.searchResult = searchResult.data;
       this.allProducts = searchResult.data;
       this.pushBuyQtyId();
     });
@@ -502,6 +504,9 @@ export default {
   updated() {
     if (this.$route.path === "/favorite") {
       this.allProducts = this.myFavoriteList;
+    if (this.searchText !== "") {
+      this.allProducts = this.searchResult;
+      this.getCart();
       this.pushBuyQtyId();
     }
   },
