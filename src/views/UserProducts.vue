@@ -370,9 +370,13 @@ export default {
       this.isLoading = false;
     },
     goToAllProducts() {
-      this.$router.push("/user-products");
-      this.getCart();
-      this.getPage1Products();
+      if (this.$route.path === "/user-products") {
+        location.reload();
+      } else {
+        this.$router.push("/user-products");
+        this.getCart();
+        this.getPage1Products();
+      }
     },
     goToTheCategory(category) {
       this.$router.push(`/user-products/${category}`);
