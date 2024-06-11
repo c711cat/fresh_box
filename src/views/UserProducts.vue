@@ -445,9 +445,7 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          this.getCart();
-          this.pushBuyQtyId();
-
+          location.reload();
           return res;
         })
         .catch((error) => {
