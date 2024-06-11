@@ -458,11 +458,13 @@ export default {
     go_to_favorite() {
       if (this.searchText && this.$route.path !== "/favorite") {
         this.allProducts = this.searchResult;
+        this.getCart();
+        this.pushBuyQtyId();
       } else {
         this.allProducts = this.myFavoriteList;
+        this.getCart();
+        this.pushBuyQtyId();
       }
-      this.getCart();
-      this.pushBuyQtyId();
     },
   },
   computed: {
