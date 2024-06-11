@@ -402,12 +402,6 @@ export default {
           if (res.data.success) {
             this.$pushMsg.status200(res, "已加入購物車");
             this.getCart();
-            if (this.$route.params.currentCategory) {
-              this.chooseCategory(this.$route.params.currentCategory);
-            } else {
-              this.getPage1Products();
-              this.getOtherPageProducts();
-            }
             this.emitter.emit("updateProductInCart");
           } else {
             this.$pushMsg.status200(res, "加入購物車失敗");
@@ -434,12 +428,6 @@ export default {
               this.delItem(item.pushCartId);
             }
             this.getCart();
-            if (this.$route.params.currentCategory) {
-              this.chooseCategory(this.$route.params.currentCategory);
-            } else {
-              this.getPage1Products();
-              this.getOtherPageProducts();
-            }
             this.emitter.emit("updateProductInCart");
           } else {
             this.$pushMsg.status200(res, "刪除失敗");
@@ -457,6 +445,9 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
+          this.getCart();
+          this.pushBuyQtyId();
+
           return res;
         })
         .catch((error) => {
@@ -465,6 +456,15 @@ export default {
     },
     goToProduct(item) {
       this.$router.push(`/product/${item.id}`);
+    },
+    go_to_favorite() {
+      if (this.searchText && this.$route.path !== "/favorite") {
+        this.allProducts = this.searchResult;
+      } else {
+        this.allProducts = this.myFavoriteList;
+      }
+      this.getCart();
+      this.pushBuyQtyId();
     },
   },
   computed: {
@@ -479,6 +479,7 @@ export default {
       );
     },
   },
+
   created() {
     this.isLoading = true;
     this.whereComeFrom();
@@ -488,6 +489,7 @@ export default {
       (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
     );
     this.emitter.on("productSearchResult", (searchResult) => {
+      this.getCart();
       this.searchText = searchResult[0];
       this.pagination.total_pages = 0;
       this.searchResult = searchResult.data;
@@ -495,6 +497,7 @@ export default {
       this.pushBuyQtyId();
     });
     this.emitter.on("productSearchNull", () => {
+      this.searchText = "";
       this.getPage1Products();
     });
     this.emitter.on("goToUserProducts", () => {
@@ -504,14 +507,7 @@ export default {
   },
   updated() {
     if (this.$route.path === "/favorite") {
-      this.allProducts = this.myFavoriteList;
-      this.getCart();
-      this.pushBuyQtyId();
-    }
-    if (this.searchText !== "") {
-      this.allProducts = this.searchResult;
-      this.getCart();
-      this.pushBuyQtyId();
+      this.go_to_favorite();
     }
   },
 };
@@ -520,7 +516,6 @@ export default {
 <style lang="scss" scoped>
 img {
   height: 19vh;
-
   object-fit: cover;
 }
 
