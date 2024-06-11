@@ -17,7 +17,7 @@
       >
         <h3 class="ps-2 m-0">購物車清單</h3>
 
-        <button @click="cleanCart" class="btn btn-danger" type="button">
+        <button @click="openDelModal" class="btn btn-danger" type="button">
           清空購物車
         </button>
       </div>
@@ -213,10 +213,16 @@
       </div>
     </div>
   </div>
+  <DelModal
+    ref="delModal"
+    :allCartItems="allItems"
+    @del-all-items-of-Cart="cleanCart"
+  ></DelModal>
 </template>
 <script>
 import "vue-select/dist/vue-select.css";
 import RecipientForm from "@/views/RecipientForm.vue";
+import DelModal from "@/components/DelModal.vue";
 export default {
   data() {
     return {
@@ -227,10 +233,11 @@ export default {
       couponOption: ["10%off"],
       shippingFee: 260,
       used_coupon: false,
+      allItems: false,
     };
   },
   inject: ["emitter"],
-  components: { RecipientForm },
+  components: { RecipientForm, DelModal },
   methods: {
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
@@ -343,6 +350,10 @@ export default {
           this.status.updateLoadingItem = "";
         });
     },
+    openDelModal() {
+      this.allItems = true;
+      this.$refs.delModal.showModal();
+    },
     cleanCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`;
       this.$http
@@ -351,6 +362,7 @@ export default {
           if (res.data.success) {
             this.$pushMsg.status200(res, "已清空購物車");
             this.getCart();
+            this.$refs.delModal.hideModal();
             this.emitter.emit("updateProductInCart");
           } else {
             this.$pushMsg.status200(res, "刪除失敗");
@@ -358,6 +370,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.allItems = false;
         });
     },
     useCoupon() {

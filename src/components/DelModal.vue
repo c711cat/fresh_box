@@ -72,6 +72,7 @@ export default {
         return {};
       },
     },
+    allCartItems: {},
     allOrders: {},
     pages: {},
   },
@@ -91,6 +92,9 @@ export default {
       }
       if (this.allOrders) {
         this.$emit("del-all-orders");
+      }
+      if (this.allCartItems) {
+        this.$emit("del-all-items-of-Cart");
       }
     },
   },
@@ -116,6 +120,9 @@ export default {
       }
       if (this.allOrders) {
         return "確定刪除全部訂單？";
+      }
+      if (this.allCartItems) {
+        return "確定刪除購物車中全部的品項？";
       }
       if (this.tempProduct.id) {
         return `確定刪除 ${this.tempProduct.title} 這個產品？`;
