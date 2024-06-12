@@ -446,7 +446,7 @@ export default {
         .then((res) => {
           if (
             this.$route.path === "/favorite" ||
-            this.$route.path === this.$route.params.currentCategory ||
+            this.$route.params.currentCategory ||
             this.$route.path === ("/user-products" && this.searchText === "")
           ) {
             location.reload();
