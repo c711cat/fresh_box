@@ -181,7 +181,6 @@
       </div>
     </div>
   </div>
-
   <Observer
     v-if="pagination.current_page < pagination.total_pages"
     @is-in-view="handleIsInView"
@@ -479,7 +478,6 @@ export default {
       );
     },
   },
-
   created() {
     this.isLoading = true;
     this.whereComeFrom();

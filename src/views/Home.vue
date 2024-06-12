@@ -59,16 +59,16 @@
   <div class="row col-12 mx-0 justify-content-center align-items-center">
     <img
       class="newsImg object-fit-cover col-lg-12 p-0"
-      data-aos="fade-right"
+      data-aos="fade-zoom-in"
       data-aos-easing="ease-out-circ"
-      data-aos-duration="1000"
+      data-aos-duration="2000"
       src="../assets/img/home_img2.jpg"
       alt="homeImg"
     />
     <router-link
       to="/user-products"
       class="newsContent text-decoration-none text-black col-11 col-sm-9 col-lg-8 col-xl-6 d-flex flex-column justify-content-center align-items-center"
-      data-aos="zoom-in-left"
+      data-aos="zoom-in"
       data-aos-easing="ease-out-sine"
       data-aos-duration="900"
     >
