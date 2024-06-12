@@ -444,11 +444,7 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (
-            this.$route.path === "/favorite" ||
-            this.$route.params.currentCategory ||
-            this.$route.path === ("/user-products" && this.searchText === "")
-          ) {
+          if (this.searchText === "") {
             location.reload();
           }
 
