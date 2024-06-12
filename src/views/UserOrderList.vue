@@ -32,6 +32,16 @@
           >
             <div class="accordion-body pt-4">
               <Order :oneOrder="item"></Order>
+              <div class="text-end col-lg-7 pe-4">
+                <button
+                  v-if="!item.is_paid"
+                  @click="toPay(item.id)"
+                  class="btn btn-danger"
+                  type="button"
+                >
+                  確認付款
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -67,6 +77,27 @@ export default {
         .then((res) => {
           this.orderList = { ...res.data.orders };
           this.pagination = res.data.pagination;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+    toPay(orderId) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${orderId}`;
+      this.isLoading = true;
+      this.$http
+        .post(api)
+        .then((res) => {
+          console.log(res);
+          if (res.data.success) {
+            this.$pushMsg.status200(res, "付款成功");
+            this.getOrders();
+          } else {
+            this.$pushMsg.status200(res, "付款失敗");
+          }
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
