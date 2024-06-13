@@ -2,21 +2,12 @@
 <template>
   <img
     src="../assets/img/1.jpg"
-    class="homeImg position-relative"
+    class="homeImg"
     alt="homeImg"
     data-aos="fade-in"
     data-aos-easing="ease-out-sine"
     data-aos-duration="2000"
   />
-  <div
-    class="scroll-container text-center position-absolute bottom-0"
-    data-aos="fade-in"
-    data-aos-easing="ease-out-sine"
-    data-aos-duration="2600"
-  >
-    <p class="m-0 fs-5">S C R O L L</p>
-    <i class="bi bi-chevron-compact-down fs-3 fw-lighter"></i>
-  </div>
 
   <!-- 商品類別 -->
   <Category></Category>
@@ -239,33 +230,5 @@ export default {
 
 .newsContent:hover .goShopping {
   opacity: 1;
-}
-
-.scroll-container {
-  height: 150px;
-  width: 100%;
-}
-
-.bi-chevron-compact-down {
-  position: relative;
-  animation-duration: 3s;
-  animation-timing-function: ease-in;
-  animation-name: moving;
-  animation-iteration-count: infinite;
-}
-
-@keyframes moving {
-  0% {
-    top: 0;
-    color: #000000;
-  }
-  50% {
-    top: 50px;
-    color: #00000000;
-  }
-  100% {
-    top: 0;
-    color: #00000000;
-  }
 }
 </style>
