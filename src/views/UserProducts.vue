@@ -58,6 +58,7 @@
         <img
           @click="goToProduct(item)"
           :src="item.imageUrl"
+          :class="{ s_height: isCurrentHeight, s_width: isCurrentWidth }"
           class="imgBody card-img-top position-relative"
         />
 
@@ -480,6 +481,12 @@ export default {
         this.searchText === ""
       );
     },
+    isCurrentHeight() {
+      return window.outerHeight <= 700;
+    },
+    isCurrentWidth() {
+      return window.innerWidth <= 300;
+    },
   },
   created() {
     this.isLoading = true;
@@ -516,8 +523,18 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  height: 19vh;
+  height: 50%;
   object-fit: cover;
+}
+
+// 瀏覽器高度 小於等於 700
+.s_height {
+  height: 40%;
+}
+
+// 瀏覽器寬度 小於等於 300
+.s_width {
+  height: 25%;
 }
 
 .imgBody:hover {
