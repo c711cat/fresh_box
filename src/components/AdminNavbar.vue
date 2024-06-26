@@ -167,7 +167,7 @@ export default {
         .post(api)
         .then((res) => {
           if (res.data.success) {
-            this.$router.push("/dashboard/login");
+            this.$router.push("/login");
             this.$pushMsg.status200(res, "已登出");
           } else {
             this.$pushMsg.status200(res, "登出失敗");
@@ -197,13 +197,17 @@ export default {
       this.$http
         .get(api)
         .then((res) => {
-          this.orders = res.data.orders;
-          this.orderPage = this.orderPage + 1;
-          if (this.orderPage <= res.data.pagination.total_pages) {
-            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
-            this.$http.get(api).then((res) => {
-              this.orders = [...this.orders, ...res.data.orders];
-            });
+          if (res.data.success) {
+            this.orders = res.data.orders;
+            this.orderPage = this.orderPage + 1;
+            if (this.orderPage <= res.data.pagination.total_pages) {
+              const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+              this.$http.get(api).then((res) => {
+                this.orders = [...this.orders, ...res.data.orders];
+              });
+            }
+          } else {
+            this.$pushMsg.status404(res.data.message);
           }
         })
         .catch((error) => {

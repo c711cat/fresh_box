@@ -5,7 +5,6 @@
   </div>
 
   <div class="viewContainer">
-    <Messages></Messages>
     <router-view />
   </div>
 </template>
@@ -13,19 +12,12 @@
 <script>
 import Cookie from "js-cookie";
 import AdminNavbar from "../components/AdminNavbar.vue";
-import emitter from "@/methods/emitter";
-import Messages from "@/components/Messages.vue";
 
 export default {
   data() {
     return {};
   },
-  provide() {
-    return {
-      emitter,
-    };
-  },
-  components: { AdminNavbar, Messages },
+  components: { AdminNavbar },
   created() {
     const token = Cookie.get("freshBoxToken");
     this.$http.defaults.headers.common["Authorization"] = token;
@@ -34,7 +26,7 @@ export default {
       .post(api)
       .then((res) => {
         if (!res.data.success) {
-          this.$router.push("/dashboard/login");
+          this.$router.push("/login");
         }
       })
       .catch((error) => {

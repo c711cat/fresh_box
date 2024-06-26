@@ -2,13 +2,13 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
   {
+    path: "/login",
+    component: () => import("../views/Login.vue"),
+  },
+  {
     path: "/dashboard",
     component: () => import("../views/AdminDashboard.vue"),
     children: [
-      {
-        path: "login",
-        component: () => import("../views/Login.vue"),
-      },
       {
         path: "admin's-products",
         component: () => import("../views/Admin'sProducts.vue"),

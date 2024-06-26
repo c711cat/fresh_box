@@ -16,10 +16,10 @@
       >
         <div style="min-width: 145px" class="text-sm-end py-2 col">
           <router-link
-            to="/dashboard/login"
-            class="text-decoration-none rounded-pill text-center bg-black text-light py-2 px-4 adminLogin"
+            to="/login"
+            class="text-decoration-none rounded-1 text-center bg-black text-light py-2 px-3 adminLogin"
           >
-            後台登入
+            後台
           </router-link>
         </div>
 
