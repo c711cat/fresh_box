@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="container col-sm-8 col-md-7 col-lg-5">
+  <Loading v-if="isLoading"></Loading>
+  <div v-else class="container col-sm-8 col-md-7 col-lg-5">
     <form @submit.prevent="signIn" class="m-3">
       <h3 class="mb-3 border-2 pb-2 border-bottom border-secondary">
         請先登入
@@ -40,6 +41,7 @@ import Cookies from "js-cookie";
 export default {
   data() {
     return {
+      isLoading: false,
       user: {
         username: "",
         password: "",
@@ -68,10 +70,12 @@ export default {
         });
     },
     checkSignIn() {
+      this.isLoading = true;
       const api = `${process.env.VUE_APP_API}api/user/check`;
       this.$http
         .post(api)
         .then((res) => {
+          this.isLoading = false;
           if (res.data.success) {
             this.$router.push("/dashboard/admin's-products");
           }
