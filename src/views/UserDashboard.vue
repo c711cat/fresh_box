@@ -3,7 +3,6 @@
   <div class="userViewContainer">
     <div>
       <UserNavbar :currentPath="this.$route.path"></UserNavbar>
-      <Messages></Messages>
       <router-view />
     </div>
 
@@ -15,19 +14,13 @@
 
 <script>
 import UserNavbar from "../components/UserNavbar.vue";
-import emitter from "@/methods/emitter";
-import Messages from "@/components/Messages.vue";
 import Footer from "@/components/Footer.vue";
+
 export default {
   data() {
     return {};
   },
-  provide() {
-    return {
-      emitter,
-    };
-  },
-  components: { UserNavbar, Messages, Footer },
+  components: { UserNavbar, Footer },
 };
 </script>
 

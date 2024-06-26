@@ -16,7 +16,7 @@
       >
         <div style="min-width: 145px" class="text-sm-end py-2 col">
           <router-link
-            to="/dashboard/login"
+            to="/login"
             class="text-decoration-none rounded-pill text-center bg-black text-light py-2 px-4 adminLogin"
           >
             後台登入
