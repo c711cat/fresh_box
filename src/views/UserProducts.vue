@@ -181,12 +181,18 @@
         </div>
       </div>
     </div>
+    <Observer
+      v-if="pagination.current_page < pagination.total_pages"
+      @is-in-view="handleIsInView"
+      @is-outside-view="handleIsOutsideView"
+    />
+    <div
+      v-if="pagination.current_page === pagination.total_pages"
+      class="w-100 text-secondary text-center"
+    >
+      <div class="noMore">已無更多商品</div>
+    </div>
   </div>
-  <Observer
-    v-if="pagination.current_page < pagination.total_pages"
-    @is-in-view="handleIsInView"
-    @is-outside-view="handleIsOutsideView"
-  />
 </template>
 
 <script>
@@ -611,5 +617,20 @@ img {
 
 .card {
   height: 40vh;
+}
+
+.noMore {
+  animation-name: noProducts;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes noProducts {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 </style>
