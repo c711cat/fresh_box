@@ -67,6 +67,22 @@ export default {
           this.$pushMsg.status404(error.response.data.message);
         });
     },
+    checkSignIn() {
+      const api = `${process.env.VUE_APP_API}api/user/check`;
+      this.$http
+        .post(api)
+        .then((res) => {
+          if (res.data.success) {
+            this.$router.push("/dashboard/admin's-products");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
+    },
+  },
+  created() {
+    this.checkSignIn();
   },
 };
 </script>
