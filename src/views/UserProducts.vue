@@ -54,26 +54,26 @@
           @click="addMyFavorite(item)"
           class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
         ></h3>
-
-        <img
-          @click="goToProduct(item)"
-          :src="item.imageUrl"
-          :class="{ s_height: isCurrentHeight, s_width: isCurrentWidth }"
-          class="imgBody card-img-top position-relative"
-        />
+        <div class="imgContainer position-relative">
+          <img
+            @click="goToProduct(item)"
+            :src="item.imageUrl"
+            class="imgBody card-img-top"
+          />
+        </div>
 
         <div class="card-body d-flex flex-column justify-content-between">
           <div>
             <div class="d-flex justify-content-between">
-              <!-- md以上字體 -->
+              <!-- sm以上字體 -->
               <h5
-                class="card-title d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+                class="card-title d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
               >
                 {{ item.title }}
               </h5>
-              <!-- sm以下字體 -->
+              <!-- xs以下字體 -->
               <h5
-                class="card-title sm_title_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+                class="card-title xs_title_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
               >
                 {{ item.title }}
               </h5>
@@ -84,30 +84,32 @@
               >
                 {{ item.buyQty }}
               </span>
-              <!-- sm以下字體 -->
+              <!-- xs以下字體 -->
               <span
                 v-if="item.buyQty >= 1"
-                class="badge text-bg-danger rounded-pill sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+                class="badge text-bg-danger rounded-pill xs_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
               >
                 {{ item.buyQty }}
               </span>
             </div>
-            <!-- md以上字體 -->
+            <!-- sm以上字體 -->
             <p
-              class="card-text d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+              class="card-text d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
             >
               {{ item.content }} / {{ item.unit }}
             </p>
-            <!-- sm以下字體 -->
+            <!-- xs以下字體 -->
             <p
-              class="card-text sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+              class="card-text xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
             >
               {{ item.content }} / {{ item.unit }}
             </p>
-            <div class="d-flex justify-content-between flex-wrap mb-2">
-              <!-- md以上字體 -->
+            <div
+              class="priceContainer d-flex justify-content-between flex-wrap mb-2"
+            >
+              <!-- sm以上字體 -->
               <strong
-                class="col-12 col-sm-auto card-text text-secondary fs-6 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+                class="col-12 col-sm-auto card-text text-secondary fs-6 d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
                 :class="{
                   'text-decoration-line-through':
                     item.price !== item.origin_price,
@@ -115,9 +117,9 @@
               >
                 NT$ {{ $filters.currency(item.origin_price) }}
               </strong>
-              <!-- sm以下字體 -->
+              <!-- xs以下字體 -->
               <strong
-                class="col-12 col-sm-auto card-text text-secondary sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+                class="col-12 col-sm-auto card-text text-secondary xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
                 :class="{
                   'text-decoration-line-through':
                     item.price !== item.origin_price,
@@ -125,16 +127,16 @@
               >
                 NT$ {{ $filters.currency(item.origin_price) }}
               </strong>
-              <!-- md以上字體 -->
+              <!-- sm以上字體 -->
               <strong
                 v-if="item.price !== item.origin_price"
-                class="col-12 col-sm-auto card-text text-danger fs-6 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+                class="col-12 col-sm-auto card-text text-danger fs-6 d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
                 >NT$ {{ $filters.currency(item.price) }}
               </strong>
-              <!-- sm以下字體 -->
+              <!-- xs以下字體 -->
               <strong
                 v-if="item.price !== item.origin_price"
-                class="col-12 col-sm-auto card-text text-danger sm_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+                class="col-12 col-sm-auto card-text text-danger xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
                 >NT$ {{ $filters.currency(item.price) }}
               </strong>
             </div>
@@ -487,12 +489,6 @@ export default {
         this.searchText === ""
       );
     },
-    isCurrentHeight() {
-      return window.outerHeight <= 700;
-    },
-    isCurrentWidth() {
-      return window.innerWidth <= 300;
-    },
   },
   created() {
     this.isLoading = true;
@@ -528,19 +524,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-img {
-  height: 50%;
-  object-fit: cover;
-}
-
-// 瀏覽器高度 小於等於 700
-.s_height {
+.imgContainer {
   height: 40%;
 }
 
-// 瀏覽器寬度 小於等於 300
-.s_width {
-  height: 25%;
+img {
+  height: 16vh;
+  object-fit: cover;
+}
+
+.priceContainer {
+  height: 6vh;
 }
 
 .imgBody:hover {
@@ -607,16 +601,12 @@ img {
   border-radius: 3%;
 }
 
-.sm_title_text {
+.xs_title_text {
   font-size: 14px;
 }
 
-.sm_text {
+.xs_text {
   font-size: 12px;
-}
-
-.card {
-  height: 40vh;
 }
 
 .noMore {
