@@ -1,9 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Form @submit="createOrder" class="row m-0 g-3" v-slot="{ errors }">
-    <h3 class="border-bottom pb-2 mt-0 ps-3">收件人資訊</h3>
+    <h3 class="my-0 ps-3">收件人資訊</h3>
     <div class="px-3">
-      <label class="form-label mt-3" for="name">收件人姓名</label>
+      <label class="form-label" for="name">收件人姓名</label>
       <Field
         v-model="form.user.name"
         :class="{ 'is-invalid': errors['姓名'] }"
@@ -54,7 +54,7 @@
       ></Field>
       <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
     </div>
-    <div class="p-3">
+    <div class="px-3">
       <label class="form-label" for="message">備註</label>
       <textarea
         v-model="form.message"
@@ -65,7 +65,7 @@
         rows="5"
       ></textarea>
     </div>
-    <div class="text-end">
+    <div class="text-end pe-3">
       <button class="btn btn-yellow-200 px-5">送出訂單</button>
     </div>
   </Form>
