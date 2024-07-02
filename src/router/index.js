@@ -45,7 +45,7 @@ const routes = [
       },
       {
         path: "cart",
-        component: () => import("../views/Cart.vue"),
+        component: () => import("../views/CartView.vue"),
       },
       {
         path: "favorite",

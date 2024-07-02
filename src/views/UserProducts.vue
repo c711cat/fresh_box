@@ -54,7 +54,7 @@
           @click="addMyFavorite(item)"
           class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
         ></h3>
-        <div class="imgContainer position-relative">
+        <div class="position-relative">
           <img
             @click="goToProduct(item)"
             :src="item.imageUrl"
@@ -524,12 +524,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.imgContainer {
-  height: 40%;
-}
-
 img {
-  height: 16vh;
+  height: 20vh;
   object-fit: cover;
 }
 
