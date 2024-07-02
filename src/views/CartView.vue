@@ -391,10 +391,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  // border: 1px solid;
-}
-
 .cartWrap {
   margin: 110px 0px 30px 0px;
 }
