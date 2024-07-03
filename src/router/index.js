@@ -63,6 +63,10 @@ const routes = [
         path: "order-list",
         component: () => import("../views/UserOrderList.vue"),
       },
+      {
+        path: "QA",
+        component: () => import("../views/UserQA.vue"),
+      },
     ],
   },
 ];
