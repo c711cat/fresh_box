@@ -10,7 +10,7 @@ export function status200(res, title) {
     const msg = [];
     Object.values(res.data.message).forEach((item) => {
       if (item === " title 欄位為必填") {
-        item = "名稱";
+        item = "名稱或標題";
         msg.push(item);
       }
       if (item === " category 欄位為必填") {
@@ -62,7 +62,7 @@ export function status200(res, title) {
         msg.push(item);
       }
       if (item === "title 屬性不得為空") {
-        item = "名稱";
+        item = "名稱或標題";
         msg.push(item);
       }
       if (item === "unit 屬性不得為空") {
@@ -79,6 +79,26 @@ export function status200(res, title) {
       }
       if (item === "category 型別錯誤") {
         item = "類別";
+        msg.push(item);
+      }
+      if (item === "content 屬性不得為空") {
+        item = "問題解答";
+        msg.push(item);
+      }
+      if (item === "author 屬性不得為空") {
+        item = "發布者";
+        msg.push(item);
+      }
+      if (item === " author 欄位為必填") {
+        item = "發布者";
+        msg.push(item);
+      }
+      if (item === " content 欄位為必填") {
+        item = "問題解答";
+        msg.push(item);
+      }
+      if (item === " isPublic 欄位為必填") {
+        item = "公開此問答";
         msg.push(item);
       }
     });

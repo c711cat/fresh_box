@@ -51,6 +51,7 @@ export default {
       tempProduct: {},
       tempCoupon: {},
       tempOrder: {},
+      tempQA: {},
     };
   },
   props: {
@@ -67,6 +68,12 @@ export default {
       },
     },
     order: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+    QA: {
       type: Object,
       default() {
         return {};
@@ -96,6 +103,9 @@ export default {
       if (this.allCartItems) {
         this.$emit("del-all-items-of-Cart");
       }
+      if (this.QA.id) {
+        this.$emit("del-QA", this.tempQA);
+      }
     },
   },
   watch: {
@@ -108,12 +118,15 @@ export default {
     order() {
       this.tempOrder = this.order;
     },
+    QA() {
+      this.tempQA = this.QA;
+    },
   },
   mixins: [ModalMixin],
   computed: {
     delText() {
       if (this.coupon.id) {
-        return `確定刪除 ${this.coupon.title} 這張優惠券？`;
+        return `確定刪除『 ${this.coupon.title} 』這張優惠券？`;
       }
       if (this.tempOrder.id) {
         return "確定刪除這張訂單？";
@@ -125,7 +138,10 @@ export default {
         return "確定刪除購物車中全部的品項？";
       }
       if (this.tempProduct.id) {
-        return `確定刪除 ${this.tempProduct.title} 這個產品？`;
+        return `確定刪除『 ${this.tempProduct.title} 』這個產品？`;
+      }
+      if (this.tempQA.id) {
+        return `確定刪除『 ${this.tempQA.title} 』這個問答？`;
       } else {
         return "";
       }
