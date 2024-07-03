@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <nav class="navbar navbar-expand-md bg-light fixed-top">
+  <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div
       class="col-12 px-3 d-flex justify-content-between align-items-center flex-wrap"
     >
@@ -71,6 +71,18 @@
                 }"
               >
                 訂單
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link
+                to="/dashboard/admin-QA"
+                class="nav-link"
+                :class="{
+                  isCurrentNavbarItem:
+                    this.$route.path === '/dashboard/admin-QA',
+                }"
+              >
+                常見問題
               </router-link>
             </li>
             <li class="nav-item">
