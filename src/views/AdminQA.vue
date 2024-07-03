@@ -1,6 +1,6 @@
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else class="mx-auto col-11 col-md-10 col-lg-8">
+  <div v-else class="mx-auto mb-5 col-11 col-md-10 col-lg-8">
     <div
       class="px-1 mb-2 d-flex justify-content-between align-items-center flex-wrap"
     >
@@ -170,3 +170,14 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.accordion-button:hover {
+  color: #ccaf3c !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  color: #000;
+  font-weight: bolder;
+}
+</style>

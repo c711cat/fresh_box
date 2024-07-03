@@ -60,3 +60,14 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.accordion-button:hover {
+  color: #ccaf3c !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  color: #000;
+  font-weight: bolder;
+}
+</style>
