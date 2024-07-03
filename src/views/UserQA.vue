@@ -1,11 +1,14 @@
 <template>
   <Loading v-if="isLoading"></Loading>
-  <div v-else class="my-5 pt-5 mx-auto col-11 col-md-10 col-lg-8">
+  <div v-else class="mt-5 pt-5 mx-auto col-11 col-md-10 col-lg-8">
     <div class="my-4 text-center">
       <h3 class="mb-0">常見問題</h3>
     </div>
 
-    <div class="accordion" id="accordionPanelsStayOpenExample">
+    <div
+      class="containerWrap accordion mb-4"
+      id="accordionPanelsStayOpenExample"
+    >
       <div
         v-for="(item, index) in QA_List"
         :key="index"
@@ -30,25 +33,37 @@
         </div>
       </div>
     </div>
+    <Pagination :pages="pagination" @emit-pages="getQAList"> </Pagination>
   </div>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
+import Pagination from "@/components/Pagination.vue";
 export default {
   data() {
     return {
       QA_List: {},
       isLoading: false,
+      pagination: {},
     };
   },
+  components: { Pagination },
   methods: {
-    getQAList() {
+    getQAList(page = 1) {
       this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles?page=1`;
-      this.$http.get(api).then((res) => {
-        this.QA_List = res.data.articles;
-        this.isLoading = false;
-      });
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles?page=${page}`;
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.pagination = res.data.pagination;
+          this.QA_List = res.data.articles;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
   created() {
@@ -61,6 +76,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.containerWrap {
+  min-height: 62vh;
+}
+
 .accordion-button:hover {
   color: #ccaf3c !important;
 }

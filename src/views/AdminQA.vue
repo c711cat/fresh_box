@@ -14,7 +14,7 @@
       </button>
     </div>
 
-    <div class="accordion" id="QAList">
+    <div class="accordion containerWrap" id="QAList">
       <div
         v-for="(item, index) in QA_List"
         :key="index"
@@ -55,6 +55,7 @@
         </div>
       </div>
     </div>
+    <Pagination :pages="pagination" @emit-pages="getQAList"></Pagination>
   </div>
   <QA_Modal
     ref="QA_Modal"
@@ -68,6 +69,7 @@
 import Collapse from "bootstrap/js/dist/collapse";
 import QA_Modal from "@/components/QA_Modal.vue";
 import DelModal from "@/components/DelModal.vue";
+import Pagination from "@/components/Pagination.vue";
 export default {
   data() {
     return {
@@ -75,17 +77,26 @@ export default {
       tempQA: {},
       isNew: false,
       isLoading: false,
+      pagination: {},
     };
   },
-  components: { QA_Modal, DelModal },
+  components: { QA_Modal, DelModal, Pagination },
   methods: {
-    getQAList() {
+    getQAList(page = 1) {
       this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=1`;
-      this.$http.get(api).then((res) => {
-        this.QA_List = res.data.articles;
-        this.isLoading = false;
-      });
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`;
+      this.$http
+        .get(api)
+        .then((res) => {
+          this.pagination = res.data.pagination;
+          this.QA_List = res.data.articles;
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     openQA_Modal(isNew, QAItem) {
       this.$refs.QA_Modal.showModal();
@@ -171,6 +182,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.containerWrap {
+  min-height: 73vh;
+}
+
 .accordion-button:hover {
   color: #ccaf3c !important;
 }
