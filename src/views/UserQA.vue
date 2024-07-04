@@ -16,7 +16,7 @@
       >
         <h2 class="accordion-header border border-0">
           <button
-            class="accordion-button border-bottom"
+            class="accordion-button border-bottom rounded-0"
             type="button"
             data-bs-toggle="collapse"
             :data-bs-target="`#QA_List` + `${index}`"
