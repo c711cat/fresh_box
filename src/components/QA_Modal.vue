@@ -12,7 +12,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header ps-4">
-          <h5 class="mb-0">新增問答</h5>
+          <h5 class="mb-0">{{ headerText }}</h5>
           <button
             type="button"
             class="btn-close"
@@ -123,6 +123,15 @@ export default {
       this.tempQA = this.QA;
       if (!this.QA.id) {
         this.tempQA.isPublic = false;
+      }
+    },
+  },
+  computed: {
+    headerText() {
+      if (this.QA.id) {
+        return "更新問答";
+      } else {
+        return "新增問答";
       }
     },
   },
