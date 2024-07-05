@@ -214,6 +214,7 @@
                 <div
                   v-for="(item, index) in tempProduct.description"
                   :key="index"
+                  class="mb-2"
                 >
                   <label for="detailed_description" class="form-label">
                     產品介紹 {{ index + 1 }}
@@ -235,7 +236,11 @@
                 </button>
               </div>
               <div class="col-lg-12">
-                <div v-for="(item, index) in tempProduct.notes" :key="index">
+                <div
+                  v-for="(item, index) in tempProduct.notes"
+                  :key="index"
+                  class="mb-2"
+                >
                   <label for="detailed_notes" class="form-label">
                     注意事項 {{ index + 1 }}
                   </label>
