@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="d-flex flex-wrap mb-2">
-      <strong class="col-12 col-auto">2. 送貨範圍：</strong>
+      <strong class="col-12 col-md-auto">2. 送貨範圍：</strong>
       <div class="col">
         僅限於台灣本島。收件地址勿為郵政信箱。<br />
         若為台灣本島以外顧客購買，收件人請留台灣本島的親友資訊。
