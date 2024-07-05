@@ -27,7 +27,13 @@
       <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
         <h4 class="mb-3 border-bottom pb-3 px-1">{{ product.title }}</h4>
         <div v-if="product.description" class="productContent px-1 mb-2">
-          {{ product.description }}
+          <ul
+            v-for="(item, index) in product.description"
+            :key="index"
+            class="ps-3 mb-0"
+          >
+            <li class="">{{ item }}</li>
+          </ul>
         </div>
         <div class="productContent p-1">
           規格：{{ product.content }} / {{ product.unit }}
