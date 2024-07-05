@@ -407,13 +407,12 @@ export default {
         this.tempProduct.notes = [];
       }
       this.tempProduct.notes.push("");
-      console.log(this.tempProduct.notes);
+    },
     addDescriptions() {
       if (!this.tempProduct.description) {
         this.tempProduct.description = [];
       }
       this.tempProduct.description.push("");
-      console.log(this.tempProduct.description);
     },
     delDescriptionItem(index) {
       this.tempProduct.description.splice(index, 1);
