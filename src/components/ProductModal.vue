@@ -236,14 +236,14 @@
               </div>
               <div class="col-lg-12">
                 <div v-for="(item, index) in tempProduct.notes" :key="index">
-                  <label for="detailed_description" class="form-label">
+                  <label for="detailed_notes" class="form-label">
                     注意事項 {{ index + 1 }}
                   </label>
                   <textarea
                     v-model="tempProduct.notes[index]"
                     type="text"
                     class="form-control"
-                    id="detailed_description"
+                    id="detailed_notes"
                   >
                   </textarea>
                 </div>
