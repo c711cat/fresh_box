@@ -134,7 +134,7 @@ export default {
     },
     openModal(isNew, item) {
       if (isNew) {
-        this.tempProduct = {};
+        this.tempProduct = { notes: [""] };
       } else {
         this.tempProduct = { ...item };
       }
