@@ -88,7 +88,7 @@
       </div>
       <div class="col-11 col-md-10 col-lg-9 col-xl-8">
         <div class="accordion m-0" id="accordionPanelsUserOrderList">
-          <div class="accordion-item border border-0">
+          <div v-if="product.notes" class="accordion-item border border-0">
             <h2 class="accordion-header">
               <button
                 class="accordion-button bg-white fs-4 fw-bold text-black"
@@ -103,7 +103,14 @@
             </h2>
             <div id="things-to-note" class="accordion-collapse collapse show">
               <div class="accordion-body border-top">
-                注意事項 Things to note
+                <div
+                  v-for="(item, index) in product.notes"
+                  :key="index"
+                  class="d-flex"
+                >
+                  <div class="col-auto">{{ index + 1 }}.</div>
+                  <div class="flex-fill">{{ item }}</div>
+                </div>
               </div>
             </div>
           </div>
