@@ -175,7 +175,7 @@ export default {
       status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
       couponOption: ["10%off"],
       couponCode: "",
-      shippingFee: 260,
+      shippingFee: 290,
       used_coupon: false,
       allCartItems: false,
       currentWidth: 300,
@@ -318,13 +318,13 @@ export default {
         this.shippingFee = 0;
       }
       if (!this.couponCode && this.subtotal < 1000) {
-        this.shippingFee = 260;
+        this.shippingFee = 290;
       }
       if (this.couponCode && this.subtotal - this.discount >= 1000) {
         this.shippingFee = 0;
       }
       if (this.couponCode && this.subtotal - this.discount < 1000) {
-        this.shippingFee = 260;
+        this.shippingFee = 290;
       }
     },
     openDelModal() {
