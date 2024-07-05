@@ -210,17 +210,29 @@
                 />
               </div>
 
-              <div class="col-lg-12">
-                <label for="detailed_description" class="form-label">
-                  產品介紹
-                </label>
-                <textarea
-                  v-model="tempProduct.description"
-                  type="text"
-                  class="form-control"
-                  id="detailed_description"
+              <div class="col-lg-12 mb-3">
+                <div
+                  v-for="(item, index) in tempProduct.description"
+                  :key="index"
                 >
-                </textarea>
+                  <label for="detailed_description" class="form-label">
+                    產品介紹 {{ index + 1 }}
+                  </label>
+                  <textarea
+                    v-model="tempProduct.description[index]"
+                    type="text"
+                    class="form-control"
+                    id="detailed_description"
+                  >
+                  </textarea>
+                </div>
+                <button
+                  @click="addDescriptions"
+                  class="btn btn-outline-primary btn-sm mt-2"
+                  type="button"
+                >
+                  新增產品介紹
+                </button>
               </div>
               <div class="col-lg-12">
                 <div v-for="(item, index) in tempProduct.notes" :key="index">
@@ -297,6 +309,7 @@ export default {
     return {
       modal: {},
       tempProduct: {
+        description: [""],
         notes: [""],
       },
       options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
@@ -372,6 +385,12 @@ export default {
       }
       this.tempProduct.notes.push("");
       console.log(this.tempProduct.notes);
+    addDescriptions() {
+      if (!this.tempProduct.description) {
+        this.tempProduct.description = [];
+      }
+      this.tempProduct.description.push("");
+      console.log(this.tempProduct.description);
     },
   },
   mixins: [ModalMixin],
