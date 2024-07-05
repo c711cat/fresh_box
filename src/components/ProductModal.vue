@@ -222,6 +222,28 @@
                 >
                 </textarea>
               </div>
+              <div class="col-lg-12">
+                <div v-for="(item, index) in tempProduct.notes" :key="index">
+                  <label for="detailed_description" class="form-label">
+                    注意事項 {{ index + 1 }}
+                  </label>
+                  <textarea
+                    v-model="tempProduct.notes[index]"
+                    type="text"
+                    class="form-control"
+                    id="detailed_description"
+                  >
+                  </textarea>
+                </div>
+
+                <button
+                  @click="addNotes"
+                  class="btn btn-outline-primary btn-sm mt-2"
+                  type="button"
+                >
+                  新增注意事項
+                </button>
+              </div>
               <div class="col-lg-12 form-check mx-1">
                 <input
                   v-model="tempProduct.is_enabled"
@@ -274,7 +296,9 @@ export default {
   data() {
     return {
       modal: {},
-      tempProduct: {},
+      tempProduct: {
+        notes: [""],
+      },
       options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
       preservationMethods: ["冷藏", "室溫陰涼乾燥處"],
     };
@@ -341,6 +365,13 @@ export default {
         this.tempProduct.images = [];
       }
       this.tempProduct.images.push("");
+    },
+    addNotes() {
+      if (!this.tempProduct.notes) {
+        this.tempProduct.notes = [];
+      }
+      this.tempProduct.notes.push("");
+      console.log(this.tempProduct.notes);
     },
   },
   mixins: [ModalMixin],
