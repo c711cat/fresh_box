@@ -219,13 +219,22 @@
                   <label for="detailed_description" class="form-label">
                     產品介紹 {{ index + 1 }}
                   </label>
-                  <textarea
-                    v-model="tempProduct.description[index]"
-                    type="text"
-                    class="form-control"
-                    id="detailed_description"
-                  >
-                  </textarea>
+                  <div class="input-group">
+                    <textarea
+                      v-model="tempProduct.description[index]"
+                      type="text"
+                      class="form-control"
+                      id="detailed_description"
+                    >
+                    </textarea>
+                    <button
+                      @click="delDescriptionItem(index)"
+                      type="button"
+                      class="btn btn-outline-danger"
+                    >
+                      移除
+                    </button>
+                  </div>
                 </div>
                 <button
                   @click="addDescriptions"
@@ -244,13 +253,22 @@
                   <label for="detailed_notes" class="form-label">
                     注意事項 {{ index + 1 }}
                   </label>
-                  <textarea
-                    v-model="tempProduct.notes[index]"
-                    type="text"
-                    class="form-control"
-                    id="detailed_notes"
-                  >
-                  </textarea>
+                  <div class="input-group">
+                    <textarea
+                      v-model="tempProduct.notes[index]"
+                      type="text"
+                      class="form-control"
+                      id="detailed_notes"
+                    >
+                    </textarea>
+                    <button
+                      @click="delNotesItem(index)"
+                      type="button"
+                      class="btn btn-outline-danger"
+                    >
+                      移除
+                    </button>
+                  </div>
                 </div>
 
                 <button
@@ -396,6 +414,12 @@ export default {
       }
       this.tempProduct.description.push("");
       console.log(this.tempProduct.description);
+    },
+    delDescriptionItem(index) {
+      this.tempProduct.description.splice(index, 1);
+    },
+    delNotesItem(index) {
+      this.tempProduct.notes.splice(index, 1);
     },
   },
   mixins: [ModalMixin],
