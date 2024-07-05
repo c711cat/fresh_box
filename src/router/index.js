@@ -21,6 +21,10 @@ const routes = [
         path: "order-list",
         component: () => import("../views/AdminOrderList.vue"),
       },
+      {
+        path: "admin-QA",
+        component: () => import("../views/AdminQA.vue"),
+      },
     ],
   },
   {
@@ -58,6 +62,10 @@ const routes = [
       {
         path: "order-list",
         component: () => import("../views/UserOrderList.vue"),
+      },
+      {
+        path: "QA",
+        component: () => import("../views/UserQA.vue"),
       },
     ],
   },

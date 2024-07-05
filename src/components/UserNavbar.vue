@@ -67,6 +67,15 @@
                 訂單
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link
+                to="/QA"
+                :class="{ isCurrentNavbarItem: currentPath === '/QA' }"
+                class="nav-link text-primary"
+              >
+                常見問題
+              </router-link>
+            </li>
           </ul>
           <form class="col-lg-3 col-xl-4 col-xxl-3" role="search">
             <input
