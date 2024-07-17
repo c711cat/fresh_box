@@ -1,6 +1,9 @@
 <template>
   <!-- 購物須知 -->
   <div class="col-12">
+    <div class="mb-1">
+      蔬果為天然農作物，會隨產期初期、中期、末期口感和色澤有所不同，也可能有些許小瑕疵，但不影響風味，請原諒它的不完美，也請珍惜果物不同時期的風味。
+    </div>
     <div class="d-flex flex-wrap mb-2">
       <strong class="col-12 col-md-auto">1. 寄送時間：</strong>
       <div class="col">
