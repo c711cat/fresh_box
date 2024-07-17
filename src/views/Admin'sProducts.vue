@@ -87,12 +87,13 @@
         </button>
       </div>
     </div>
+    <Pagination
+      v-if="openPagination"
+      :pages="pagination"
+      @emit-pages="getProducts"
+    ></Pagination>
   </div>
-  <Pagination
-    v-if="openPagination"
-    :pages="pagination"
-    @emit-pages="getProducts"
-  ></Pagination>
+
   <ProductModal
     ref="productModal"
     :product="tempProduct"
