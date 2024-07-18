@@ -114,7 +114,7 @@
               </div>
             </div>
             <div class="rightContainer col-lg-8 row g-3 mx-0">
-              <div class="col-xl-5">
+              <div class="col-lg-6 col-xl-4">
                 <div class="d-inline text-danger">＊</div>
                 <label for="name" class="form-label">產品名稱</label>
                 <input
@@ -133,7 +133,7 @@
                   :options="options"
                 ></v-select>
               </div>
-              <div class="col-lg-6 col-xl-4">
+              <div class="col-xl-5">
                 <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">保存方式</label>
                 <v-select
@@ -336,7 +336,12 @@ export default {
         notes: [""],
       },
       options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
-      preservationMethods: ["冷藏", "室溫陰涼乾燥處"],
+      preservationMethods: [
+        "冷藏",
+        "室溫陰涼乾燥處",
+        "冷藏或冷凍",
+        "室溫陰涼乾燥處、冷藏或冷凍",
+      ],
     };
   },
   props: {
