@@ -22,6 +22,7 @@
     <div
       v-for="item in products"
       :key="item.id"
+      :class="{ 'bg-light': item.is_enabled === 0 }"
       class="row m-0 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
     >
       <div
@@ -60,17 +61,17 @@
       </div>
       <div
         v-if="item.is_enabled"
-        class="py-3 col-12 col-sm-3 col-md-3 col-lg-1 text-success text-end text-md-center"
+        class="py-3 px-3 col-12 col-sm-3 col-md-3 col-lg-1 text-success text-end text-md-center"
       >
         販售中
       </div>
       <div
         v-else
-        class="py-3 col-12 col-sm-3 col-md-3 col-lg-1 text-secondary text-end text-md-center"
+        class="py-3 px-3 col-12 col-sm-3 col-md-3 col-lg-1 text-secondary text-end text-md-center"
       >
         未販售
       </div>
-      <div class="px-0 text-end col-12 col-md-9 col-lg-12 col-xl-2">
+      <div class="px-3 text-end col-12 col-md-9 col-lg-12 col-xl-2">
         <button
           @click="openModal(false, item)"
           type="button"
