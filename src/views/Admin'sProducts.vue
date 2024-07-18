@@ -31,7 +31,10 @@
         <router-link :to="isPath(item)">
           <img
             :src="item.imageUrl"
-            :class="{ disabled: item.is_enabled === 0 }"
+            :class="{
+              disabled: item.is_enabled === 0,
+              xsWidth: currentWidth <= 450,
+            }"
             class="img-fluid linkStyle"
           />
           <div
@@ -127,6 +130,7 @@ export default {
       pagination: {},
       openPagination: true,
       searchText: null,
+      currentWidth: 1000,
     };
   },
   components: { ProductModal, DelModal, Pagination },
@@ -236,6 +240,9 @@ export default {
         return `/product/${item.id}`;
       }
     },
+    getCurrentWidth() {
+      this.currentWidth = window.outerWidth;
+    },
   },
   computed: {
     noResults() {
@@ -250,6 +257,7 @@ export default {
     },
   },
   created() {
+    this.getCurrentWidth();
     this.getProducts();
     this.emitter.on("adminSearchProductNull", () => {
       this.searchText = null;
@@ -265,6 +273,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+img {
+  height: 20vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.xsWidth {
+  height: 8vh;
+}
+
 .linkStyle:hover {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
 }
