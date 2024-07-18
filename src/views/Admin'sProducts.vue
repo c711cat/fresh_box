@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       products: [],
-      tempProduct: {},
+      tempProduct: { is_enabled: 0 },
       isNew: false,
       isLoading: false,
       pagination: {},
@@ -152,7 +152,7 @@ export default {
     },
     openModal(isNew, item) {
       if (isNew) {
-        this.tempProduct = { description: [""], notes: [""] };
+        this.tempProduct = { description: [""], notes: [""], is_enabled: 0 };
       } else {
         this.tempProduct = { ...item };
       }
