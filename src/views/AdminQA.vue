@@ -22,17 +22,30 @@
       >
         <h2 class="accordion-header border border-0">
           <button
-            class="accordion-button border-bottom rounded-0"
+            :class="{ 'bg-dark text-yellow-200': item.isPublic === false }"
+            class="accordion-button border-bottom rounded-0 py-0"
             type="button"
             data-bs-toggle="collapse"
             :data-bs-target="`#QA_List` + `${index}`"
             aria-expanded="true"
             :aria-controls="`QA_List` + `${index}`"
           >
-            <strong>Q{{ item.num }}. {{ item.title }}</strong>
+            <div class="d-flex flex-wrap align-items-center py-2">
+              <div
+                v-if="item.isPublic === false"
+                class="d-inline text-danger border border-danger p-1 me-2"
+              >
+                未公開
+              </div>
+              <div class="py-2">Q{{ item.num }}. {{ item.title }}</div>
+            </div>
           </button>
         </h2>
-        <div :id="`QA_List` + `${index}`" class="accordion-collapse collapse">
+        <div
+          :id="`QA_List` + `${index}`"
+          :class="{ 'bg-dark text-yellow-200': item.isPublic === false }"
+          class="accordion-collapse collapse"
+        >
           <div class="accordion-body border-bottom">
             <p class="overflow-x-auto mb-3">A : {{ item.description }}</p>
             <div class="col-12 text-end flex-wrap">
