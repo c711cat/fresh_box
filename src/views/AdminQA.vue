@@ -22,7 +22,7 @@
       >
         <h2 class="accordion-header border border-0">
           <button
-            :class="{ 'bg-dark text-yellow-200': item.isPublic === false }"
+            :class="{ 'bg-secondary-subtle': item.isPublic === false }"
             class="accordion-button border-bottom rounded-0 py-0"
             type="button"
             data-bs-toggle="collapse"
@@ -43,7 +43,9 @@
         </h2>
         <div
           :id="`QA_List` + `${index}`"
-          :class="{ 'bg-dark text-yellow-200': item.isPublic === false }"
+          :class="{
+            'bg-body-secondary text-secondary': item.isPublic === false,
+          }"
           class="accordion-collapse collapse"
         >
           <div class="accordion-body border-bottom">
