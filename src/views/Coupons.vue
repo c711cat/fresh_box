@@ -23,18 +23,31 @@
       <div
         v-for="(coupon, index) in coupons"
         :key="index"
+        :class="{ 'bg-light': coupon.is_enabled === 0 }"
         class="row m-0 align-items-center border-top py-3"
       >
-        <div class="col-12 col-sm-4 col-lg-2 col-xl-2 py-2">
+        <div
+          :class="{ 'text-secondary': coupon.is_enabled === 0 }"
+          class="col-12 col-sm-4 col-lg-2 col-xl-2 py-2"
+        >
           名稱：{{ coupon.title }}
         </div>
-        <div class="col-12 col-sm-4 col-lg-3 col-xl-2 py-2">
+        <div
+          :class="{ 'text-secondary': coupon.is_enabled === 0 }"
+          class="col-12 col-sm-4 col-lg-3 col-xl-2 py-2"
+        >
           折扣碼：{{ coupon.code }}
         </div>
-        <div class="col-12 col-sm-4 col-lg-3 col-xl-2 py-2">
+        <div
+          :class="{ 'text-secondary': coupon.is_enabled === 0 }"
+          class="col-12 col-sm-4 col-lg-3 col-xl-2 py-2"
+        >
           總金額乘以 {{ coupon.percent }} ％
         </div>
-        <div class="col-12 col-sm-4 col-lg-3 col-xl-3 py-2">
+        <div
+          :class="{ 'text-secondary': coupon.is_enabled === 0 }"
+          class="col-12 col-sm-4 col-lg-3 col-xl-3 py-2"
+        >
           使用期限：{{ $filters.changeDateStyle(coupon.due_date) }}
         </div>
         <div
@@ -130,7 +143,7 @@ export default {
     openCouponModal(isNew, coupon) {
       this.$refs.couponModal.showModal();
       if (isNew) {
-        this.tempCoupon = {};
+        this.tempCoupon = { is_enabled: 0 };
       } else {
         this.tempCoupon = { ...coupon };
       }

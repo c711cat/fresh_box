@@ -22,11 +22,27 @@
     <div
       v-for="item in products"
       :key="item.id"
+      :class="{ 'bg-light': item.is_enabled === 0 }"
       class="row m-0 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
     >
-      <div class="text-center col-4 col-sm-6 col-md-3 col-lg-2">
-        <router-link :to="`/product/${item.id}`" class="">
-          <img :src="item.imageUrl" class="img-fluid linkStyle" />
+      <div
+        class="position-relative text-center col-4 col-sm-6 col-md-3 col-lg-2"
+      >
+        <router-link :to="isPath(item)">
+          <img
+            :src="item.imageUrl"
+            :class="{
+              disabled: item.is_enabled === 0,
+              xsWidth: currentWidth <= 450,
+            }"
+            class="img-fluid linkStyle"
+          />
+          <div
+            v-if="item.is_enabled === 0"
+            class="disabledContainer disabled position-absolute start-0 top-0"
+          >
+            <strong>未 販 售</strong>
+          </div>
         </router-link>
       </div>
 
@@ -48,12 +64,17 @@
       </div>
       <div
         v-if="item.is_enabled"
-        class="py-3 col-12 col-sm-3 col-md-3 col-lg-1 text-success text-end text-md-center"
+        class="py-3 px-3 col-12 col-sm-3 col-md-3 col-lg-1 text-success text-end text-md-center"
       >
         販售中
       </div>
-      <div v-else class="col-6 col-sm-3 col-lg-2 text-secondary">未販售</div>
-      <div class="px-0 text-end col-12 col-md-9 col-lg-12 col-xl-2">
+      <div
+        v-else
+        class="py-3 px-3 col-12 col-sm-3 col-md-3 col-lg-1 text-secondary text-end text-md-center"
+      >
+        未販售
+      </div>
+      <div class="px-3 text-end col-12 col-md-9 col-lg-12 col-xl-2">
         <button
           @click="openModal(false, item)"
           type="button"
@@ -70,12 +91,13 @@
         </button>
       </div>
     </div>
+    <Pagination
+      v-if="openPagination"
+      :pages="pagination"
+      @emit-pages="getProducts"
+    ></Pagination>
   </div>
-  <Pagination
-    v-if="openPagination"
-    :pages="pagination"
-    @emit-pages="getProducts"
-  ></Pagination>
+
   <ProductModal
     ref="productModal"
     :product="tempProduct"
@@ -102,12 +124,13 @@ export default {
   data() {
     return {
       products: [],
-      tempProduct: {},
+      tempProduct: { is_enabled: 0 },
       isNew: false,
       isLoading: false,
       pagination: {},
       openPagination: true,
       searchText: null,
+      currentWidth: 1000,
     };
   },
   components: { ProductModal, DelModal, Pagination },
@@ -134,7 +157,7 @@ export default {
     },
     openModal(isNew, item) {
       if (isNew) {
-        this.tempProduct = {};
+        this.tempProduct = { description: [""], notes: [""], is_enabled: 0 };
       } else {
         this.tempProduct = { ...item };
       }
@@ -210,6 +233,16 @@ export default {
           this.isLoading = false;
         });
     },
+    isPath(item) {
+      if (item.is_enabled === 0) {
+        return "/dashboard/admin's-products";
+      } else {
+        return `/product/${item.id}`;
+      }
+    },
+    getCurrentWidth() {
+      this.currentWidth = window.outerWidth;
+    },
   },
   computed: {
     noResults() {
@@ -224,6 +257,7 @@ export default {
     },
   },
   created() {
+    this.getCurrentWidth();
     this.getProducts();
     this.emitter.on("adminSearchProductNull", () => {
       this.searchText = null;
@@ -239,7 +273,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+img {
+  height: 20vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.xsWidth {
+  height: 8vh;
+}
+
 .linkStyle:hover {
   box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
+}
+
+.disabled:hover {
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.disabledContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(253, 253, 253, 0.581);
+  color: #6c757d;
 }
 </style>

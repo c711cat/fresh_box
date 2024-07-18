@@ -166,7 +166,7 @@ export default {
         discount: 0,
         afterDiscount: 0,
         paymentAmount: 0,
-        shippingFee: 260,
+        shippingFee: 290,
         user: {},
       },
     };
@@ -217,7 +217,7 @@ export default {
         this.order.shippingFee = 0;
       }
       if (this.order.total < 1000) {
-        this.order.shippingFee = 260;
+        this.order.shippingFee = 290;
       }
     },
     getPaymentAmount() {

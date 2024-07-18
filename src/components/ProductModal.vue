@@ -114,7 +114,7 @@
               </div>
             </div>
             <div class="rightContainer col-lg-8 row g-3 mx-0">
-              <div class="col-xl-5">
+              <div class="col-lg-6 col-xl-4">
                 <div class="d-inline text-danger">＊</div>
                 <label for="name" class="form-label">產品名稱</label>
                 <input
@@ -133,7 +133,7 @@
                   :options="options"
                 ></v-select>
               </div>
-              <div class="col-lg-6 col-xl-4">
+              <div class="col-xl-5">
                 <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">保存方式</label>
                 <v-select
@@ -210,17 +210,74 @@
                 />
               </div>
 
-              <div class="col-lg-12">
-                <label for="detailed_description" class="form-label">
-                  產品介紹
-                </label>
-                <textarea
-                  v-model="tempProduct.description"
-                  type="text"
-                  class="form-control"
-                  id="detailed_description"
+              <div class="col-lg-12 mb-3">
+                <div
+                  v-for="(item, index) in tempProduct.description"
+                  :key="index"
+                  class="mb-2"
                 >
-                </textarea>
+                  <label for="detailed_description" class="form-label">
+                    產品介紹 {{ index + 1 }}
+                  </label>
+                  <div class="input-group">
+                    <textarea
+                      v-model="tempProduct.description[index]"
+                      type="text"
+                      class="form-control"
+                      id="detailed_description"
+                    >
+                    </textarea>
+                    <button
+                      @click="delDescriptionItem(index)"
+                      type="button"
+                      class="btn btn-outline-danger"
+                    >
+                      移除
+                    </button>
+                  </div>
+                </div>
+                <button
+                  @click="addDescriptions"
+                  class="btn btn-outline-primary btn-sm mt-2"
+                  type="button"
+                >
+                  新增產品介紹
+                </button>
+              </div>
+              <div class="col-lg-12">
+                <div
+                  v-for="(item, index) in tempProduct.notes"
+                  :key="index"
+                  class="mb-2"
+                >
+                  <label for="detailed_notes" class="form-label">
+                    注意事項 {{ index + 1 }}
+                  </label>
+                  <div class="input-group">
+                    <textarea
+                      v-model="tempProduct.notes[index]"
+                      type="text"
+                      class="form-control"
+                      id="detailed_notes"
+                    >
+                    </textarea>
+                    <button
+                      @click="delNotesItem(index)"
+                      type="button"
+                      class="btn btn-outline-danger"
+                    >
+                      移除
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  @click="addNotes"
+                  class="btn btn-outline-primary btn-sm mt-2"
+                  type="button"
+                >
+                  新增注意事項
+                </button>
               </div>
               <div class="col-lg-12 form-check mx-1">
                 <input
@@ -274,9 +331,17 @@ export default {
   data() {
     return {
       modal: {},
-      tempProduct: {},
+      tempProduct: {
+        description: [""],
+        notes: [""],
+      },
       options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
-      preservationMethods: ["冷藏", "室溫陰涼乾燥處"],
+      preservationMethods: [
+        "冷藏",
+        "室溫陰涼乾燥處",
+        "冷藏或冷凍",
+        "室溫陰涼乾燥處、冷藏或冷凍",
+      ],
     };
   },
   props: {
@@ -341,6 +406,24 @@ export default {
         this.tempProduct.images = [];
       }
       this.tempProduct.images.push("");
+    },
+    addNotes() {
+      if (!this.tempProduct.notes) {
+        this.tempProduct.notes = [];
+      }
+      this.tempProduct.notes.push("");
+    },
+    addDescriptions() {
+      if (!this.tempProduct.description) {
+        this.tempProduct.description = [];
+      }
+      this.tempProduct.description.push("");
+    },
+    delDescriptionItem(index) {
+      this.tempProduct.description.splice(index, 1);
+    },
+    delNotesItem(index) {
+      this.tempProduct.notes.splice(index, 1);
     },
   },
   mixins: [ModalMixin],
