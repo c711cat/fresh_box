@@ -91,7 +91,6 @@ export default {
       this.$http
         .post(api)
         .then((res) => {
-          console.log(res);
           if (res.data.success) {
             this.$pushMsg.status200(res, "付款成功");
             this.getOrders();
