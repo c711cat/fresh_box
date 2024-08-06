@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <img
-    src="../assets/img/1.jpg"
+    src="@/assets/img/1.jpg"
     class="homeImg"
     alt="homeImg"
     data-aos="fade-in"
@@ -70,7 +70,7 @@
       data-aos="fade-zoom-in"
       data-aos-easing="ease-out-circ"
       data-aos-duration="2000"
-      src="../assets/img/home_img2.jpg"
+      src="@/assets/img/home_img2.jpg"
       alt="homeImg"
     />
     <router-link
@@ -113,8 +113,8 @@
   </div>
 </template>
 <script>
-import Category from "@/components/Category.vue";
-import SwiperImgs from "@/components/SwiperImgs.vue";
+import Category from "@/components/frontend/Category.vue";
+import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
 export default {
   data() {
     return {

@@ -201,7 +201,7 @@
 </template>
 
 <script>
-import Observer from "@/components/Observer.vue";
+import Observer from "@/components/frontend/Observer.vue";
 import { throttle } from "lodash";
 import Dropdown from "bootstrap/js/dist/dropdown";
 export default {

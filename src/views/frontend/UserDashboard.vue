@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import UserNavbar from "../components/UserNavbar.vue";
-import Footer from "@/components/Footer.vue";
+import UserNavbar from "@/components/frontend/UserNavbar.vue";
+import Footer from "@/components/frontend/Footer.vue";
 
 export default {
   data() {

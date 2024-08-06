@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import CouponModal from "@/components/CouponModal.vue";
+import CouponModal from "@/components/backend/CouponModal.vue";
 import DelModal from "@/components/DelModal.vue";
 export default {
   data() {

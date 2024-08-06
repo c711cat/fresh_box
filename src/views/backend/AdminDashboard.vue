@@ -11,7 +11,7 @@
 
 <script>
 import Cookie from "js-cookie";
-import AdminNavbar from "../components/AdminNavbar.vue";
+import AdminNavbar from "@/components/backend/AdminNavbar.vue";
 
 export default {
   data() {

@@ -167,10 +167,10 @@
 </template>
 
 <script>
-import SwiperImgs from "@/components/SwiperImgs.vue";
+import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
 import Collapse from "bootstrap/js/dist/collapse";
-import ExceptionSOP from "@/components/ExceptionSOP.vue";
-import ShoppingNotes from "@/components/ShoppingNotes.vue";
+import ExceptionSOP from "@/components/frontend/ExceptionSOP.vue";
+import ShoppingNotes from "@/components/frontend/ShoppingNotes.vue";
 export default {
   data() {
     return {

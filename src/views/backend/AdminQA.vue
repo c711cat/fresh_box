@@ -82,7 +82,7 @@
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
-import QA_Modal from "@/components/QA_Modal.vue";
+import QA_Modal from "@/components/backend/QA_Modal.vue";
 import DelModal from "@/components/DelModal.vue";
 import Pagination from "@/components/Pagination.vue";
 export default {
