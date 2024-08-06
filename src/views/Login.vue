@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Loading v-if="isLoading"></Loading>
+  <Loading v-if="isLoading" />
   <div v-else class="container col-sm-8 col-md-7 col-lg-5">
     <form @submit.prevent="signIn" class="m-3">
       <h3 class="mb-3 border-2 pb-2 border-bottom border-secondary">

@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="isLoading"></Loading>
+  <Loading v-if="isLoading" />
   <div v-else class="mt-5 pt-5 mx-auto col-11 col-md-10 col-lg-8">
     <div class="my-4 text-center">
       <h3 class="mb-0">常見問題</h3>

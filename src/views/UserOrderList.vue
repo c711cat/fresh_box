@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="isLoading"></Loading>
+  <Loading v-if="isLoading" />
   <div
     v-else
     class="listContainer mx-auto d-flex flex-column justify-content-between col-12 col-xl-10"

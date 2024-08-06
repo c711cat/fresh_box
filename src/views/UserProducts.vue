@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="isLoading"></Loading>
+  <Loading v-if="isLoading" />
   <div
     v-else
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"

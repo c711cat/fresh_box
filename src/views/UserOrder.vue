@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <Loading v-if="isLoading"></Loading>
+  <Loading v-if="isLoading" />
   <div v-else class="mt-5 pt-4">
     <div
       class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
