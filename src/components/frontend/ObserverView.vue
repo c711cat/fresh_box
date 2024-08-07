@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div ref="target" class="w-100 text-center text-secondary">商品載入中 ⋯</div>
 </template>
