@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading" />
   <div v-else class="container col-sm-8 col-md-7 col-lg-5">

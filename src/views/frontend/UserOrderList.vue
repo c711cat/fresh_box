@@ -31,7 +31,7 @@
             class="accordion-collapse collapse show"
           >
             <div class="accordion-body pt-4">
-              <Order :oneOrder="item"></Order>
+              <OrderView :oneOrder="item"></OrderView>
               <div class="text-end col-lg-7 pe-4">
                 <button
                   v-if="!item.is_paid"
@@ -47,14 +47,18 @@
         </div>
       </div>
     </div>
-    <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
-    </Pagination>
+    <PaginationView
+      v-if="pageSwitch"
+      :pages="pagination"
+      @emit-pages="getOrders"
+    >
+    </PaginationView>
   </div>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
-import Order from "@/components/Order.vue";
-import Pagination from "@/components/Pagination.vue";
+import OrderView from "@/components/OrderView.vue";
+import PaginationView from "@/components/PaginationView.vue";
 
 export default {
   data() {
@@ -66,7 +70,7 @@ export default {
     };
   },
   inject: ["emitter"],
-  components: { Order, Pagination },
+  components: { OrderView, PaginationView },
   methods: {
     getOrders(page = 1) {
       this.orderList = {};

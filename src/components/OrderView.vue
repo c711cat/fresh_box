@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="row m-0 p-0">
     <div class="detailsText pb-2 col-lg-7">

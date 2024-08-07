@@ -70,7 +70,10 @@
         </div>
       </div>
     </div>
-    <Pagination :pages="pagination" @emit-pages="getQAList"></Pagination>
+    <PaginationView
+      :pages="pagination"
+      @emit-pages="getQAList"
+    ></PaginationView>
   </div>
   <QA_Modal
     ref="QA_Modal"
@@ -84,7 +87,7 @@
 import Collapse from "bootstrap/js/dist/collapse";
 import QA_Modal from "@/components/backend/QA_Modal.vue";
 import DelModal from "@/components/DelModal.vue";
-import Pagination from "@/components/Pagination.vue";
+import PaginationView from "@/components/PaginationView.vue";
 export default {
   data() {
     return {
@@ -95,7 +98,7 @@ export default {
       pagination: {},
     };
   },
-  components: { QA_Modal, DelModal, Pagination },
+  components: { QA_Modal, DelModal, PaginationView },
   methods: {
     getQAList(page = 1) {
       this.isLoading = true;

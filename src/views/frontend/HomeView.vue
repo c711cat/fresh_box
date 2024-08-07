@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <img
     src="@/assets/img/1.jpg"
@@ -10,7 +9,7 @@
   />
 
   <!-- 商品類別 -->
-  <Category></Category>
+  <CategoryView></CategoryView>
   <!-- 暢銷商品 -->
   <div class="d-flex justify-content-center mt-5">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
@@ -113,7 +112,7 @@
   </div>
 </template>
 <script>
-import Category from "@/components/frontend/Category.vue";
+import CategoryView from "@/components/frontend/CategoryView.vue";
 import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
 export default {
   data() {
@@ -158,7 +157,7 @@ export default {
       ],
     };
   },
-  components: { Category, SwiperImgs },
+  components: { CategoryView, SwiperImgs },
   inject: ["emitter"],
   methods: {
     addCart(item) {

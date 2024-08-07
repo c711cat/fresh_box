@@ -1,11 +1,10 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading" />
   <div v-else class="mt-5 pt-4">
     <div
       class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
     >
-      <Order class="pt-2" :transOrder="order"></Order>
+      <OrderView class="pt-2" :transOrder="order"></OrderView>
     </div>
     <div
       class="text-end col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 pb-5 my-0 mx-auto"
@@ -38,7 +37,7 @@
 </template>
 
 <script>
-import Order from "@/components/Order.vue";
+import OrderView from "@/components/OrderView.vue";
 export default {
   data() {
     return {
@@ -46,7 +45,7 @@ export default {
       isLoading: false,
     };
   },
-  components: { Order },
+  components: { OrderView },
   methods: {
     getOrder() {
       const orderId = this.$route.params.orderId || this.OrderId;

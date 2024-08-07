@@ -1,16 +1,16 @@
 <template>
-  <Messages></Messages>
+  <MessagesView></MessagesView>
   <router-view />
 </template>
 
 <script>
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Messages from "@/components/Messages.vue";
+import MessagesView from "@/components/MessagesView.vue";
 import emitter from "@/methods/emitter";
 
 export default {
-  components: { Messages },
+  components: { MessagesView },
   provide() {
     return {
       emitter,

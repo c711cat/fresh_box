@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Loading v-if="isLoading" />
   <div v-else class="px-3 mb-5 d-flex flex-column align-items-center">
@@ -91,11 +90,11 @@
         </button>
       </div>
     </div>
-    <Pagination
+    <PaginationView
       v-if="openPagination"
       :pages="pagination"
       @emit-pages="getProducts"
-    ></Pagination>
+    ></PaginationView>
   </div>
 
   <ProductModal
@@ -118,7 +117,7 @@
 <script>
 import ProductModal from "@/components/backend/ProductModal.vue";
 import DelModal from "@/components/DelModal.vue";
-import Pagination from "@/components/Pagination.vue";
+import PaginationView from "@/components/PaginationView.vue";
 
 export default {
   data() {
@@ -133,7 +132,7 @@ export default {
       currentWidth: 1000,
     };
   },
-  components: { ProductModal, DelModal, Pagination },
+  components: { ProductModal, DelModal, PaginationView },
   inject: ["emitter"],
   methods: {
     getProducts(page = 1) {

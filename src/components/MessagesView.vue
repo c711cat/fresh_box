@@ -1,12 +1,15 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="toast-container end-0 mt-3 container-fluid">
-    <Toast v-for="(msg, index) in messages" :key="index" :msg="msg"></Toast>
+    <ToastView
+      v-for="(msg, index) in messages"
+      :key="index"
+      :msg="msg"
+    ></ToastView>
   </div>
 </template>
 
 <script>
-import Toast from "@/components/Toast.vue";
+import ToastView from "@/components/ToastView.vue";
 
 export default {
   data() {
@@ -14,7 +17,7 @@ export default {
       messages: [],
     };
   },
-  components: { Toast },
+  components: { ToastView },
   inject: ["emitter"],
   mounted() {
     this.emitter.on("push-message", (message) => {

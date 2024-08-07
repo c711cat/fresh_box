@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="userViewContainer">
     <div>
@@ -7,20 +6,20 @@
     </div>
 
     <div>
-      <Footer></Footer>
+      <FooterView></FooterView>
     </div>
   </div>
 </template>
 
 <script>
 import UserNavbar from "@/components/frontend/UserNavbar.vue";
-import Footer from "@/components/frontend/Footer.vue";
+import FooterView from "@/components/frontend/FooterView.vue";
 
 export default {
   data() {
     return {};
   },
-  components: { UserNavbar, Footer },
+  components: { UserNavbar, FooterView },
 };
 </script>
 

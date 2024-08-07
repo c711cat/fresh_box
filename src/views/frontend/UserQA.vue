@@ -33,12 +33,13 @@
         </div>
       </div>
     </div>
-    <Pagination :pages="pagination" @emit-pages="getQAList"> </Pagination>
+    <PaginationView :pages="pagination" @emit-pages="getQAList">
+    </PaginationView>
   </div>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
-import Pagination from "@/components/Pagination.vue";
+import PaginationView from "@/components/PaginationView.vue";
 export default {
   data() {
     return {
@@ -47,7 +48,7 @@ export default {
       pagination: {},
     };
   },
-  components: { Pagination },
+  components: { PaginationView },
   methods: {
     getQAList(page = 1) {
       this.isLoading = true;

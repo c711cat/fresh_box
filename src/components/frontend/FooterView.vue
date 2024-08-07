@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="row m-0 py-2 ps-4 bg-light fw-light">
     <div class="row m-0 align-items-center justify-content-between col-12">

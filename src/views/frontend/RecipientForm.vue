@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <Form @submit="createOrder" class="row m-0 g-3" v-slot="{ errors }">
     <h3 class="my-0 ps-3">收件人資訊</h3>

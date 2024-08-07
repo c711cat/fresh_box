@@ -40,7 +40,7 @@
             class="accordion-collapse collapse"
           >
             <div class="accordion-body">
-              <Order :oneOrder="item"></Order>
+              <OrderView :oneOrder="item"></OrderView>
               <div class="text-end pe-5">
                 <button
                   @click="openDelModal(item)"
@@ -55,8 +55,12 @@
         </div>
       </div>
     </div>
-    <Pagination v-if="pageSwitch" :pages="pagination" @emit-pages="getOrders">
-    </Pagination>
+    <PaginationView
+      v-if="pageSwitch"
+      :pages="pagination"
+      @emit-pages="getOrders"
+    >
+    </PaginationView>
   </div>
 
   <delModal
@@ -72,9 +76,9 @@
 
 <script>
 import Collapse from "bootstrap/js/dist/collapse";
-import Order from "@/components/Order.vue";
+import OrderView from "@/components/OrderView.vue";
 import delModal from "@/components/DelModal.vue";
-import Pagination from "@/components/Pagination.vue";
+import PaginationView from "@/components/PaginationView.vue";
 
 export default {
   data() {
@@ -88,7 +92,7 @@ export default {
     };
   },
   inject: ["emitter"],
-  components: { Order, delModal, Pagination },
+  components: { OrderView, delModal, PaginationView },
   methods: {
     getOrders(page = 1) {
       this.orderList = {};

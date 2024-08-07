@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div

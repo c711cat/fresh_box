@@ -2,7 +2,7 @@
 import { createApp } from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import Loading from "@/components/Loading.vue";
+import Loading from "@/components/LoadingScreen.vue";
 import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";

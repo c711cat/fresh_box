@@ -183,7 +183,7 @@
         </div>
       </div>
     </div>
-    <Observer
+    <ObserverView
       v-if="
         pagination.current_page < pagination.total_pages &&
         this.$route.path === '/user-products'
@@ -201,7 +201,7 @@
 </template>
 
 <script>
-import Observer from "@/components/frontend/Observer.vue";
+import ObserverView from "@/components/frontend/ObserverView.vue";
 import { throttle } from "lodash";
 import Dropdown from "bootstrap/js/dist/dropdown";
 export default {
@@ -258,7 +258,7 @@ export default {
       ),
     };
   },
-  components: { Observer },
+  components: { ObserverView },
   inject: ["emitter"],
   methods: {
     whereComeFrom() {

@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
     class="categoryWrap bg-light-gray row m-0 flex-wrap justify-content-center align-items-center"

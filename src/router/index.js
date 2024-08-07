@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 const routes = [
   {
     path: "/login",
-    component: () => import("@/views/Login.vue"),
+    component: () => import("@/views/LoginView.vue"),
   },
   {
     path: "/dashboard",
@@ -15,7 +15,7 @@ const routes = [
       },
       {
         path: "coupons",
-        component: () => import("@/views/backend/Coupons.vue"),
+        component: () => import("@/views/backend/AdminCoupons.vue"),
       },
       {
         path: "order-list",
@@ -33,7 +33,7 @@ const routes = [
     children: [
       {
         path: "",
-        component: () => import("@/views/frontend/Home.vue"),
+        component: () => import("@/views/frontend/HomeView.vue"),
       },
       {
         path: "user-products",
