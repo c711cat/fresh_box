@@ -1,7 +1,7 @@
 <template>
   <div class="userViewContainer">
     <div>
-      <UserNavbar :currentPath="this.$route.path"></UserNavbar>
+      <UserNavbar :currentPath="$route.path"></UserNavbar>
       <router-view />
     </div>
 

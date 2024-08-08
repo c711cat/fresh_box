@@ -186,7 +186,7 @@
     <ObserverView
       v-if="
         pagination.current_page < pagination.total_pages &&
-        this.$route.path === '/user-products'
+        $route.path === '/user-products'
       "
       @is-in-view="handleIsInView"
       @is-outside-view="handleIsOutsideView"

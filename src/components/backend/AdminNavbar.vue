@@ -42,7 +42,7 @@
                 class="nav-link"
                 :class="{
                   isCurrentNavbarItem:
-                    this.$route.path === `/dashboard/admin's-products`,
+                    $route.path === `/dashboard/admin's-products`,
                 }"
               >
                 產品清單
@@ -53,8 +53,7 @@
                 to="/dashboard/coupons"
                 class="nav-link"
                 :class="{
-                  isCurrentNavbarItem:
-                    this.$route.path === '/dashboard/coupons',
+                  isCurrentNavbarItem: $route.path === '/dashboard/coupons',
                 }"
               >
                 優惠券
@@ -65,8 +64,7 @@
                 to="/dashboard/order-list"
                 class="nav-link"
                 :class="{
-                  isCurrentNavbarItem:
-                    this.$route.path === '/dashboard/order-list',
+                  isCurrentNavbarItem: $route.path === '/dashboard/order-list',
                 }"
               >
                 訂單
@@ -77,8 +75,7 @@
                 to="/dashboard/admin-QA"
                 class="nav-link"
                 :class="{
-                  isCurrentNavbarItem:
-                    this.$route.path === '/dashboard/admin-QA',
+                  isCurrentNavbarItem: $route.path === '/dashboard/admin-QA',
                 }"
               >
                 常見問題
@@ -99,7 +96,7 @@
       </router-link>
       <form class="col-2 col-sm-3" role="search">
         <input
-          v-if="this.$route.path === `/dashboard/admin's-products`"
+          v-if="$route.path === `/dashboard/admin's-products`"
           v-model="productSearchText"
           class="form-control"
           type="search"
@@ -107,7 +104,7 @@
           aria-label="Search"
         />
         <input
-          v-if="this.$route.path === '/dashboard/order-list'"
+          v-if="$route.path === '/dashboard/order-list'"
           v-model="orderSearchText"
           class="form-control"
           type="search"
