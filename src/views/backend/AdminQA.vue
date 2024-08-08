@@ -192,6 +192,8 @@ export default {
   },
   created() {
     this.getQAList();
+  },
+  mounted() {
     const collapseElementList = document.querySelectorAll(".collapse");
     this.QA_List = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)

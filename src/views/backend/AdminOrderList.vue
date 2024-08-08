@@ -182,10 +182,6 @@ export default {
   },
   created() {
     this.getOrders();
-    const collapseElementList = document.querySelectorAll(".collapse");
-    this.orderList = [...collapseElementList].map(
-      (collapseEl) => new Collapse(collapseEl)
-    );
     this.emitter.on("adminOrderSearchResult", (searchResult) => {
       this.searchContent = searchResult[0];
       this.orderList = [];
@@ -195,6 +191,12 @@ export default {
       this.getOrders();
       this.searchContent = null;
     });
+  },
+  mounted() {
+    const collapseElementList = document.querySelectorAll(".collapse");
+    this.orderList = [...collapseElementList].map(
+      (collapseEl) => new Collapse(collapseEl)
+    );
   },
 };
 </script>
