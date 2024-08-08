@@ -228,14 +228,17 @@ export default {
   },
   created() {
     this.getOrders();
-    const offcanvasElementList = document.querySelectorAll(".offcanvas");
-    this.adminNavbar = [...offcanvasElementList].map(
-      (offcanvasEl) => new Offcanvas(offcanvasEl)
-    );
+
     this.getProducts();
     setTimeout(() => {
       this.isCurrentWidth();
     }, 500);
+  },
+  mounted() {
+    const offcanvasElementList = document.querySelectorAll(".offcanvas");
+    this.adminNavbar = [...offcanvasElementList].map(
+      (offcanvasEl) => new Offcanvas(offcanvasEl)
+    );
   },
 };
 </script>

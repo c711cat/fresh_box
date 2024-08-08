@@ -272,17 +272,18 @@ export default {
     this.getOrders();
     this.getCart();
     this.getProducts();
-    const offcanvasElementList = document.querySelectorAll(".offcanvas");
-    this.userNavbar = [...offcanvasElementList].map(
-      (offcanvasEl) => new Offcanvas(offcanvasEl)
-    );
-    this.getProducts();
     this.emitter.on("updateProductInCart", () => {
       this.getCart();
     });
     this.emitter.on("clearCart", () => {
       this.getCart();
     });
+  },
+  mounted() {
+    const offcanvasElementList = document.querySelectorAll(".offcanvas");
+    this.userNavbar = [...offcanvasElementList].map(
+      (offcanvasEl) => new Offcanvas(offcanvasEl)
+    );
   },
 };
 </script>

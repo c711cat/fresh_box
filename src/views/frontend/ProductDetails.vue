@@ -261,6 +261,8 @@ export default {
   },
   created() {
     this.getProduct();
+  },
+  mounted() {
     const collapseElementList = document.querySelectorAll(".collapse");
     this.details = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)

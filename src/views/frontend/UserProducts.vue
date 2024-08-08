@@ -497,10 +497,6 @@ export default {
     this.isLoading = true;
     this.whereComeFrom();
     this.getMyFavorite();
-    const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
-    this.dropdownList = [...dropdownElementList].map(
-      (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
-    );
     this.emitter.on("productSearchResult", (searchResult) => {
       this.getCart();
       this.searchText = searchResult[0];
@@ -517,6 +513,12 @@ export default {
       this.getPage1Products();
       this.getOtherPageProducts();
     });
+  },
+  mounted() {
+    const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
+    this.dropdownList = [...dropdownElementList].map(
+      (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
+    );
   },
   updated() {
     if (this.$route.path === "/favorite") {
