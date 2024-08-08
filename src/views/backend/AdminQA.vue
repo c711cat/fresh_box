@@ -26,9 +26,9 @@
             class="accordion-button border-bottom rounded-0 py-0"
             type="button"
             data-bs-toggle="collapse"
-            :data-bs-target="`#QA_List` + `${index}`"
+            :data-bs-target="`#QA_List${index}`"
             aria-expanded="true"
-            :aria-controls="`QA_List` + `${index}`"
+            :aria-controls="`QA_List${index}`"
           >
             <div class="d-flex flex-wrap align-items-center py-2">
               <div
@@ -42,7 +42,7 @@
           </button>
         </h2>
         <div
-          :id="`QA_List` + `${index}`"
+          :id="`QA_List${index}`"
           :class="{
             'bg-body-secondary text-secondary': item.isPublic === false,
           }"

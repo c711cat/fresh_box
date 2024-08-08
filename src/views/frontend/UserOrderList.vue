@@ -19,15 +19,15 @@
               class="accordion-button"
               type="button"
               data-bs-toggle="collapse"
-              :data-bs-target="`#accordion-collapse-collapse` + `${index}`"
+              :data-bs-target="`#accordion-collapse-collapse${index}`"
               aria-expanded="true"
-              :aria-controls="`accordion-collapse-collapse` + `${index}`"
+              :aria-controls="`accordion-collapse-collapse${index}`"
             >
               訂單日期 {{ turnDate(item.create_at) }}
             </button>
           </h2>
           <div
-            :id="`accordion-collapse-collapse` + `${index}`"
+            :id="`accordion-collapse-collapse${index}`"
             class="accordion-collapse collapse show"
           >
             <div class="accordion-body pt-4">

@@ -26,7 +26,7 @@
             <strong>Q{{ item.num }}. {{ item.title }}</strong>
           </button>
         </h2>
-        <div :id="`QA_List` + `${index}`" class="accordion-collapse collapse">
+        <div :id="`QA_List${index}`" class="accordion-collapse collapse">
           <div class="accordion-body border-bottom">
             <p class="overflow-x-auto mb-3">A : {{ item.description }}</p>
           </div>
