@@ -19,9 +19,9 @@
             class="accordion-button border-bottom rounded-0"
             type="button"
             data-bs-toggle="collapse"
-            :data-bs-target="`#QA_List` + `${index}`"
+            :data-bs-target="`#QA_List${index}`"
             aria-expanded="true"
-            :aria-controls="`QA_List` + `${index}`"
+            :aria-controls="`QA_List${index}`"
           >
             <strong>Q{{ item.num }}. {{ item.title }}</strong>
           </button>
