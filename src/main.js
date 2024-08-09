@@ -1,8 +1,7 @@
-/* eslint-disable vue/multi-word-component-names */
 import { createApp } from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import Loading from "@/components/LoadingScreen.vue";
+import LoadingView from "@/components/LoadingView.vue";
 import App from "./App.vue";
 import router from "./router";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -15,6 +14,6 @@ app.config.globalProperties.$filters = { currency, changeDateStyle };
 app.config.globalProperties.$pushMsg = { status200, status404 };
 app.use(VueAxios, axios);
 app.use(router);
-app.component("Loading", Loading);
+app.component("LoadingView", LoadingView);
 app.component("v-select", vSelect);
 app.mount("#app");

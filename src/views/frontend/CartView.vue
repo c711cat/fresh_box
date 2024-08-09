@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="isLoading" />
+  <LoadingView v-if="isLoading" />
   <div v-else>
     <div v-if="!carts.length" class="col-10 mx-auto mt-5 pt-5">
       <h3 class="mt-5 ps-2 mb-4">購物車空了</h3>

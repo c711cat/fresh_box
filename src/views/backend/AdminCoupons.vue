@@ -1,5 +1,5 @@
 <template>
-  <Loading v-if="isLoading" />
+  <LoadingView v-if="isLoading" />
   <div v-else>
     <div
       class="mx-auto mb-2 col-11 col-md-10 col-lg-11 col-xl-10 d-flex justify-content-between align-items-center flex-wrap"
