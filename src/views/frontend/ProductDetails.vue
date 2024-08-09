@@ -105,14 +105,15 @@
             </h2>
             <div id="things-to-note" class="accordion-collapse collapse show">
               <div class="accordion-body border-top">
-                <div
-                  v-for="(item, index) in product.notes"
-                  :key="item"
-                  class="d-flex"
-                >
-                  <div class="col-auto">{{ index + 1 }}.</div>
-                  <div class="flex-fill">{{ item }}</div>
-                </div>
+                <ol class="ms-4 ps-0">
+                  <li
+                    v-for="item in product.notes"
+                    :key="item"
+                    class="col-auto"
+                  >
+                    {{ item }}
+                  </li>
+                </ol>
               </div>
             </div>
           </div>

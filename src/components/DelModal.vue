@@ -21,9 +21,9 @@
           ></button>
         </div>
         <div class="modal-body">
-          <strong> {{ delText }} </strong><br />
-          <strong v-if="tempOrder.id"> {{ delItemId }} </strong><br />
-          <strong v-if="tempOrder.id"> {{ delItemTime }} </strong>
+          <p class="fw-bolder">delText {{ delText }}</p>
+          <p class="fw-bolder" v-if="tempOrder.id">{{ delItemId }}</p>
+          <p class="fw-bolder" v-if="tempOrder.id">{{ delItemTime }}</p>
         </div>
         <div class="modal-footer">
           <button
