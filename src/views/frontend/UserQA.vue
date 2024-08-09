@@ -11,7 +11,7 @@
     >
       <div
         v-for="(item, index) in QA_List"
-        :key="index"
+        :key="item.id"
         class="accordion-item border border-0"
       >
         <h2 class="accordion-header border border-0">

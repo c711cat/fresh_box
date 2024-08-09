@@ -20,8 +20,8 @@
       class="row my-0 mx-auto align-items-center col-11 col-md-10 col-lg-11 col-xl-10"
     >
       <div
-        v-for="(coupon, index) in coupons"
-        :key="index"
+        v-for="coupon in coupons"
+        :key="coupon.id"
         :class="{ 'bg-light': coupon.is_enabled === 0 }"
         class="row m-0 align-items-center border-top py-3"
       >

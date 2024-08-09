@@ -10,8 +10,8 @@
       </div>
 
       <div
-        v-for="(item, id) in order.products"
-        :key="id"
+        v-for="item in order.products"
+        :key="item.id"
         class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
       >
         <router-link

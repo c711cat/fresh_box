@@ -42,7 +42,7 @@
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-      <SwiperSlide v-for="(item, index) in allProducts" :key="index">
+      <SwiperSlide v-for="item in allProducts" :key="item.id">
         <router-link
           @click="goToProductPage"
           :to="`/product/${item.id}`"

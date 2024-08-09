@@ -22,12 +22,10 @@
         <ul class="dropdown-menu">
           <li
             @click="goToTheCategory(item)"
-            v-for="(item, index) in categoryList"
-            :key="index"
+            v-for="item in categoryList"
+            :key="item"
             class="dropdown-item"
-          >
-            {{ item }}
-          </li>
+          ></li>
         </ul>
       </li>
     </ul>
@@ -38,8 +36,8 @@
       <h3>目前無收藏的商品</h3>
     </div>
     <div
-      v-for="(item, index) in allProducts"
-      :key="index"
+      v-for="item in allProducts"
+      :key="item.id"
       class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
     >
       <div class="card my-3 mx-auto">
@@ -410,6 +408,7 @@ export default {
       this.$http
         .post(api, { data: addItem })
         .then((res) => {
+          console.log(res);
           if (res.data.success) {
             this.$pushMsg.status200(res, "已加入購物車");
             this.getCart();

@@ -29,8 +29,8 @@
         </div>
         <div class="col-12 p-2">
           <div
-            v-for="(item, index) in carts"
-            :key="index"
+            v-for="item in carts"
+            :key="item.id"
             class="itemC mb-3 pe-2 d-flex align-items-center bg-white"
           >
             <router-link :to="`/product/${item.product.id}`" class="">

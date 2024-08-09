@@ -26,7 +26,7 @@
       <div class="col col-md-11 col-xl-9 row m-0 justify-content-center">
         <div
           v-for="(item, index) in bestSellerProducts"
-          :key="index"
+          :key="item.id"
           class="pt-4 mb-4 col-10 col-sm-6 col-md-6 col-lg-3 col-xl"
           data-aos="fade-up"
           data-aos-duration="800"

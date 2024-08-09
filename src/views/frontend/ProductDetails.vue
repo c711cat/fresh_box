@@ -15,23 +15,19 @@
         ></h2>
         <div class="row m-0 overflow-x-auto align-items-center flex-nowrap">
           <img
-            v-for="(img, index) in product.images"
-            :key="index"
+            v-for="img in product.images"
+            :key="img"
             @click="changeImg(img)"
             :src="img"
             class="imgItems col-3"
-            alt=""
+            alt="product-img"
           />
         </div>
       </div>
       <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
         <h4 class="mb-3 border-bottom pb-3 px-1">{{ product.title }}</h4>
         <div v-if="product.description" class="productContent px-1 mb-2">
-          <ul
-            v-for="(item, index) in product.description"
-            :key="index"
-            class="ps-3 mb-0"
-          >
+          <ul v-for="item in product.description" :key="item" class="ps-3 mb-0">
             <li class="">{{ item }}</li>
           </ul>
         </div>
@@ -111,7 +107,7 @@
               <div class="accordion-body border-top">
                 <div
                   v-for="(item, index) in product.notes"
-                  :key="index"
+                  :key="item"
                   class="d-flex"
                 >
                   <div class="col-auto">{{ index + 1 }}.</div>

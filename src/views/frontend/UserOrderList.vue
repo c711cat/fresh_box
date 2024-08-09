@@ -8,7 +8,7 @@
       <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
       <div
         v-for="(item, index) in orderList"
-        :key="index"
+        :key="item.id"
         class="accordion m-0"
         id="accordionPanelsUserOrderList"
       >

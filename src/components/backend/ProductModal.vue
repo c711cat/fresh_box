@@ -63,7 +63,7 @@
               <div v-if="tempProduct.images" class="col-12">
                 <div
                   v-for="(image, index) in tempProduct.images"
-                  :key="index"
+                  :key="image + index"
                   class="border-top pt-2"
                 >
                   <label for="inputUrl" class="form-label">

@@ -17,7 +17,7 @@
       </div>
       <div
         v-for="(item, index) in orderList"
-        :key="index"
+        :key="item.id"
         class="accordion m-0"
         id="accordionPanelsAdminOrderList"
       >

@@ -2,7 +2,7 @@
   <div class="toast-container end-0 mt-3 container-fluid">
     <ToastView
       v-for="(msg, index) in messages"
-      :key="index"
+      :key="msg + index"
       :msg="msg"
     ></ToastView>
   </div>
