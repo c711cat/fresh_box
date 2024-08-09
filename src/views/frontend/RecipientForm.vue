@@ -75,7 +75,9 @@ import { localize, setLocale } from "@vee-validate/i18n";
 import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
 import * as AllRules from "@vee-validate/rules";
 Object.keys(AllRules).forEach((rule) => {
-  defineRule(rule, AllRules[rule]);
+  if (rule !== "all") {
+    defineRule(rule, AllRules[rule]);
+  }
 });
 
 configure({
