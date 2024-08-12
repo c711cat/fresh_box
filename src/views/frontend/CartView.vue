@@ -164,7 +164,7 @@
 
 <script>
 import "vue-select/dist/vue-select.css";
-import RecipientForm from "@/views/frontend/RecipientForm.vue";
+import RecipientForm from "@/components/frontend/RecipientForm.vue";
 import delModal from "@/components/DelModal.vue";
 export default {
   data() {
