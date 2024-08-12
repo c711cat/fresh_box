@@ -1,15 +1,17 @@
 <template>
   <div class="row m-0 p-0">
-    <div class="detailsText pb-2 col-lg-7">
-      <div class="d-flex align-items-center justify-content-between flex-wrap">
+    <section class="detailsText pb-2 col-lg-7">
+      <header
+        class="d-flex align-items-center justify-content-between flex-wrap"
+      >
         <h3 class="ps-3">訂單明細</h3>
         <div class="ps-3">
-          <div class="orderId">訂單日期 {{ turnDate(order.create_at) }}</div>
-          <div class="orderId">訂單編號 {{ order.id }}</div>
+          <p class="orderId mb-0">訂單日期 {{ turnDate(order.create_at) }}</p>
+          <p class="orderId mb-0">訂單編號 {{ order.id }}</p>
         </div>
-      </div>
+      </header>
 
-      <div
+      <main
         v-for="item in order.products"
         :key="item.id"
         class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
@@ -57,7 +59,7 @@
             NT$ {{ $filters.currency(item.total) }}
           </div>
         </div>
-      </div>
+      </main>
 
       <div
         class="col-12 row g-1 m-0 border-top py-3 justify-content-center align-items-center"
@@ -126,32 +128,32 @@
           {{ paymentStatus }}
         </strong>
       </div>
-    </div>
-    <div class="col-lg-5">
+    </section>
+    <section class="col-lg-5">
       <h3 class="border-bottom pb-2 ps-3">收件人資訊</h3>
       <div class="px-4 mb-2 d-flex flex-wrap">
-        <div class="py-1 fw-bold col-sm-2 col-12">姓名</div>
-        <div class="py-1 col-sm-10 col-12">{{ order.user.name }}</div>
+        <p class="mb-0 py-1 fw-bold col-sm-2 col-12">姓名</p>
+        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.name }}</p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
-        <div class="py-1 fw-bold col-sm-2 col-12">email</div>
-        <div class="py-1 col-sm-10 col-12">{{ order.user.email }}</div>
+        <p class="mb-0 py-1 fw-bold col-sm-2 col-12">email</p>
+        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.email }}</p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
-        <div class="py-1 fw-bold col-sm-2 col-12">電話</div>
-        <div class="py-1 col-sm-10 col-12">{{ order.user.tel }}</div>
+        <p class="mb-0 py-1 fw-bold col-sm-2 col-12">電話</p>
+        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.tel }}</p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
-        <div class="py-1 fw-bold col-sm-2 col-12">地址</div>
-        <div class="py-1 col-sm-10 col-12">
+        <p class="mb-0 py-1 fw-bold col-sm-2 col-12">地址</p>
+        <p class="mb-0 py-1 col-sm-10 col-12">
           {{ order.user.address }}
-        </div>
+        </p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
-        <div class="py-1 fw-bold col-sm-2 col-12">備註</div>
-        <div class="py-1 col-sm-10 col-12">{{ order.message }}</div>
+        <p class="mb-0 py-1 fw-bold col-sm-2 col-12">備註</p>
+        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.message }}</p>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
