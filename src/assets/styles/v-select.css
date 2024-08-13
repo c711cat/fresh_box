@@ -14,7 +14,7 @@
   --vs-border-color: var(--vs-colors--lightest);
   --vs-border-width: 1px;
   --vs-border-style: solid;
-  --vs-border-radius: 4px;
+  --vs-border-radius: 0px;
   --vs-actions-padding: 4px 6px 0 3px;
   --vs-controls-color: var(--vs-colors--light);
   --vs-controls-size: 1;
