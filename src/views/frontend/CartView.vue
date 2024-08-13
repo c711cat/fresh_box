@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import "vue-select/dist/vue-select.css";
+import "@/assets/styles/v-select.css";
 import RecipientForm from "@/components/frontend/RecipientForm.vue";
 import delModal from "@/components/DelModal.vue";
 export default {
