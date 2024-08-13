@@ -10,12 +10,12 @@
         繼續逛逛
       </router-link>
     </div>
-    <div
+    <main
       v-else
       class="cartWrap col-sm-11 col-md-10 mx-auto d-flex flex-wrap bg-light"
     >
       <div class="col-12 col-lg-6 my-3">
-        <div
+        <header
           class="col-12 d-flex justify-content-between align-items-center px-3 mb-2"
         >
           <h3 class="m-0">購買清單</h3>
@@ -26,9 +26,9 @@
           >
             清空購物車
           </button>
-        </div>
+        </header>
         <div class="col-12 p-2">
-          <div
+          <section
             v-for="item in carts"
             :key="item.id"
             class="itemC mb-3 pe-2 d-flex align-items-center bg-white"
@@ -97,8 +97,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="d-flex flex-wrap align-items-center px-4">
+          </section>
+          <section class="d-flex flex-wrap align-items-center px-4">
             <div class="mb-1 col-4">小計</div>
             <div class="text-end mb-1 col-8">
               NT$ {{ $filters.currency(subtotal) }}
@@ -115,6 +115,7 @@
                   v-model="couponCode"
                   :disabled="used_coupon"
                 ></v-select>
+
                 <button
                   @click="useCoupon"
                   class="btn btn-yellow-200"
@@ -147,13 +148,13 @@
             <strong class="text-danger text-end col-8"
               >NT$ {{ $filters.currency(paymentAmount) }}</strong
             >
-          </div>
+          </section>
         </div>
       </div>
-      <div class="col-12 col-lg-6 py-3">
+      <section class="col-12 col-lg-6 py-3">
         <RecipientForm class="mt-1"></RecipientForm>
-      </div>
-    </div>
+      </section>
+    </main>
   </div>
   <delModal
     ref="delModal"

@@ -1,7 +1,7 @@
 <template>
   <div class="row mb-5 mx-auto justify-content-center productDetailsContainer">
     <div class="row m-0 d-cloumn justify-content-center">
-      <div class="p-1 col-12 col-md-5 position-relative mb-5">
+      <section class="p-1 col-12 col-md-5 position-relative mb-5">
         <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
         <h2
           v-if="isMyFavorite"
@@ -23,23 +23,23 @@
             alt="product-img"
           />
         </div>
-      </div>
-      <div class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
+      </section>
+      <section class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
         <h4 class="mb-3 border-bottom pb-3 px-1">{{ product.title }}</h4>
         <div v-if="product.description" class="productContent px-1 mb-2">
           <ul v-for="item in product.description" :key="item" class="ps-3 mb-0">
             <li class="">{{ item }}</li>
           </ul>
         </div>
-        <div class="productContent p-1">
+        <p class="productContent p-1 mb-0">
           規格：{{ product.content }} / {{ product.unit }}
-        </div>
-        <div v-if="product.origin_place" class="productContent p-1">
+        </p>
+        <p v-if="product.origin_place" class="mb-0 productContent p-1">
           產地：{{ product.origin_place }}
-        </div>
-        <div v-if="product.preservation_methods" class="productContent p-1">
+        </p>
+        <p v-if="product.preservation_methods" class="mb-0 productContent p-1">
           保存方式：{{ product.preservation_methods }}
-        </div>
+        </p>
 
         <div class="row m-0 g-3 mb-3">
           <strong
@@ -87,10 +87,10 @@
         >
           加入購物車
         </button>
-      </div>
+      </section>
       <div class="col-11 col-md-10 col-lg-9 col-xl-8">
         <div class="accordion m-0" id="accordionPanelsUserOrderList">
-          <div v-if="product.notes" class="accordion-item border border-0">
+          <section v-if="product.notes" class="accordion-item border border-0">
             <h2 class="accordion-header">
               <button
                 class="accordion-button bg-white fs-4 fw-bold text-black"
@@ -116,8 +116,8 @@
                 </ol>
               </div>
             </div>
-          </div>
-          <div class="accordion-item border border-0">
+          </section>
+          <section class="accordion-item border border-0">
             <h2 class="accordion-header">
               <button
                 class="accordion-button bg-white fs-4 fw-bold text-black"
@@ -135,8 +135,8 @@
                 <ShoppingNotes></ShoppingNotes>
               </div>
             </div>
-          </div>
-          <div class="accordion-item border border-0">
+          </section>
+          <section class="accordion-item border border-0">
             <h2 class="accordion-header">
               <button
                 class="accordion-button bg-white fs-4 fw-bold text-black"
@@ -154,7 +154,7 @@
                 <ExceptionSOP></ExceptionSOP>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
       <h3 class="mb-4 pb-3 pt-5 col-10 border-bottom">推薦商品</h3>

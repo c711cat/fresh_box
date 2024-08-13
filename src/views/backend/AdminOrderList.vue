@@ -1,21 +1,24 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div
+  <main
     v-else
     class="mx-auto containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
   >
     <div class="mb-5">
-      <h3 v-if="noResults">{{ noResultsContent }}</h3>
-      <div v-else class="p-1 mb-2 text-end">
-        <button
-          @click="openDelAllOrdersModal"
-          class="btn btn-danger"
-          type="button"
-        >
-          刪除全部訂單
-        </button>
-      </div>
-      <div
+      <header>
+        <h3 v-if="noResults">{{ noResultsContent }}</h3>
+        <div v-else class="p-1 mb-2 text-end">
+          <button
+            @click="openDelAllOrdersModal"
+            class="btn btn-danger"
+            type="button"
+          >
+            刪除全部訂單
+          </button>
+        </div>
+      </header>
+
+      <section
         v-for="(item, index) in orderList"
         :key="item.id"
         class="accordion m-0"
@@ -53,15 +56,17 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-    <PaginationView
-      v-if="pageSwitch"
-      :pages="pagination"
-      @emit-pages="getOrders"
-    >
-    </PaginationView>
-  </div>
+    <footer>
+      <PaginationView
+        v-if="pageSwitch"
+        :pages="pagination"
+        @emit-pages="getOrders"
+      >
+      </PaginationView>
+    </footer>
+  </main>
 
   <delModal
     ref="delModal"

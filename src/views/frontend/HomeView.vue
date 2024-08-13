@@ -11,7 +11,7 @@
   <!-- 商品類別 -->
   <CategoryView></CategoryView>
   <!-- 暢銷商品 -->
-  <div class="d-flex justify-content-center mt-5">
+  <section class="d-flex justify-content-center mt-5">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
       <h3
         class="writeStyle m-0 col-1"
@@ -61,9 +61,9 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="row col-12 mx-0 justify-content-center align-items-center">
+  <section class="row col-12 mx-0 justify-content-center align-items-center">
     <img
       class="newsImg object-fit-cover col-lg-12 p-0"
       data-aos="fade-zoom-in"
@@ -87,9 +87,9 @@
       </div>
       <div class="goShopping fw-lighter fs-5">去 逛 逛</div>
     </router-link>
-  </div>
+  </section>
 
-  <div class="py-5 col-12">
+  <section class="py-5 col-12">
     <div class="mx-auto col-11 py-5">
       <div class="row my-0 mx-auto flex-row-reverse col-11">
         <h3
@@ -109,7 +109,7 @@
         ></SwiperImgs>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 <script>
 import CategoryView from "@/components/frontend/CategoryView.vue";

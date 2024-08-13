@@ -1,11 +1,11 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div v-else class="mt-5 pt-5 mx-auto col-11 col-md-10 col-lg-8">
-    <div class="my-4 text-center">
+  <main v-else class="mt-5 pt-5 mx-auto col-11 col-md-10 col-lg-8">
+    <header class="my-4 text-center">
       <h3 class="mb-0">常見問題</h3>
-    </div>
+    </header>
 
-    <div
+    <section
       class="containerWrap accordion mb-4"
       id="accordionPanelsStayOpenExample"
     >
@@ -32,10 +32,12 @@
           </div>
         </div>
       </div>
-    </div>
-    <PaginationView :pages="pagination" @emit-pages="getQAList">
-    </PaginationView>
-  </div>
+    </section>
+    <footer>
+      <PaginationView :pages="pagination" @emit-pages="getQAList">
+      </PaginationView>
+    </footer>
+  </main>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";

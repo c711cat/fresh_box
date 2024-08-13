@@ -11,7 +11,7 @@
   >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header">
+        <header class="modal-header">
           <h5 v-if="tempProduct.id" class="modal-title">編輯產品</h5>
           <h5 v-else class="modal-title">新增產品</h5>
           <button
@@ -20,11 +20,11 @@
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
-        </div>
-        <div class="modal-body">
+        </header>
+        <main class="modal-body">
           <form class="row g-3">
             <div class="col-lg-4 row g-3 mx-0 flex-column">
-              <div class="col-12">
+              <section class="col-12">
                 <label for="inputUrl" class="form-label">
                   輸入封面圖片網址
                 </label>
@@ -44,8 +44,8 @@
                     移除
                   </button>
                 </div>
-              </div>
-              <div class="col-12">
+              </section>
+              <section class="col-12">
                 <label for="customFile" class="form-label"
                   >或 上傳封面圖片檔案
                 </label>
@@ -59,8 +59,8 @@
                 <div class="col-12 mb-1">
                   <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
                 </div>
-              </div>
-              <div v-if="tempProduct.images" class="col-12">
+              </section>
+              <section v-if="tempProduct.images" class="col-12">
                 <div
                   v-for="(image, index) in tempProduct.images"
                   :key="image + index"
@@ -103,7 +103,7 @@
                     />
                   </div>
                 </div>
-              </div>
+              </section>
               <div class="mt-2">
                 <button
                   @click="addImg"
@@ -113,7 +113,7 @@
                 </button>
               </div>
             </div>
-            <div class="rightContainer col-lg-8 row g-3 mx-0">
+            <section class="rightContainer col-lg-8 row g-3 mx-0">
               <div class="col-lg-6 col-xl-4">
                 <div class="d-inline text-danger">＊</div>
                 <label for="name" class="form-label">產品名稱</label>
@@ -290,10 +290,10 @@
                 />
                 <label class="form-check-label" for="is_enabled"> 販售 </label>
               </div>
-            </div>
+            </section>
           </form>
-        </div>
-        <div class="modal-footer">
+        </main>
+        <footer class="modal-footer">
           <button
             type="button"
             class="btn btn-outline-dark"
@@ -317,7 +317,7 @@
           >
             新增產品
           </button>
-        </div>
+        </footer>
       </div>
     </div>
   </div>

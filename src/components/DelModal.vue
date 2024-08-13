@@ -10,7 +10,7 @@
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered">
-      <section class="modal-content">
+      <div class="modal-content">
         <header class="modal-header bg-danger">
           <h5 class="modal-title text-white">再次確認</h5>
           <button
@@ -20,11 +20,11 @@
             aria-label="Close"
           ></button>
         </header>
-        <main class="modal-body">
+        <section class="modal-body">
           <p class="fw-bolder">delText {{ delText }}</p>
           <p class="fw-bolder" v-if="tempOrder.id">{{ delItemId }}</p>
           <p class="fw-bolder" v-if="tempOrder.id">{{ delItemTime }}</p>
-        </main>
+        </section>
         <footer class="modal-footer">
           <button
             type="button"
@@ -37,7 +37,7 @@
             確定刪除
           </button>
         </footer>
-      </section>
+      </div>
     </div>
   </div>
 </template>

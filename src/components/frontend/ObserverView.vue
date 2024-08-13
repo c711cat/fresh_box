@@ -1,5 +1,5 @@
 <template>
-  <div ref="target" class="w-100 text-center text-secondary">商品載入中 ⋯</div>
+  <p ref="target" class="w-100 mb-0 text-center text-secondary">商品載入中 ⋯</p>
 </template>
 
 <script setup>

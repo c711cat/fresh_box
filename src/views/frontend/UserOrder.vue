@@ -1,12 +1,12 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div v-else class="mt-5 pt-4">
-    <div
+  <main v-else class="mt-5 pt-4">
+    <section
       class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
     >
       <OrderView class="pt-2" :transOrder="order"></OrderView>
-    </div>
-    <div
+    </section>
+    <section
       class="text-end col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 pb-5 my-0 mx-auto"
     >
       <div v-if="order.is_paid" class="col-lg-7">
@@ -32,8 +32,8 @@
           確認付款
         </button>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 </template>
 
 <script>

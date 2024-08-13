@@ -11,7 +11,7 @@
   >
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
-        <div class="modal-header ps-4">
+        <header class="modal-header ps-4">
           <h5 class="mb-0">{{ headerText }}</h5>
           <button
             type="button"
@@ -19,8 +19,8 @@
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
-        </div>
-        <div class="modal-body ms-3">
+        </header>
+        <section class="modal-body ms-3">
           <form class="row m-0 g-3">
             <div class="">
               <div class="d-inline text-danger">＊</div>
@@ -69,8 +69,8 @@
               />
             </div>
           </form>
-        </div>
-        <div class="modal-footer">
+        </section>
+        <footer class="modal-footer">
           <button
             type="button"
             class="btn btn-outline-dark"
@@ -94,7 +94,7 @@
           >
             新增問答
           </button>
-        </div>
+        </footer>
       </div>
     </div>
   </div>

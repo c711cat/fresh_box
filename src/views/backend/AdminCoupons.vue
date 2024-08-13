@@ -1,7 +1,7 @@
 <template>
   <LoadingView v-if="isLoading" />
   <div v-else>
-    <div
+    <header
       class="mx-auto mb-2 col-11 col-md-10 col-lg-11 col-xl-10 d-flex justify-content-between align-items-center flex-wrap"
     >
       <h3 class="ps-2">後台優惠券列表</h3>
@@ -14,12 +14,12 @@
           新增優惠券
         </button>
       </div>
-    </div>
+    </header>
 
     <div
       class="row my-0 mx-auto align-items-center col-11 col-md-10 col-lg-11 col-xl-10"
     >
-      <div
+      <section
         v-for="coupon in coupons"
         :key="coupon.id"
         :class="{ 'bg-light': coupon.is_enabled === 0 }"
@@ -79,7 +79,7 @@
             刪除
           </button>
         </div>
-      </div>
+      </section>
     </div>
   </div>
   <CouponModal

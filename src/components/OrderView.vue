@@ -1,6 +1,6 @@
 <template>
   <div class="row m-0 p-0">
-    <section class="detailsText pb-2 col-lg-7">
+    <div class="detailsText pb-2 col-lg-7">
       <header
         class="d-flex align-items-center justify-content-between flex-wrap"
       >
@@ -11,7 +11,7 @@
         </div>
       </header>
 
-      <main
+      <section
         v-for="item in order.products"
         :key="item.id"
         class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
@@ -59,9 +59,9 @@
             NT$ {{ $filters.currency(item.total) }}
           </div>
         </div>
-      </main>
+      </section>
 
-      <div
+      <section
         class="col-12 row g-1 m-0 border-top py-3 justify-content-center align-items-center"
       >
         <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
@@ -127,8 +127,8 @@
         >
           {{ paymentStatus }}
         </strong>
-      </div>
-    </section>
+      </section>
+    </div>
     <section class="col-lg-5">
       <h3 class="border-bottom pb-2 ps-3">收件人資訊</h3>
       <div class="px-4 mb-2 d-flex flex-wrap">

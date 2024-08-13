@@ -1,12 +1,12 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div
+  <main
     v-else
     class="listContainer mx-auto d-flex flex-column justify-content-between col-12 col-xl-10"
   >
     <div class="mb-5">
       <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
-      <div
+      <section
         v-for="(item, index) in orderList"
         :key="item.id"
         class="accordion m-0"
@@ -45,15 +45,17 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-    <PaginationView
-      v-if="pageSwitch"
-      :pages="pagination"
-      @emit-pages="getOrders"
-    >
-    </PaginationView>
-  </div>
+    <footer>
+      <PaginationView
+        v-if="pageSwitch"
+        :pages="pagination"
+        @emit-pages="getOrders"
+      >
+      </PaginationView>
+    </footer>
+  </main>
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";

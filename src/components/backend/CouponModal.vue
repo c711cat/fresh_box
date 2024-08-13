@@ -10,7 +10,7 @@
     aria-hidden="true"
   >
     <div class="modal-dialog modal-xl">
-      <section class="modal-content">
+      <div class="modal-content">
         <header class="modal-header ps-4">
           <h5 v-if="tempCoupon.id" class="modal-title">編輯優惠券</h5>
           <h5 v-else class="modal-title">新增優惠券</h5>
@@ -21,7 +21,7 @@
             aria-label="Close"
           ></button>
         </header>
-        <main class="modal-body ms-3">
+        <div class="modal-body ms-3">
           <form class="row g-3">
             <div class="col-12 col-lg-6 col-xl-3">
               <div class="d-inline text-danger">＊</div>
@@ -84,7 +84,7 @@
               <label class="form-check-label" for="is_enabled"> 啟用 </label>
             </div>
           </form>
-        </main>
+        </div>
         <footer class="modal-footer">
           <button
             type="button"
@@ -110,7 +110,7 @@
             新增優惠券
           </button>
         </footer>
-      </section>
+      </div>
     </div>
   </div>
 </template>

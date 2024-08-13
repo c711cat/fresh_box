@@ -1,5 +1,5 @@
 <template>
-  <div
+  <section
     class="categoryWrap bg-light-gray row m-0 flex-wrap justify-content-center align-items-center"
   >
     <router-link
@@ -14,19 +14,16 @@
         alt="leafy_vegetable_img"
       />
 
-      <!-- md以上字體 -->
-      <div
-        class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+      <p
+        class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
         {{ categoryList.veleafy_vegetable }}
-      </div>
-
-      <!-- sm以下字體 -->
-      <div
-        class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+      </p>
+      <p
+        class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         {{ categoryList.veleafy_vegetable }}
-      </div>
+      </p>
     </router-link>
     <router-link
       :to="`/user-products/${categoryList.melon_root_bulb}`"
@@ -39,17 +36,17 @@
         src="@/assets/img/melon_root_bulb.png"
         alt="melon_root_bulb_img"
       />
-      <div
-        class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+      <p
+        class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
         {{ categoryList.melon_root_bulb }}
-      </div>
-      <!-- sm以下字體 -->
-      <div
-        class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+      </p>
+
+      <p
+        class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         {{ categoryList.melon_root_bulb }}
-      </div>
+      </p>
     </router-link>
     <router-link
       :to="`/user-products/${categoryList.mushroom}`"
@@ -62,17 +59,17 @@
         src="@/assets/img/mushroom.png"
         alt="mushroom_img"
       />
-      <div
-        class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+      <p
+        class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
         {{ categoryList.mushroom }}
-      </div>
-      <!-- sm以下字體 -->
-      <div
-        class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+      </p>
+
+      <p
+        class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         {{ categoryList.mushroom }}
-      </div>
+      </p>
     </router-link>
     <router-link
       :to="`/user-products/${categoryList.fruit}`"
@@ -81,16 +78,16 @@
       class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img class="categoryImg" src="@/assets/img/fruit.png" alt="fruit_img" />
-      <div
-        class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+      <p
+        class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
         {{ categoryList.fruit }}
-      </div>
-      <div
-        class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+      </p>
+      <p
+        class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         {{ categoryList.fruit }}
-      </div>
+      </p>
     </router-link>
     <router-link
       :to="`/user-products/${categoryList.spice}`"
@@ -99,18 +96,18 @@
       class="m-1 categoryLink text-secondary col-2 col-lg-1"
     >
       <img class="categoryImg" src="@/assets/img/spice.png" alt="spice_img" />
-      <div
-        class="d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
+      <p
+        class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
       >
         {{ categoryList.spice }}
-      </div>
-      <div
-        class="smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
+      </p>
+      <p
+        class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
       >
         {{ categoryList.spice }}
-      </div>
+      </p>
     </router-link>
-  </div>
+  </section>
 </template>
 <script>
 export default {

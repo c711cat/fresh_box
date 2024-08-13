@@ -1,6 +1,6 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div
+  <main
     v-else
     class="col-11 col-sm-10 col-md-8 col-lg-8 col-xl-10 col-xxl-9 row mt-0 mb-3 mx-auto productsContainer"
   >
@@ -29,13 +29,13 @@
         </ul>
       </li>
     </ul>
-    <div v-if="noResults" class="mt-4">
+    <section v-if="noResults" class="mt-4">
       <h3>查無相符商品</h3>
-    </div>
-    <div v-if="noFavorites" class="mt-4">
+    </section>
+    <section v-if="noFavorites" class="mt-4">
       <h3>目前無收藏的商品</h3>
-    </div>
-    <div
+    </section>
+    <section
       v-for="item in allProducts"
       :key="item.id"
       class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3"
@@ -63,26 +63,23 @@
         <div class="card-body d-flex flex-column justify-content-between">
           <div>
             <div class="d-flex justify-content-between">
-              <!-- sm以上字體 -->
               <h5
                 class="card-title d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
               >
                 {{ item.title }}
               </h5>
-              <!-- xs以下字體 -->
               <h5
                 class="card-title xs_title_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
               >
                 {{ item.title }}
               </h5>
-              <!-- md以上字體 -->
+
               <span
                 v-if="item.buyQty >= 1"
                 class="badge text-bg-danger rounded-pill fs-6 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
               >
                 {{ item.buyQty }}
               </span>
-              <!-- xs以下字體 -->
               <span
                 v-if="item.buyQty >= 1"
                 class="badge text-bg-danger rounded-pill xs_text d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
@@ -90,13 +87,12 @@
                 {{ item.buyQty }}
               </span>
             </div>
-            <!-- sm以上字體 -->
+
             <p
               class="card-text d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
             >
               {{ item.content }} / {{ item.unit }}
             </p>
-            <!-- xs以下字體 -->
             <p
               class="card-text xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
             >
@@ -105,7 +101,6 @@
             <div
               class="priceContainer d-flex justify-content-between flex-wrap mb-2"
             >
-              <!-- sm以上字體 -->
               <strong
                 class="col-12 col-sm-auto card-text text-secondary fs-6 d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
                 :class="{
@@ -115,7 +110,7 @@
               >
                 NT$ {{ $filters.currency(item.origin_price) }}
               </strong>
-              <!-- xs以下字體 -->
+
               <strong
                 class="col-12 col-sm-auto card-text text-secondary xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
                 :class="{
@@ -125,13 +120,13 @@
               >
                 NT$ {{ $filters.currency(item.origin_price) }}
               </strong>
-              <!-- sm以上字體 -->
+
               <strong
                 v-if="item.price !== item.origin_price"
                 class="col-12 col-sm-auto card-text text-danger fs-6 d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
                 >NT$ {{ $filters.currency(item.price) }}
               </strong>
-              <!-- xs以下字體 -->
+
               <strong
                 v-if="item.price !== item.origin_price"
                 class="col-12 col-sm-auto card-text text-danger xs_text d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
@@ -145,7 +140,6 @@
             role="group"
             aria-label="Default button group"
           >
-            <!-- - -->
             <button
               @click="delOne(item)"
               :disabled="!item.buyQty || item.id === status.delLoadingItem"
@@ -161,7 +155,7 @@
               </div>
               <i v-else class="bi bi-dash-lg"></i>
             </button>
-            <!-- + -->
+
             <button
               @click="addCart(item)"
               :disabled="item.id === status.addLoadingItem"
@@ -180,7 +174,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
     <ObserverView
       v-if="
         pagination.current_page < pagination.total_pages &&
@@ -193,9 +187,9 @@
       v-if="pagination.current_page === pagination.total_pages"
       class="w-100 text-secondary text-center"
     >
-      <div class="noMore">已無更多商品</div>
+      <p class="mb-0 noMore">已無更多商品</p>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

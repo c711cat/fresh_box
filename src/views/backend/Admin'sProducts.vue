@@ -1,7 +1,7 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div v-else class="px-3 mb-5 d-flex flex-column align-items-center">
-    <div
+  <main v-else class="px-3 mb-5 d-flex flex-column align-items-center">
+    <header
       class="row m-0 p-2 col-12 col-xxl-11 justify-content-between align-items-center"
     >
       <h3 v-if="noResults">查無相關商品</h3>
@@ -17,8 +17,8 @@
           新增產品
         </button>
       </div>
-    </div>
-    <div
+    </header>
+    <section
       v-for="item in products"
       :key="item.id"
       :class="{ 'bg-light': item.is_enabled === 0 }"
@@ -89,13 +89,13 @@
           刪除
         </button>
       </div>
-    </div>
+    </section>
     <PaginationView
       v-if="openPagination"
       :pages="pagination"
       @emit-pages="getProducts"
     ></PaginationView>
-  </div>
+  </main>
 
   <ProductModal
     ref="productModal"

@@ -1,7 +1,7 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <div v-else class="mx-auto mb-5 col-11 col-md-10 col-lg-8">
-    <div
+  <main v-else class="mx-auto mb-5 col-11 col-md-10 col-lg-8">
+    <header
       class="px-1 mb-2 d-flex justify-content-between align-items-center flex-wrap"
     >
       <h3 class="mb-0">常見問題</h3>
@@ -12,9 +12,9 @@
       >
         新增
       </button>
-    </div>
+    </header>
 
-    <div class="accordion containerWrap" id="QAList">
+    <section class="accordion containerWrap" id="QAList">
       <div
         v-for="(item, index) in QA_List"
         :key="item.id"
@@ -69,12 +69,14 @@
           </div>
         </div>
       </div>
-    </div>
-    <PaginationView
-      :pages="pagination"
-      @emit-pages="getQAList"
-    ></PaginationView>
-  </div>
+    </section>
+    <footer>
+      <PaginationView
+        :pages="pagination"
+        @emit-pages="getQAList"
+      ></PaginationView>
+    </footer>
+  </main>
   <QA_Modal
     ref="QA_Modal"
     :QA="tempQA"
