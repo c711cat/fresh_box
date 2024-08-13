@@ -134,15 +134,14 @@
             <div v-if="used_coupon" class="text-end mb-1 col-8">
               NT$ {{ $filters.currency(afterDiscount) }}
             </div>
-
-            <div class="mb-1 col-4">
-              冷藏宅配
-              <div class="infoText col-12 text-yellow-600">
-                <i class="bi bi-info-circle"></i>
-                滿 NT$ 1,000 免運
+            <div class="d-flex col-12 flex-wrap mb-1">
+              <div class="col-4">冷藏宅配</div>
+              <div class="text-end col-8">NT$ {{ shippingFee }}</div>
+              <div class="infoText col-12 text-yellow-600 d-flex">
+                <i class="bi bi-info-circle me-1"></i>
+                <p class="mb-0">滿 NT$ 1,000 免運</p>
               </div>
             </div>
-            <div class="text-end mb-1 col-8">NT$ {{ shippingFee }}</div>
 
             <strong class="text-danger col-4">付款金額</strong>
             <strong class="text-danger text-end col-8"
@@ -417,6 +416,8 @@ img:hover {
 }
 
 .infoText {
-  font-size: 13px;
+  font-size: 14px;
+}
+
 }
 </style>
