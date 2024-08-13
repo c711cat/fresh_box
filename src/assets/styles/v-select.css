@@ -172,7 +172,6 @@
   margin: 0;
   width: 100%;
   max-height: var(--vs-dropdown-max-height);
-  min-width: var(--vs-dropdown-min-width);
   overflow-y: auto;
   box-shadow: var(--vs-dropdown-box-shadow);
   border: var(--vs-border-width) var(--vs-border-style) var(--vs-border-color);
@@ -196,8 +195,11 @@
   cursor: pointer;
 }
 .vs__dropdown-option--highlight {
-  background: var(--vs-dropdown-option--active-bg);
-  color: var(--vs-dropdown-option--active-color);
+  color: #000;
+}
+.vs__dropdown-option--highlight:hover{
+  background-color: #ccaf3c;
+  color: #000;
 }
 .vs__dropdown-option--deselect {
   background: var(--vs-dropdown-option--deselect-bg);
