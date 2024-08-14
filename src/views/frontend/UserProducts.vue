@@ -25,7 +25,9 @@
             v-for="item in categoryList"
             :key="item"
             class="dropdown-item"
-          ></li>
+          >
+            {{ item }}
+          </li>
         </ul>
       </li>
     </ul>
