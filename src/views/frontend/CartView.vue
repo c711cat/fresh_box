@@ -419,5 +419,7 @@ img:hover {
   font-size: 14px;
 }
 
+.btnBody {
+  height: 35.4px;
 }
 </style>
