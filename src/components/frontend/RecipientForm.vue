@@ -2,6 +2,7 @@
   <Form @submit="createOrder" class="row m-0 g-3" v-slot="{ errors }">
     <h3 class="my-0 ps-3">收件人資訊</h3>
     <div class="px-3">
+      <div class="d-inline text-danger">＊</div>
       <label class="form-label" for="name">收件人姓名</label>
       <Field
         v-model="form.user.name"
@@ -15,6 +16,7 @@
       <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
     </div>
     <div class="px-3">
+      <div class="d-inline text-danger">＊</div>
       <label class="form-label" for="email">Email</label>
       <Field
         v-model="form.user.email"
@@ -28,6 +30,7 @@
       <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
     </div>
     <div class="px-3">
+      <div class="d-inline text-danger">＊</div>
       <label class="form-label" for="tel">電話</label>
       <Field
         v-model="form.user.tel"
@@ -41,6 +44,7 @@
       <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
     </div>
     <div class="px-3">
+      <div class="d-inline text-danger">＊</div>
       <label class="form-label" for="address">收件地址</label>
       <Field
         v-model="form.user.address"
