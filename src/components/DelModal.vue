@@ -11,7 +11,7 @@
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header bg-danger">
+        <header class="modal-header bg-danger">
           <h5 class="modal-title text-white">再次確認</h5>
           <button
             type="button"
@@ -19,13 +19,13 @@
             data-bs-dismiss="modal"
             aria-label="Close"
           ></button>
-        </div>
-        <div class="modal-body">
-          <strong> {{ delText }} </strong><br />
-          <strong v-if="tempOrder.id"> {{ delItemId }} </strong><br />
-          <strong v-if="tempOrder.id"> {{ delItemTime }} </strong>
-        </div>
-        <div class="modal-footer">
+        </header>
+        <section class="modal-body">
+          <p class="fw-bolder">{{ delText }}</p>
+          <p class="fw-bolder" v-if="tempOrder.id">{{ delItemId }}</p>
+          <p class="fw-bolder" v-if="tempOrder.id">{{ delItemTime }}</p>
+        </section>
+        <footer class="modal-footer">
           <button
             type="button"
             class="btn btn-outline-dark"
@@ -36,7 +36,7 @@
           <button @click="delItem" type="button" class="btn btn-danger">
             確定刪除
           </button>
-        </div>
+        </footer>
       </div>
     </div>
   </div>
