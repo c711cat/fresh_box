@@ -161,7 +161,7 @@
         </div>
       </div>
       <section class="col-12 col-lg-6 py-3 ps-3 pe-3">
-        <RecipientForm class="h-100"></RecipientForm>
+        <RecipientForm class="h-100" />
       </section>
     </main>
   </div>
