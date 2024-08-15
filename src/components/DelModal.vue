@@ -21,7 +21,7 @@
           ></button>
         </header>
         <section class="modal-body">
-          <p class="fw-bolder">delText {{ delText }}</p>
+          <p class="fw-bolder">{{ delText }}</p>
           <p class="fw-bolder" v-if="tempOrder.id">{{ delItemId }}</p>
           <p class="fw-bolder" v-if="tempOrder.id">{{ delItemTime }}</p>
         </section>
