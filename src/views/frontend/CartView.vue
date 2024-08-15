@@ -1,13 +1,13 @@
 <template>
   <LoadingView v-if="isLoading" />
   <div v-else>
-    <section v-if="!carts.length" class="col-10 mx-auto mt-5 pt-5">
-      <h3 class="mt-5 ps-2 mb-4">購物車空了</h3>
-      <router-link
-        to="/user-products"
-        class="ms-2 p-2 fs-6 border border-primary text-decoration-none"
-      >
-        繼續逛逛
+    <section
+      v-if="!carts.length"
+      class="emptyContainer d-flex flex-column align-items-center justify-content-center col-10 mx-auto text-center"
+    >
+      <h3 class="mb-4">購物車空了</h3>
+      <router-link to="/user-products" class="">
+        <button type="button" class="btn btn-outline-primary">繼續逛逛</button>
       </router-link>
     </section>
     <main
@@ -453,5 +453,10 @@ img:hover {
 .space {
   row-gap: 12px;
   column-gap: 12px;
+}
+
+.emptyContainer {
+  height: 89vh;
+  margin-top: 90px;
 }
 </style>
