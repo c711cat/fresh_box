@@ -4,7 +4,7 @@
       <header
         class="d-flex align-items-center justify-content-between flex-wrap"
       >
-        <h3 class="ps-3">訂單明細</h3>
+        <h3 class="">訂單明細</h3>
         <div class="ps-3">
           <p class="orderId mb-0">訂單日期 {{ turnDate(order.create_at) }}</p>
           <p class="orderId mb-0">訂單編號 {{ order.id }}</p>
@@ -62,16 +62,16 @@
       </section>
 
       <section
-        class="col-12 row g-1 m-0 border-top py-3 justify-content-center align-items-center"
+        class="col-12 row g-1 m-0 border-top py-3 justify-content-between align-items-center"
       >
-        <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">小計</div>
+        <div class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end">小計</div>
         <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
           NT$ {{ $filters.currency(order.subtotal) }}
         </div>
 
         <div
           v-if="order.discount > 0"
-          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
+          class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end"
         >
           優惠碼折抵
         </div>
@@ -83,7 +83,7 @@
         </div>
         <div
           v-if="order.discount > 0"
-          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
+          class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end"
         >
           折抵後小計
         </div>
@@ -94,7 +94,7 @@
           NT$ {{ $filters.currency(order.afterDiscount) }}
         </div>
 
-        <div class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+        <div class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end">
           冷藏宅配
           <div class="col-12 text-yellow-600">
             <i class="bi bi-info-circle"></i>
@@ -108,7 +108,7 @@
 
         <strong
           :class="paymentAmountColor"
-          class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end"
+          class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end"
         >
           付款金額
         </strong>
@@ -118,7 +118,7 @@
         >
           NT$ {{ $filters.currency(order.paymentAmount) }}
         </strong>
-        <strong class="col-6 col-sm-7 col-lg-8 col-xl-9 text-sm-end">
+        <strong class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end">
           付款狀態
         </strong>
         <strong
@@ -130,7 +130,7 @@
       </section>
     </div>
     <section class="col-lg-5">
-      <h3 class="border-bottom pb-2 ps-3">收件人資訊</h3>
+      <h3 class="border-bottom pb-2">收件人資訊</h3>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">姓名</p>
         <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.name }}</p>
