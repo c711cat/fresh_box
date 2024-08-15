@@ -62,7 +62,7 @@
                 >
                   NT$ {{ $filters.currency(item.product.origin_price) }}
                 </div>
-                <div v-else class="text-danger fw-bold">
+                <div v-else class="text-secondary pb-1">
                   NT$ {{ $filters.currency(item.product.price) }}
                 </div>
                 <div class="d-flex flex-wrap mb-2">
