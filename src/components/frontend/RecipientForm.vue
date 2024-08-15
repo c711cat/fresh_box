@@ -68,8 +68,8 @@
         rows="5"
       ></textarea>
     </div>
-    <div class="text-end pe-3">
-      <button class="btn btn-primary px-5">送出訂單</button>
+    <div class="text-end px-3">
+      <button class="btn btn-primary col-12 col-lg-auto px-5">送出訂單</button>
     </div>
   </Form>
 </template>
