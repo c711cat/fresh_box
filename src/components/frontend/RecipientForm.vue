@@ -1,74 +1,81 @@
 <template>
-  <Form @submit="createOrder" class="row m-0 g-3" v-slot="{ errors }">
-    <h3 class="my-0 ps-3">收件人資訊</h3>
-    <div class="px-3">
-      <div class="d-inline text-danger">＊</div>
-      <label class="form-label" for="name">收件人姓名</label>
-      <Field
-        v-model="form.user.name"
-        :class="{ 'is-invalid': errors['姓名'] }"
-        class="form-control"
-        id="name"
-        name="姓名"
-        type="text"
-        rules="required"
-      ></Field>
-      <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+  <Form
+    @submit="createOrder"
+    class="d-flex flex-column justify-content-between"
+    v-slot="{ errors }"
+  >
+    <div class="d-flex flex-column gap-3 mb-3">
+      <h3 class="my-0">收件人資訊</h3>
+      <div class="">
+        <div class="d-inline text-danger">＊</div>
+        <label class="form-label" for="name">收件人姓名</label>
+        <Field
+          v-model="form.user.name"
+          :class="{ 'is-invalid': errors['姓名'] }"
+          class="form-control"
+          id="name"
+          name="姓名"
+          type="text"
+          rules="required"
+        ></Field>
+        <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <div class="">
+        <div class="d-inline text-danger">＊</div>
+        <label class="form-label" for="email">Email</label>
+        <Field
+          v-model="form.user.email"
+          :class="{ 'is-invalid': errors['email'] }"
+          class="form-control"
+          id="email"
+          name="email"
+          type="email"
+          rules="required|email"
+        ></Field>
+        <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <div class="">
+        <div class="d-inline text-danger">＊</div>
+        <label class="form-label" for="tel">電話</label>
+        <Field
+          v-model="form.user.tel"
+          :class="{ 'is-invalid': errors['電話'] }"
+          class="form-control"
+          id="tel"
+          name="電話"
+          type="tel"
+          rules="required"
+        ></Field>
+        <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <div class="">
+        <div class="d-inline text-danger">＊</div>
+        <label class="form-label" for="address">收件地址</label>
+        <Field
+          v-model="form.user.address"
+          :class="{ 'is-invalid': errors['地址'] }"
+          class="form-control"
+          id="address"
+          name="地址"
+          type="text"
+          rules="required"
+        ></Field>
+        <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+      </div>
+      <div class="">
+        <label class="form-label" for="message">備註</label>
+        <textarea
+          v-model="form.message"
+          class="form-control"
+          name="message"
+          id="message"
+          cols="30"
+          rows="5"
+        ></textarea>
+      </div>
     </div>
-    <div class="px-3">
-      <div class="d-inline text-danger">＊</div>
-      <label class="form-label" for="email">Email</label>
-      <Field
-        v-model="form.user.email"
-        :class="{ 'is-invalid': errors['email'] }"
-        class="form-control"
-        id="email"
-        name="email"
-        type="email"
-        rules="required|email"
-      ></Field>
-      <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
-    </div>
-    <div class="px-3">
-      <div class="d-inline text-danger">＊</div>
-      <label class="form-label" for="tel">電話</label>
-      <Field
-        v-model="form.user.tel"
-        :class="{ 'is-invalid': errors['電話'] }"
-        class="form-control"
-        id="tel"
-        name="電話"
-        type="tel"
-        rules="required"
-      ></Field>
-      <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
-    </div>
-    <div class="px-3">
-      <div class="d-inline text-danger">＊</div>
-      <label class="form-label" for="address">收件地址</label>
-      <Field
-        v-model="form.user.address"
-        :class="{ 'is-invalid': errors['地址'] }"
-        class="form-control"
-        id="address"
-        name="地址"
-        type="text"
-        rules="required"
-      ></Field>
-      <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
-    </div>
-    <div class="px-3">
-      <label class="form-label" for="message">備註</label>
-      <textarea
-        v-model="form.message"
-        class="form-control"
-        name="message"
-        id="message"
-        cols="30"
-        rows="5"
-      ></textarea>
-    </div>
-    <div class="text-end px-3">
+
+    <div class="text-end">
       <button class="btn btn-primary col-12 col-lg-auto px-5">送出訂單</button>
     </div>
   </Form>

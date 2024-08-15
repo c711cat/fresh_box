@@ -16,7 +16,7 @@
     >
       <div class="col-12 col-lg-6 my-3">
         <header
-          class="col-12 d-flex flex-wrap justify-content-between align-items-center ps-2 pe-3 mb-2"
+          class="col-12 d-flex flex-wrap justify-content-between align-items-center ps-3 pe-3 mb-2"
         >
           <h3 class="m-0">購買清單</h3>
           <button
@@ -27,11 +27,11 @@
             清空購物車
           </button>
         </header>
-        <div class="col-12 p-2">
+        <div class="col-12 ps-3">
           <section
             v-for="item in carts"
             :key="item.id"
-            class="itemC mb-3 d-flex bg-white"
+            class="d-flex align-items-center mb-3 bg-white pe-3"
           >
             <router-link :to="`/product/${item.product.id}`" class="">
               <img
@@ -41,71 +41,65 @@
               />
             </router-link>
 
-            <div class="col ps-3 d-flex">
-              <div
-                class="w-100 d-flex flex-column justify-content-between position-relative"
-              >
-                <i
-                  @click="delItem(item)"
-                  class="bi bi-x-lg px-2 position-absolute end-0"
-                ></i>
+            <div class="col ps-3 d-flex flex-column justify-content-between">
+              <div class="d-flex justify-content-between col-12">
                 <router-link
                   :to="`/product/${item.product.id}`"
                   class="productTitle text-decoration-none fw-bolder mt-1"
                 >
                   {{ item.product.title }}
                 </router-link>
+                <i
+                  @click="delItem(item)"
+                  class="bi bi-x-lg ps-2 d-flex align-items-center"
+                ></i>
+              </div>
 
-                <div
-                  v-if="item.product.origin_price === item.product.price"
-                  class="text-secondary pb-1"
-                >
-                  NT$ {{ $filters.currency(item.product.origin_price) }}
-                </div>
-                <div v-else class="text-secondary pb-1">
-                  NT$ {{ $filters.currency(item.product.price) }}
-                </div>
-                <div class="d-flex flex-wrap mb-2">
-                  <div class="d-flex col-sm-6">
-                    <button
-                      @click="delOneQty(item)"
-                      :disabled="item.id === status.delLoadingItem"
-                      type="button"
-                      class="btn btn-light btn-sm rounded-0 rounded-start"
-                    >
-                      <i class="bi bi-dash-lg"></i>
-                    </button>
+              <div
+                v-if="item.product.origin_price === item.product.price"
+                class="text-secondary pb-1"
+              >
+                NT$ {{ $filters.currency(item.product.origin_price) }}
+              </div>
+              <div v-else class="text-secondary pb-1">
+                NT$ {{ $filters.currency(item.product.price) }}
+              </div>
 
-                    <input
-                      @change="updateQtyOfInput(item)"
-                      :disabled="item.id === status.updateLoadingItem"
-                      v-model="item.qty"
-                      type="text"
-                      class="form-control form-control-sm text-center rounded-0 z-1"
-                    />
-
-                    <button
-                      @click="addOneToCart(item)"
-                      :disabled="item.id === status.addLoadingItem"
-                      type="button"
-                      class="btn btn-light btn-sm rounded-0 rounded-end"
-                    >
-                      <i class="bi bi-plus-lg"></i>
-                    </button>
-                  </div>
-
-                  <div
-                    class="col-12 col-sm-6 d-flex align-items-center flex-row-reverse text-end mt-1 pe-2 fw-bolder"
+              <div class="d-flex flex-wrap justify-content-between">
+                <div class="d-flex col-7 col-sm-6">
+                  <button
+                    @click="delOneQty(item)"
+                    :disabled="item.id === status.delLoadingItem"
+                    type="button"
+                    class="btn btn-light btn-sm rounded-0 rounded-start"
                   >
-                    <div>NT$ {{ $filters.currency(item.total) }}</div>
-                  </div>
+                    <i class="bi bi-dash-lg"></i>
+                  </button>
+
+                  <input
+                    @change="updateQtyOfInput(item)"
+                    :disabled="item.id === status.updateLoadingItem"
+                    v-model="item.qty"
+                    type="text"
+                    class="form-control form-control-sm text-center rounded-0 z-1"
+                  />
+
+                  <button
+                    @click="addOneToCart(item)"
+                    :disabled="item.id === status.addLoadingItem"
+                    type="button"
+                    class="btn btn-light btn-sm rounded-0 rounded-end"
+                  >
+                    <i class="bi bi-plus-lg"></i>
+                  </button>
+                </div>
+                <div class="col-auto mt-1 fw-bolder text-end ms-auto">
+                  NT$ {{ $filters.currency(item.total) }}
                 </div>
               </div>
             </div>
           </section>
-          <section
-            class="d-flex space flex-wrap col align-items-center ps-1 pe-2"
-          >
+          <section class="d-flex space flex-wrap col align-items-center pe-3">
             <div class="d-flex flex-wrap col-12 align-items-center">
               <strong class="col-4">小計</strong>
               <strong class="text-end col-8">
@@ -115,7 +109,7 @@
 
             <div class="d-flex align-items-center col-12 flex-wrap">
               <v-select
-                class="col-8 flex-fill col-sm-9 text-secondary"
+                class="selectStyle col-8 flex-fill col-sm-9 text-secondary"
                 label="Select"
                 :options="couponOption"
                 v-model="couponCode"
@@ -166,8 +160,8 @@
           </section>
         </div>
       </div>
-      <section class="col-12 col-lg-6 py-3">
-        <RecipientForm class=""></RecipientForm>
+      <section class="col-12 col-lg-6 py-3 ps-3 pe-3">
+        <RecipientForm class="h-100"></RecipientForm>
       </section>
     </main>
   </div>
@@ -406,16 +400,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  // border: 1px solid;
-}
 .cartWrap {
   margin: 110px 0px 30px 0px;
 }
 
 img {
   height: 100px;
-  width: 100px;
+  width: 80px;
   object-fit: cover;
 }
 
@@ -431,10 +422,6 @@ img:hover {
 
 .productTitle:hover {
   color: #212529;
-}
-
-.bi-x-lg {
-  top: 4px;
 }
 
 .bi-x-lg:hover {
