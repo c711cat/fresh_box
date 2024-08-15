@@ -124,7 +124,7 @@
               ></v-select>
               <button
                 @click="useCoupon"
-                class="btn btn-yellow-200 btnBody border border-yellow-200 rounded-0 rounded-end-2 py-0 col flex-fill"
+                class="btn btn-primary btnBody border border-primary rounded-0 rounded-end-2 py-0 col flex-fill"
                 type="button"
               >
                 送出
@@ -151,7 +151,7 @@
             <div class="d-flex col-12 flex-wrap">
               <div class="col-4">冷藏宅配</div>
               <div class="text-end col-8">NT$ {{ shippingFee }}</div>
-              <div class="infoText col-12 text-yellow-600 d-flex">
+              <div class="infoText col-12 text-primary d-flex">
                 <i class="bi bi-info-circle me-1"></i>
                 <p class="mb-0">滿 NT$ 1,000 免運</p>
               </div>
@@ -159,7 +159,7 @@
 
             <div class="d-flex align-items-center col-12 flex-wrap">
               <strong class="col-4">付款金額</strong>
-              <strong class="text-primay-lightBg text-end col-8"
+              <strong class="text-primary text-end col-8"
                 >NT$ {{ $filters.currency(paymentAmount) }}</strong
               >
             </div>
