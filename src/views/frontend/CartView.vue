@@ -1,7 +1,7 @@
 <template>
   <LoadingView v-if="isLoading" />
   <div v-else>
-    <div v-if="!carts.length" class="col-10 mx-auto mt-5 pt-5">
+    <section v-if="!carts.length" class="col-10 mx-auto mt-5 pt-5">
       <h3 class="mt-5 ps-2 mb-4">購物車空了</h3>
       <router-link
         to="/user-products"
@@ -9,14 +9,14 @@
       >
         繼續逛逛
       </router-link>
-    </div>
+    </section>
     <main
       v-else
-      class="cartWrap col-sm-11 col-md-10 mx-auto d-flex flex-wrap bg-light"
+      class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light"
     >
       <div class="col-12 col-lg-6 my-3">
         <header
-          class="col-12 d-flex justify-content-between align-items-center px-3 mb-2"
+          class="col-12 d-flex flex-wrap justify-content-between align-items-center ps-2 pe-3 mb-2"
         >
           <h3 class="m-0">購買清單</h3>
           <button
@@ -31,7 +31,7 @@
           <section
             v-for="item in carts"
             :key="item.id"
-            class="itemC mb-3 pe-2 d-flex align-items-center bg-white"
+            class="itemC mb-3 d-flex bg-white"
           >
             <router-link :to="`/product/${item.product.id}`" class="">
               <img
@@ -41,26 +41,31 @@
               />
             </router-link>
 
-            <div class="col ps-3 py-2 d-flex align-items-center">
-              <div class="w-100">
-                <div class="d-flex justify-content-between">
-                  <router-link
-                    :to="`/product/${item.product.id}`"
-                    class="productTitle text-decoration-none text-black"
-                  >
-                    {{ item.product.title }}
-                  </router-link>
-                  <i @click="delItem(item)" class="bi bi-x-lg px-2"></i>
-                </div>
+            <div class="col ps-3 d-flex">
+              <div
+                class="w-100 d-flex flex-column justify-content-between position-relative"
+              >
+                <i
+                  @click="delItem(item)"
+                  class="bi bi-x-lg px-2 position-absolute end-0"
+                ></i>
+                <router-link
+                  :to="`/product/${item.product.id}`"
+                  class="productTitle text-decoration-none fw-bolder mt-1"
+                >
+                  {{ item.product.title }}
+                </router-link>
 
-                <div>{{ item.product.content }}／{{ item.product.unit }}</div>
-                <div v-if="item.product.origin_price === item.product.price">
+                <div
+                  v-if="item.product.origin_price === item.product.price"
+                  class="text-secondary pb-1"
+                >
                   NT$ {{ $filters.currency(item.product.origin_price) }}
                 </div>
                 <div v-else class="text-danger fw-bold">
                   NT$ {{ $filters.currency(item.product.price) }}
                 </div>
-                <div class="d-flex flex-wrap align-items-center">
+                <div class="d-flex flex-wrap mb-2">
                   <div class="d-flex col-sm-6">
                     <button
                       @click="delOneQty(item)"
@@ -89,52 +94,61 @@
                     </button>
                   </div>
 
-                  <strong
-                    class="col-12 col-sm-6 d-flex align-items-center flex-row-reverse text-end pe-2 mt-1"
+                  <div
+                    class="col-12 col-sm-6 d-flex align-items-center flex-row-reverse text-end mt-1 pe-2 fw-bolder"
                   >
                     <div>NT$ {{ $filters.currency(item.total) }}</div>
-                  </strong>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
-          <section class="d-flex flex-wrap align-items-center px-4">
-            <div class="mb-1 col-4">小計</div>
-            <div class="text-end mb-1 col-8">
-              NT$ {{ $filters.currency(subtotal) }}
+          <section
+            class="d-flex space flex-wrap col align-items-center ps-1 pe-2"
+          >
+            <div class="d-flex flex-wrap col-12 align-items-center">
+              <strong class="col-4">小計</strong>
+              <strong class="text-end col-8">
+                NT$ {{ $filters.currency(subtotal) }}
+              </strong>
             </div>
-            <div class="d-flex align-items-center mb-1 col-12">
-              <label class="form-label m-0 col-4" for="couponCode">
-                優惠碼
-              </label>
-              <div class="d-flex align-items-center col-8 ps-3">
-                <v-select
-                  class="col"
-                  label="Select"
-                  :options="couponOption"
-                  v-model="couponCode"
-                  :disabled="used_coupon"
-                ></v-select>
 
-                <button
-                  @click="useCoupon"
-                  class="btn btn-yellow-200"
-                  type="button"
-                >
-                  送出
-                </button>
+            <div class="d-flex align-items-center col-12 flex-wrap">
+              <v-select
+                class="col-8 flex-fill col-sm-9 text-secondary"
+                label="Select"
+                :options="couponOption"
+                v-model="couponCode"
+                :disabled="used_coupon"
+                placeholder="使用優惠碼"
+              ></v-select>
+              <button
+                @click="useCoupon"
+                class="btn btn-yellow-200 btnBody border border-yellow-200 rounded-0 rounded-end-2 py-0 col flex-fill"
+                type="button"
+              >
+                送出
+              </button>
+            </div>
+
+            <div v-if="used_coupon" class="d-flex align-items-center col-12">
+              <div class="col-4">優惠碼折抵</div>
+              <div class="text-end col-8">
+                - NT$ {{ $filters.currency(discount) }}
               </div>
             </div>
-            <div v-if="used_coupon" class="mb-1 col-4">優惠碼折抵</div>
-            <div v-if="used_coupon" class="text-end mb-1 col-8">
-              - NT$ {{ $filters.currency(discount) }}
+
+            <div
+              v-if="used_coupon"
+              class="d-flex align-items-center col-12 flex-wrap"
+            >
+              <div class="col-4">折抵後小計</div>
+              <div class="text-end col-8">
+                NT$ {{ $filters.currency(afterDiscount) }}
+              </div>
             </div>
 
-            <div v-if="used_coupon" class="mb-1 col-4">折抵後小計</div>
-            <div v-if="used_coupon" class="text-end mb-1 col-8">
-              NT$ {{ $filters.currency(afterDiscount) }}
-            </div>
-            <div class="d-flex col-12 flex-wrap mb-1">
+            <div class="d-flex col-12 flex-wrap">
               <div class="col-4">冷藏宅配</div>
               <div class="text-end col-8">NT$ {{ shippingFee }}</div>
               <div class="infoText col-12 text-yellow-600 d-flex">
@@ -143,15 +157,17 @@
               </div>
             </div>
 
-            <strong class="text-danger col-4">付款金額</strong>
-            <strong class="text-danger text-end col-8"
-              >NT$ {{ $filters.currency(paymentAmount) }}</strong
-            >
+            <div class="d-flex align-items-center col-12 flex-wrap">
+              <strong class="col-4">付款金額</strong>
+              <strong class="text-primay-lightBg text-end col-8"
+                >NT$ {{ $filters.currency(paymentAmount) }}</strong
+              >
+            </div>
           </section>
         </div>
       </div>
       <section class="col-12 col-lg-6 py-3">
-        <RecipientForm class="mt-1"></RecipientForm>
+        <RecipientForm class=""></RecipientForm>
       </section>
     </main>
   </div>
@@ -390,12 +406,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+* {
+  // border: 1px solid;
+}
 .cartWrap {
   margin: 110px 0px 30px 0px;
 }
 
 img {
-  height: 130px;
+  height: 100px;
   width: 100px;
   object-fit: cover;
 }
@@ -405,9 +424,17 @@ img:hover {
   cursor: pointer;
 }
 
+.productTitle {
+  color: #000;
+  font-size: 20px;
+}
+
 .productTitle:hover {
-  font-weight: bolder;
-  cursor: pointer;
+  color: #212529;
+}
+
+.bi-x-lg {
+  top: 4px;
 }
 
 .bi-x-lg:hover {
@@ -420,6 +447,11 @@ img:hover {
 }
 
 .btnBody {
-  height: 35.4px;
+  height: 35px;
+}
+
+.space {
+  row-gap: 12px;
+  column-gap: 12px;
 }
 </style>

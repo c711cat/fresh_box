@@ -113,7 +113,7 @@
   padding: 0 0 4px;
   background: none;
   border: var(--vs-border-width) var(--vs-border-style) var(--vs-border-color);
-  border-radius: var(--vs-border-radius);
+  border-radius: 4px 0px 0px 4px;
   white-space: normal;
 }
 .vs__selected-options {
@@ -121,7 +121,7 @@
   flex-basis: 100%;
   flex-grow: 1;
   flex-wrap:nowrap;
-  padding: 0 0 0 1px;
+  padding: 0 2px;
   position: relative;
 }
 .vs__actions {
@@ -198,8 +198,8 @@
   color: #000;
 }
 .vs__dropdown-option--highlight:hover{
-  background-color: #ccaf3c;
-  color: #000;
+  color: #ccaf3c;
+  background-color: #f8f9fa;
 }
 .vs__dropdown-option--deselect {
   background: var(--vs-dropdown-option--deselect-bg);
@@ -216,7 +216,7 @@
   background-color: var(--vs-selected-bg);
   border: var(--vs-selected-border-width) var(--vs-selected-border-style)
     var(--vs-selected-border-color);
-  border-radius: var(--vs-border-radius);
+  border-radius: 4px;
   color: var(--vs-selected-color);
   line-height: var(--vs-line-height);
   margin: 4px 2px 0;
