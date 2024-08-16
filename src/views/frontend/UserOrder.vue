@@ -1,37 +1,34 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <main v-else class="mt-5 pt-4">
+  <main v-else class="mt-5 pt-4 mb-5">
     <section
       class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
     >
-      <OrderView class="pt-2" :transOrder="order"></OrderView>
-    </section>
-    <section
-      class="text-end col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 pb-5 my-0 mx-auto"
-    >
-      <div v-if="order.is_paid" class="col-lg-7">
-        <router-link to="/user-products" class="border-0">
-          <button type="button" class="btn btn-outline-dark px-4 me-3">
-            繼續逛逛
+      <OrderView class="pt-2 mb-3" :transOrder="order"></OrderView>
+      <section class="col-12 col-lg-2 px-2 ms-auto">
+        <div v-if="order.is_paid" class="col-lg-7">
+          <router-link to="/user-products" class="border-0">
+            <button type="button" class="btn btn-outline-dark px-4 me-3">
+              繼續逛逛
+            </button>
+          </router-link>
+          <router-link to="/order-list" class="border-0 pe-4">
+            <button type="button" class="btn btn-outline-primary px-4">
+              查看訂單
+            </button>
+          </router-link>
+        </div>
+        <div v-else class="col-12">
+          <button
+            @click="toPay"
+            :disabled="isLoading"
+            type="button"
+            class="btn btn-primary w-100"
+          >
+            確認付款
           </button>
-        </router-link>
-        <router-link to="/order-list" class="border-0 pe-4">
-          <button type="button" class="btn btn-outline-primary px-4">
-            查看訂單
-          </button>
-        </router-link>
-      </div>
-
-      <div v-else class="col-lg-7 pe-3">
-        <button
-          @click="toPay"
-          :disabled="isLoading"
-          type="button"
-          class="btn btn-danger px-4"
-        >
-          確認付款
-        </button>
-      </div>
+        </div>
+      </section>
     </section>
   </main>
 </template>
