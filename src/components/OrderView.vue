@@ -20,48 +20,46 @@
       <section
         v-for="item in order.products"
         :key="item.id"
-        class="row m-0 justify-content-center align-items-center border-top pt-3 pb-3"
+        class="row m-0 justify-content-around align-items-center border-top pt-3 pb-3"
       >
         <router-link
           :to="`/product/${item.product.id}`"
-          class="d-none d-sm-block col-sm-2 col-xxl-1 m-0 text-center p-0"
+          class="col-auto m-0 text-center p-0"
         >
-          <img class="imgBody" :src="item.product.imageUrl" alt="" />
+          <img class="imgBody" :src="item.product.imageUrl" alt="product-img" />
         </router-link>
         <div
-          class="col-7 col-sm-6 col-md-4 col-lg-5 col-xl-4 col-xxl-7 row mx-0 my-1 align-items-center"
+          class="row mx-0 my-1 px-0 col-9 col-sm-10 align-items-center flex-wrap"
         >
-          <router-link
-            :to="`/product/${item.product.id}`"
-            class="col-md-12 col-lg-12 col-xl-12 col-xxl-4 titleLink"
-          >
-            {{ item.product.title }}
-          </router-link>
-          <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-4">
+          <div class="col-12">
+            <router-link :to="`/product/${item.product.id}`" class="titleLink">
+              {{ item.product.title }}
+            </router-link>
+          </div>
+
+          <div class="col-12 col-md-4 col-xl-12 col-xxl-3">
             {{ item.product.content }}／{{ item.product.unit }}
           </div>
+
           <div
             v-if="item.product.origin_price === item.product.price"
-            class="text-secondary col-md-12 col-lg-12 col-xl-12 col-xxl-4"
+            class="text-secondary col-12 col-md-3 col-xl-4 col-xxl-3"
           >
             NT$ {{ $filters.currency(item.product.origin_price) }}
           </div>
-          <div
-            v-else
-            class="text-danger fw-bold col-md-12 col-lg-12 col-xl-12 col-xxl-4"
-          >
+          <div v-else class="text-secondary col-12 col-md-3 col-xl-4 col-xxl-3">
             NT$ {{ $filters.currency(item.product.price) }}
           </div>
-        </div>
 
-        <div
-          class="row m-0 align-items-center col-5 col-sm-4 col-md-6 col-lg-5 col-xl-4 col-xxl-4"
-        >
-          <div class="py-2 d-flex col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-            數量：{{ item.qty }}
+          <div
+            class="col-auto col-sm-6 col-md-2 col-xl-4 col-xxl-2 d-inline-block"
+          >
+            {{ item.qty }} 件
           </div>
 
-          <div class="my-2 col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+          <div
+            class="col-auto ms-auto col-sm-6 col-md-3 col-xl-4 col-xxl-4 fw-bold text-end d-inline-block"
+          >
             NT$ {{ $filters.currency(item.total) }}
           </div>
         </div>
@@ -270,7 +268,8 @@ export default {
 }
 
 .imgBody {
-  width: 50px;
+  width: 60px;
+  height: 90px;
   object-fit: cover;
 }
 
