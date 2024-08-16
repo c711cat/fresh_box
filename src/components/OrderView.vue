@@ -4,10 +4,16 @@
       <header
         class="d-flex align-items-center justify-content-between flex-wrap"
       >
-        <h3 class="">訂單明細</h3>
-        <div class="ps-3">
-          <p class="orderId mb-0">訂單日期 {{ turnDate(order.create_at) }}</p>
-          <p class="orderId mb-0">訂單編號 {{ order.id }}</p>
+        <h3>訂單明細</h3>
+        <div>
+          <p class="orderId mb-0">
+            訂單日期
+            <span class="d-inline-block">{{ turnDate(order.create_at) }}</span>
+          </p>
+          <p class="orderId mb-0">
+            訂單編號
+            <span class="d-inline-block"> {{ order.id }}</span>
+          </p>
         </div>
       </header>
 
