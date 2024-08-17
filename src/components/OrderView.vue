@@ -66,71 +66,88 @@
       </section>
 
       <section
-        class="col-12 row g-1 m-0 border-top py-3 justify-content-between align-items-center"
+        class="col-12 row g-1 m-0 border-top py-3 justify-content-between align-items-center space"
       >
-        <div class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end">小計</div>
-        <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ $filters.currency(order.subtotal) }}
-        </div>
-
-        <div
-          v-if="order.discount > 0"
-          class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end"
-        >
-          優惠碼折抵
-        </div>
-        <div
-          v-if="order.discount > 0"
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
-        >
-          - NT$ {{ $filters.currency(order.discount) }}
-        </div>
-        <div
-          v-if="order.discount > 0"
-          class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end"
-        >
-          折抵後小計
-        </div>
-        <div
-          v-if="order.discount > 0"
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
-        >
-          NT$ {{ $filters.currency(order.afterDiscount) }}
-        </div>
-
-        <div class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end">
-          冷藏宅配
-          <div class="col-12 text-yellow-600">
-            <i class="bi bi-info-circle"></i>
-            滿 NT$ 1,000 免運
+        <div class="d-flex flex-wrap col-12">
+          <div
+            class="col-4 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9 text-sm-end fw-bold"
+          >
+            小計
+          </div>
+          <div
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end fw-bold"
+          >
+            NT$ {{ $filters.currency(order.subtotal) }}
           </div>
         </div>
-
-        <div class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end">
-          NT$ {{ order.shippingFee }}
+        <div v-if="order.discount > 0" class="d-flex col-12">
+          <div
+            class="col-4 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9 text-sm-end"
+          >
+            優惠碼折抵
+          </div>
+          <div
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end"
+          >
+            - NT$ {{ $filters.currency(order.discount) }}
+          </div>
         </div>
-
-        <strong
-          :class="paymentAmountColor"
-          class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end"
-        >
-          付款金額
-        </strong>
-        <strong
-          :class="paymentAmountColor"
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
-        >
-          NT$ {{ $filters.currency(order.paymentAmount) }}
-        </strong>
-        <strong class="col-7 col-sm-8 col-lg-9 col-xl-10 text-sm-end">
-          付款狀態
-        </strong>
-        <strong
-          :class="paymentStatusColor"
-          class="col-5 col-sm-4 col-lg-3 col-xl-2 text-end"
-        >
-          {{ paymentStatus }}
-        </strong>
+        <div v-if="order.discount > 0" class="d-flex col-12">
+          <div
+            class="col-4 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9 text-sm-end"
+          >
+            折抵後小計
+          </div>
+          <div
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end"
+          >
+            NT$ {{ $filters.currency(order.afterDiscount) }}
+          </div>
+        </div>
+        <div class="d-flex flex-wrap col-12">
+          <div
+            class="col-4 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9 text-sm-end"
+          >
+            冷藏宅配
+          </div>
+          <div
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end"
+          >
+            NT$ {{ order.shippingFee }}
+          </div>
+          <div
+            class="d-flex text-primary col-12 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9"
+          >
+            <p class="mb-0 w-100 text-sm-end">
+              <i class="bi bi-info-circle me-1"></i>滿 NT$ 1,000 免運
+            </p>
+          </div>
+        </div>
+        <div class="d-flex col-12">
+          <strong
+            class="col-4 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9 text-sm-end"
+          >
+            付款金額
+          </strong>
+          <strong
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end text-primary"
+          >
+            NT$ {{ $filters.currency(order.paymentAmount) }}
+          </strong>
+        </div>
+        <div class="d-flex col-12">
+          <strong
+            class="col-4 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9 text-sm-end"
+          >
+            付款狀態
+          </strong>
+          <strong
+            :class="paymentStatusColor"
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end"
+          >
+            {{ paymentStatus }}
+          </strong>
+        </div>
       </section>
     </div>
     <section class="col-lg-5">
@@ -248,13 +265,6 @@ export default {
         return "text-danger";
       }
     },
-    paymentAmountColor() {
-      if (this.order.is_paid === true) {
-        return "";
-      } else {
-        return "text-danger";
-      }
-    },
   },
   created() {
     this.getOrder();
@@ -284,5 +294,10 @@ export default {
 
 .titleLink:hover {
   font-weight: bold;
+}
+
+.space {
+  row-gap: 12px;
+  column-gap: 12px;
 }
 </style>
