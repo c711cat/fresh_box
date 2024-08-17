@@ -41,14 +41,8 @@
             {{ item.product.content }}／{{ item.product.unit }}
           </div>
 
-          <div
-            v-if="item.product.origin_price === item.product.price"
-            class="text-secondary col-12 col-md-3 col-xl-4 col-xxl-3"
-          >
-            NT$ {{ $filters.currency(item.product.origin_price) }}
-          </div>
-          <div v-else class="text-secondary col-12 col-md-3 col-xl-4 col-xxl-3">
-            NT$ {{ $filters.currency(item.product.price) }}
+          <div class="text-secondary col-12 col-md-3 col-xl-4 col-xxl-3">
+            NT$ {{ $filters.currency(showPrice(item)) }}
           </div>
 
           <div
@@ -248,6 +242,13 @@ export default {
     },
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+    },
+    showPrice(item) {
+      if (item.product.origin_price === item.product.price) {
+        return item.product.origin_price;
+      } else {
+        return item.product.price;
+      }
     },
   },
   computed: {
