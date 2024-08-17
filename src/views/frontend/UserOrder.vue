@@ -5,20 +5,23 @@
       class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
     >
       <OrderView class="pt-2 mb-3" :transOrder="order"></OrderView>
-      <section class="col-12 col-lg-2 px-2 ms-auto">
-        <div v-if="order.is_paid" class="col-lg-7">
-          <router-link to="/user-products" class="border-0">
-            <button type="button" class="btn btn-outline-dark px-4 me-3">
+      <section class="col-12 col-lg-5 px-2 ms-auto">
+        <div
+          v-if="order.is_paid"
+          class="col-12 d-flex flex-wrap justify-content-between"
+        >
+          <router-link to="/user-products" class="border-0 col p-1">
+            <button type="button" class="w-100 btnBody btn btn-outline-primary">
               繼續逛逛
             </button>
           </router-link>
-          <router-link to="/order-list" class="border-0 pe-4">
-            <button type="button" class="btn btn-outline-primary px-4">
+          <router-link to="/order-list" class="border-0 col p-1">
+            <button type="button" class="w-100 btnBody btn btn-outline-dark">
               查看訂單
             </button>
           </router-link>
         </div>
-        <div v-else class="col-12">
+        <div v-else class="">
           <button
             @click="toPay"
             :disabled="isLoading"
@@ -82,3 +85,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.btnBody {
+  min-width: 100px;
+}
+</style>
