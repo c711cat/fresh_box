@@ -1,6 +1,6 @@
 <template>
   <div class="row m-0 p-0">
-    <div class="detailsText pb-2 col-lg-7">
+    <div class="detailsText mb-4 col-lg-7">
       <header
         class="d-flex align-items-center justify-content-between flex-wrap"
       >
@@ -152,7 +152,9 @@
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">email</p>
-        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.email }}</p>
+        <p class="wrapText mb-0 py-1 col-sm-10 col-12">
+          {{ order.user.email }}
+        </p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">電話</p>
@@ -300,5 +302,9 @@ export default {
 .space {
   row-gap: 12px;
   column-gap: 12px;
+}
+
+.wrapText {
+  word-wrap: break-word;
 }
 </style>
