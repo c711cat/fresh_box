@@ -31,12 +31,12 @@
             class="accordion-collapse collapse show"
           >
             <div class="accordion-body pt-4">
-              <OrderView :oneOrder="item"></OrderView>
-              <div class="text-end col-lg-7 pe-4">
+              <OrderView :oneOrder="item" class="mb-3" />
+              <div class="col-12 col-lg-3 col-xxl-2 ms-auto text-end px-3">
                 <button
                   v-if="!item.is_paid"
                   @click="toPay(item.id)"
-                  class="btn btn-danger"
+                  class="w-100 btn btn-primary"
                   type="button"
                 >
                   確認付款

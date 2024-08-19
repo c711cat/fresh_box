@@ -71,19 +71,11 @@
       </div>
     </section>
     <footer>
-      <PaginationView
-        :pages="pagination"
-        @emit-pages="getQAList"
-      ></PaginationView>
+      <PaginationView :pages="pagination" @emit-pages="getQAList" />
     </footer>
   </main>
-  <QA_Modal
-    ref="QA_Modal"
-    :QA="tempQA"
-    @add-QA="addQA"
-    @edit-QA="editQA"
-  ></QA_Modal>
-  <DelModal ref="delModal" :QA="tempQA" @del-QA="delQA"></DelModal>
+  <QA_Modal ref="QA_Modal" :QA="tempQA" @add-QA="addQA" @edit-QA="editQA" />
+  <DelModal ref="delModal" :QA="tempQA" @del-QA="delQA" />
 </template>
 <script>
 import Collapse from "bootstrap/js/dist/collapse";

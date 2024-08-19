@@ -55,14 +55,8 @@
                 ></i>
               </div>
 
-              <div
-                v-if="item.product.origin_price === item.product.price"
-                class="text-secondary pb-1"
-              >
-                NT$ {{ $filters.currency(item.product.origin_price) }}
-              </div>
-              <div v-else class="text-secondary pb-1">
-                NT$ {{ $filters.currency(item.product.price) }}
+              <div class="text-secondary pb-1">
+                NT$ {{ $filters.currency(showPrice(item)) }}
               </div>
 
               <div class="d-flex flex-wrap justify-content-between">
@@ -169,7 +163,7 @@
     ref="delModal"
     :allCartItems="allCartItems"
     @del-all-items-of-Cart="cleanCart"
-  ></delModal>
+  />
 </template>
 
 <script>
@@ -361,6 +355,13 @@ export default {
     },
     getCurrentWidth() {
       this.currentWidth = window.outerWidth;
+    },
+    showPrice(item) {
+      if (item.product.origin_price === item.product.price) {
+        return item.product.origin_price;
+      } else {
+        return item.product.price;
+      }
     },
   },
   computed: {
