@@ -94,7 +94,7 @@
       v-if="openPagination"
       :pages="pagination"
       @emit-pages="getProducts"
-    ></PaginationView>
+    />
   </main>
 
   <ProductModal

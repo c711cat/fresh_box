@@ -163,7 +163,7 @@
     ref="delModal"
     :allCartItems="allCartItems"
     @del-all-items-of-Cart="cleanCart"
-  ></delModal>
+  />
 </template>
 
 <script>

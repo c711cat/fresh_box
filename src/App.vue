@@ -1,5 +1,5 @@
 <template>
-  <MessagesView></MessagesView>
+  <MessagesView />
   <router-view />
 </template>
 

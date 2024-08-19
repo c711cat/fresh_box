@@ -1,12 +1,12 @@
 <template>
   <div class="userViewContainer">
     <div>
-      <UserNavbar :currentPath="$route.path"></UserNavbar>
+      <UserNavbar :currentPath="$route.path" />
       <router-view />
     </div>
 
     <div>
-      <FooterView></FooterView>
+      <FooterView />
     </div>
   </div>
 </template>

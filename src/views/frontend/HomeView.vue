@@ -9,7 +9,7 @@
   />
 
   <!-- 商品類別 -->
-  <CategoryView></CategoryView>
+  <CategoryView />
   <!-- 暢銷商品 -->
   <section class="d-flex justify-content-center mt-5">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
@@ -106,7 +106,7 @@
           data-aos="fade-up"
           data-aos-easing="ease-out-sine"
           data-aos-duration="800"
-        ></SwiperImgs>
+        />
       </div>
     </div>
   </section>

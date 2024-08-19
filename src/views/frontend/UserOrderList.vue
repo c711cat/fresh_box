@@ -31,7 +31,7 @@
             class="accordion-collapse collapse show"
           >
             <div class="accordion-body pt-4">
-              <OrderView :oneOrder="item" class="mb-3"></OrderView>
+              <OrderView :oneOrder="item" class="mb-3" />
               <div class="col-12 col-lg-3 col-xxl-2 ms-auto text-end px-3">
                 <button
                   v-if="!item.is_paid"

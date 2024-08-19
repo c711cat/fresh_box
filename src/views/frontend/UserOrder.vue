@@ -4,7 +4,7 @@
     <section
       class="mx-2 mt-5 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
     >
-      <OrderView class="pt-2 mb-3" :transOrder="order"></OrderView>
+      <OrderView class="pt-2 mb-3" :transOrder="order" />
       <section class="col-12 col-lg-5 px-2 ms-auto">
         <div
           v-if="order.is_paid"

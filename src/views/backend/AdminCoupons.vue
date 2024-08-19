@@ -87,12 +87,8 @@
     @add-coupon="addCoupon"
     :coupon="tempCoupon"
     ref="couponModal"
-  ></CouponModal>
-  <DelModal
-    ref="delModal"
-    @del-coupon="delCoupon"
-    :coupon="tempCoupon"
-  ></DelModal>
+  />
+  <DelModal ref="delModal" @del-coupon="delCoupon" :coupon="tempCoupon" />
 </template>
 
 <script>

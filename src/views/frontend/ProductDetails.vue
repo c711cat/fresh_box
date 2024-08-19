@@ -132,7 +132,7 @@
             </h2>
             <div id="shopping-notes" class="accordion-collapse collapse show">
               <div class="accordion-body border-top">
-                <ShoppingNotes></ShoppingNotes>
+                <ShoppingNotes />
               </div>
             </div>
           </section>
@@ -151,14 +151,14 @@
             </h2>
             <div id="exception-SOP" class="accordion-collapse collapse show">
               <div class="accordion-body border-top">
-                <ExceptionSOP></ExceptionSOP>
+                <ExceptionSOP />
               </div>
             </div>
           </section>
         </div>
       </div>
       <h3 class="mb-4 pb-3 pt-5 col-10 border-bottom">推薦商品</h3>
-      <SwiperImgs class="col-lg-10"></SwiperImgs>
+      <SwiperImgs class="col-lg-10" />
     </div>
   </div>
 </template>

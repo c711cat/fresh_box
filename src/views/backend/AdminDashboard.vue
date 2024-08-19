@@ -1,6 +1,6 @@
 <template>
   <div class="navContainer">
-    <AdminNavbar></AdminNavbar>
+    <AdminNavbar />
   </div>
 
   <div class="viewContainer">
