@@ -404,7 +404,6 @@ export default {
       this.$http
         .post(api, { data: addItem })
         .then((res) => {
-          console.log(res);
           if (res.data.success) {
             this.$pushMsg.status200(res, "已加入購物車");
             this.getCart();
