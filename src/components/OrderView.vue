@@ -4,7 +4,7 @@
       <header
         class="d-flex align-items-center justify-content-between flex-wrap"
       >
-        <h3>訂單明細</h3>
+        <h3 class="orderTitle">訂單明細</h3>
         <div>
           <p class="orderId mb-0">
             訂單日期
@@ -276,6 +276,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.orderTitle {
+  margin-right: 40px;
+}
 .detailsText {
   font-size: 14px;
 }
@@ -287,7 +290,7 @@ export default {
 }
 
 .orderId {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .titleLink {

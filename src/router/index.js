@@ -50,6 +50,12 @@ const routes = [
       {
         path: "cart",
         component: () => import("@/views/frontend/CartView.vue"),
+        children: [
+          {
+            path: "",
+            component: () => import("@/components/frontend/StepperView.vue"),
+          },
+        ],
       },
       {
         path: "favorite",
@@ -58,6 +64,12 @@ const routes = [
       {
         path: "order/:orderId",
         component: () => import("@/views/frontend/UserOrder.vue"),
+        children: [
+          {
+            path: "",
+            component: () => import("@/components/frontend/StepperView.vue"),
+          },
+        ],
       },
       {
         path: "order-list",
