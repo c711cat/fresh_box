@@ -157,31 +157,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.accordion-button {
-  background-color: #f8f9fa;
-  color: #6c757d;
+.accordion-button:hover {
+  color: #ccaf3c !important;
 }
 
 .accordion-button:not(.collapsed) {
-  background-color: #000;
-  color: #ccaf3c;
+  background-color: #f8f9fa;
+  color: #000;
   font-weight: bolder;
-}
-
-.accordion-button:not(.collapsed):hover {
-  color: #f9c406;
-}
-
-.accordion-button:hover {
-  color: #212529;
 }
 
 .listContainer {
   margin-top: 120px;
   min-height: 76vh;
-}
-
-.accordion-button::after {
-  content: none;
 }
 </style>
