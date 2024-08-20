@@ -14,6 +14,9 @@
       v-else
       class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light"
     >
+      <div class="col-12 p-3">
+        <router-view />
+      </div>
       <div class="col-12 col-lg-6 my-3">
         <header
           class="col-12 d-flex flex-wrap justify-content-between align-items-center ps-3 pe-3 mb-2"
