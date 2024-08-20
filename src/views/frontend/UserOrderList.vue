@@ -28,7 +28,8 @@
           </h2>
           <div
             :id="`accordion-collapse-collapse${index}`"
-            class="accordion-collapse collapse show"
+            class="accordion-collapse collapse"
+            :class="{ show: item.num === 1 }"
           >
             <div class="accordion-body pt-4">
               <OrderView :oneOrder="item" class="mb-3" />
