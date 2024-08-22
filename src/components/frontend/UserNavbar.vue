@@ -1,20 +1,15 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-black fixed-top">
     <div
-      class="col-12 px-3 d-flex justify-content-between align-items-center flex-wrap"
+      class="d-flex justify-content-between align-items-center flex-wrap col-12 px-3"
     >
-      <button
-        class="navbar-toggler border-0 col-auto"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar"
-        aria-label="Toggle navigation"
-      >
-        <i class="bi bi-list fs-2 px-2 text-primary"></i>
-      </button>
+      <router-link to="/" class="logoTextLink navbar-brand text-center m-0">
+        <span class="logoText text-center text-primary px-1 fs-3"
+          >FRESH BOX</span
+        >
+      </router-link>
       <div
-        class="offcanvas offcanvas-start bg-black w-50"
+        class="offcanvas offcanvas-end bg-black"
         tabindex="-1"
         id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel"
@@ -22,7 +17,7 @@
         <div class="offcanvas-header px-4">
           <router-link
             to="/"
-            class="offcanvas-title logoText text-decoration-none"
+            class="offcanvas-title logoText text-decoration-none fs-3"
             id="offcanvasNavbarLabel"
           >
             FRESH BOX
@@ -76,80 +71,56 @@
               </router-link>
             </li>
           </ul>
-          <form class="col-lg-3 col-xl-4 col-xxl-3" role="search">
-            <input
-              v-if="currentPath === '/order-list'"
-              v-model="orderSearchText"
-              class="form-control"
-              type="search"
-              placeholder="Search for name on orders"
-              aria-label="Search"
-            />
-            <input
-              v-else
-              v-model="productSearchText"
-              class="form-control col-1"
-              type="search"
-              placeholder="Search for product name"
-              aria-label="Search"
-            />
-          </form>
         </div>
       </div>
+      <div class="d-flex justify-content-end align-items-center col">
+        <section class="d-flex align-items-center searchContainer">
+          <input
+            v-if="currentPath === '/order-list'"
+            v-model="orderSearchText"
+            type="search"
+            class="form-control searchText"
+            placeholder="搜尋訂單者姓名"
+            aria-label="Search"
+          />
+          <input
+            v-else
+            v-model="productSearchText"
+            type="search"
+            class="form-control searchText"
+            placeholder="搜尋產品名稱"
+            aria-label="Search"
+          />
+          <button
+            type="btn"
+            class="btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+          ></button>
+        </section>
 
-      <router-link to="/" class="logoTextLink navbar-brand text-center p-0 m-0">
-        <span class="logoText text-center text-primary fs-3">FRESH BOX</span>
-      </router-link>
-
-      <router-link to="/cart" class="nav-link d-flex flex-row-reverse">
-        <div
-          style="height: 75px"
-          class="h-100 d-flex flex-column align-items-center text-center d-none d-sm-block d-md-block d-lg-block d-xl-block d-xxl-block"
+        <router-link to="/cart" class="nav-link px-2">
+          <div class="">
+            <div class="h-auto position-relative">
+              <i class="bi bi-cart2 fs-2 text-primary"></i>
+              <span
+                v-if="carts.length >= 1"
+                class="badge rounded-pill numInCart"
+              >
+                {{ carts.length }}
+              </span>
+            </div>
+          </div>
+        </router-link>
+        <button
+          class="navbar-toggler border-0 col-auto m-0"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+          aria-label="Toggle navigation"
         >
-          <div class="h-auto position-relative">
-            <i class="bi bi-cart2 fs-2 text-primary"></i>
-            <span
-              v-if="carts.length >= 1"
-              class="sm_cart_num_position translate-middle badge rounded-pill numInCart"
-            >
-              {{ carts.length }}
-              <span class="visually-hidden">cart items</span>
-            </span>
-          </div>
-
-          <h5 class="m-0 d-flex align-items-center">
-            <span class="amountText sm_amountText text-yellow-light badge"
-              >NT$ {{ $filters.currency(undiscountedAmount) }}
-            </span>
-          </h5>
-        </div>
-
-        <div
-          class="h-100 d-flex flex-column align-items-center pe-1 d-block d-sm-none d-md-none d-lg-none d-xl-none d-xxl-none"
-        >
-          <div class="h-auto position-relative">
-            <i class="bi bi-cart2 fs-2 iconLink text-primary"></i>
-            <span
-              v-if="carts.length >= 1"
-              class="xs_cart_num_position translate-middle badge rounded-pill numInCart"
-            >
-              {{ carts.length }}
-              <span class="visually-hidden">cart items</span>
-            </span>
-          </div>
-
-          <div
-            class="m-0 d-flex flex-column justify-content-center align-items-center"
-          >
-            <span class="amountText xs_amountText badge text-yellow-light"
-              >NT$
-            </span>
-            <span class="amountText xs_amountText badge text-yellow-light"
-              >{{ $filters.currency(undiscountedAmount) }}
-            </span>
-          </div>
-        </div>
-      </router-link>
+          <i class="bi bi-list fs-2 px-1 text-primary"></i>
+        </button>
+      </div>
     </div>
   </nav>
 </template>
@@ -170,6 +141,7 @@ export default {
       orders: [],
       orderPage: 1,
       searchInput: false,
+      open: false,
     };
   },
   inject: ["emitter"],
@@ -215,6 +187,13 @@ export default {
     },
   },
   methods: {
+    openSearchBar() {
+      this.open = !this.open;
+      console.log(this.open);
+      setTimeout(() => {
+        this.open = !this.open;
+      }, 10000);
+    },
     getProducts() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http
@@ -259,15 +238,6 @@ export default {
         });
     },
   },
-  computed: {
-    undiscountedAmount() {
-      let total = 0;
-      this.carts.forEach((item) => {
-        total += item.total;
-      });
-      return total;
-    },
-  },
   created() {
     this.getOrders();
     this.getCart();
@@ -289,49 +259,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logoTextLink {
-  width: 1px;
-  position: absolute;
-  right: 50%;
-  display: flex;
-  justify-content: center;
+* {
+  border: 1px solid;
 }
+
 .logoText {
   width: fit-content;
   font-family: "Times New Roman", Times, serif;
 }
 
-.iconLink {
-  font-weight: 100;
-  padding: 7px;
-}
-
-.sm_cart_num_position {
-  position: absolute;
-  top: 14px;
-  left: 70px;
-}
-
-.xs_cart_num_position {
-  position: absolute;
-  top: 10px;
-  left: 28px;
-}
-
-.amountText {
-  padding: 5px 0px;
-}
-
-.sm_amountText {
-  width: 120px;
-}
-
-.xs_amountText {
-  width: 60px;
-}
 .numInCart {
   background-color: #f9c406;
   color: #000;
+  position: absolute;
+  top: 2px;
+  right: -10px;
 }
 
 .isCurrentNavbarItem {
@@ -339,7 +281,20 @@ export default {
   color: #f9c406 !important;
 }
 
-.text-primary:hover {
+.text-primary:hover,
+.searchBtn:hover {
   color: #f9c406 !important;
+}
+
+.searchText {
+  width: 0px;
+  padding: 6px 0px;
+  transition: 1.5s;
+  border: 0px;
+}
+
+.searchContainer:hover .searchText {
+  width: 200px;
+  padding: 6px 12px;
 }
 </style>
