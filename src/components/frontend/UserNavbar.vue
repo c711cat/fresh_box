@@ -9,6 +9,7 @@
         >
       </router-link>
       <div
+        ref="menu"
         class="offcanvas offcanvas-end bg-black"
         tabindex="-1"
         id="offcanvasNavbar"
@@ -17,6 +18,7 @@
       >
         <div class="offcanvas-header px-4">
           <router-link
+            @click="() => closeMenu()"
             to="/"
             class="offcanvas-title logoText text-decoration-none fs-3"
             id="offcanvasNavbarLabel"
@@ -24,6 +26,7 @@
             FRESH BOX
           </router-link>
           <button
+            @click="() => closeMenu()"
             type="button"
             class="btn-close btn-close-white"
             data-bs-dismiss="offcanvas"
@@ -46,6 +49,7 @@
             </li>
             <li class="nav-item">
               <router-link
+                @click="() => closeMenu()"
                 to="/favorite"
                 :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
                 class="nav-link text-primary"
@@ -55,6 +59,7 @@
             </li>
             <li class="nav-item">
               <router-link
+                @click="() => closeMenu()"
                 to="/order-list"
                 :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
                 class="nav-link text-primary"
@@ -64,6 +69,7 @@
             </li>
             <li class="nav-item">
               <router-link
+                @click="() => closeMenu()"
                 to="/QA"
                 :class="{ isCurrentNavbarItem: currentPath === '/QA' }"
                 class="nav-link text-primary"
@@ -112,6 +118,7 @@
           </div>
         </router-link>
         <button
+          @click="close"
           class="navbar-toggler border-0 col-auto m-0"
           type="button"
           data-bs-toggle="offcanvas"
@@ -188,6 +195,9 @@ export default {
     },
   },
   methods: {
+    closeMenu() {
+      this.userNavbar.hide();
+    },
     openSearchBar() {
       this.open = !this.open;
       console.log(this.open);
@@ -219,6 +229,7 @@ export default {
     },
     goToUserProducts() {
       this.emitter.emit("goToUserProducts");
+      this.closeMenu();
     },
     getOrders() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
@@ -251,10 +262,7 @@ export default {
     });
   },
   mounted() {
-    const offcanvasElementList = document.querySelectorAll(".offcanvas");
-    this.userNavbar = [...offcanvasElementList].map(
-      (offcanvasEl) => new Offcanvas(offcanvasEl)
-    );
+    this.userNavbar = new Offcanvas(this.$refs.menu, { toggle: false });
   },
 };
 </script>
