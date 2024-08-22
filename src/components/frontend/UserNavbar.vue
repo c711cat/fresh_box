@@ -14,7 +14,8 @@
         tabindex="-1"
         id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel"
-        data-bs-backdrop="false"
+        data-bs-backdrop="true"
+        data-bs-scroll="true"
       >
         <div class="offcanvas-header px-4">
           <router-link
