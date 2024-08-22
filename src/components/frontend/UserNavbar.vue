@@ -29,7 +29,7 @@
           <button
             @click="() => closeMenu()"
             type="button"
-            class="btn-close btn-close-white"
+            class="bi bi-x-lg btn btn-outline-primary border-0 btn-lg"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
@@ -306,5 +306,10 @@ export default {
 .searchContainer:hover .searchText {
   width: 200px;
   padding: 6px 12px;
+}
+
+.btn-outline-primary:hover {
+  background-color: #000;
+  color: #f9c406;
 }
 </style>
