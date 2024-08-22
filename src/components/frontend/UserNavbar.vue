@@ -13,6 +13,7 @@
         tabindex="-1"
         id="offcanvasNavbar"
         aria-labelledby="offcanvasNavbarLabel"
+        data-bs-backdrop="false"
       >
         <div class="offcanvas-header px-4">
           <router-link
