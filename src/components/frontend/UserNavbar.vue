@@ -21,7 +21,7 @@
           <router-link
             @click="() => closeMenu()"
             to="/"
-            class="offcanvas-title logoText text-decoration-none fs-3"
+            class="ps-2 offcanvas-title logoText text-decoration-none fs-3 text-primary"
             id="offcanvasNavbarLabel"
           >
             FRESH BOX
@@ -34,9 +34,12 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body px-4">
-          <ul class="navbar-nav flex-grow-1 pe-3">
-            <li class="nav-item">
+        <div class="offcanvas-body" :class="currentWidth < 992 ? '' : 'px-4'">
+          <ul class="navbar-nav flex-grow-1">
+            <li
+              class="nav-item rounded"
+              :class="{ mobile: currentWidth < 992 }"
+            >
               <router-link
                 @click="goToUserProducts"
                 to="/user-products"
@@ -48,7 +51,10 @@
                 所有產品
               </router-link>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item rounded"
+              :class="{ mobile: currentWidth < 992 }"
+            >
               <router-link
                 @click="() => closeMenu()"
                 to="/favorite"
@@ -58,7 +64,10 @@
                 收藏
               </router-link>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item rounded"
+              :class="{ mobile: currentWidth < 992 }"
+            >
               <router-link
                 @click="() => closeMenu()"
                 to="/order-list"
@@ -68,7 +77,10 @@
                 訂單
               </router-link>
             </li>
-            <li class="nav-item">
+            <li
+              class="nav-item rounded"
+              :class="{ mobile: currentWidth < 992 }"
+            >
               <router-link
                 @click="() => closeMenu()"
                 to="/QA"
@@ -151,6 +163,7 @@ export default {
       orderPage: 1,
       searchInput: false,
       open: false,
+      currentWidth: "1000",
     };
   },
   inject: ["emitter"],
@@ -250,8 +263,13 @@ export default {
           this.$pushMsg.status404(error.response.data.message);
         });
     },
+    getCurrentWidth() {
+      this.currentWidth = window.innerWidth;
+    },
   },
+  computed: {},
   created() {
+    this.getCurrentWidth();
     this.getOrders();
     this.getCart();
     this.getProducts();
@@ -270,7 +288,7 @@ export default {
 
 <style lang="scss" scoped>
 * {
-  border: 1px solid;
+  // border: 1px solid;
 }
 
 .logoText {
@@ -311,5 +329,13 @@ export default {
 .btn-outline-primary:hover {
   background-color: #000;
   color: #f9c406;
+}
+
+.mobile {
+  padding: 0px 15px;
+}
+
+.mobile:hover {
+  background-color: #333;
 }
 </style>
