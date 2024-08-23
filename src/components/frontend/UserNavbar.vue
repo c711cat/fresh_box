@@ -4,9 +4,9 @@
       class="d-flex justify-content-between align-items-center flex-wrap col-12 px-3"
     >
       <router-link to="/" class="logoTextLink navbar-brand text-center m-0">
-        <span class="logoText text-center text-primary px-1 fs-3"
-          >FRESH BOX</span
-        >
+        <span class="logoText text-center text-primary px-1 fs-3">
+          FRESH BOX
+        </span>
       </router-link>
       <div
         ref="menu"
@@ -36,56 +36,42 @@
         </div>
         <div class="offcanvas-body" :class="currentWidth < 992 ? '' : 'px-4'">
           <ul class="navbar-nav flex-grow-1">
-            <li
-              class="nav-item rounded"
-              :class="{ mobile: currentWidth < 992 }"
-            >
+            <li class="nav-item rounded p-0" :class="isMoileOrPc">
               <router-link
                 @click="goToUserProducts"
                 to="/user-products"
-                class="nav-link text-primary"
-                :class="{
-                  isCurrentNavbarItem: currentPath === '/user-products',
-                }"
+                class="nav-link text-primary py-2 px-3 rounded"
+                :class="isCurrentPage('/user-products')"
               >
                 所有產品
               </router-link>
             </li>
-            <li
-              class="nav-item rounded"
-              :class="{ mobile: currentWidth < 992 }"
-            >
+            <li class="nav-item rounded p-0" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/favorite"
-                :class="{ isCurrentNavbarItem: currentPath === '/favorite' }"
-                class="nav-link text-primary"
+                class="nav-link text-primary py-2 px-3 rounded"
+                :class="isCurrentPage('/favorite')"
               >
                 收藏
               </router-link>
             </li>
-            <li
-              class="nav-item rounded"
-              :class="{ mobile: currentWidth < 992 }"
-            >
+            <li class="nav-item rounded p-0" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/order-list"
-                :class="{ isCurrentNavbarItem: currentPath === '/order-list' }"
-                class="nav-link text-primary"
+                class="nav-link text-primary py-2 px-3 rounded"
+                :class="isCurrentPage('/order-list')"
               >
                 訂單
               </router-link>
             </li>
-            <li
-              class="nav-item rounded"
-              :class="{ mobile: currentWidth < 992 }"
-            >
+            <li class="nav-item rounded p-0" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/QA"
-                :class="{ isCurrentNavbarItem: currentPath === '/QA' }"
-                class="nav-link text-primary"
+                class="nav-link text-primary py-2 px-3 rounded"
+                :class="isCurrentPage('/QA')"
               >
                 常見問題
               </router-link>
@@ -161,7 +147,6 @@ export default {
       carts: [],
       orders: [],
       orderPage: 1,
-      searchInput: false,
       open: false,
       currentWidth: "1000",
     };
@@ -209,12 +194,21 @@ export default {
     },
   },
   methods: {
+    isCurrentPage(path) {
+      let className = "";
+      if (this.currentPath === path && this.currentWidth < 992) {
+        className = "isCurrentNavbarItem mobileBg";
+      }
+      if (this.currentPath === path && this.currentWidth >= 992) {
+        className = "isCurrentNavbarItem";
+      }
+      return className;
+    },
     closeMenu() {
       this.userNavbar.hide();
     },
     openSearchBar() {
       this.open = !this.open;
-      console.log(this.open);
       setTimeout(() => {
         this.open = !this.open;
       }, 10000);
@@ -267,7 +261,15 @@ export default {
       this.currentWidth = window.innerWidth;
     },
   },
-  computed: {},
+  computed: {
+    isMoileOrPc() {
+      if (this.currentWidth < 992) {
+        return "isMobileItem";
+      } else {
+        return "";
+      }
+    },
+  },
   created() {
     this.getCurrentWidth();
     this.getOrders();
@@ -287,10 +289,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  // border: 1px solid;
-}
-
 .logoText {
   width: fit-content;
   font-family: "Times New Roman", Times, serif;
@@ -331,11 +329,12 @@ export default {
   color: #f9c406;
 }
 
-.mobile {
-  padding: 0px 15px;
+.isMobileItem {
+  color: #f9c406 !important;
 }
 
-.mobile:hover {
+.isMobileItem:hover,
+.mobileBg {
   background-color: #333;
 }
 </style>
