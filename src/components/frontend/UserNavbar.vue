@@ -85,7 +85,7 @@
             v-if="currentPath === '/order-list'"
             v-model="orderSearchText"
             type="search"
-            class="form-control searchText"
+            class="d-none d-lg-block form-control searchText"
             placeholder="搜尋訂單者姓名"
             aria-label="Search"
           />
@@ -93,13 +93,39 @@
             v-else
             v-model="productSearchText"
             type="search"
-            class="form-control searchText"
+            class="d-none d-lg-block form-control searchText"
             placeholder="搜尋產品名稱"
-            aria-label="Search"
+            aria-label="PCSearch"
           />
           <button
             type="btn"
-            class="btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+            class="d-none d-lg-block btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+          ></button>
+        </section>
+
+        <section
+          class="d-block d-lg-none d-flex align-items-center mobileSearchBox"
+        >
+          <input
+            v-if="currentPath === '/order-list'"
+            v-model="orderSearchText"
+            class="border-0 d-block d-lg-none form-control mobileSearchText"
+            type="search"
+            placeholder="搜尋訂單者姓名"
+            aria-label="mobileSearch"
+          />
+          <input
+            v-else
+            v-model="productSearchText"
+            class="border-0 d-block d-lg-none form-control mobileSearchText"
+            type="search"
+            placeholder="搜尋產品名稱"
+            aria-label="mobileSearch"
+          />
+
+          <button
+            type="btn"
+            class="d-block d-lg-none mobileSearchBtn btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
           ></button>
         </section>
 
@@ -336,5 +362,38 @@ export default {
 .isMobileItem:hover,
 .mobileBg {
   background-color: #333;
+}
+
+.mobileSearchBox {
+  width: 49px;
+  height: 100%;
+  background-color: #000;
+  z-index: 1;
+}
+
+.mobileSearchText {
+  width: 0%;
+  padding: 10px 0px;
+}
+
+.mobileSearchBox:hover .mobileSearchText {
+  width: 95%;
+  transition: 2s;
+  position: absolute;
+  right: 2.5%;
+  padding: 10px 16px 10px 16px;
+}
+
+.mobileSearchBox:hover {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+}
+
+.mobileSearchBox:hover .mobileSearchBtn {
+  position: absolute;
+  right: 3%;
+  background-color: #fff !important;
+  height: 44px;
 }
 </style>
