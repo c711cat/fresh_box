@@ -4,7 +4,7 @@
       class="col-12 px-3 d-flex justify-content-between align-items-center flex-wrap"
     >
       <router-link to="/" class="navbar-brand text-center m-0">
-        <span class="logoText text-center px-1 fs-3">FRESH BOX</span>
+        <span class="logoText text-center px-3 fs-3">FRESH BOX</span>
       </router-link>
       <div
         ref="adminMenu"
@@ -32,7 +32,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body px-3">
           <ul class="navbar-nav flex-grow-1">
             <li class="nav-item rounded-0">
               <router-link
@@ -98,7 +98,7 @@
             v-model="productSearchText"
             class="form-control"
             type="search"
-            placeholder="Search for products"
+            placeholder="搜尋產品名稱"
             aria-label="Search"
           />
           <input
@@ -106,7 +106,7 @@
             v-model="orderSearchText"
             class="form-control"
             type="search"
-            placeholder="Search for name on orders"
+            placeholder="搜尋訂單者姓名"
             aria-label="Search"
           />
         </form>
