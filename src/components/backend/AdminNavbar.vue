@@ -38,11 +38,8 @@
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/admin's-products"
-                class="nav-link px-3 rounded-0"
-                :class="{
-                  isCurrentNavbarItem:
-                    $route.path === `/dashboard/admin's-products`,
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage(`/dashboard/admin's-products`)"
               >
                 產品清單
               </router-link>
@@ -51,10 +48,8 @@
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/coupons"
-                class="nav-link px-3"
-                :class="{
-                  isCurrentNavbarItem: $route.path === '/dashboard/coupons',
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage('/dashboard/coupons')"
               >
                 優惠券
               </router-link>
@@ -63,10 +58,8 @@
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/order-list"
-                class="nav-link px-3"
-                :class="{
-                  isCurrentNavbarItem: $route.path === '/dashboard/order-list',
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage('/dashboard/order-list')"
               >
                 訂單
               </router-link>
@@ -75,10 +68,8 @@
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/admin-QA"
-                class="nav-link px-3"
-                :class="{
-                  isCurrentNavbarItem: $route.path === '/dashboard/admin-QA',
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage('/dashboard/admin-QA')"
               >
                 常見問題
               </router-link>
@@ -178,6 +169,16 @@ export default {
     },
   },
   methods: {
+    isCurrentPage(path) {
+      let className = "";
+      if (this.$route.path === path && this.currentWidth < 992) {
+        className = "isCurrentNavbarItem mobileBg";
+      }
+      if (this.$route.path === path && this.currentWidth >= 992) {
+        className = "isCurrentNavbarItem";
+      }
+      return className;
+    },
     closeMenu() {
       this.adminNavbar.hide();
     },
@@ -264,7 +265,7 @@ export default {
 
 <style lang="scss" scoped>
 * {
-  border: 1px solid;
+  // border: 1px solid;
 }
 .logoText {
   color: #000000a6;
@@ -287,6 +288,10 @@ export default {
 }
 
 .isMobileItem:hover {
-  background-color: #e8e8e8;
+  background-color: #f1f1f1;
+}
+
+.mobileBg {
+  background-color: #f1f1f1;
 }
 </style>
