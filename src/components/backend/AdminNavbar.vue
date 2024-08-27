@@ -17,6 +17,7 @@
       >
         <div class="offcanvas-header px-4">
           <router-link
+            @click="() => closeMenu()"
             to="/"
             class="offcanvas-title logoText text-decoration-none fs-3 px-2"
             id="offcanvasNavbarLabel"
@@ -24,6 +25,7 @@
             FRESH BOX
           </router-link>
           <button
+            @click="() => closeMenu()"
             type="button"
             class="btn-close"
             data-bs-dismiss="offcanvas"
@@ -34,6 +36,7 @@
           <ul class="navbar-nav flex-grow-1">
             <li class="nav-item rounded-0">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/admin's-products"
                 class="nav-link px-3"
                 :class="{
@@ -46,6 +49,7 @@
             </li>
             <li class="nav-item rounded-0">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/coupons"
                 class="nav-link px-3"
                 :class="{
@@ -57,6 +61,7 @@
             </li>
             <li class="nav-item rounded-0">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/order-list"
                 class="nav-link px-3"
                 :class="{
@@ -68,6 +73,7 @@
             </li>
             <li class="nav-item rounded-0">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/admin-QA"
                 class="nav-link px-3"
                 :class="{
@@ -172,7 +178,11 @@ export default {
     },
   },
   methods: {
+    closeMenu() {
+      this.adminNavbar.hide();
+    },
     logOut() {
+      this.closeMenu();
       const api = `${process.env.VUE_APP_API}logout`;
       this.$http
         .post(api)
