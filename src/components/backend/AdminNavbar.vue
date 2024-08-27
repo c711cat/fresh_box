@@ -34,11 +34,11 @@
         </div>
         <div class="offcanvas-body px-3">
           <ul class="navbar-nav flex-grow-1">
-            <li class="nav-item rounded-0">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/admin's-products"
-                class="nav-link px-3"
+                class="nav-link px-3 rounded-0"
                 :class="{
                   isCurrentNavbarItem:
                     $route.path === `/dashboard/admin's-products`,
@@ -47,7 +47,7 @@
                 產品清單
               </router-link>
             </li>
-            <li class="nav-item rounded-0">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/coupons"
@@ -59,7 +59,7 @@
                 優惠券
               </router-link>
             </li>
-            <li class="nav-item rounded-0">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/order-list"
@@ -71,7 +71,7 @@
                 訂單
               </router-link>
             </li>
-            <li class="nav-item rounded-0">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
                 to="/dashboard/admin-QA"
@@ -83,7 +83,7 @@
                 常見問題
               </router-link>
             </li>
-            <li class="nav-item rounded-0">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <a @click.prevent="logOut" class="nav-link px-3" href="#">
                 登出
               </a>
@@ -239,6 +239,15 @@ export default {
       this.currentWidth = window.innerWidth;
     },
   },
+  computed: {
+    isMoileOrPc() {
+      if (this.currentWidth < 992) {
+        return "isMobileItem";
+      } else {
+        return "";
+      }
+    },
+  },
   created() {
     this.getOrders();
 
@@ -275,5 +284,9 @@ export default {
 .isCurrentNavbarItem {
   color: black;
   font-weight: bold;
+}
+
+.isMobileItem:hover {
+  background-color: #e8e8e8;
 }
 </style>
