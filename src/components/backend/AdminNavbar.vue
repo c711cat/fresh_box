@@ -3,26 +3,22 @@
     <div
       class="col-12 px-3 d-flex justify-content-between align-items-center flex-wrap"
     >
-      <button
-        class="navbar-toggler border-0 col-auto"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar"
-        aria-label="Toggle navigation"
-      >
-        <i class="bi bi-list fs-2 px-2"></i>
-      </button>
+      <router-link to="/" class="navbar-brand text-center m-0">
+        <span class="logoText text-center px-1 fs-3">FRESH BOX</span>
+      </router-link>
       <div
-        class="offcanvas offcanvas-start w-50"
+        ref="adminMenu"
+        class="offcanvas offcanvas-end"
+        id="admin_offcanvasNavbar"
+        aria-labelledby="admin_offcanvasNavbarLabel"
+        data-bs-backdrop="true"
+        data-bs-scroll="true"
         tabindex="-1"
-        id="offcanvasNavbar"
-        aria-labelledby="offcanvasNavbarLabel"
       >
         <div class="offcanvas-header px-4">
           <router-link
             to="/"
-            class="offcanvas-title logoText text-decoration-none"
+            class="offcanvas-title logoText text-decoration-none fs-3 px-2"
             id="offcanvasNavbarLabel"
           >
             FRESH BOX
@@ -34,12 +30,12 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body ps-5">
-          <ul class="navbar-nav flex-grow-1 pe-3">
-            <li class="nav-item">
+        <div class="offcanvas-body">
+          <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item rounded-0">
               <router-link
                 to="/dashboard/admin's-products"
-                class="nav-link"
+                class="nav-link px-3"
                 :class="{
                   isCurrentNavbarItem:
                     $route.path === `/dashboard/admin's-products`,
@@ -48,10 +44,10 @@
                 產品清單
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item rounded-0">
               <router-link
                 to="/dashboard/coupons"
-                class="nav-link"
+                class="nav-link px-3"
                 :class="{
                   isCurrentNavbarItem: $route.path === '/dashboard/coupons',
                 }"
@@ -59,10 +55,10 @@
                 優惠券
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item rounded-0">
               <router-link
                 to="/dashboard/order-list"
-                class="nav-link"
+                class="nav-link px-3"
                 :class="{
                   isCurrentNavbarItem: $route.path === '/dashboard/order-list',
                 }"
@@ -70,10 +66,10 @@
                 訂單
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item rounded-0">
               <router-link
                 to="/dashboard/admin-QA"
-                class="nav-link"
+                class="nav-link px-3"
                 :class="{
                   isCurrentNavbarItem: $route.path === '/dashboard/admin-QA',
                 }"
@@ -81,37 +77,44 @@
                 常見問題
               </router-link>
             </li>
-            <li class="nav-item">
-              <a @click.prevent="logOut" class="nav-link" href="#"> 登出 </a>
+            <li class="nav-item rounded-0">
+              <a @click.prevent="logOut" class="nav-link px-3" href="#">
+                登出
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      <router-link
-        v-if="currentWidth > 275"
-        to="/"
-        class="logoTextLink navbar-brand text-center p-0 m-0"
-      >
-        <span class="logoText text-center">FRESH BOX</span>
-      </router-link>
-      <form class="col-2 col-sm-3" role="search">
-        <input
-          v-if="$route.path === `/dashboard/admin's-products`"
-          v-model="productSearchText"
-          class="form-control"
-          type="search"
-          placeholder="Search for products"
-          aria-label="Search"
-        />
-        <input
-          v-if="$route.path === '/dashboard/order-list'"
-          v-model="orderSearchText"
-          class="form-control"
-          type="search"
-          placeholder="Search for name on orders"
-          aria-label="Search"
-        />
-      </form>
+      <div class="d-flex justify-conten-end">
+        <form class="col" role="search">
+          <input
+            v-if="$route.path === `/dashboard/admin's-products`"
+            v-model="productSearchText"
+            class="form-control"
+            type="search"
+            placeholder="Search for products"
+            aria-label="Search"
+          />
+          <input
+            v-if="$route.path === '/dashboard/order-list'"
+            v-model="orderSearchText"
+            class="form-control"
+            type="search"
+            placeholder="Search for name on orders"
+            aria-label="Search"
+          />
+        </form>
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#admin_offcanvasNavbar"
+          aria-controls="admin_offcanvasNavbar"
+          aria-label="Toggle navigation"
+        >
+          <i class="bi bi-list fs-2 px-1"></i>
+        </button>
+      </div>
     </div>
   </nav>
 </template>
@@ -235,24 +238,16 @@ export default {
     }, 500);
   },
   mounted() {
-    const offcanvasElementList = document.querySelectorAll(".offcanvas");
-    this.adminNavbar = [...offcanvasElementList].map(
-      (offcanvasEl) => new Offcanvas(offcanvasEl)
-    );
+    this.adminNavbar = new Offcanvas(this.$refs.adminMenu, { toggle: false });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.logoTextLink {
-  width: 1px;
-  position: absolute;
-  right: 50%;
-  display: flex;
-  justify-content: center;
+* {
+  border: 1px solid;
 }
 .logoText {
-  width: fit-content;
   color: #000000a6;
   font-family: "Times New Roman", Times, serif;
 }
