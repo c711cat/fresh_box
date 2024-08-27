@@ -3,7 +3,7 @@
     <div
       class="d-flex justify-content-between align-items-center flex-wrap col-12 px-3"
     >
-      <router-link to="/" class="logoTextLink navbar-brand text-center m-0">
+      <router-link to="/" class="navbar-brand text-center m-0">
         <span class="logoText text-center text-primary px-1 fs-3">
           FRESH BOX
         </span>
