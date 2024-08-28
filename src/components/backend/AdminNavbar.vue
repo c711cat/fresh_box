@@ -86,24 +86,24 @@
         class="col-auto d-flex justify-conten-end align-items-center ms-auto"
       >
         <form
-          class="col-auto d-flex"
+          class="col-auto d-flex align-items-center"
           role="search"
           :class="{ mobileBox: currentWidth < 992 }"
         >
-          <input
-            v-if="$route.path === `/dashboard/admin's-products`"
-            v-model="productSearchText"
-            class="form-control searchInput"
-            type="search"
-            placeholder="搜尋產品名稱"
-            aria-label="Search"
-          />
           <input
             v-if="$route.path === '/dashboard/order-list'"
             v-model="orderSearchText"
             class="form-control searchInput"
             type="search"
             placeholder="搜尋訂單者姓名"
+            aria-label="Search"
+          />
+          <input
+            v-else
+            v-model="productSearchText"
+            class="form-control searchInput"
+            type="search"
+            placeholder="搜尋產品名稱"
             aria-label="Search"
           />
           <button
