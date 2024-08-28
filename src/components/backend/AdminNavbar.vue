@@ -101,7 +101,7 @@
           <input
             v-if="$route.path === '/dashboard/order-list'"
             v-model="orderSearchText"
-            class="form-control"
+            class="form-control searchInput"
             type="search"
             placeholder="搜尋訂單者姓名"
             aria-label="Search"
@@ -341,6 +341,7 @@ form:hover .searchInput {
   margin-left: auto;
   background-color: #fff;
   padding-top: 0px;
+  padding-bottom: 0px;
   margin-top: 6px;
 }
 </style>
