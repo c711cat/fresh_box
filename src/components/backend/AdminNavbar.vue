@@ -82,12 +82,18 @@
           </ul>
         </div>
       </div>
-      <div class="d-flex justify-conten-end">
-        <form class="col" role="search">
+      <div
+        class="col-auto d-flex justify-conten-end align-items-center ms-auto"
+      >
+        <form
+          class="col-auto d-flex"
+          role="search"
+          :class="{ mobileBox: currentWidth < 992 }"
+        >
           <input
             v-if="$route.path === `/dashboard/admin's-products`"
             v-model="productSearchText"
-            class="form-control"
+            class="form-control searchInput"
             type="search"
             placeholder="搜尋產品名稱"
             aria-label="Search"
@@ -100,6 +106,10 @@
             placeholder="搜尋訂單者姓名"
             aria-label="Search"
           />
+          <button
+            type="btn"
+            class="searchBtn btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
+          ></button>
         </form>
         <button
           class="navbar-toggler border-0"
@@ -264,9 +274,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  // border: 1px solid;
-}
 .logoText {
   color: #000000a6;
   font-family: "Times New Roman", Times, serif;
@@ -274,7 +281,8 @@ export default {
 
 .logoText:hover,
 .nav-link:hover,
-.bi-list:hover {
+.bi-list:hover,
+.searchBtn:hover {
   color: black;
 }
 
@@ -293,5 +301,46 @@ export default {
 
 .mobileBg {
   background-color: #f1f1f1;
+}
+
+.searchBtn {
+  color: #000000a6;
+}
+
+.searchInput {
+  width: 0px;
+  padding: 10px 0px;
+  border-color: #f8f9fa;
+}
+
+form:hover .searchInput {
+  width: 200px;
+  padding: 10px 16px;
+  transition: 1s;
+  border: 1px solid #dee2e6;
+}
+
+.mobileBox:hover {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0px;
+  background-color: #f8f9fa;
+}
+
+.mobileBox:hover .searchInput {
+  transition: 2s;
+  width: 95%;
+  position: absolute;
+  right: 2.5%;
+}
+
+.mobileBox:hover .searchBtn {
+  margin-right: 3%;
+  z-index: 2;
+  margin-left: auto;
+  background-color: #fff;
+  padding-top: 0px;
+  margin-top: 6px;
 }
 </style>
