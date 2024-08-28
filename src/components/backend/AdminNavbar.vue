@@ -86,14 +86,13 @@
         class="col-auto d-flex justify-conten-end align-items-center ms-auto"
       >
         <form
-          class="col-auto d-flex align-items-center"
+          class="col-auto d-flex align-items-center searchContainer"
           role="search"
-          :class="{ mobileBox: currentWidth < 992 }"
         >
           <input
             v-if="$route.path === '/dashboard/order-list'"
             v-model="orderSearchText"
-            class="form-control searchInput"
+            class="d-none d-lg-block form-control searchInput"
             type="search"
             placeholder="搜尋訂單者姓名"
             aria-label="Search"
@@ -101,14 +100,46 @@
           <input
             v-else
             v-model="productSearchText"
-            class="form-control searchInput"
+            class="d-none d-lg-block form-control searchInput"
             type="search"
             placeholder="搜尋產品名稱"
             aria-label="Search"
           />
           <button
             type="btn"
-            class="searchBtn btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
+            class="d-none d-lg-block btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
+          ></button>
+        </form>
+        <form class="col-auto d-flex align-items-center" role="search">
+          <div
+            id="mobile-admin"
+            class="mobileInputBox px-3 offcanvas offcanvas-top align-items-center justify-content-center"
+          >
+            <input
+              v-if="$route.path === '/dashboard/order-list'"
+              v-model="orderSearchText"
+              class="d-block d-lg-none form-control"
+              type="search"
+              placeholder="搜尋訂單者姓名"
+              aria-label="Search"
+            />
+            <input
+              v-else
+              v-model="productSearchText"
+              class="d-block d-lg-none form-control"
+              type="search"
+              placeholder="搜尋產品名稱"
+              aria-label="Search"
+            />
+          </div>
+
+          <button
+            type="btn"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobile-admin"
+            aria-controls="mobile-admin"
+            aria-label="Toggle mobile-admin"
+            class="d-block d-lg-none mobileSearchBtn btn bi bi-search fs-4 border border-0"
           ></button>
         </form>
         <button
@@ -282,7 +313,8 @@ export default {
 .logoText:hover,
 .nav-link:hover,
 .bi-list:hover,
-.searchBtn:hover {
+.searchBtn:hover,
+.mobileSearchBtn:hover {
   color: black;
 }
 
@@ -313,35 +345,18 @@ export default {
   border-color: #f8f9fa;
 }
 
-form:hover .searchInput {
+.searchContainer:hover .searchInput {
   width: 200px;
   padding: 10px 16px;
   transition: 1s;
   border: 1px solid #dee2e6;
 }
 
-.mobileBox:hover {
-  width: 100%;
-  position: absolute;
-  z-index: 1;
-  left: 0px;
-  background-color: #f8f9fa;
+.mobileInputBox {
+  height: 10%;
 }
 
-.mobileBox:hover .searchInput {
-  transition: 2s;
-  width: 95%;
-  position: absolute;
-  right: 2.5%;
-}
-
-.mobileBox:hover .searchBtn {
-  margin-right: 3%;
-  z-index: 2;
-  margin-left: auto;
-  background-color: #fff;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-top: 6px;
+.mobileSearchBtn {
+  color: #000000a6;
 }
 </style>
