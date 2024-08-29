@@ -3,115 +3,163 @@
     <div
       class="col-12 px-3 d-flex justify-content-between align-items-center flex-wrap"
     >
-      <button
-        class="navbar-toggler border-0 col-auto"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasNavbar"
-        aria-controls="offcanvasNavbar"
-        aria-label="Toggle navigation"
-      >
-        <i class="bi bi-list fs-2 px-2"></i>
-      </button>
+      <router-link to="/" class="navbar-brand text-center m-0">
+        <span class="logoText text-center px-3 fs-3">FRESH BOX</span>
+      </router-link>
       <div
-        class="offcanvas offcanvas-start w-50"
+        ref="adminMenu"
+        class="offcanvas offcanvas-end"
+        id="admin_offcanvasNavbar"
+        aria-labelledby="admin_offcanvasNavbarLabel"
+        data-bs-backdrop="true"
+        data-bs-scroll="true"
         tabindex="-1"
-        id="offcanvasNavbar"
-        aria-labelledby="offcanvasNavbarLabel"
       >
         <div class="offcanvas-header px-4">
           <router-link
+            @click="() => closeMenu()"
             to="/"
-            class="offcanvas-title logoText text-decoration-none"
+            class="offcanvas-title logoText text-decoration-none fs-3 px-2"
             id="offcanvasNavbarLabel"
           >
             FRESH BOX
           </router-link>
           <button
+            @click="() => closeMenu()"
             type="button"
             class="btn-close"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
-        <div class="offcanvas-body ps-5">
-          <ul class="navbar-nav flex-grow-1 pe-3">
-            <li class="nav-item">
+        <div class="offcanvas-body px-3">
+          <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/admin's-products"
-                class="nav-link"
-                :class="{
-                  isCurrentNavbarItem:
-                    $route.path === `/dashboard/admin's-products`,
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage(`/dashboard/admin's-products`)"
               >
                 產品清單
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/coupons"
-                class="nav-link"
-                :class="{
-                  isCurrentNavbarItem: $route.path === '/dashboard/coupons',
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage('/dashboard/coupons')"
               >
                 優惠券
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/order-list"
-                class="nav-link"
-                :class="{
-                  isCurrentNavbarItem: $route.path === '/dashboard/order-list',
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage('/dashboard/order-list')"
               >
                 訂單
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
+                @click="() => closeMenu()"
                 to="/dashboard/admin-QA"
-                class="nav-link"
-                :class="{
-                  isCurrentNavbarItem: $route.path === '/dashboard/admin-QA',
-                }"
+                class="nav-link px-3 rounded"
+                :class="isCurrentPage('/dashboard/admin-QA')"
               >
                 常見問題
               </router-link>
             </li>
-            <li class="nav-item">
-              <a @click.prevent="logOut" class="nav-link" href="#"> 登出 </a>
+            <li class="nav-item rounded" :class="isMoileOrPc">
+              <a @click.prevent="logOut" class="nav-link px-3" href="#">
+                登出
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      <router-link
-        v-if="currentWidth > 275"
-        to="/"
-        class="logoTextLink navbar-brand text-center p-0 m-0"
+      <div
+        class="col-auto d-flex justify-conten-end align-items-center ms-auto"
       >
-        <span class="logoText text-center">FRESH BOX</span>
-      </router-link>
-      <form class="col-2 col-sm-3" role="search">
-        <input
-          v-if="$route.path === `/dashboard/admin's-products`"
-          v-model="productSearchText"
-          class="form-control"
-          type="search"
-          placeholder="Search for products"
-          aria-label="Search"
-        />
-        <input
-          v-if="$route.path === '/dashboard/order-list'"
-          v-model="orderSearchText"
-          class="form-control"
-          type="search"
-          placeholder="Search for name on orders"
-          aria-label="Search"
-        />
-      </form>
+        <form
+          class="col-auto d-flex align-items-center searchContainer"
+          role="search"
+        >
+          <input
+            v-if="$route.path === '/dashboard/order-list'"
+            v-model="orderSearchText"
+            class="d-none d-sm-block form-control searchInput"
+            type="search"
+            placeholder="搜尋訂單者姓名"
+            aria-label="Search"
+          />
+          <input
+            v-else
+            v-model="productSearchText"
+            class="d-none d-sm-block form-control searchInput"
+            type="search"
+            placeholder="搜尋產品名稱"
+            aria-label="Search"
+          />
+          <button
+            type="btn"
+            class="d-none d-sm-block btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
+          ></button>
+        </form>
+        <form class="col-auto d-flex align-items-center" role="search">
+          <div
+            id="mobile-admin"
+            class="mobileInputBox px-3 offcanvas offcanvas-top align-items-center justify-content-center"
+          >
+            <div
+              v-if="$route.path === '/dashboard/order-list'"
+              class="d-block d-sm-none w-100 mobileInputWrap"
+            >
+              <input
+                v-model="orderSearchText"
+                class="form-control mobileInput"
+                type="search"
+                placeholder="搜尋訂單者姓名"
+                aria-label="Search"
+              />
+              <i class="bi bi-search mobileSearchIcon"></i>
+            </div>
+            <div v-else class="d-block d-sm-none w-100 mobileInputWrap">
+              <input
+                v-model="productSearchText"
+                class="form-control mobileInput"
+                type="search"
+                placeholder="搜尋產品名稱"
+                aria-label="Search"
+              />
+              <i class="bi bi-search mobileSearchIcon"></i>
+            </div>
+          </div>
+
+          <button
+            type="btn"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobile-admin"
+            aria-controls="mobile-admin"
+            aria-label="Toggle mobile-admin"
+            class="d-block d-sm-none mobileSearchBtn btn bi bi-search fs-4 border border-0"
+          ></button>
+        </form>
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#admin_offcanvasNavbar"
+          aria-controls="admin_offcanvasNavbar"
+          aria-label="Toggle navigation"
+        >
+          <i class="bi bi-list fs-2 px-1"></i>
+        </button>
+      </div>
     </div>
   </nav>
 </template>
@@ -169,7 +217,21 @@ export default {
     },
   },
   methods: {
+    isCurrentPage(path) {
+      let className = "";
+      if (this.$route.path === path && this.currentWidth < 992) {
+        className = "isCurrentNavbarItem mobileBg";
+      }
+      if (this.$route.path === path && this.currentWidth >= 992) {
+        className = "isCurrentNavbarItem";
+      }
+      return className;
+    },
+    closeMenu() {
+      this.adminNavbar.hide();
+    },
     logOut() {
+      this.closeMenu();
       const api = `${process.env.VUE_APP_API}logout`;
       this.$http
         .post(api)
@@ -226,6 +288,15 @@ export default {
       this.currentWidth = window.innerWidth;
     },
   },
+  computed: {
+    isMoileOrPc() {
+      if (this.currentWidth < 992) {
+        return "isMobileItem";
+      } else {
+        return "";
+      }
+    },
+  },
   created() {
     this.getOrders();
 
@@ -235,31 +306,22 @@ export default {
     }, 500);
   },
   mounted() {
-    const offcanvasElementList = document.querySelectorAll(".offcanvas");
-    this.adminNavbar = [...offcanvasElementList].map(
-      (offcanvasEl) => new Offcanvas(offcanvasEl)
-    );
+    this.adminNavbar = new Offcanvas(this.$refs.adminMenu, { toggle: false });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.logoTextLink {
-  width: 1px;
-  position: absolute;
-  right: 50%;
-  display: flex;
-  justify-content: center;
-}
 .logoText {
-  width: fit-content;
   color: #000000a6;
   font-family: "Times New Roman", Times, serif;
 }
 
 .logoText:hover,
 .nav-link:hover,
-.bi-list:hover {
+.bi-list:hover,
+.searchBtn:hover,
+.mobileSearchBtn:hover {
   color: black;
 }
 
@@ -270,5 +332,52 @@ export default {
 .isCurrentNavbarItem {
   color: black;
   font-weight: bold;
+}
+
+.isMobileItem:hover {
+  background-color: #f1f1f1;
+}
+
+.mobileBg {
+  background-color: #f1f1f1;
+}
+
+.searchBtn {
+  color: #000000a6;
+}
+
+.searchInput {
+  width: 0px;
+  padding: 10px 0px;
+  border-color: #f8f9fa;
+}
+
+.searchContainer:hover .searchInput {
+  width: 200px;
+  padding: 10px 16px;
+  transition: 1s;
+  border: 1px solid #dee2e6;
+}
+
+.mobileInputBox {
+  height: 10%;
+}
+
+.mobileSearchBtn {
+  color: #000000a6;
+}
+
+.mobileInput {
+  padding-left: 33px;
+}
+
+.mobileInputWrap {
+  position: relative;
+}
+
+.mobileSearchIcon {
+  position: absolute;
+  bottom: 7px;
+  left: 10px;
 }
 </style>
