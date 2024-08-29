@@ -92,7 +92,7 @@
           <input
             v-if="$route.path === '/dashboard/order-list'"
             v-model="orderSearchText"
-            class="d-none d-lg-block form-control searchInput"
+            class="d-none d-sm-block form-control searchInput"
             type="search"
             placeholder="搜尋訂單者姓名"
             aria-label="Search"
@@ -100,14 +100,14 @@
           <input
             v-else
             v-model="productSearchText"
-            class="d-none d-lg-block form-control searchInput"
+            class="d-none d-sm-block form-control searchInput"
             type="search"
             placeholder="搜尋產品名稱"
             aria-label="Search"
           />
           <button
             type="btn"
-            class="d-none d-lg-block btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
+            class="d-none d-sm-block btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
           ></button>
         </form>
         <form class="col-auto d-flex align-items-center" role="search">
@@ -118,7 +118,7 @@
             <input
               v-if="$route.path === '/dashboard/order-list'"
               v-model="orderSearchText"
-              class="d-block d-lg-none form-control"
+              class="d-block d-sm-none form-control"
               type="search"
               placeholder="搜尋訂單者姓名"
               aria-label="Search"
@@ -126,7 +126,7 @@
             <input
               v-else
               v-model="productSearchText"
-              class="d-block d-lg-none form-control"
+              class="d-block d-sm-none form-control"
               type="search"
               placeholder="搜尋產品名稱"
               aria-label="Search"
@@ -139,7 +139,7 @@
             data-bs-target="#mobile-admin"
             aria-controls="mobile-admin"
             aria-label="Toggle mobile-admin"
-            class="d-block d-lg-none mobileSearchBtn btn bi bi-search fs-4 border border-0"
+            class="d-block d-sm-none mobileSearchBtn btn bi bi-search fs-4 border border-0"
           ></button>
         </form>
         <button

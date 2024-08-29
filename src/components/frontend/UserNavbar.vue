@@ -85,7 +85,7 @@
             v-if="currentPath === '/order-list'"
             v-model="orderSearchText"
             type="search"
-            class="d-none d-lg-block form-control searchText"
+            class="d-none d-sm-block form-control searchText"
             placeholder="搜尋訂單者姓名"
             aria-label="Search"
           />
@@ -93,17 +93,17 @@
             v-else
             v-model="productSearchText"
             type="search"
-            class="d-none d-lg-block form-control searchText"
+            class="d-none d-sm-block form-control searchText"
             placeholder="搜尋產品名稱"
             aria-label="PCSearch"
           />
           <button
             type="btn"
-            class="d-none d-lg-block btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+            class="d-none d-sm-block btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
           ></button>
         </section>
 
-        <section class="d-block d-lg-none d-flex align-items-center">
+        <section class="d-block d-sm-none d-flex align-items-center">
           <div
             class="mobileInputBox px-3 offcanvas offcanvas-top bg-black align-items-center justify-content-center"
             id="mobile"
@@ -115,7 +115,7 @@
             <input
               v-if="currentPath === '/order-list'"
               v-model="orderSearchText"
-              class="border-0 d-block d-lg-none form-control"
+              class="border-0 d-block d-sm-none form-control"
               type="search"
               placeholder="搜尋訂單者姓名"
             />
@@ -123,14 +123,14 @@
             <input
               v-else
               v-model="productSearchText"
-              class="border-0 d-block d-lg-none form-control"
+              class="border-0 d-block d-sm-none form-control"
               type="search"
               placeholder="搜尋產品名稱"
             />
           </div>
           <button
             type="btn"
-            class="d-block d-lg-none btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+            class="d-block d-sm-none btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
             data-bs-toggle="offcanvas"
             data-bs-target="#mobile"
             aria-controls="mobile"
