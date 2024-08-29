@@ -115,22 +115,29 @@
             id="mobile-admin"
             class="mobileInputBox px-3 offcanvas offcanvas-top align-items-center justify-content-center"
           >
-            <input
+            <div
               v-if="$route.path === '/dashboard/order-list'"
-              v-model="orderSearchText"
-              class="d-block d-sm-none form-control"
-              type="search"
-              placeholder="搜尋訂單者姓名"
-              aria-label="Search"
-            />
-            <input
-              v-else
-              v-model="productSearchText"
-              class="d-block d-sm-none form-control"
-              type="search"
-              placeholder="搜尋產品名稱"
-              aria-label="Search"
-            />
+              class="d-block d-sm-none w-100 mobileInputWrap"
+            >
+              <input
+                v-model="orderSearchText"
+                class="form-control mobileInput"
+                type="search"
+                placeholder="搜尋訂單者姓名"
+                aria-label="Search"
+              />
+              <i class="bi bi-search mobileSearchIcon"></i>
+            </div>
+            <div v-else class="d-block d-sm-none w-100 mobileInputWrap">
+              <input
+                v-model="productSearchText"
+                class="form-control mobileInput"
+                type="search"
+                placeholder="搜尋產品名稱"
+                aria-label="Search"
+              />
+              <i class="bi bi-search mobileSearchIcon"></i>
+            </div>
           </div>
 
           <button
@@ -358,5 +365,19 @@ export default {
 
 .mobileSearchBtn {
   color: #000000a6;
+}
+
+.mobileInput {
+  padding-left: 33px;
+}
+
+.mobileInputWrap {
+  position: relative;
+}
+
+.mobileSearchIcon {
+  position: absolute;
+  bottom: 7px;
+  left: 10px;
 }
 </style>

@@ -112,21 +112,27 @@
             tabindex="-1"
             aria-labelledby="mobileLabel"
           >
-            <input
+            <div
               v-if="currentPath === '/order-list'"
-              v-model="orderSearchText"
-              class="border-0 d-block d-sm-none form-control"
-              type="search"
-              placeholder="搜尋訂單者姓名"
-            />
-
-            <input
-              v-else
-              v-model="productSearchText"
-              class="border-0 d-block d-sm-none form-control"
-              type="search"
-              placeholder="搜尋產品名稱"
-            />
+              class="d-block d-sm-none w-100 mobileInputWrap"
+            >
+              <input
+                v-model="orderSearchText"
+                class="border-0 form-control mobileInput"
+                type="search"
+                placeholder="搜尋訂單者姓名"
+              />
+              <i class="bi bi-search mobileSearchIcon"></i>
+            </div>
+            <div v-else class="d-block d-sm-none w-100 mobileInputWrap">
+              <input
+                v-model="productSearchText"
+                class="border-0 form-control mobileInput"
+                type="search"
+                placeholder="搜尋產品名稱"
+              />
+              <i class="bi bi-search mobileSearchIcon"></i>
+            </div>
           </div>
           <button
             type="btn"
@@ -367,5 +373,19 @@ export default {
 
 .mobileInputBox {
   height: 10%;
+}
+
+.mobileInput {
+  padding-left: 33px;
+}
+
+.mobileInputWrap {
+  position: relative;
+}
+
+.mobileSearchIcon {
+  position: absolute;
+  bottom: 7px;
+  left: 10px;
 }
 </style>
