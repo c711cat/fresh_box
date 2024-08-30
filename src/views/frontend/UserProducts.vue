@@ -2,7 +2,7 @@
   <LoadingView v-if="isLoading" />
   <main v-else class="col-11 col-xxl-9 d-flex mx-auto productsContainer">
     <div class="border col-2">
-      <section class="list-group">
+      <section class="list-group sticky-top">
         <buttom
           @click="goToAllProducts"
           class="list-group-item list-group-item-action"
@@ -30,8 +30,8 @@
         <h3>目前無收藏的商品</h3>
       </section>
       <div class="d-flex flex-wrap col-12">
-        <section v-for="item in allProducts" :key="item.id" class="col-3 px-3">
-          <div class="card my-3 mx-auto">
+        <section v-for="item in allProducts" :key="item.id" class="col-3 ps-4">
+          <div class="card mx-auto mb-4">
             <h3
               v-if="isMyFavorite(item)"
               @click="delMyFavorite(item)"
@@ -622,5 +622,9 @@ img {
   background-color: #fff;
   color: #ccaf3c;
   border: 1px solid #dee2e6;
+}
+
+.sticky-top {
+  top: 100px;
 }
 </style>
