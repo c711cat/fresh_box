@@ -11,6 +11,7 @@
 
 <style lang="scss" scoped>
 .laoderWrap {
+  position: relative;
   height: 100vh;
   width: 100%;
   background-color: #00000055;
