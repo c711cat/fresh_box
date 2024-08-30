@@ -40,7 +40,6 @@ span {
 
 .loader2 {
   border: 1px solid #f9c406;
-  animation-direction: reverse;
   border-radius: 73% 27% 68% 32% / 31% 71% 29% 75%;
   animation: loading 6s linear infinite;
   animation-direction: reverse;
