@@ -1,8 +1,18 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <main v-else class="col-11 col-xxl-9 d-flex mx-auto productsContainer">
-    <div class="border col-2">
-      <section class="list-group sticky-top">
+  <main
+    v-else
+    class="mx-auto col-11 col-xxl-9 d-flex flex-wrap productsContainer"
+  >
+    <div
+      class="mx-auto mb-3 col-11 col-sm-3 col-lg-2 col-xxl-2"
+      :class="{
+        'sticky-top': currentWidth < 576,
+        miniWidth: currentWidth < 306,
+      }"
+    >
+      <!-- sm以上 -->
+      <section class="d-none d-sm-block list-group sticky-top">
         <buttom
           @click="goToAllProducts"
           class="list-group-item list-group-item-action"
@@ -21,8 +31,31 @@
           {{ item }}
         </buttom>
       </section>
+      <!-- xs -->
+      <section
+        class="bg-white d-block d-sm-none d-flex flex-wrap justify-content-between col-12"
+      >
+        <button
+          @click="goToAllProducts"
+          type="button"
+          class="btn btnXs m-1 flex-fill"
+          :class="{ activeBtnXs: $route.path === '/user-products' }"
+        >
+          所有類別
+        </button>
+        <button
+          @click="goToTheCategory(item)"
+          v-for="item in categoryList"
+          :key="item"
+          type="button"
+          class="btn btnXs m-1 flex-fill"
+          :class="{ activeBtnXs: $route.params.currentCategory === item }"
+        >
+          {{ item }}
+        </button>
+      </section>
     </div>
-    <div class="col-10 border">
+    <div class="mx-auto col-11 col-sm-9 col-lg-10 col-xxl-10">
       <section v-if="noResults" class="mt-4">
         <h3>查無相符商品</h3>
       </section>
@@ -30,7 +63,12 @@
         <h3>目前無收藏的商品</h3>
       </section>
       <div class="d-flex flex-wrap col-12">
-        <section v-for="item in allProducts" :key="item.id" class="col-3 ps-4">
+        <section
+          v-for="item in allProducts"
+          :key="item.id"
+          class="col-12 col-sm-6 col-lg-4 col-xxl-3"
+          :class="{ 'ps-4': currentWidth >= 576 }"
+        >
           <div class="card mx-auto mb-4">
             <h3
               v-if="isMyFavorite(item)"
@@ -212,6 +250,7 @@ export default {
       currentCategory: "選擇類別",
       searchText: "",
       searchResult: [],
+      currentWidth: 1000,
       getOtherPageProducts: throttle(
         function (options = this.pagination) {
           const { current_page, total_pages } = options;
@@ -469,6 +508,9 @@ export default {
         this.pushBuyQtyId();
       }
     },
+    getCurrentWidth() {
+      this.currentWidth = window.innerWidth;
+    },
   },
   computed: {
     noResults() {
@@ -483,6 +525,7 @@ export default {
     },
   },
   created() {
+    this.getCurrentWidth();
     this.isLoading = true;
     this.whereComeFrom();
     this.getMyFavorite();
@@ -619,12 +662,33 @@ img {
 }
 
 .list-group-item.active {
-  background-color: #fff;
+  background-color: #f8f9fa;
   color: #ccaf3c;
   border: 1px solid #dee2e6;
+  font-weight: bolder;
 }
 
 .sticky-top {
-  top: 100px;
+  top: 75px;
+}
+
+.btnXs {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+.btnXs:hover {
+  background-color: #ccaf3c;
+}
+
+.activeBtnXs {
+  color: #000;
+  font-weight: bolder;
+  border: 1px solid #ccaf3c;
+  background-color: #ccaf3c;
+}
+
+.miniWidth {
+  padding-top: 29px;
 }
 </style>
