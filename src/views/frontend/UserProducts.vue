@@ -13,14 +13,15 @@
     >
       <!-- sm以上 -->
       <section class="d-none d-sm-block list-group sticky-top">
-        <buttom
+        <button
           @click="goToAllProducts"
           class="list-group-item list-group-item-action"
           :class="{ active: $route.path === '/user-products' }"
           :aria-current="$route.path === '/user-products'"
-          >所有類別
-        </buttom>
-        <buttom
+        >
+          所有類別
+        </button>
+        <button
           @click="goToTheCategory(item)"
           v-for="item in categoryList"
           :key="item"
@@ -29,7 +30,7 @@
           :aria-current="$route.params.currentCategory === item"
         >
           {{ item }}
-        </buttom>
+        </button>
       </section>
       <!-- xs -->
       <section
@@ -211,10 +212,11 @@
           "
           @is-in-view="handleIsInView"
           @is-outside-view="handleIsOutsideView"
+          class="mb-4"
         />
         <div
           v-if="pagination.current_page === pagination.total_pages"
-          class="w-100 text-secondary text-center"
+          class="w-100 text-secondary text-center mb-4"
         >
           <p class="mb-0 noMore">已無更多商品</p>
         </div>
