@@ -73,13 +73,13 @@
           <div @click="goToProduct(item)" class="card mx-auto mb-4">
             <h3
               v-if="isMyFavorite(item)"
-              @click="delMyFavorite(item)"
+              @click.stop="delMyFavorite(item)"
               class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
             ></h3>
 
             <h3
               v-else
-              @click="addMyFavorite(item)"
+              @click.stop="addMyFavorite(item)"
               class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
             ></h3>
             <div class="position-relative">
@@ -167,7 +167,7 @@
                 aria-label="Default button group"
               >
                 <button
-                  @click="delOne(item)"
+                  @click.stop="delOne(item)"
                   :disabled="!item.buyQty || item.id === status.delLoadingItem"
                   type="button"
                   class="btn btn-light w-50"
@@ -183,7 +183,7 @@
                 </button>
 
                 <button
-                  @click="addCart(item)"
+                  @click.stop="addCart(item)"
                   :disabled="item.id === status.addLoadingItem"
                   type="button"
                   class="btn btn-light w-50"
