@@ -160,44 +160,21 @@
                   </strong>
                 </div>
               </div>
-
-              <div
-                class="btn-group w-100"
-                role="group"
-                aria-label="Default button group"
+              <button
+                @click.stop="addCart(item)"
+                :disabled="item.id === status.addLoadingItem"
+                type="button"
+                class="btn btn-light addBtn"
               >
-                <button
-                  @click.stop="delOne(item)"
-                  :disabled="!item.buyQty || item.id === status.delLoadingItem"
-                  type="button"
-                  class="btn btn-light w-50"
+                <div
+                  v-if="item.id === status.addLoadingItem"
+                  class="spinner-border text-light spinner-grow-sm"
+                  role="status"
                 >
-                  <div
-                    v-if="item.id === status.delLoadingItem"
-                    class="spinner-border text-dark spinner-grow-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <i v-else class="bi bi-dash-lg"></i>
-                </button>
-
-                <button
-                  @click.stop="addCart(item)"
-                  :disabled="item.id === status.addLoadingItem"
-                  type="button"
-                  class="btn btn-light w-50"
-                >
-                  <div
-                    v-if="item.id === status.addLoadingItem"
-                    class="spinner-border text-dark spinner-grow-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <i v-else class="bi bi-plus-lg"></i>
-                </button>
-              </div>
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p v-else class="mb-0">加入購物車</p>
+              </button>
             </div>
           </div>
         </section>
@@ -451,47 +428,6 @@ export default {
           this.status.addLoadingItem = "";
         });
     },
-    delOne(item) {
-      const updateQty = item.buyQty - 1;
-      const delItem = { product_id: item.id, qty: updateQty };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushCartId}`;
-      this.status.delLoadingItem = item.id;
-      this.$http
-        .put(api, { data: delItem })
-        .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已刪除 1 個品項");
-            if (res.data.data.qty === 0) {
-              this.delItem(item.pushCartId);
-            }
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "刪除失敗");
-          }
-        })
-        .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        })
-        .finally(() => {
-          this.status.delLoadingItem = "";
-        });
-    },
-    delItem(id) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-      this.$http
-        .delete(api)
-        .then((res) => {
-          if (this.searchText === "") {
-            location.reload();
-          }
-
-          return res;
-        })
-        .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
-    },
     goToProduct(item) {
       this.$router.push(`/product/${item.id}`);
     },
@@ -570,11 +506,8 @@ img {
 
 .card:hover {
   cursor: pointer;
-  background-color: #f8f9fa;
-}
-
-.card:hover .imgBody {
-  border: 2px solid #f8f9fa;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .badge {
@@ -692,5 +625,11 @@ img {
 
 .miniWidth {
   padding-top: 29px;
+}
+
+.addBtn:hover {
+  background-color: #ccaf3c;
+  border: 1px solid #ccaf3c;
+  color: #000;
 }
 </style>
