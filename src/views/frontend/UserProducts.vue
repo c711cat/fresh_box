@@ -70,7 +70,7 @@
           class="col-12 col-sm-6 col-lg-4 col-xxl-3"
           :class="{ 'ps-4': currentWidth >= 576 }"
         >
-          <div class="card mx-auto mb-4">
+          <div @click="goToProduct(item)" class="card mx-auto mb-4">
             <h3
               v-if="isMyFavorite(item)"
               @click="delMyFavorite(item)"
@@ -83,11 +83,7 @@
               class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
             ></h3>
             <div class="position-relative">
-              <img
-                @click="goToProduct(item)"
-                :src="item.imageUrl"
-                class="imgBody card-img-top"
-              />
+              <img :src="item.imageUrl" class="imgBody card-img-top" />
             </div>
 
             <div class="card-body d-flex flex-column justify-content-between">
@@ -572,9 +568,13 @@ img {
   height: 6vh;
 }
 
-.imgBody:hover {
+.card:hover {
   cursor: pointer;
-  border: 2px solid #fff;
+  background-color: #f8f9fa;
+}
+
+.card:hover .imgBody {
+  border: 2px solid #f8f9fa;
 }
 
 .badge {
