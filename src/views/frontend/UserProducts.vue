@@ -57,11 +57,18 @@
       </section>
     </div>
     <div class="mx-auto col-11 col-sm-9 col-lg-10 col-xxl-10">
-      <section v-if="noResults" class="mt-4">
+      <section v-if="noResults" class="mt-4 text-center">
         <h3>查無相符商品</h3>
       </section>
-      <section v-if="noFavorites" class="mt-4">
-        <h3>目前無收藏的商品</h3>
+      <section v-if="noFavorites" class="mt-4 text-center">
+        <h3 class="mb-4">目前無收藏的商品</h3>
+        <button
+          @click="goToAllProducts"
+          class="btn btn-outline-primary"
+          type="button"
+        >
+          繼續逛逛
+        </button>
       </section>
       <div class="d-flex flex-wrap col-12">
         <section
@@ -380,6 +387,7 @@ export default {
       this.isLoading = false;
     },
     goToAllProducts() {
+      this.isLoading = true;
       if (this.$route.path === "/user-products") {
         location.reload();
       } else {
