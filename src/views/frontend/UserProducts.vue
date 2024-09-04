@@ -580,11 +580,11 @@ img {
 }
 
 .xs_title_text {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .xs_text {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .noMore {
