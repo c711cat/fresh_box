@@ -2,7 +2,7 @@
   <div>
     <Swiper
       style="padding: 0px 35px"
-      class="d-flex align-items-center"
+      class="d-flex align-items-center m-0"
       :modules="modules"
       :slides-per-view="5"
       :space-between="40"
@@ -33,10 +33,6 @@
         '1200': {
           slidesPerView: 4,
           spaceBetween: 45,
-        },
-        '1400': {
-          slidesPerView: 5,
-          spaceBetween: 50,
         },
       }"
       @swiper="onSwiper"
@@ -246,6 +242,16 @@ a {
 :root .swiper-button-next,
 .swiper-button-prev {
   --swiper-navigation-size: 20px;
+}
+
+.swiper-button-next {
+  position: absolute;
+  right: 0px;
+}
+
+.swiper-button-prev {
+  position: absolute;
+  left: 0px;
 }
 
 :root .swiper-button-next:hover,

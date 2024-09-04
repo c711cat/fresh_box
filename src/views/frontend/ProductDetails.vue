@@ -157,8 +157,8 @@
           </section>
         </div>
       </div>
-      <h3 class="mb-4 pb-3 pt-5 col-10 border-bottom">推薦商品</h3>
-      <SwiperImgs class="col-lg-10" />
+      <h3 class="mb-4 pb-3 pt-5 col-11 col-md-10 border-bottom">推薦商品</h3>
+      <SwiperImgs class="col-11 col-md-10 px-0" />
     </div>
   </div>
 </template>
