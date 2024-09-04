@@ -83,7 +83,7 @@
               class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
             ></h3>
             <div class="position-relative">
-              <img :src="item.imageUrl" class="imgBody card-img-top" />
+              <img :src="item.imageUrl" class="card-img-top" />
             </div>
 
             <div class="card-body d-flex flex-column justify-content-between">
@@ -507,7 +507,17 @@ img {
 .card:hover {
   cursor: pointer;
   border: none;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 7px 0px #8f8f8f;
+}
+
+.card:hover .addBtn {
+  background-color: #ccaf3c;
+  border: 1px solid #ccaf3c;
+}
+
+.card .addBtn:hover {
+  background-color: #d4bb59;
+  border: 1px solid #d1b750;
 }
 
 .badge {
@@ -625,11 +635,5 @@ img {
 
 .miniWidth {
   padding-top: 29px;
-}
-
-.addBtn:hover {
-  background-color: #ccaf3c;
-  border: 1px solid #ccaf3c;
-  color: #000;
 }
 </style>
