@@ -9,9 +9,9 @@
   />
 
   <!-- 商品類別 -->
-  <CategoryView />
+  <CategoryView class="mb-5" />
   <!-- 暢銷商品 -->
-  <section class="d-flex justify-content-center mt-5">
+  <section class="d-flex justify-content-center">
     <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
       <h3
         class="writeStyle m-0 col-1"
