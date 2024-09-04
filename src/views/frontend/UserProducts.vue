@@ -57,11 +57,18 @@
       </section>
     </div>
     <div class="mx-auto col-11 col-sm-9 col-lg-10 col-xxl-10">
-      <section v-if="noResults" class="mt-4">
+      <section v-if="noResults" class="mt-4 text-center">
         <h3>查無相符商品</h3>
       </section>
-      <section v-if="noFavorites" class="mt-4">
-        <h3>目前無收藏的商品</h3>
+      <section v-if="noFavorites" class="mt-4 text-center">
+        <h3 class="mb-4">目前無收藏的商品</h3>
+        <button
+          @click="goToAllProducts"
+          class="btn btn-outline-primary"
+          type="button"
+        >
+          繼續逛逛
+        </button>
       </section>
       <div class="d-flex flex-wrap col-12">
         <section
@@ -70,24 +77,20 @@
           class="col-12 col-sm-6 col-lg-4 col-xxl-3"
           :class="{ 'ps-4': currentWidth >= 576 }"
         >
-          <div class="card mx-auto mb-4">
+          <div @click="goToProduct(item)" class="card mx-auto mb-4">
             <h3
               v-if="isMyFavorite(item)"
-              @click="delMyFavorite(item)"
+              @click.stop="delMyFavorite(item)"
               class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
             ></h3>
 
             <h3
               v-else
-              @click="addMyFavorite(item)"
+              @click.stop="addMyFavorite(item)"
               class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
             ></h3>
             <div class="position-relative">
-              <img
-                @click="goToProduct(item)"
-                :src="item.imageUrl"
-                class="imgBody card-img-top"
-              />
+              <img :src="item.imageUrl" class="card-img-top" />
             </div>
 
             <div class="card-body d-flex flex-column justify-content-between">
@@ -164,44 +167,21 @@
                   </strong>
                 </div>
               </div>
-
-              <div
-                class="btn-group w-100"
-                role="group"
-                aria-label="Default button group"
+              <button
+                @click.stop="addCart(item)"
+                :disabled="item.id === status.addLoadingItem"
+                type="button"
+                class="btn btn-light addBtn"
               >
-                <button
-                  @click="delOne(item)"
-                  :disabled="!item.buyQty || item.id === status.delLoadingItem"
-                  type="button"
-                  class="btn btn-light w-50"
+                <div
+                  v-if="item.id === status.addLoadingItem"
+                  class="spinner-border text-light spinner-grow-sm"
+                  role="status"
                 >
-                  <div
-                    v-if="item.id === status.delLoadingItem"
-                    class="spinner-border text-dark spinner-grow-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <i v-else class="bi bi-dash-lg"></i>
-                </button>
-
-                <button
-                  @click="addCart(item)"
-                  :disabled="item.id === status.addLoadingItem"
-                  type="button"
-                  class="btn btn-light w-50"
-                >
-                  <div
-                    v-if="item.id === status.addLoadingItem"
-                    class="spinner-border text-dark spinner-grow-sm"
-                    role="status"
-                  >
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                  <i v-else class="bi bi-plus-lg"></i>
-                </button>
-              </div>
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p v-else class="mb-0">加入購物車</p>
+              </button>
             </div>
           </div>
         </section>
@@ -407,6 +387,7 @@ export default {
       this.isLoading = false;
     },
     goToAllProducts() {
+      this.isLoading = true;
       if (this.$route.path === "/user-products") {
         location.reload();
       } else {
@@ -453,47 +434,6 @@ export default {
         })
         .finally(() => {
           this.status.addLoadingItem = "";
-        });
-    },
-    delOne(item) {
-      const updateQty = item.buyQty - 1;
-      const delItem = { product_id: item.id, qty: updateQty };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.pushCartId}`;
-      this.status.delLoadingItem = item.id;
-      this.$http
-        .put(api, { data: delItem })
-        .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已刪除 1 個品項");
-            if (res.data.data.qty === 0) {
-              this.delItem(item.pushCartId);
-            }
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "刪除失敗");
-          }
-        })
-        .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        })
-        .finally(() => {
-          this.status.delLoadingItem = "";
-        });
-    },
-    delItem(id) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
-      this.$http
-        .delete(api)
-        .then((res) => {
-          if (this.searchText === "") {
-            location.reload();
-          }
-
-          return res;
-        })
-        .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
         });
     },
     goToProduct(item) {
@@ -572,9 +512,20 @@ img {
   height: 6vh;
 }
 
-.imgBody:hover {
+.card:hover {
   cursor: pointer;
-  border: 2px solid #fff;
+  border: none;
+  box-shadow: 0px 0px 7px 0px #8f8f8f;
+}
+
+.card:hover .addBtn {
+  background-color: #ccaf3c;
+  border: 1px solid #ccaf3c;
+}
+
+.card .addBtn:hover {
+  background-color: #d4bb59;
+  border: 1px solid #d1b750;
 }
 
 .badge {
@@ -637,11 +588,11 @@ img {
 }
 
 .xs_title_text {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .xs_text {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .noMore {
