@@ -1,7 +1,7 @@
 <template>
   <div class="bg-light">
     <main
-      class="mx-auto categoryWrap py-4 px-1 d-flex flex-wrap col-12 col-sm-9 col-lg-9 justify-content-center align-items-center"
+      class="mx-auto py-4 px-1 d-flex flex-wrap col-12 col-lg-9 justify-content-center align-items-center"
     >
       <router-link
         v-for="item in categoryList"
@@ -9,14 +9,15 @@
         :to="`/user-products/${item.veleafy_vegetable}`"
         data-aos="zoom-in"
         data-aos-duration="600"
-        class="categoryLink text-secondary col col-sm"
+        class="categoryLink py-2 px-1 text-secondary text-decoration-none d-flex flex-column justify-content-center align-items-center col-4 col-sm"
       >
-        <img class="categoryImg" :src="item.img" alt="leafy_vegetable_img" />
+        <img
+          class="categoryImg mb-1"
+          :src="item.img"
+          alt="leafy_vegetable_img"
+        />
 
-        <p class="mb-0 d-none d-md-block">
-          {{ item.name }}
-        </p>
-        <p class="mb-0 smFontSize d-block d-md-none">
+        <p class="mb-0">
           {{ item.name }}
         </p>
       </router-link>
@@ -52,22 +53,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.categoryWrap {
-  padding: 10px 0px;
-}
-
 .categoryImg {
   width: 50px;
-  margin-bottom: 6px;
 }
 
 .categoryLink {
-  padding: 5px 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
   min-width: 90px;
 }
 
@@ -76,9 +66,5 @@ export default {
   background-color: #f9c40637;
   color: #000 !important;
   filter: brightness(1.1);
-}
-
-.smFontSize {
-  font-size: 14px;
 }
 </style>
