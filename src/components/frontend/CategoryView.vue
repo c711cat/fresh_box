@@ -1,127 +1,52 @@
 <template>
   <div class="bg-light">
     <main
-      class="mx-auto categoryWrap py-4 d-flex flex-wrap col-12 col-sm-9 col-lg-9 justify-content-center align-items-center"
+      class="mx-auto categoryWrap py-4 px-1 d-flex flex-wrap col-12 col-sm-9 col-lg-9 justify-content-center align-items-center"
     >
       <router-link
-        :to="`/user-products/${categoryList.veleafy_vegetable}`"
+        v-for="item in categoryList"
+        :key="item.name"
+        :to="`/user-products/${item.veleafy_vegetable}`"
         data-aos="zoom-in"
         data-aos-duration="600"
-        class="m-1 categoryLink text-secondary col col-sm"
+        class="categoryLink text-secondary col col-sm"
       >
-        <img
-          class="categoryImg"
-          src="@/assets/img/leafy_vegetable.png"
-          alt="leafy_vegetable_img"
-        />
+        <img class="categoryImg" :src="item.img" alt="leafy_vegetable_img" />
 
-        <p
-          class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
-        >
-          {{ categoryList.veleafy_vegetable }}
+        <p class="mb-0 d-none d-md-block">
+          {{ item.name }}
         </p>
-        <p
-          class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
-        >
-          {{ categoryList.veleafy_vegetable }}
-        </p>
-      </router-link>
-      <router-link
-        :to="`/user-products/${categoryList.melon_root_bulb}`"
-        data-aos="zoom-in"
-        data-aos-duration="600"
-        class="m-1 categoryLink text-secondary col col-sm"
-      >
-        <img
-          class="categoryImg"
-          src="@/assets/img/melon_root_bulb.png"
-          alt="melon_root_bulb_img"
-        />
-        <p
-          class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
-        >
-          {{ categoryList.melon_root_bulb }}
-        </p>
-
-        <p
-          class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
-        >
-          {{ categoryList.melon_root_bulb }}
-        </p>
-      </router-link>
-      <router-link
-        :to="`/user-products/${categoryList.mushroom}`"
-        data-aos="zoom-in"
-        data-aos-duration="600"
-        class="m-1 categoryLink text-secondary col col-sm"
-      >
-        <img
-          class="categoryImg"
-          src="@/assets/img/mushroom.png"
-          alt="mushroom_img"
-        />
-        <p
-          class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
-        >
-          {{ categoryList.mushroom }}
-        </p>
-
-        <p
-          class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
-        >
-          {{ categoryList.mushroom }}
-        </p>
-      </router-link>
-      <router-link
-        :to="`/user-products/${categoryList.fruit}`"
-        data-aos="zoom-in"
-        data-aos-duration="600"
-        class="m-1 categoryLink text-secondary col col-sm"
-      >
-        <img class="categoryImg" src="@/assets/img/fruit.png" alt="fruit_img" />
-        <p
-          class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
-        >
-          {{ categoryList.fruit }}
-        </p>
-        <p
-          class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
-        >
-          {{ categoryList.fruit }}
-        </p>
-      </router-link>
-      <router-link
-        :to="`/user-products/${categoryList.spice}`"
-        data-aos="zoom-in"
-        data-aos-duration="600"
-        class="m-1 categoryLink text-secondary col col-sm"
-      >
-        <img class="categoryImg" src="@/assets/img/spice.png" alt="spice_img" />
-        <p
-          class="mb-0 d-none d-sm-none d-md-block d-lg-block d-xl-block d-xxl-block"
-        >
-          {{ categoryList.spice }}
-        </p>
-        <p
-          class="mb-0 smFontSize d-block d-sm-block d-md-none d-lg-none d-xl-none d-xxl-none"
-        >
-          {{ categoryList.spice }}
+        <p class="mb-0 smFontSize d-block d-md-none">
+          {{ item.name }}
         </p>
       </router-link>
     </main>
   </div>
 </template>
 <script>
+import leafy_vegetableImg from "@/assets/img/leafy_vegetable.png";
+import melon_root_bulbImg from "@/assets/img/melon_root_bulb.png";
+import mushroomImg from "@/assets/img/mushroom.png";
+import fruitImg from "@/assets/img/fruit.png";
+import spiceImg from "@/assets/img/spice.png";
 export default {
   data() {
     return {
-      categoryList: {
-        veleafy_vegetable: "葉菜",
-        melon_root_bulb: "瓜果根球莖",
-        mushroom: "菇菌",
-        fruit: "水果",
-        spice: "辛香料",
-      },
+      categoryList: [
+        {
+          name: "葉菜",
+          type: "leafy_vegetable",
+          img: leafy_vegetableImg,
+        },
+        {
+          name: "瓜果根球莖",
+          type: "melon_root_bulb",
+          img: melon_root_bulbImg,
+        },
+        { name: "菇菌", type: "mushroom", img: mushroomImg },
+        { name: "水果", type: "fruit", img: fruitImg },
+        { name: "辛香料", type: "spice", img: spiceImg },
+      ],
     };
   },
 };
@@ -143,7 +68,7 @@ export default {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  min-width: 75px;
+  min-width: 90px;
 }
 
 .categoryLink:hover {
