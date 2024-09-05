@@ -26,11 +26,11 @@
           slidesPerView: 2,
           spaceBetween: 45,
         },
-        '800': {
+        '750': {
           slidesPerView: 3,
           spaceBetween: 45,
         },
-        '1200': {
+        '900': {
           slidesPerView: 4,
           spaceBetween: 45,
         },
