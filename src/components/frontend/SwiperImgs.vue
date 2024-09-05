@@ -46,22 +46,13 @@
             alt="carouselImg"
           />
           <div>
-            <div
-              class="p-2 fs-5 text-black"
-              :class="{ 'fs-6 fw-bold': currentWidth < 600 }"
-            >
+            <div class="p-2 fs-5 fw-bold text-black">
               {{ item.title }}
             </div>
-            <div
-              class="px-2 text-black"
-              :class="{ 'smStyle fw-light': currentWidth < 600 }"
-            >
+            <div class="px-2 text-black">
               {{ item.content }}
             </div>
-            <div
-              :class="{ 'smStyle fw-light': currentWidth < 600 }"
-              class="priceContainer d-flex p-2 flex-wrap align-items-center"
-            >
+            <div class="priceContainer d-flex p-2 flex-wrap align-items-center">
               <div
                 class="text-secondary col-12"
                 :class="{
@@ -81,7 +72,6 @@
             <div class="text-center pb-2">
               <button
                 @click.stop="addCart(item)"
-                :class="{ 'btn-sm': currentWidth < 600 }"
                 class="mb-0 btn btn-light addBtn"
                 type="button"
               >
@@ -120,7 +110,6 @@ export default {
   data() {
     return {
       allProducts: [],
-      currentWidth: "1000",
       status: {
         addLoadingItem: "",
         delLoadingItem: "",
@@ -176,11 +165,7 @@ export default {
           this.status.addLoadingItem = "";
         });
     },
-    isCurrentWidth() {
-      this.currentWidth = window.innerWidth;
-    },
     goToProductPage(id) {
-      console.log(id);
       this.$router.push(`/product/${id}`);
       if (this.$route.path !== "/") {
         setTimeout(() => {
@@ -191,7 +176,6 @@ export default {
   },
 
   created() {
-    this.isCurrentWidth();
     this.getAllProducts();
   },
 };
@@ -229,10 +213,6 @@ a {
   width: 100%;
   height: 150px;
   object-fit: cover;
-}
-
-.smStyle {
-  font-size: 14px;
 }
 
 .priceContainer {

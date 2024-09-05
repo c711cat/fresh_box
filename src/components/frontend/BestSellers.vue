@@ -48,22 +48,13 @@
         >
           <img class="bestSellersImg" :src="item.imgUrl" alt="bestSellerImg" />
           <div>
-            <div
-              class="p-2 fs-5 text-black"
-              :class="{ 'fs-6 fw-bold': currentWidth < 600 }"
-            >
+            <div class="p-2 fs-5 fw-bold text-black">
               {{ item.title }}
             </div>
-            <div
-              class="px-2 text-black"
-              :class="{ 'smStyle fw-light': currentWidth < 600 }"
-            >
+            <div class="px-2 text-black">
               {{ item.content }}
             </div>
-            <div
-              class="d-flex p-2 flex-wrap align-items-center"
-              :class="{ 'smStyle fw-light': currentWidth < 600 }"
-            >
+            <div class="d-flex p-2 flex-wrap align-items-center">
               <div
                 class="text-secondary col-12"
                 :class="{
@@ -84,7 +75,6 @@
               <button
                 @click.stop="addCart(item)"
                 class="mb-0 btn btn-light shadow addBtn"
-                :class="{ 'btn-sm': currentWidth < 600 }"
                 type="button"
               >
                 <div
@@ -193,7 +183,6 @@ export default {
           id: "-Ntoe6-WbDJY9ChStYOs",
         },
       ],
-      currentWidth: 1000,
       status: {
         addLoadingItem: "",
         delLoadingItem: "",
@@ -239,12 +228,6 @@ export default {
           this.status.addLoadingItem = "";
         });
     },
-    isCurrentWidth() {
-      this.currentWidth = window.innerWidth;
-    },
-  },
-  created() {
-    this.isCurrentWidth();
   },
 };
 </script>
@@ -252,7 +235,6 @@ export default {
 <style lang="scss" scoped>
 .productItem:hover {
   cursor: pointer;
-  // filter: brightness(1.1);
 }
 .bestSellersImg {
   width: 100%;
@@ -276,10 +258,6 @@ export default {
 .productItem .addBtn:hover {
   background-color: #d4bb59;
   border: 1px solid #d1b750;
-}
-
-.smStyle {
-  font-size: 14px;
 }
 
 :root .swiper-button-next,
