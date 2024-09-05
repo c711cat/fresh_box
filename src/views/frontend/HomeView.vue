@@ -11,56 +11,17 @@
   <!-- 商品類別 -->
   <CategoryView class="mb-5" />
   <!-- 暢銷商品 -->
-  <section class="d-flex justify-content-center">
-    <div class="row mx-0 mb-5 pb-3 pt-4 col-11 justify-content-center">
-      <h3
-        class="writeStyle m-0 col-1"
-        data-aos="fade-in"
-        data-aos-easing="ease-out-sine"
-        data-aos-duration="1500"
-      >
-        暢銷商品
-        <div class="straightLine writeStyle mt-3 ms-2"></div>
-      </h3>
+  <section class="mx-auto mb-5 col-11 col-xl-9">
+    <h3
+      class="mb-3 border-bottom border-dark"
+      data-aos="fade-in"
+      data-aos-easing="ease-out-sine"
+      data-aos-duration="1500"
+    >
+      暢銷商品
+    </h3>
 
-      <div class="col col-md-11 col-xl-9 row m-0 justify-content-center">
-        <div
-          v-for="(item, index) in bestSellerProducts"
-          :key="item.id"
-          class="pt-4 mb-4 col-10 col-sm-6 col-md-6 col-lg-3 col-xl"
-          data-aos="fade-up"
-          data-aos-duration="800"
-          :data-aos-delay="index * 100"
-        >
-          <router-link :to="`/product/${item.id}`" class="linkStyle">
-            <img
-              class="img-fluid bestSellersImg shadow-lg"
-              :src="item.imgUrl"
-              alt="bestSellerProductImg"
-            />
-          </router-link>
-          <div>
-            <div class="p-2 fs-5">{{ item.title }}</div>
-            <div class="px-2">{{ item.content }}</div>
-            <div class="d-flex p-2 justify-content-between">
-              <div class="text-decoration-line-through text-secondary">
-                NT$ {{ $filters.currency(item.origin_price) }}
-              </div>
-              <div class="text-end">
-                NT$ {{ $filters.currency(item.price) }}
-              </div>
-            </div>
-            <button
-              @click="addCart(item)"
-              class="w-100 my-3 btn btn-light shadow rounded-0"
-              type="button"
-            >
-              加入購物車
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <BestSellers />
   </section>
 
   <section class="row col-12 mx-0 justify-content-center align-items-center">
@@ -89,30 +50,26 @@
     </router-link>
   </section>
 
-  <section class="py-5 col-12">
-    <div class="mx-auto col-11 py-5">
-      <div class="row my-0 mx-auto flex-row-reverse col-11">
-        <h3
-          class="writeStyle m-0 p-0 col-1"
-          data-aos="fade-in"
-          data-aos-easing="ease-out-sine"
-          data-aos-duration="1500"
-        >
-          <div class="straightLine writeStyle mt-3 me-2"></div>
-          精選商品
-        </h3>
-        <SwiperImgs
-          class="mx-auto overflow-x-hidden pt-3 col-10"
-          data-aos="fade-up"
-          data-aos-easing="ease-out-sine"
-          data-aos-duration="800"
-        />
-      </div>
-    </div>
+  <section class="mx-auto py-5 col-11 col-xl-9">
+    <h3
+      class="mb-3 border-bottom border-dark"
+      data-aos="fade-in"
+      data-aos-easing="ease-out-sine"
+      data-aos-duration="1500"
+    >
+      精選商品
+    </h3>
+    <SwiperImgs
+      class="mx-auto overflow-x-hidden"
+      data-aos="fade-up"
+      data-aos-easing="ease-out-sine"
+      data-aos-duration="800"
+    />
   </section>
 </template>
 <script>
 import CategoryView from "@/components/frontend/CategoryView.vue";
+import BestSellers from "@/components/frontend/BestSellers.vue";
 import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
 export default {
   data() {
@@ -157,7 +114,7 @@ export default {
       ],
     };
   },
-  components: { CategoryView, SwiperImgs },
+  components: { CategoryView, BestSellers, SwiperImgs },
   inject: ["emitter"],
   methods: {
     addCart(item) {
@@ -186,10 +143,6 @@ export default {
   width: 100%;
   height: 100vh;
   object-fit: cover;
-}
-
-.writeStyle {
-  writing-mode: vertical-lr;
 }
 
 .straightLine {
