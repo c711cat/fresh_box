@@ -93,39 +93,6 @@
       <div class="swiper-button-prev text-dark"></div>
       <div class="swiper-button-next text-dark"></div>
     </Swiper>
-    <!-- <div
-      v-for="(item, index) in bestSellerProducts"
-      :key="item.id"
-      class="border pt-4 mb-4 px-3 col-10 col-sm-6 col-md-6 col-lg-3 col-xl-3"
-      data-aos="fade-up"
-      data-aos-duration="800"
-      :data-aos-delay="index * 100"
-    >
-      <router-link :to="`/product/${item.id}`" class="linkStyle">
-        <img
-          class="img-fluid bestSellersImg shadow-lg"
-          :src="item.imgUrl"
-          alt="bestSellerProductImg"
-        />
-      </router-link>
-      <div>
-        <div class="p-2 fs-5">{{ item.title }}</div>
-        <div class="px-2">{{ item.content }}</div>
-        <div class="d-flex p-2 justify-content-between">
-          <div class="text-decoration-line-through text-secondary">
-            NT$ {{ $filters.currency(item.origin_price) }}
-          </div>
-          <div class="text-end">NT$ {{ $filters.currency(item.price) }}</div>
-        </div>
-        <button
-          @click="addCart(item)"
-          class="w-100 my-3 btn btn-light shadow rounded-0"
-          type="button"
-        >
-          加入購物車
-        </button>
-      </div>
-    </div> -->
   </div>
 </template>
 
