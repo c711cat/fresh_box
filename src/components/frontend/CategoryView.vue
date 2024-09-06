@@ -1,27 +1,55 @@
 <template>
   <div class="bg-light">
-    <main
-      class="mx-auto py-4 px-1 d-flex flex-wrap col-12 col-lg-9 justify-content-center align-items-center"
+    <Swiper
+      class="swiper mx-auto py-4 px-1 d-flex flex-wrap col-12 col-lg-9 justify-content-center align-items-center"
+      :modules="modules"
+      :freeMode="true"
+      :slides-per-view="5"
+      :space-between="10"
+      :grabCursor="true"
+      :pagination="{
+        clickable: true,
+        el: '.swiper-pagination',
+      }"
+      :scrollbar="false"
+      :breakpoints="{
+        '0': {
+          slidesPerView: 1,
+        },
+        '220': {
+          slidesPerView: 2,
+        },
+        '320': {
+          slidesPerView: 3,
+        },
+        '420': {
+          slidesPerView: 4,
+        },
+        '500': {
+          slidesPerView: 5,
+        },
+      }"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
     >
-      <router-link
+      <SwiperSlide
         v-for="item in categoryList"
         :key="item.name"
-        :to="`/user-products/${item.veleafy_vegetable}`"
-        data-aos="zoom-in"
-        data-aos-duration="600"
-        class="categoryLink py-2 px-1 text-secondary text-decoration-none d-flex flex-column justify-content-center align-items-center col-4 col-sm"
+        class="mb-2 d-flex jusitify-content-center"
       >
-        <img
-          class="categoryImg mb-1"
-          :src="item.img"
-          alt="leafy_vegetable_img"
-        />
+        <router-link
+          :to="`/user-products/${item.name}`"
+          class="categoryLink py-2 px-1 text-secondary text-decoration-none d-flex flex-column justify-content-center align-items-center col-4 col-sm"
+        >
+          <img class="categoryImg mb-1" :src="item.img" alt="category_img" />
 
-        <p class="mb-0">
-          {{ item.name }}
-        </p>
-      </router-link>
-    </main>
+          <p class="mb-0">
+            {{ item.name }}
+          </p>
+        </router-link>
+      </SwiperSlide>
+      <div class="swiper-pagination"></div>
+    </Swiper>
   </div>
 </template>
 <script>
@@ -30,6 +58,18 @@ import melon_root_bulbImg from "@/assets/img/melon_root_bulb.png";
 import mushroomImg from "@/assets/img/mushroom.png";
 import fruitImg from "@/assets/img/fruit.png";
 import spiceImg from "@/assets/img/spice.png";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 export default {
   data() {
     return {
@@ -50,6 +90,19 @@ export default {
       ],
     };
   },
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  setup() {
+    const onSwiper = () => {};
+    const onSlideChange = () => {};
+    return {
+      onSwiper,
+      onSlideChange,
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
+    };
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -62,9 +115,18 @@ export default {
 }
 
 .categoryLink:hover {
+  width: 100%;
   border-radius: 6px;
   background-color: #f9c40637;
   color: #000 !important;
   filter: brightness(1.1);
+}
+
+.swiper-slide {
+  justify-content: center;
+}
+
+.swiper {
+  --swiper-pagination-color: #ccaf3c;
 }
 </style>
