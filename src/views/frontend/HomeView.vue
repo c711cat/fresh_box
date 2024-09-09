@@ -1,12 +1,34 @@
 <template>
-  <img
-    src="@/assets/img/1.jpg"
-    class="homeImg"
-    alt="homeImg"
-    data-aos="fade-in"
-    data-aos-easing="ease-out-sine"
-    data-aos-duration="2000"
-  />
+  <div class="position-relative d-flex justify-content-center">
+    <img
+      src="@/assets/img/1.jpg"
+      class="homeImg"
+      alt="homeImg"
+      data-aos="fade-in"
+      data-aos-easing="ease-out-sine"
+      data-aos-duration="2000"
+    />
+    <div
+      class="fastGoBox position-absolute rounded p-5 text-center col-11 col-sm-11 col-md-9"
+    >
+      <p class="fs-1 text-light fw-bold">新 鮮 食 材 更 有 好 味 道</p>
+      <p class="fs-1 text-light fw-bold">當 季 蔬 果 熱 賣 中</p>
+      <router-link
+        to="/user-products"
+        class="btn btn-primary btn-lg"
+        role="button"
+      >
+        快速前往購物吧
+      </router-link>
+    </div>
+    <div
+      class="scrollBox w-100 py-2 px-3 position-absolute d-flex justify-content-center"
+    >
+      <button class="btn btn arrowBtn" type="button ">
+        <i class="fs-1 bi bi-arrow-down"></i>
+      </button>
+    </div>
+  </div>
 
   <!-- 商品類別 -->
   <CategoryView class="mb-5" />
@@ -60,7 +82,43 @@ export default {
 <style lang="scss" scoped>
 .homeImg {
   width: 100%;
-  height: 82vh;
+  height: 100vh;
   object-fit: cover;
+}
+
+.fastGoBox {
+  bottom: 30%;
+  background-color: #0000004d;
+}
+
+.fastGoBox:hover {
+  filter: brightness(1.3);
+}
+
+.scrollBox {
+  height: 250px;
+  bottom: 0px;
+}
+
+.arrowBtn {
+  position: absolute;
+  top: 0px;
+  animation-name: arrow;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes arrow {
+  0% {
+    color: #fff;
+    top: 20px;
+    opacity: 1;
+  }
+
+  100% {
+    color: #fff;
+    top: 200px;
+    opacity: 0;
+  }
 }
 </style>
