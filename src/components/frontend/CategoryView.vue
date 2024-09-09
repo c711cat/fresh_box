@@ -116,10 +116,9 @@ export default {
 
 .categoryLink:hover {
   width: 100%;
-  border-radius: 6px;
-  background-color: #f9c40637;
   color: #000 !important;
-  filter: brightness(1.1);
+  font-weight: bolder;
+  filter: brightness(1.3);
 }
 
 .swiper-slide {
