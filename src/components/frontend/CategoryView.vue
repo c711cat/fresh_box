@@ -38,6 +38,8 @@
         class="mb-2 d-flex jusitify-content-center"
       >
         <router-link
+          data-aos="zoom-in"
+          data-aos-duration="600"
           :to="`/user-products/${item.name}`"
           class="categoryLink py-2 px-1 text-secondary text-decoration-none d-flex flex-column justify-content-center align-items-center col-4 col-sm"
         >
