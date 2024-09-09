@@ -60,7 +60,7 @@ export default {
 <style lang="scss" scoped>
 .homeImg {
   width: 100%;
-  height: 100vh;
+  height: 82vh;
   object-fit: cover;
 }
 </style>
