@@ -60,7 +60,7 @@
         </div>
         <div class="d-flex mb-3">
           <button
-            :disabled="productQty === 1"
+            :disabled="productQty <= 1"
             @click="delQty"
             type="button"
             class="btn btn-light rounded-0 rounded-start border border-gray-light"
@@ -257,6 +257,14 @@ export default {
         }
       });
       return favorite;
+    },
+  },
+  watch: {
+    productQty() {
+      if (this.productQty < 1) {
+        this.productQty = 1;
+      }
+      return this.productQty;
     },
   },
   created() {
