@@ -12,7 +12,7 @@
     </section>
     <main
       v-else
-      class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light"
+      class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light rounded"
     >
       <div class="col-12 p-3">
         <router-view />
@@ -34,8 +34,12 @@
           <section
             v-for="item in carts"
             :key="item.id"
-            class="d-flex align-items-center mb-3 bg-white pe-3"
+            class="d-flex align-items-center mb-3 pe-3 position-relative bg-white rounded"
           >
+            <i
+              @click="delItem(item)"
+              class="bi bi-x-lg px-3 py-2 position-absolute top-0 end-0"
+            ></i>
             <router-link :to="`/product/${item.product.id}`" class="">
               <img
                 v-if="currentWidth >= 250"
@@ -48,17 +52,13 @@
               <div class="d-flex justify-content-between col-12">
                 <router-link
                   :to="`/product/${item.product.id}`"
-                  class="productTitle text-decoration-none fw-bolder mt-1"
+                  class="productTitle text-decoration-none fw-bolder lh-1"
                 >
                   {{ item.product.title }}
                 </router-link>
-                <i
-                  @click="delItem(item)"
-                  class="bi bi-x-lg ps-2 d-flex align-items-center"
-                ></i>
               </div>
 
-              <div class="text-secondary pb-1">
+              <div class="text-secondary py-1">
                 NT$ {{ $filters.currency(showPrice(item)) }}
               </div>
 
@@ -425,13 +425,13 @@ export default {
 }
 
 img {
-  height: 100px;
+  height: 120px;
   width: 80px;
   object-fit: cover;
 }
 
 img:hover {
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   cursor: pointer;
 }
 
@@ -441,7 +441,9 @@ img:hover {
 }
 
 .productTitle:hover {
-  color: #212529;
+  font-size: 18px;
+  border: 1px solid #fff;
+  color: #887426;
 }
 
 .bi-x-lg:hover {
