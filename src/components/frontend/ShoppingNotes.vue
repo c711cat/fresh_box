@@ -10,7 +10,10 @@
         <p class="mb-0 col">
           從訂購當日 至 到貨日需 3 個工作天（ 不包含週六、週日及國定假日 ）。
           詳細內容請至
-          <router-link to="/QA" class="text-decoration-none px-1">
+          <router-link
+            to="/QA"
+            class="text-decoration-none px-1 fw-bold text-dark-primary"
+          >
             常見問題
           </router-link>
           查閱。
@@ -53,5 +56,9 @@
 <style lang="scss" scoped>
 .noteTitle {
   width: 100px;
+}
+
+.text-dark-primary:hover {
+  color: #ccaf3c !important;
 }
 </style>

@@ -307,7 +307,7 @@ $danger:        $red !default;
 $light:         $gray-100 !default;
 $dark:          $gray-900 !default;
 $black:#000;
-$yellow-600:$yellow-600;
+$dark-primary:#887426;
 $yellow-200:$yellow-200;
 $yellow-light:#f9c406;
 $gray-light:#dee2e6;
@@ -324,10 +324,10 @@ $theme-colors: (
   "light":      $light,
   "dark":       $dark,
   "black":      $black,
-  "yellow-600": $yellow-600,
   "yellow-200": $yellow-200,
   "yellow-light":$yellow-light,
   "gray-light": $gray-light,
+  "dark-primary":$dark-primary
 ) !default;
 // scss-docs-end theme-colors-map
 
