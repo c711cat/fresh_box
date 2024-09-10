@@ -69,8 +69,8 @@
           </button>
           <input
             v-model="productQty"
-            type="text"
             class="form-control text-center rounded-0"
+            type="number"
           />
           <button
             @click="addQty"
@@ -325,5 +325,11 @@ export default {
 
 .accordion-button:not(.collapsed) {
   box-shadow: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

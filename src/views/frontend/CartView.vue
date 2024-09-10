@@ -77,7 +77,7 @@
                     @change="updateQtyOfInput(item)"
                     :disabled="item.id === status.updateLoadingItem"
                     v-model="item.qty"
-                    type="text"
+                    type="number"
                     class="form-control form-control-sm text-center rounded-0 z-1"
                   />
 
@@ -449,5 +449,11 @@ img:hover {
 .emptyContainer {
   height: 89vh;
   margin-top: 90px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
