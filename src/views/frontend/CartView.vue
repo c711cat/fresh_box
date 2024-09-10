@@ -68,7 +68,7 @@
                     @click="delOneQty(item)"
                     :disabled="item.id === status.delLoadingItem"
                     type="button"
-                    class="btn btn-light btn-sm rounded-0 rounded-start"
+                    class="btn btn-primary btn-sm rounded-0 rounded-start"
                   >
                     <i class="bi bi-dash-lg"></i>
                   </button>
@@ -78,14 +78,14 @@
                     :disabled="item.id === status.updateLoadingItem"
                     v-model="item.qty"
                     type="number"
-                    class="form-control form-control-sm text-center rounded-0 z-1"
+                    class="form-control form-control-sm text-center rounded-0 border-primary"
                   />
 
                   <button
                     @click="addOneToCart(item)"
                     :disabled="item.id === status.addLoadingItem"
                     type="button"
-                    class="btn btn-light btn-sm rounded-0 rounded-end"
+                    class="btn btn-primary btn-sm rounded-0 rounded-end"
                   >
                     <i class="bi bi-plus-lg"></i>
                   </button>
