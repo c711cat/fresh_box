@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex">
     <Swiper
       style="padding: 0px 35px"
       class="d-flex align-items-center m-0"
@@ -32,19 +32,21 @@
         },
         '900': {
           slidesPerView: 4,
-          spaceBetween: 45,
+          spaceBetween: 30,
         },
       }"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-      <SwiperSlide v-for="item in allProducts" :key="item.id">
-        <div @click="goToProductPage(item.id)" class="productItem rounded my-3">
-          <img
-            class="img-fluid carouselImg rounded-top"
-            :src="item.imageUrl"
-            alt="carouselImg"
-          />
+      <SwiperSlide v-for="(item, index) in bestSellerProducts" :key="item.id">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="800"
+          :data-aos-delay="index * 100"
+          @click="goToProductPage(item.id)"
+          class="productItem my-3"
+        >
+          <img class="bestSellersImg" :src="item.imgUrl" alt="bestSellerImg" />
           <div>
             <div class="p-2 fs-5 fw-bold text-black">
               {{ item.title }}
@@ -52,7 +54,7 @@
             <div class="px-2 text-black">
               {{ item.content }}
             </div>
-            <div class="priceContainer d-flex p-2 flex-wrap align-items-center">
+            <div class="d-flex p-2 flex-wrap align-items-center">
               <div
                 class="text-secondary col-12"
                 :class="{
@@ -72,7 +74,7 @@
             <div class="text-center pb-2">
               <button
                 @click.stop="addCart(item)"
-                class="mb-0 btn btn-light addBtn"
+                class="mb-0 btn btn-light shadow addBtn"
                 type="button"
               >
                 <div
@@ -93,6 +95,7 @@
     </Swiper>
   </div>
 </template>
+
 <script>
 import {
   Navigation,
@@ -109,7 +112,44 @@ import "swiper/css/scrollbar";
 export default {
   data() {
     return {
-      allProducts: [],
+      bestSellerProducts: [
+        {
+          title: "台灣水蜜桃",
+          imgUrl:
+            "https://images.unsplash.com/photo-1595124245030-41448b199d6d?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          content: "600g±10% / 盒",
+          origin_price: 600,
+          price: 500,
+          id: "-NsfVCnYqjTKonXqR4cO",
+        },
+        {
+          title: "無籽黑葡萄",
+          imgUrl:
+            "https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          content: "1.8kg±10% / 盒",
+          origin_price: 699,
+          price: 569,
+          id: "-Nsg6Th1g1I7OzbPJF1g",
+        },
+        {
+          title: "空運櫻桃",
+          imgUrl:
+            "https://images.unsplash.com/photo-1595657241488-468423581c23?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          content: "1kg±10% / 盒",
+          origin_price: 1200,
+          price: 1000,
+          id: "-NsfbLG9v4NLUQwba1YJ",
+        },
+        {
+          title: "蘆筍",
+          imgUrl:
+            "https://images.unsplash.com/photo-1629875235136-737fef945cfd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          content: "200g±10% / 盒",
+          origin_price: 150,
+          price: 120,
+          id: "-Ntoe6-WbDJY9ChStYOs",
+        },
+      ],
       status: {
         addLoadingItem: "",
         delLoadingItem: "",
@@ -131,18 +171,8 @@ export default {
   },
   inject: ["emitter"],
   methods: {
-    getAllProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
-      this.$http
-        .get(api)
-        .then((res) => {
-          if (res.data.success) {
-            this.allProducts = res.data.products;
-          }
-        })
-        .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+    goToProductPage(id) {
+      this.$router.push(`/product/${id}`);
     },
     addCart(item) {
       const addItem = { product_id: item.id, qty: 1 };
@@ -165,41 +195,29 @@ export default {
           this.status.addLoadingItem = "";
         });
     },
-    goToProductPage(id) {
-      this.$router.push(`/product/${id}`);
-      if (this.$route.path !== "/") {
-        setTimeout(() => {
-          location.reload();
-        }, 500);
-      }
-    },
-  },
-
-  created() {
-    this.getAllProducts();
   },
 };
 </script>
+
 <style lang="scss" scoped>
-a {
-  text-decoration: none;
+.productItem:hover {
+  cursor: pointer;
+}
+.bestSellersImg {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
 }
 
-.productItem {
-  height: auto;
+.productItem:hover .bestSellersImg {
+  box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511) !important;
 }
 
-.productItem .addBtn {
+.addBtn {
   width: 100%;
 }
 
-.productItem:hover {
-  cursor: pointer;
-  box-shadow: 0px 0px 7px 0px #8f8f8f;
-}
-
 .productItem:hover .addBtn {
-  width: 90%;
   background-color: #ccaf3c;
   border: 1px solid #ccaf3c;
 }
@@ -207,16 +225,6 @@ a {
 .productItem .addBtn:hover {
   background-color: #d4bb59;
   border: 1px solid #d1b750;
-}
-
-.carouselImg {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.priceContainer {
-  height: 65px;
 }
 
 :root .swiper-button-next,

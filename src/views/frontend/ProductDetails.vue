@@ -195,6 +195,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          window.scrollTo(0, 0);
         });
     },
     addQty() {
