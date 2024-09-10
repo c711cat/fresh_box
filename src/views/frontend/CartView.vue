@@ -12,7 +12,7 @@
     </section>
     <main
       v-else
-      class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light"
+      class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light rounded"
     >
       <div class="col-12 p-3">
         <router-view />
@@ -34,8 +34,12 @@
           <section
             v-for="item in carts"
             :key="item.id"
-            class="d-flex align-items-center mb-3 bg-white pe-3"
+            class="d-flex align-items-center mb-3 pe-3 position-relative bg-white rounded"
           >
+            <i
+              @click="delItem(item)"
+              class="bi bi-x-lg px-3 py-2 position-absolute top-0 end-0"
+            ></i>
             <router-link :to="`/product/${item.product.id}`" class="">
               <img
                 v-if="currentWidth >= 250"
@@ -48,17 +52,13 @@
               <div class="d-flex justify-content-between col-12">
                 <router-link
                   :to="`/product/${item.product.id}`"
-                  class="productTitle text-decoration-none fw-bolder mt-1"
+                  class="productTitle text-decoration-none fw-bolder lh-1"
                 >
                   {{ item.product.title }}
                 </router-link>
-                <i
-                  @click="delItem(item)"
-                  class="bi bi-x-lg ps-2 d-flex align-items-center"
-                ></i>
               </div>
 
-              <div class="text-secondary pb-1">
+              <div class="text-secondary py-1">
                 NT$ {{ $filters.currency(showPrice(item)) }}
               </div>
 
@@ -68,7 +68,7 @@
                     @click="delOneQty(item)"
                     :disabled="item.id === status.delLoadingItem"
                     type="button"
-                    class="btn btn-light btn-sm rounded-0 rounded-start"
+                    class="btn btn-primary btn-sm rounded-0 rounded-start"
                   >
                     <i class="bi bi-dash-lg"></i>
                   </button>
@@ -77,15 +77,15 @@
                     @change="updateQtyOfInput(item)"
                     :disabled="item.id === status.updateLoadingItem"
                     v-model="item.qty"
-                    type="text"
-                    class="form-control form-control-sm text-center rounded-0 z-1"
+                    type="number"
+                    class="form-control form-control-sm text-center rounded-0 border-primary"
                   />
 
                   <button
                     @click="addOneToCart(item)"
                     :disabled="item.id === status.addLoadingItem"
                     type="button"
-                    class="btn btn-light btn-sm rounded-0 rounded-end"
+                    class="btn btn-primary btn-sm rounded-0 rounded-end"
                   >
                     <i class="bi bi-plus-lg"></i>
                   </button>
@@ -106,7 +106,7 @@
 
             <div class="d-flex align-items-center col-12 flex-wrap">
               <v-select
-                class="selectStyle col-8 flex-fill col-sm-9 text-secondary"
+                class="selectStyle col flex-fill col-sm-9 text-secondary"
                 label="Select"
                 :options="couponOption"
                 v-model="couponCode"
@@ -115,10 +115,17 @@
               ></v-select>
               <button
                 @click="useCoupon"
-                class="btn btn-primary btnBody border border-primary rounded-0 rounded-end-2 py-0 col flex-fill"
+                class="btn btn-primary btnBody border border-primary rounded-0 rounded-end-2 py-0 col-4 col-sm"
                 type="button"
               >
-                送出
+                <div
+                  v-if="status.submit"
+                  class="spinner-border text-light spinner-grow-sm"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p v-else class="m-0">送出</p>
               </button>
             </div>
 
@@ -178,7 +185,12 @@ export default {
     return {
       isLoading: false,
       carts: [],
-      status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
+      status: {
+        addLoadingItem: "",
+        delLoadingItem: "",
+        updateLoadingItem: "",
+        submit: false,
+      },
       couponOption: ["10%off"],
       couponCode: "",
       shippingFee: 290,
@@ -303,6 +315,7 @@ export default {
     },
     useCoupon() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      this.status.submit = true;
       this.$http
         .post(api, { data: { code: this.couponCode } })
         .then((res) => {
@@ -317,6 +330,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.submit = false;
         });
     },
     getshippingFee() {
@@ -409,13 +425,13 @@ export default {
 }
 
 img {
-  height: 100px;
+  height: 120px;
   width: 80px;
   object-fit: cover;
 }
 
 img:hover {
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   cursor: pointer;
 }
 
@@ -425,7 +441,9 @@ img:hover {
 }
 
 .productTitle:hover {
-  color: #212529;
+  font-size: 18px;
+  border: 1px solid #fff;
+  color: #887426;
 }
 
 .bi-x-lg:hover {
@@ -449,5 +467,11 @@ img:hover {
 .emptyContainer {
   height: 89vh;
   margin-top: 90px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>

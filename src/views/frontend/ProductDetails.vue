@@ -1,18 +1,9 @@
 <template>
   <div class="row mb-5 mx-auto justify-content-center productDetailsContainer">
     <div class="row m-0 d-cloumn justify-content-center">
-      <section class="p-1 col-12 col-md-5 position-relative mb-5">
+      <section class="p-1 col-12 col-md-5 mb-5">
         <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
-        <h2
-          v-if="isMyFavorite"
-          @click="delMyFavorite"
-          class="bi bi-suit-heart-fill delmyFavoriteIcon position-absolute z-1"
-        ></h2>
-        <h2
-          v-else
-          @click="addMyFavorite"
-          class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
-        ></h2>
+
         <div class="row m-0 overflow-x-auto align-items-center flex-nowrap">
           <img
             v-for="img in product.images"
@@ -24,8 +15,23 @@
           />
         </div>
       </section>
-      <section class="mt-3 px-4 col-12 col-md-5 col-lg-4 col-xl-3">
-        <h4 class="mb-3 border-bottom pb-3 px-1">{{ product.title }}</h4>
+      <section class="px-4 mb-5 col-12 col-md-5 col-lg-4 col-xl-3">
+        <div
+          class="border-bottom mb-3 d-flex justify-content-between align-items-center"
+        >
+          <h4 class="mb-0 py-3 px-1">{{ product.title }}</h4>
+          <i
+            v-if="isMyFavorite"
+            @click="delMyFavorite"
+            class="fs-2 px-2 bi bi-suit-heart-fill delmyFavoriteIcon"
+          ></i>
+          <i
+            v-else
+            @click="addMyFavorite"
+            class="fs-2 px-2 bi bi-suit-heart myFavoriteIcon"
+          ></i>
+        </div>
+
         <div v-if="product.description" class="productContent px-1 mb-2">
           <ul v-for="item in product.description" :key="item" class="ps-3 mb-0">
             <li class="">{{ item }}</li>
@@ -60,32 +66,40 @@
         </div>
         <div class="d-flex mb-3">
           <button
-            :disabled="productQty === 1"
+            :disabled="productQty <= 1"
             @click="delQty"
             type="button"
-            class="btn btn-light rounded-0 rounded-start border border-gray-light"
+            class="btn btn-primary rounded-0 rounded-start"
           >
             <i class="bi bi-dash-lg"></i>
           </button>
           <input
             v-model="productQty"
-            type="text"
-            class="form-control text-center rounded-0"
+            class="form-control text-center rounded-0 border-primary"
+            type="number"
           />
           <button
+            :disabled="status.addLoadingItem"
             @click="addQty"
             type="button"
-            class="btn btn-light rounded-0 rounded-end border border-gray-light"
+            class="btn btn-primary rounded-0 rounded-end"
           >
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
         <button
-          @click="addToCart"
+          @click.stop="addToCart"
           type="button"
-          class="btn btn-light w-100 border border-gray-light"
+          class="btn btn-primary w-100"
         >
-          加入購物車
+          <div
+            v-if="status.addLoadingItem"
+            class="spinner-border text-light spinner-grow-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p v-else class="mb-0">加入購物車</p>
         </button>
       </section>
       <div class="col-11 col-md-10 col-lg-9 col-xl-8">
@@ -175,6 +189,10 @@ export default {
       productQty: 1,
       myFavoriteList: [],
       details: {},
+      status: {
+        addLoadingItem: false,
+        delLoadingItem: false,
+      },
     };
   },
   inject: ["emitter"],
@@ -208,6 +226,7 @@ export default {
     },
     addToCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.status.addLoadingItem = true;
       this.$http
         .post(api, {
           data: { product_id: this.product.id, qty: Number(this.productQty) },
@@ -223,6 +242,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.addLoadingItem = false;
         });
     },
     changeImg(img) {
@@ -259,6 +281,14 @@ export default {
       return favorite;
     },
   },
+  watch: {
+    productQty() {
+      if (this.productQty < 1) {
+        this.productQty = 1;
+      }
+      return this.productQty;
+    },
+  },
   created() {
     this.getProduct();
   },
@@ -288,27 +318,21 @@ export default {
 }
 
 .delmyFavoriteIcon {
-  right: 5px;
-  top: 5px;
-  padding: 8px 12px;
-  color: #f52424b3;
+  color: #f52424;
 }
 
 .delmyFavoriteIcon:hover {
   cursor: pointer;
-  color: #dc3545;
+  color: #bb2d3b;
 }
 
 .myFavoriteIcon {
-  right: 5px;
-  top: 5px;
-  padding: 8px 12px;
-  color: #ffffffb3;
+  color: #f52424;
 }
 
 .myFavoriteIcon:hover {
   cursor: pointer;
-  color: #f52424;
+  color: #bb2d3b;
 }
 
 .productDetailsContainer {
@@ -325,5 +349,11 @@ export default {
 
 .accordion-button:not(.collapsed) {
   box-shadow: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 </style>
