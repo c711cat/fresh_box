@@ -63,29 +63,37 @@
             :disabled="productQty <= 1"
             @click="delQty"
             type="button"
-            class="btn btn-light rounded-0 rounded-start border border-gray-light"
+            class="btn btn-primary rounded-0 rounded-start"
           >
             <i class="bi bi-dash-lg"></i>
           </button>
           <input
             v-model="productQty"
-            class="form-control text-center rounded-0"
+            class="form-control text-center rounded-0 border-primary"
             type="number"
           />
           <button
+            :disabled="status.addLoadingItem"
             @click="addQty"
             type="button"
-            class="btn btn-light rounded-0 rounded-end border border-gray-light"
+            class="btn btn-primary rounded-0 rounded-end"
           >
             <i class="bi bi-plus-lg"></i>
           </button>
         </div>
         <button
-          @click="addToCart"
+          @click.stop="addToCart"
           type="button"
-          class="btn btn-light w-100 border border-gray-light"
+          class="btn btn-primary w-100"
         >
-          加入購物車
+          <div
+            v-if="status.addLoadingItem"
+            class="spinner-border text-light spinner-grow-sm"
+            role="status"
+          >
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p v-else class="mb-0">加入購物車</p>
         </button>
       </section>
       <div class="col-11 col-md-10 col-lg-9 col-xl-8">
@@ -175,6 +183,10 @@ export default {
       productQty: 1,
       myFavoriteList: [],
       details: {},
+      status: {
+        addLoadingItem: false,
+        delLoadingItem: false,
+      },
     };
   },
   inject: ["emitter"],
@@ -208,6 +220,7 @@ export default {
     },
     addToCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      this.status.addLoadingItem = true;
       this.$http
         .post(api, {
           data: { product_id: this.product.id, qty: Number(this.productQty) },
@@ -223,6 +236,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.addLoadingItem = false;
         });
     },
     changeImg(img) {
