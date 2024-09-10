@@ -106,7 +106,7 @@
 
             <div class="d-flex align-items-center col-12 flex-wrap">
               <v-select
-                class="selectStyle col-8 flex-fill col-sm-9 text-secondary"
+                class="selectStyle col flex-fill col-sm-9 text-secondary"
                 label="Select"
                 :options="couponOption"
                 v-model="couponCode"
@@ -115,10 +115,17 @@
               ></v-select>
               <button
                 @click="useCoupon"
-                class="btn btn-primary btnBody border border-primary rounded-0 rounded-end-2 py-0 col flex-fill"
+                class="btn btn-primary btnBody border border-primary rounded-0 rounded-end-2 py-0 col-4 col-sm"
                 type="button"
               >
-                送出
+                <div
+                  v-if="status.submit"
+                  class="spinner-border text-light spinner-grow-sm"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p v-else class="m-0">送出</p>
               </button>
             </div>
 
@@ -178,7 +185,12 @@ export default {
     return {
       isLoading: false,
       carts: [],
-      status: { addLoadingItem: "", delLoadingItem: "", updateLoadingItem: "" },
+      status: {
+        addLoadingItem: "",
+        delLoadingItem: "",
+        updateLoadingItem: "",
+        submit: false,
+      },
       couponOption: ["10%off"],
       couponCode: "",
       shippingFee: 290,
@@ -303,6 +315,7 @@ export default {
     },
     useCoupon() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      this.status.submit = true;
       this.$http
         .post(api, { data: { code: this.couponCode } })
         .then((res) => {
@@ -317,6 +330,9 @@ export default {
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
+        })
+        .finally(() => {
+          this.status.submit = false;
         });
     },
     getshippingFee() {
