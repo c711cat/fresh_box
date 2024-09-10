@@ -24,9 +24,7 @@
     <div
       class="scrollBox w-100 py-2 px-3 position-absolute d-flex justify-content-center"
     >
-      <button class="btn btn arrowBtn" type="button ">
-        <i class="fs-1 bi bi-arrow-down"></i>
-      </button>
+      <i class="arrowDown text-white fs-1 bi-arrow-down-circle-fill"></i>
     </div>
   </div>
 
@@ -100,7 +98,7 @@ export default {
   bottom: 0px;
 }
 
-.arrowBtn {
+.arrowDown {
   position: absolute;
   top: 0px;
   animation-name: arrow;
@@ -110,13 +108,11 @@ export default {
 
 @keyframes arrow {
   0% {
-    color: #fff;
-    top: 20px;
+    top: 0px;
     opacity: 1;
   }
 
   100% {
-    color: #fff;
     top: 200px;
     opacity: 0;
   }
