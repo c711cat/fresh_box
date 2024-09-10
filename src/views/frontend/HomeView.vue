@@ -9,10 +9,10 @@
       data-aos-duration="2000"
     />
     <div
-      class="fastGoBox position-absolute rounded p-5 text-center col-11 col-sm-11 col-md-9"
+      class="fastGoBox position-absolute rounded py-5 px-3 text-center col-11 col-sm-11 col-md-9"
     >
-      <p class="fs-1 text-light fw-bold">新 鮮 食 材 更 有 好 味 道</p>
-      <p class="fs-1 text-light fw-bold">當 季 蔬 果 熱 賣 中</p>
+      <p class="bannerText text-light fw-bold">新 鮮 食 材 更 有 好 味 道</p>
+      <p class="bannerText text-light fw-bold">當 季 蔬 果 熱 賣 中</p>
       <router-link
         to="/user-products"
         class="btn btn-primary btn-lg"
@@ -91,6 +91,10 @@ export default {
 
 .fastGoBox:hover {
   filter: brightness(1.3);
+}
+
+.bannerText {
+  font-size: clamp(24px, 4vw, 40px);
 }
 
 .scrollBox {
