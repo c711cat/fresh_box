@@ -283,7 +283,8 @@ img {
 }
 
 .linkStyle:hover {
-  box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
+  filter: brightness(1.1);
+  border: 3px solid #fff;
 }
 
 .disabled:hover {
