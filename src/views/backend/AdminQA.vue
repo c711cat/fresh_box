@@ -5,11 +5,7 @@
       class="px-1 mb-2 d-flex justify-content-between align-items-center flex-wrap"
     >
       <h3 class="mb-0">常見問題</h3>
-      <button
-        @click="openQA_Modal(true)"
-        class="btn btn-yellow-200"
-        type="button"
-      >
+      <button @click="openQA_Modal(true)" class="btn btn-primary" type="button">
         新增
       </button>
     </header>
@@ -33,7 +29,7 @@
             <div class="d-flex flex-wrap align-items-center py-2">
               <div
                 v-if="item.isPublic === false"
-                class="d-inline text-danger border border-danger p-1 me-2"
+                class="d-inline text-danger border border-danger p-1 me-2 rounded"
               >
                 未公開
               </div>
@@ -53,7 +49,7 @@
             <div class="col-12 text-end flex-wrap">
               <button
                 @click="openQA_Modal(isNew, item)"
-                class="btn btn-outline-primary me-2"
+                class="btn btn-outline-dark-primary me-2"
                 type="button"
               >
                 編輯
