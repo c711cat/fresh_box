@@ -34,7 +34,7 @@
           <section
             v-for="item in carts"
             :key="item.id"
-            class="d-flex align-items-center mb-3 pe-3 position-relative bg-white rounded"
+            class="d-flex align-items-center mb-3 pe-3 position-relative bg-white"
           >
             <i
               @click="delItem(item)"
