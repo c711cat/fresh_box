@@ -2,9 +2,7 @@
   <LoadingView v-if="isLoading" />
   <div v-else class="container col-sm-8 col-md-7 col-lg-5">
     <form @submit.prevent="signIn" class="m-3">
-      <h3 class="mb-3 border-2 pb-2 border-bottom border-secondary">
-        請先登入
-      </h3>
+      <h3 class="mb-3 pb-2 border-bottom border-gray-light">請先登入</h3>
       <div class="mb-3">
         <label for="inputEmail">Email</label>
         <input
@@ -26,7 +24,10 @@
         />
       </div>
       <div class="d-grid gap-2">
-        <button class="btn btn-lg btn-dark btn-block rounded-1" type="submit">
+        <button
+          class="btn btn-lg btn-primary btn-block rounded-1"
+          type="submit"
+        >
           登入
         </button>
       </div>
