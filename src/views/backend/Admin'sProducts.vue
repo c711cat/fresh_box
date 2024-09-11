@@ -1,6 +1,6 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <main v-else class="px-3 mb-5 d-flex flex-column align-items-center">
+  <main v-else class="wrap px-3 d-flex flex-column align-items-center">
     <header
       class="row m-0 p-2 col-12 col-xxl-11 justify-content-between align-items-center"
     >
@@ -22,7 +22,7 @@
       v-for="item in products"
       :key="item.id"
       :class="{ 'bg-light': item.is_enabled === 0 }"
-      class="row m-0 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
+      class="row m-0 mb-5 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
     >
       <div
         class="position-relative text-center col-4 col-sm-6 col-md-3 col-lg-2"
@@ -272,6 +272,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrap {
+  margin-top: 120px;
+}
+
 img {
   height: 20vh;
   width: 100%;

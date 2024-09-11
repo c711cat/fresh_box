@@ -4,7 +4,7 @@
     v-else
     class="mx-auto containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
   >
-    <div class="mb-5">
+    <div class="">
       <header>
         <h3 v-if="noResults">{{ noResultsContent }}</h3>
         <div v-else class="p-1 mb-2 text-end">
@@ -208,7 +208,7 @@ export default {
 
 <style lang="scss" scoped>
 .containerWrap {
-  min-height: 88vh;
+  margin-top: 120px;
 }
 
 .accordion-button:hover {
