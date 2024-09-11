@@ -6,13 +6,12 @@
   >
     <div class="">
       <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
-      <section
-        v-for="(item, index) in orderList"
-        :key="item.id"
-        class="accordion m-0"
-        id="accordionPanelsUserOrderList"
-      >
-        <div class="accordion-item">
+      <section class="accordion m-0" id="accordionPanelsUserOrderList">
+        <div
+          v-for="(item, index) in orderList"
+          :key="item.id"
+          class="accordion-item"
+        >
           <h2 class="accordion-header">
             <button
               @click="open"

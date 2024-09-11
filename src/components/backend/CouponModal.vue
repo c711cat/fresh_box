@@ -105,7 +105,7 @@
             v-else
             @click="$emit('add-coupon', tempCoupon)"
             type="button"
-            class="btn btn-yellow-200"
+            class="btn btn-primary"
           >
             新增優惠券
           </button>

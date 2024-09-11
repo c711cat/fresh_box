@@ -9,11 +9,7 @@
         後台產品列表
       </h3>
       <div v-if="itemsInProducts" class="col-auto p-1">
-        <button
-          @click="openModal(true)"
-          type="button"
-          class="btn btn-yellow-200"
-        >
+        <button @click="openModal(true)" type="button" class="btn btn-primary">
           新增產品
         </button>
       </div>
@@ -22,7 +18,7 @@
       v-for="item in products"
       :key="item.id"
       :class="{ 'bg-light': item.is_enabled === 0 }"
-      class="row m-0 mb-5 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
+      class="row m-0 col-12 col-xxl-11 justify-content-center align-items-center py-2 border-top text-center text-sm-start"
     >
       <div
         class="position-relative text-center col-4 col-sm-6 col-md-3 col-lg-2"
@@ -77,7 +73,7 @@
         <button
           @click="openModal(false, item)"
           type="button"
-          class="btn btn-outline-primary rounded-1 me-1 my-1"
+          class="btn btn-outline-dark-primary rounded-1 me-1 my-1"
         >
           編輯
         </button>
@@ -287,7 +283,8 @@ img {
 }
 
 .linkStyle:hover {
-  box-shadow: 0px 8px 10px rgba(36, 35, 35, 0.511);
+  filter: brightness(1.1);
+  border: 3px solid #fff;
 }
 
 .disabled:hover {

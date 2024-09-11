@@ -147,10 +147,7 @@
           <div class="">
             <div class="h-auto position-relative">
               <i class="bi bi-cart2 fs-2 text-primary"></i>
-              <span
-                v-if="carts.length >= 1"
-                class="badge rounded-pill numInCart"
-              >
+              <span v-if="carts.length >= 1" class="badge rounded-5 numInCart">
                 {{ carts.length }}
               </span>
             </div>
@@ -331,8 +328,9 @@ export default {
   background-color: #f9c406;
   color: #000;
   position: absolute;
-  top: 2px;
-  right: -10px;
+  top: 0px;
+  right: -13px;
+  font-size: clamp(12px, 1.5vw, 14px);
 }
 
 .isCurrentNavbarItem {

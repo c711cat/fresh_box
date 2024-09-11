@@ -9,7 +9,7 @@
         <button
           @click="openCouponModal(true)"
           type="button"
-          class="btn btn-yellow-200"
+          class="btn btn-primary"
         >
           新增優惠券
         </button>
@@ -67,7 +67,7 @@
           <button
             @click="openCouponModal(isNew, coupon)"
             type="button"
-            class="btn btn-outline-primary rounded-1 me-2 my-1"
+            class="btn btn-outline-dark-primary rounded-1 me-2 my-1"
           >
             編輯
           </button>
