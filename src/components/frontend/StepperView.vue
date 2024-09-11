@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-between align-items-center col-12">
     <p
-      class="col-2 col-sm-auto flex-wrap mb-0 fs-5 text-primary border border-primary p-2 text-center"
+      class="col-2 col-sm-auto flex-wrap mb-0 fs-5 text-primary border border-primary p-2 text-center rounded"
     >
       建立<br class="d-block d-sm-none" />訂單
     </p>
@@ -12,7 +12,7 @@
     </div>
 
     <p
-      class="col-2 col-sm-auto mb-0 fs-5 border p-2 text-center"
+      class="col-2 col-sm-auto mb-0 fs-5 border p-2 text-center rounded"
       :class="payingText"
     >
       進行<br class="d-block d-sm-none" />付款
@@ -24,7 +24,7 @@
     </div>
 
     <p
-      class="col-2 col-sm-auto mb-0 fs-5 border p-2 text-center"
+      class="col-2 col-sm-auto mb-0 fs-5 border p-2 text-center rounded"
       :class="paidText"
     >
       付款<br class="d-block d-sm-none" />完成
