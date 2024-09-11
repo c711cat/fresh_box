@@ -1,6 +1,6 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <main v-else class="px-3 d-flex flex-column align-items-center">
+  <main v-else class="wrap px-3 d-flex flex-column align-items-center">
     <header
       class="row m-0 p-2 col-12 col-xxl-11 justify-content-between align-items-center"
     >
@@ -272,6 +272,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrap {
+  margin-top: 120px;
+}
+
 img {
   height: 20vh;
   width: 100%;

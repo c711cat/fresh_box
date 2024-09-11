@@ -208,7 +208,7 @@ export default {
 
 <style lang="scss" scoped>
 .containerWrap {
-  min-height: 88vh;
+  margin-top: 120px;
 }
 
 .accordion-button:hover {

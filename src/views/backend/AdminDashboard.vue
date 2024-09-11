@@ -1,9 +1,9 @@
 <template>
-  <div class="navContainer">
+  <div>
     <AdminNavbar />
   </div>
 
-  <div class="viewContainer">
+  <div>
     <router-view />
   </div>
 </template>
@@ -34,9 +34,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.navContainer {
-  margin-bottom: 100px;
-}
-</style>
