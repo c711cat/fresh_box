@@ -18,12 +18,12 @@
       <div
         v-for="(item, index) in QA_List"
         :key="item.id"
-        class="accordion-item border border-0"
+        class="accordion-item"
       >
-        <h2 class="accordion-header border border-0">
+        <h2 class="accordion-header">
           <button
             :class="{ 'bg-secondary-subtle': item.isPublic === false }"
-            class="accordion-button border-bottom rounded-0 py-0"
+            class="accordion-button py-0"
             type="button"
             data-bs-toggle="collapse"
             :data-bs-target="`#QA_List${index}`"
@@ -48,7 +48,7 @@
           }"
           class="accordion-collapse collapse"
         >
-          <div class="accordion-body border-bottom">
+          <div class="accordion-body">
             <p class="overflow-x-auto mb-3">A : {{ item.description }}</p>
             <div class="col-12 text-end flex-wrap">
               <button

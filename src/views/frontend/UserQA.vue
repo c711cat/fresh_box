@@ -9,11 +9,11 @@
       <div
         v-for="(item, index) in QA_List"
         :key="item.id"
-        class="accordion-item border border-0"
+        class="accordion-item"
       >
-        <h2 class="accordion-header border border-0">
+        <h2 class="accordion-header">
           <button
-            class="accordion-button border-bottom rounded-0"
+            class="accordion-button"
             type="button"
             data-bs-toggle="collapse"
             :data-bs-target="`#QA_List${index}`"
@@ -24,7 +24,7 @@
           </button>
         </h2>
         <div :id="`QA_List${index}`" class="accordion-collapse collapse">
-          <div class="accordion-body border-bottom">
+          <div class="accordion-body">
             <p class="overflow-x-auto mb-3">A : {{ item.description }}</p>
           </div>
         </div>
