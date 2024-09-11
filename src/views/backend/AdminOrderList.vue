@@ -4,7 +4,7 @@
     v-else
     class="mx-auto containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
   >
-    <div class="">
+    <div>
       <header>
         <h3 v-if="noResults">{{ noResultsContent }}</h3>
         <div v-else class="p-1 mb-2 text-end">
@@ -18,13 +18,12 @@
         </div>
       </header>
 
-      <section
-        v-for="(item, index) in orderList"
-        :key="item.id"
-        class="accordion m-0"
-        id="accordionPanelsAdminOrderList"
-      >
-        <div class="accordion-item">
+      <section class="accordion m-0" id="accordionPanelsAdminOrderList">
+        <div
+          v-for="(item, index) in orderList"
+          :key="item.id"
+          class="accordion-item"
+        >
           <h2 class="accordion-header">
             <button
               @click="open"
