@@ -1,6 +1,6 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <main v-else class="mx-auto mb-5 col-11 col-md-10 col-lg-8">
+  <main v-else class="mx-auto col-11 col-md-10 col-lg-8">
     <header
       class="px-1 mb-2 d-flex justify-content-between align-items-center flex-wrap"
     >
@@ -14,7 +14,7 @@
       </button>
     </header>
 
-    <section class="accordion containerWrap" id="QAList">
+    <section class="accordion" id="QAList">
       <div
         v-for="(item, index) in QA_List"
         :key="item.id"
@@ -196,10 +196,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.containerWrap {
-  min-height: 73vh;
-}
-
 .accordion-button:hover {
   color: #ccaf3c !important;
 }

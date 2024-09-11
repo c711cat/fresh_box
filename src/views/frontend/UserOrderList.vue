@@ -4,7 +4,7 @@
     v-else
     class="listContainer mx-auto d-flex flex-column justify-content-between col-12 col-xl-10"
   >
-    <div class="mb-5">
+    <div class="">
       <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
       <section
         v-for="(item, index) in orderList"
@@ -48,7 +48,7 @@
         </div>
       </section>
     </div>
-    <footer>
+    <footer class="">
       <PaginationView
         v-if="pageSwitch"
         :pages="pagination"
@@ -169,6 +169,5 @@ export default {
 
 .listContainer {
   margin-top: 120px;
-  min-height: 76vh;
 }
 </style>

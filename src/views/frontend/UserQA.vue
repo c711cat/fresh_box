@@ -1,14 +1,11 @@
 <template>
   <LoadingView v-if="isLoading" />
-  <main v-else class="mt-5 pt-5 mx-auto col-11 col-md-10 col-lg-8">
+  <main v-else class="userQAWrap mx-auto col-11 col-md-10 col-lg-8">
     <header class="my-4 text-center">
       <h3 class="mb-0">常見問題</h3>
     </header>
 
-    <section
-      class="containerWrap accordion mb-4"
-      id="accordionPanelsStayOpenExample"
-    >
+    <section class="accordion" id="accordionPanelsStayOpenExample">
       <div
         v-for="(item, index) in QA_List"
         :key="item.id"
@@ -33,7 +30,7 @@
         </div>
       </div>
     </section>
-    <footer>
+    <footer class="">
       <PaginationView :pages="pagination" @emit-pages="getQAList">
       </PaginationView>
     </footer>
@@ -81,8 +78,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.containerWrap {
-  min-height: 62vh;
+.userQAWrap {
+  margin-top: 120px;
 }
 
 .accordion-button:hover {
