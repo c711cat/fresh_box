@@ -107,7 +107,7 @@
               <div class="mt-2">
                 <button
                   @click="addImg"
-                  class="btn btn-outline-primary btn-sm w-100"
+                  class="btn btn-outline-dark-primary btn-sm w-100"
                 >
                   新增其他圖片
                 </button>
@@ -238,7 +238,7 @@
                 </div>
                 <button
                   @click="addDescriptions"
-                  class="btn btn-outline-primary btn-sm mt-2"
+                  class="btn btn-outline-dark-primary btn-sm mt-2"
                   type="button"
                 >
                   新增產品介紹
@@ -273,7 +273,7 @@
 
                 <button
                   @click="addNotes"
-                  class="btn btn-outline-primary btn-sm mt-2"
+                  class="btn btn-outline-dark-primary btn-sm mt-2"
                   type="button"
                 >
                   新增注意事項
@@ -313,7 +313,7 @@
             v-else
             @click="$emit('add-product', tempProduct)"
             type="button"
-            class="btn btn-yellow-200"
+            class="btn btn-primary"
           >
             新增產品
           </button>
