@@ -1,75 +1,66 @@
 <template>
-  <div class="row m-0 py-2 ps-4 bg-light fw-light">
-    <div class="row m-0 align-items-center justify-content-between col-12">
-      <div class="col-12 col-sm-6">
-        <router-link
-          to="/"
-          class="text-decoration-none text-dark textStyle fs-5 logoStyle"
-        >
-          FRESH BOX
-        </router-link>
-      </div>
-
-      <div
-        class="col-12 col-sm-6 row m-0 align-items-center justify-content-between p-0 flex-wrap"
+  <main class="bg-light">
+    <div
+      class="px-3 py-4 border-bottom d-flex flex-wrap justify-content-between align-items-center"
+    >
+      <router-link
+        to="/"
+        class="mb-0 ps-1 pe-3 textStyle linkStyle fs-4 text-dark"
       >
-        <div style="min-width: 145px" class="text-sm-end py-2 col">
-          <router-link
-            to="/login"
-            class="text-decoration-none rounded-pill text-center bg-black text-light py-2 px-3 adminLogin"
-          >
-            後台
-          </router-link>
-        </div>
-
+        FRESH BOX
+      </router-link>
+      <div class="d-flex align-items-center ps-1 py-1 pe-1">
+        <router-link to="/login" class="backendLink btn btn-black me-3 py-1">
+          後台
+        </router-link>
         <a
-          class="text-center text-sm-end col-auto"
+          class="bi bi-github fs-1 text-dark"
           href="https://github.com/c711cat/fresh_box"
         >
-          <i class="bi bi-github text-dark fs-1"></i>
         </a>
       </div>
     </div>
-    <div class="row m-0 col-12 textSize">
-      <span class="col-auto"> 此網站為個人作品展示，非商業用途。 </span>
-      <div class="col-auto">
+    <div class="px-3 py-4 d-flex flex-wrap">
+      <div class="textStyle pe-2">
         <a
-          class="text-decoration-none"
+          class="linkStyle text-dark"
           target="_blank"
           href="https://icons8.com/icons/collections/x6c5ehv2qqdv25m8idkq"
         >
-          category
+          Category
         </a>
         icons by
         <a
-          class="text-decoration-none"
+          class="linkStyle text-dark"
           target="_blank"
           href="https://icons8.com"
         >
           Icons8
         </a>
+        .
       </div>
-      <div class="textStyle col-auto">© 2024 FRESH BOX</div>
+      <span class="pe-2">此網站為個人作品展示，非商業用途。</span>
+      <span class="textStyle">© 2024 FRESH BOX</span>
     </div>
-  </div>
+  </main>
 </template>
-
 <style lang="scss" scoped>
-.textStyle {
-  font-family: "Times New Roman", Times, serif;
+a {
+  text-decoration: none;
 }
 
-.logoStyle:hover,
+.linkStyle:hover,
 .bi-github:hover {
   color: #ccaf3c !important;
 }
 
-.adminLogin:hover {
-  background-color: #ccaf3c !important;
-  color: black !important;
+.textStyle {
+  font-family: "Times New Roman", Times, serif;
 }
 
-.textSize {
-  font-size: 15px;
+.backendLink:hover {
+  background-color: #ccaf3c;
+  color: black;
+  border: 1px solid #ccaf3c;
 }
 </style>
