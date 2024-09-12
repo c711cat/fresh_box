@@ -1,7 +1,7 @@
 <template>
   <main class="bg-light">
     <div
-      class="px-3 py-1 border-bottom d-flex flex-wrap justify-content-between align-items-center"
+      class="px-3 py-4 border-bottom d-flex flex-wrap justify-content-between align-items-center"
     >
       <router-link
         to="/"
@@ -20,7 +20,7 @@
         </a>
       </div>
     </div>
-    <div class="px-3 py-3 d-flex flex-wrap">
+    <div class="px-3 py-4 d-flex flex-wrap">
       <div class="textStyle pe-2">
         <a
           class="linkStyle text-dark"
