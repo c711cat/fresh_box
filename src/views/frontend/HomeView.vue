@@ -1,12 +1,12 @@
 <template>
-  <div
-    class="position-relative bannerImg d-flex justify-content-center"
+  <section
+    class="bannerImg d-flex flex-column justify-content-end align-items-center"
     data-aos="fade-in"
     data-aos-easing="ease-out-sine"
     data-aos-duration="2000"
   >
     <div
-      class="fastGoBox position-absolute rounded py-5 px-3 text-center col-11 col-sm-11 col-md-9"
+      class="fastGoBox rounded py-5 px-3 text-center col-11 col-sm-11 col-md-9"
     >
       <p class="bannerText text-light fw-bold">新 鮮 食 材 更 有 好 味 道</p>
       <p class="bannerText text-light fw-bold">當 季 蔬 果 熱 賣 中</p>
@@ -18,12 +18,10 @@
         快速前往購物吧
       </router-link>
     </div>
-    <div
-      class="scrollBox w-100 py-2 px-3 position-absolute d-flex justify-content-center"
-    >
+    <div class="scrollBox w-100 py-2 px-3 d-flex justify-content-center">
       <i class="arrowDown text-white fs-1 bi-arrow-down-circle-fill"></i>
     </div>
-  </div>
+  </section>
 
   <!-- 商品類別 -->
   <CategoryView class="mb-5" />
@@ -88,7 +86,6 @@ export default {
 }
 
 .fastGoBox {
-  bottom: 30%;
   background-color: #0000004d;
 }
 
@@ -101,7 +98,8 @@ export default {
 }
 
 .scrollBox {
-  height: 250px;
+  position: relative;
+  height: 30vh;
   bottom: 0px;
 }
 
@@ -115,12 +113,12 @@ export default {
 
 @keyframes arrow {
   0% {
-    top: 0px;
+    top: 0vh;
     opacity: 1;
   }
 
   100% {
-    top: 200px;
+    top: 26vh;
     opacity: 0;
   }
 }
