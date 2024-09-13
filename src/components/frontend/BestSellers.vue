@@ -46,7 +46,13 @@
           @click="goToProductPage(item.id)"
           class="productItem my-3"
         >
-          <img class="bestSellersImg" :src="item.imgUrl" alt="bestSellerImg" />
+          <img
+            class="bestSellersImg"
+            :srcset="`${item.imgUrl}&w=${
+              currentWidth * 2 >= 1000 ? 1000 : currentWidth * 2
+            }`"
+            alt="bestSellerImg"
+          />
           <div>
             <div class="p-2 fs-5 fw-bold text-black">
               {{ item.title }}
@@ -116,7 +122,7 @@ export default {
         {
           title: "台灣水蜜桃",
           imgUrl:
-            "https://images.unsplash.com/photo-1595124245030-41448b199d6d?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1595124245030-41448b199d6d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           content: "600g±10% / 盒",
           origin_price: 600,
           price: 500,
@@ -125,7 +131,7 @@ export default {
         {
           title: "無籽黑葡萄",
           imgUrl:
-            "https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           content: "1.8kg±10% / 盒",
           origin_price: 699,
           price: 569,
@@ -134,7 +140,7 @@ export default {
         {
           title: "空運櫻桃",
           imgUrl:
-            "https://images.unsplash.com/photo-1595657241488-468423581c23?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1595657241488-468423581c23?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           content: "1kg±10% / 盒",
           origin_price: 1200,
           price: 1000,
@@ -143,7 +149,7 @@ export default {
         {
           title: "蘆筍",
           imgUrl:
-            "https://images.unsplash.com/photo-1629875235136-737fef945cfd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1629875235136-737fef945cfd?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           content: "200g±10% / 盒",
           origin_price: 150,
           price: 120,
@@ -154,6 +160,7 @@ export default {
         addLoadingItem: "",
         delLoadingItem: "",
       },
+      currentWidth: 1000,
     };
   },
   components: {
@@ -195,6 +202,9 @@ export default {
           this.status.addLoadingItem = "";
         });
     },
+  },
+  created() {
+    this.currentWidth = window.innerWidth;
   },
 };
 </script>
