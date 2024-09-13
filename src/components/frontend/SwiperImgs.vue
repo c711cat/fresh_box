@@ -42,7 +42,7 @@
         <div @click="goToProductPage(item.id)" class="productItem rounded my-3">
           <img
             class="img-fluid carouselImg rounded-top"
-            :src="item.imageUrl"
+            :srcset="`${item.imageUrl}&w=500`"
             alt="carouselImg"
           />
           <div>
