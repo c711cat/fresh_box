@@ -202,9 +202,12 @@ export default {
           this.status.addLoadingItem = "";
         });
     },
+    getCurrentWidth() {
+      this.currentWidth = window.innerWidth;
+    },
   },
   created() {
-    this.currentWidth = window.innerWidth;
+    this.getCurrentWidth();
   },
 };
 </script>
