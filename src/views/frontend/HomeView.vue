@@ -1,13 +1,10 @@
 <template>
-  <div class="position-relative d-flex justify-content-center">
-    <img
-      src="@/assets/img/1.jpg"
-      class="homeImg"
-      alt="homeImg"
-      data-aos="fade-in"
-      data-aos-easing="ease-out-sine"
-      data-aos-duration="2000"
-    />
+  <div
+    class="position-relative bannerImg d-flex justify-content-center"
+    data-aos="fade-in"
+    data-aos-easing="ease-out-sine"
+    data-aos-duration="2000"
+  >
     <div
       class="fastGoBox position-absolute rounded py-5 px-3 text-center col-11 col-sm-11 col-md-9"
     >
@@ -78,6 +75,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bannerImg {
+  background-image: url(@/assets/img/1.jpg);
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
 .homeImg {
   width: 100%;
   height: 100vh;
