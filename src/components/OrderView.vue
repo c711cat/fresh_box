@@ -26,7 +26,11 @@
           :to="`/product/${item.product.id}`"
           class="col-auto m-0 text-center p-0"
         >
-          <img class="imgBody" :src="item.product.imageUrl" alt="product-img" />
+          <img
+            class="imgBody"
+            :srcset="`${item.product.imageUrl}&w=500`"
+            alt="product-img"
+          />
         </router-link>
         <div
           class="row mx-0 my-1 px-0 col-9 col-sm-10 align-items-center flex-wrap"

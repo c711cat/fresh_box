@@ -25,7 +25,7 @@
       >
         <router-link :to="isPath(item)">
           <img
-            :src="item.imageUrl"
+            :srcset="`${item.imageUrl}&w=500`"
             :class="{
               disabled: item.is_enabled === 0,
               xsWidth: currentWidth <= 450,
