@@ -57,7 +57,11 @@
                   class="form-control mb-3"
                 />
                 <div class="col-12 mb-1">
-                  <img class="img-fluid" :src="tempProduct.imageUrl" alt="" />
+                  <img
+                    class="img-fluid"
+                    :srcset="`${tempProduct.imageUrl}&w=500`"
+                    alt=""
+                  />
                 </div>
               </section>
               <section v-if="tempProduct.images" class="col-12">
@@ -98,7 +102,7 @@
                     />
                     <img
                       class="img-fluid mb-3"
-                      :src="tempProduct.images[index]"
+                      :src="`${tempProduct.images[index]}&w=500`"
                       alt=""
                     />
                   </div>

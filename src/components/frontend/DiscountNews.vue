@@ -1,16 +1,11 @@
 <template>
   <main>
     <div
-      class="position-relative d-flex justify-content-center align-items-center"
+      class="backendImg d-flex justify-content-center align-items-center"
+      data-aos="fade-zoom-in"
+      data-aos-easing="ease-out-circ"
+      data-aos-duration="2000"
     >
-      <img
-        class="newsImg object-fit-cover col-12 p-0"
-        data-aos="fade-zoom-in"
-        data-aos-easing="ease-out-circ"
-        data-aos-duration="2000"
-        src="@/assets/img/home_img2.jpg"
-        alt="homeImg"
-      />
       <router-link
         to="/user-products"
         class="rounded newsContent px-1 text-decoration-none text-black col-11 col-sm-9 col-lg-8 col-xl-6 d-flex flex-column justify-content-center align-items-center"
@@ -36,12 +31,14 @@
   </main>
 </template>
 <style lang="scss" scoped>
-.newsImg {
+.backendImg {
   height: 300px;
+  background-image: url(@/assets/img/home_img2.jpg);
+  background-position: center;
+  background-size: cover;
 }
 
 .newsContent {
-  position: absolute;
   height: 250px;
   background-color: rgba(252, 251, 251, 0.832);
 }

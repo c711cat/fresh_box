@@ -2,14 +2,18 @@
   <div class="row mb-5 mx-auto justify-content-center productDetailsContainer">
     <div class="row m-0 d-cloumn justify-content-center">
       <section class="p-1 col-12 col-md-5 mb-5">
-        <img class="imgBody col-12 mb-3" :src="product.imageUrl" alt="" />
+        <img
+          class="imgBody col-12 mb-3"
+          :srcset="`${product.imageUrl}&w=${currentWidth}`"
+          alt=""
+        />
 
         <div class="row m-0 overflow-x-auto align-items-center flex-nowrap">
           <img
             v-for="img in product.images"
             :key="img"
             @click="changeImg(img)"
-            :src="img"
+            :srcset="`${img}&w=500`"
             class="imgItems col-3"
             alt="product-img"
           />
@@ -279,6 +283,9 @@ export default {
         }
       });
       return favorite;
+    },
+    currentWidth() {
+      return window.innerWidth;
     },
   },
   watch: {
