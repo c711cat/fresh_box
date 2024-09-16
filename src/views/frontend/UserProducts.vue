@@ -238,40 +238,44 @@ export default {
       searchText: "",
       searchResult: [],
       currentWidth: 1000,
-      getOtherPageProducts: throttle(
-        function (options = this.pagination) {
-          const { current_page, total_pages } = options;
-          if (this.isInView === true && current_page < total_pages) {
-            const page = current_page + 1;
-            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
-            this.$http
-              .get(api)
-              .then((res) => {
-                this.pagination = { ...res.data.pagination };
-                this.newPage = [...res.data.products];
-                this.allProducts = [...this.allProducts, ...this.newPage];
-                this.allProducts.forEach((item) => {
-                  this.carts.forEach((cartItem) => {
-                    if (item.id === cartItem.product_id) {
-                      item.buyQty = cartItem.qty;
-                      item.pushCartId = cartItem.id;
-                    }
-                  });
-                });
-              })
-              .catch((error) => {
-                this.$pushMsg.status404(error.response.data.message);
-              });
-          }
-        },
-        500,
-        { leading: true, trailing: true }
-      ),
     };
   },
   components: { ObserverView },
   inject: ["emitter"],
   methods: {
+    getOtherPageProductsThrottled: throttle(
+      function (options = this.pagination) {
+        const { current_page, total_pages } = options;
+        if (this.isInView && current_page < total_pages) {
+          const nextPage = current_page + 1;
+          this.fetchProducts(nextPage);
+        }
+      },
+      500,
+      { leading: true, trailing: true }
+    ),
+    fetchProducts(page) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      this.$http
+        .get(api)
+        .then((res) => {
+          const { pagination, products } = res.data;
+          this.pagination = { ...pagination };
+          this.newPage = [...products];
+          this.allProducts = [...this.allProducts, ...this.newPage];
+          this.allProducts.forEach((item) => {
+            this.carts.forEach((cartItem) => {
+              if (item.id === cartItem.product_id) {
+                item.buyQty = cartItem.qty;
+                item.pushCartId = cartItem.id;
+              }
+            });
+          });
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
+    },
     whereComeFrom() {
       if (this.$route.params.currentCategory) {
         this.chooseCategory(this.$route.params.currentCategory);
@@ -288,7 +292,7 @@ export default {
           this.getCart();
           setTimeout(() => {
             this.getPage1Products();
-            this.getOtherPageProducts();
+            this.getOtherPageProductsThrottled();
           }, 600);
         }
       }
@@ -414,7 +418,7 @@ export default {
       this.handleLoadmore();
     },
     handleLoadmore() {
-      this.getOtherPageProducts();
+      this.getOtherPageProductsThrottled();
     },
     handleIsOutsideView() {
       this.isInView = false;
@@ -490,7 +494,7 @@ export default {
     });
     this.emitter.on("goToUserProducts", () => {
       this.getPage1Products();
-      this.getOtherPageProducts();
+      this.getOtherPageProductsThrottled();
     });
   },
   mounted() {
