@@ -90,7 +90,12 @@
               class="bi bi-suit-heart myFavoriteIcon position-absolute z-1"
             ></h3>
             <div class="position-relative">
-              <img :srcset="`${item.imageUrl}&w=500`" class="card-img-top" />
+              <img
+                :srcset="`${item.imageUrl}&w=${
+                  currentWidth <= 575 ? 500 : 330
+                }`"
+                class="card-img-top"
+              />
             </div>
 
             <div class="card-body d-flex flex-column justify-content-between">

@@ -48,9 +48,7 @@
         >
           <img
             class="bestSellersImg"
-            :srcset="`${item.imgUrl}&w=${
-              currentWidth * 2 >= 1000 ? 1000 : currentWidth * 2
-            }`"
+            :srcset="`${item.imgUrl}&w=350`"
             alt="bestSellerImg"
           />
           <div>
@@ -149,7 +147,7 @@ export default {
         {
           title: "蘆筍",
           imgUrl:
-            "https://images.unsplash.com/photo-1629875235136-737fef945cfd?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "https://images.unsplash.com/photo-1626132661889-4058c6f9508f?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           content: "200g±10% / 盒",
           origin_price: 150,
           price: 120,
