@@ -15,7 +15,7 @@
 
         <div v-else class="p-1 mb-2">
           <h3 v-if="searchContent" class="text-center">
-            共搜尋到 {{ orderList.length }} 筆訂單
+            共搜尋到 {{ orderList.length }} 筆相符的訂單
           </h3>
           <div class="text-end">
             <button
