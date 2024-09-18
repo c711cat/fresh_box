@@ -122,6 +122,7 @@
             >
               <input
                 v-model="orderSearchText"
+                :disabled="searchInputDisabled"
                 class="form-control mobileInput"
                 type="search"
                 placeholder="搜尋訂單者姓名"
@@ -265,12 +266,8 @@ export default {
       this.$http
         .get(api)
         .then((res) => {
-          if (res.data.success) {
-            this.orders = res.data.orders;
-            this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
-          } else {
-            this.$pushMsg.status404(res.data.message);
-          }
+          this.orders = res.data.orders;
+          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -280,13 +277,18 @@ export default {
       this.orderPage = this.orderPage + 1;
       if (this.orderPage <= total_pages) {
         const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
-        this.$http.get(api).then((res) => {
-          this.orders = [...this.orders, ...res.data.orders];
-          this.fetchOrdersOfOtherPages(total_pages);
-          if (this.orderPage > total_pages) {
-            this.searchInputDisabled = false;
-          }
-        });
+        this.$http
+          .get(api)
+          .then((res) => {
+            this.orders = [...this.orders, ...res.data.orders];
+            this.fetchOrdersOfOtherPages(total_pages);
+            if (this.orderPage > total_pages) {
+              this.searchInputDisabled = false;
+            }
+          })
+          .catch((error) => {
+            this.$pushMsg.status404(error.response.data.message);
+          });
       }
     },
     isCurrentWidth() {
