@@ -80,6 +80,7 @@ export default {
 <style lang="scss" scoped>
 .userQAWrap {
   margin-top: 120px;
+  margin-bottom: 60px;
 }
 
 .accordion-button:hover {

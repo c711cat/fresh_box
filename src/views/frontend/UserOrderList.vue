@@ -177,5 +177,6 @@ export default {
 
 .listContainer {
   margin-top: 120px;
+  margin-bottom: 60px;
 }
 </style>
