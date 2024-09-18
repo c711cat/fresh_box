@@ -78,8 +78,6 @@ export default {
           this.isLoading = false;
           if (res.data.success) {
             this.$router.push("/dashboard/admin's-products");
-          } else {
-            this.$pushMsg.status404(res.data.message);
           }
         })
         .catch((error) => {
