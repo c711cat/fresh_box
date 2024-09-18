@@ -236,12 +236,8 @@ export default {
       this.$http
         .post(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$router.push("/login");
-            this.$pushMsg.status200(res, "已登出");
-          } else {
-            this.$pushMsg.status200(res, "登出失敗");
-          }
+          this.$router.push("/login");
+          this.$pushMsg.status200(res, "已登出");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
