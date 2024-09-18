@@ -214,6 +214,7 @@
 import ObserverView from "@/components/frontend/ObserverView.vue";
 import { throttle } from "lodash";
 import Dropdown from "bootstrap/js/dist/dropdown";
+import { localStorageHelper } from "@/utils/localStorage";
 export default {
   data() {
     return {
@@ -298,11 +299,7 @@ export default {
       }
     },
     getMyFavorite() {
-      this.myFavoriteList =
-        JSON.parse(localStorage.getItem("myFavorite")) || [];
-      this.myFavoriteList.forEach((item) => {
-        item.buyQty = 0;
-      });
+      this.myFavoriteList = localStorageHelper.get("myFavorite") || [];
     },
     isMyFavorite(item) {
       let favorite = "";
@@ -315,7 +312,7 @@ export default {
     },
     addMyFavorite(addItem) {
       this.myFavoriteList.push(addItem);
-      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+      localStorageHelper.set("myFavorite", this.myFavoriteList);
     },
     delMyFavorite(delItem) {
       this.myFavoriteList.filter((item, index) => {
@@ -323,7 +320,7 @@ export default {
           return this.myFavoriteList.splice(index, 1);
         }
       });
-      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+      localStorageHelper.set("myFavorite", this.myFavoriteList);
     },
     getCart() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
