@@ -4,8 +4,17 @@
     v-else
     class="listContainer mx-auto d-flex flex-column justify-content-between col-12 col-xl-10"
   >
-    <div class="">
-      <h3 v-if="noResults" class="pt-4 ps-5">{{ noResultsContent }}</h3>
+    <div>
+      <div v-if="noResults" class="text-center">
+        <h3 class="pt-4">共搜尋到 {{ orderList.length }} 筆訂單</h3>
+        <p class="fs-3 fw-bold">{{ noResultsContent }}</p>
+      </div>
+      <div v-else class="text-center mb-5">
+        <h3 v-if="searchContent" class="pt-4">
+          共搜尋到 {{ orderList.length }} 筆訂單
+        </h3>
+      </div>
+
       <section class="accordion m-0" id="accordionPanelsUserOrderList">
         <div
           v-for="(item, index) in orderList"
