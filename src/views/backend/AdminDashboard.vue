@@ -17,20 +17,28 @@ export default {
     return {};
   },
   components: { AdminNavbar },
+  methods: {
+    getToken() {
+      const token = Cookie.get("freshBoxToken");
+      this.$http.defaults.headers.common["Authorization"] = token;
+      this.checkSignIn();
+    },
+    checkSignIn() {
+      const api = `${process.env.VUE_APP_API}api/user/check`;
+      this.$http
+        .post(api)
+        .then((res) => {
+          if (!res.data.success) {
+            this.$router.push("/login");
+          }
+        })
+        .catch((error) => {
+          this.$pushMsg.status404(error.response.data.message);
+        });
+    },
+  },
   created() {
-    const token = Cookie.get("freshBoxToken");
-    this.$http.defaults.headers.common["Authorization"] = token;
-    const api = `${process.env.VUE_APP_API}api/user/check`;
-    this.$http
-      .post(api)
-      .then((res) => {
-        if (!res.data.success) {
-          this.$router.push("/login");
-        }
-      })
-      .catch((error) => {
-        this.$pushMsg.status404(error.response.data.message);
-      });
+    this.getToken();
   },
 };
 </script>
