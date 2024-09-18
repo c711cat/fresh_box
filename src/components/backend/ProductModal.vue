@@ -373,9 +373,7 @@ export default {
       this.$http
         .post(url, formData)
         .then((res) => {
-          if (res.data.success) {
-            this.tempProduct.imageUrl = res.data.imageUrl;
-          }
+          this.tempProduct.imageUrl = res.data.imageUrl;
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -390,9 +388,7 @@ export default {
       this.$http
         .post(url, formData)
         .then((res) => {
-          if (res.data.success) {
-            this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
-          }
+          this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

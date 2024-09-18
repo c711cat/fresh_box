@@ -136,9 +136,7 @@ export default {
       this.$http
         .get(api)
         .then((res) => {
-          if (res.data.success) {
-            this.allProducts = res.data.products;
-          }
+          this.allProducts = res.data.products;
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
