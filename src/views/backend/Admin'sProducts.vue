@@ -137,11 +137,9 @@ export default {
       this.$http
         .get(api)
         .then((res) => {
-          if (res.data.success) {
-            this.pagination = res.data.pagination;
-            this.products = res.data.products;
-            this.openPagination = true;
-          }
+          this.pagination = res.data.pagination;
+          this.products = res.data.products;
+          this.openPagination = true;
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -171,6 +169,7 @@ export default {
             this.$refs.productModal.hideModal();
             this.$pushMsg.status200(res, "新增產品成功");
           } else {
+            // 會出現『必填』沒有填入到的品項訊息
             this.$pushMsg.status200(res, "新增產品失敗");
           }
         })
@@ -193,6 +192,7 @@ export default {
             this.$refs.productModal.hideModal();
             this.$pushMsg.status200(res, "更新產品成功");
           } else {
+            // 會出現『必填』沒有填入到的品項訊息
             this.$pushMsg.status200(res, "更新產品失敗");
           }
         })
@@ -218,7 +218,7 @@ export default {
             this.$refs.delModal.hideModal();
             this.$pushMsg.status200(res, "已刪除產品");
           } else {
-            this.$pushMsg.status200(res, "刪除產品失敗");
+            this.$pushMsg.status200(res, `${"刪除失敗" + res.data.message}`);
           }
         })
         .catch((error) => {
