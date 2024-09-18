@@ -2,7 +2,7 @@
   <LoadingView v-if="isLoading" />
   <main
     v-else
-    class="mx-auto containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
+    class="mx-auto mb-5 containerWrap d-flex flex-column col-12 col-xl-10"
   >
     <div>
       <header>
