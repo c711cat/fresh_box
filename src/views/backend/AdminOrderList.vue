@@ -6,15 +6,26 @@
   >
     <div>
       <header>
-        <h3 v-if="noResults">{{ noResultsContent }}</h3>
-        <div v-else class="p-1 mb-2 text-end">
-          <button
-            @click="openDelAllOrdersModal"
-            class="btn btn-danger"
-            type="button"
-          >
-            刪除全部訂單
-          </button>
+        <div v-if="noResults" class="mt-5 text-center">
+          <h3>共搜尋到 {{ orderList.length }} 筆訂單</h3>
+          <p class="fs-3 fw-bold">
+            {{ noResultsContent }}
+          </p>
+        </div>
+
+        <div v-else class="p-1 mb-2">
+          <h3 v-if="searchContent" class="text-center">
+            共搜尋到 {{ orderList.length }} 筆訂單
+          </h3>
+          <div class="text-end">
+            <button
+              @click="openDelAllOrdersModal"
+              class="btn btn-danger"
+              type="button"
+            >
+              刪除全部訂單
+            </button>
+          </div>
         </div>
       </header>
 
