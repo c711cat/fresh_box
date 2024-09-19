@@ -236,13 +236,9 @@ export default {
           data: { product_id: this.product.id, qty: Number(this.productQty) },
         })
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已加入購物車");
-            this.productQty = 1;
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.statue200(res, "加入購物車失敗");
-          }
+          this.$pushMsg.status200(res, "已加入購物車");
+          this.productQty = 1;
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

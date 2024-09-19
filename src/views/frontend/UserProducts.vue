@@ -425,13 +425,9 @@ export default {
       this.$http
         .post(api, { data: addItem })
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已加入購物車");
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "加入購物車失敗");
-          }
+          this.$pushMsg.status200(res, "已加入購物車");
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

@@ -125,6 +125,8 @@ export default {
             this.$pushMsg.status200(res, "新增優惠券成功");
             this.getCoupons();
           } else {
+            // 會出現『必填』沒有填入到的品項訊息
+            console.log(res);
             this.$pushMsg.status200(res, "新增優惠券失敗");
           }
         })
@@ -154,6 +156,7 @@ export default {
             this.$pushMsg.status200(res, "已更新優惠券");
             this.getCoupons();
           } else {
+            // 會出現『必填』沒有填入到的品項訊息
             this.$pushMsg.status200(res, "更新優惠券失敗");
           }
         })
@@ -174,13 +177,9 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "已刪除優惠券");
-            this.getCoupons();
-          } else {
-            this.$pushMsg.status200(res, "刪除優惠券失敗");
-          }
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "已刪除優惠券");
+          this.getCoupons();
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

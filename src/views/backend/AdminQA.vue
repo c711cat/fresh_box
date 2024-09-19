@@ -125,6 +125,7 @@ export default {
             this.$refs.QA_Modal.hideModal();
             this.$pushMsg.status200(res, "新增問答成功");
           } else {
+            // 會出現『必填』沒有填入到的品項訊息
             this.$pushMsg.status200(res, "新增問答失敗");
           }
         })
@@ -146,6 +147,7 @@ export default {
             this.$refs.QA_Modal.hideModal();
             this.$pushMsg.status200(res, "更新問答成功");
           } else {
+            // 會出現『必填』沒有填入到的品項訊息
             this.$pushMsg.status200(res, "更新問答失敗");
           }
         })
@@ -165,12 +167,8 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "刪除問答成功");
-          } else {
-            this.$pushMsg.status200(res, "刪除問答失敗");
-          }
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "刪除問答成功");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

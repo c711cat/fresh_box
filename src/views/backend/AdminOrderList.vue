@@ -141,13 +141,9 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.getOrders(page);
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "已刪除訂單");
-          } else {
-            this.$pushMsg.status200(res, "刪除訂單失敗");
-          }
+          this.getOrders(page);
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "已刪除訂單");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -161,12 +157,8 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "成功刪除全部訂單");
-          } else {
-            this.$pushMsg.status200(res, "刪除全部訂單失敗");
-          }
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "成功刪除全部訂單");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

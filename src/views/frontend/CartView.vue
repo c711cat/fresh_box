@@ -229,13 +229,9 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "刪除商品成功");
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "刪除商品失敗");
-          }
+          this.$pushMsg.status200(res, "刪除商品成功");
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -248,13 +244,9 @@ export default {
       this.$http
         .post(api, { data: addItem })
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已加入購物車");
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "加入購物車失敗");
-          }
+          this.$pushMsg.status200(res, "已加入購物車");
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -273,13 +265,9 @@ export default {
       this.$http
         .put(api, { data: delItem })
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已刪除 1 個品項");
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "刪除失敗");
-          }
+          this.$pushMsg.status200(res, "已刪除 1 個品項");
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -298,13 +286,9 @@ export default {
       this.$http
         .put(api, { data: { product_id: item.product.id, qty: updateQty } })
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "已更新數量");
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "更新數量失敗");
-          }
+          this.$pushMsg.status200(res, "已更新數量");
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -321,11 +305,12 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.used_coupon = true;
-            this.$pushMsg.status200(res, "套用優惠券成功");
+            this.$pushMsg.status200(res, res.data.message);
             this.getCart();
             this.emitter.emit("updateProductInCart");
           } else {
-            this.$pushMsg.status200(res, "套用優惠券失敗");
+            // 會出現『失敗』的訊息回饋（找不到優惠券! 或 優惠券無法使用或已過期）
+            this.$pushMsg.status200(res, `套用優惠券失敗:${res.data.message}`);
           }
         })
         .catch((error) => {
@@ -358,14 +343,10 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "已清空購物車");
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            this.$pushMsg.status200(res, "刪除失敗");
-          }
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "已清空購物車");
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.allCartItems = false;

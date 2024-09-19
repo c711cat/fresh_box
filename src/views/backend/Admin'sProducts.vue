@@ -213,13 +213,9 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.getProducts(current_page);
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "已刪除產品");
-          } else {
-            this.$pushMsg.status200(res, `${"刪除失敗" + res.data.message}`);
-          }
+          this.getProducts(current_page);
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "已刪除產品");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
