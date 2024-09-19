@@ -72,12 +72,8 @@ export default {
       this.$http
         .post(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$pushMsg.status200(res, "付款成功");
-            this.getOrder();
-          } else {
-            this.$pushMsg.status200(res, "付款失敗");
-          }
+          this.$pushMsg.status200(res, "付款成功");
+          this.getOrder();
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);

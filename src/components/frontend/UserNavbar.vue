@@ -84,6 +84,7 @@
           <input
             v-if="currentPath === '/order-list'"
             v-model="orderSearchText"
+            :disabled="searchInputDisabled"
             type="search"
             class="d-none d-sm-block form-control searchText"
             placeholder="搜尋訂單者姓名"
@@ -118,6 +119,7 @@
             >
               <input
                 v-model="orderSearchText"
+                :disabled="searchInputDisabled"
                 class="border-0 form-control mobileInput"
                 type="search"
                 placeholder="搜尋訂單者姓名"
@@ -185,6 +187,7 @@ export default {
       orderPage: 1,
       open: false,
       currentWidth: "1000",
+      searchInputDisabled: true,
     };
   },
   inject: ["emitter"],
@@ -269,23 +272,35 @@ export default {
       this.emitter.emit("goToUserProducts");
       this.closeMenu();
     },
-    getOrders() {
+    getOrdersOfPage1() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
       this.$http
         .get(api)
         .then((res) => {
-          this.orderPage = this.orderPage + 1;
           this.orders = res.data.orders;
-          if (this.orderPage <= res.data.pagination.total_pages) {
-            const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
-            this.$http.get(api).then((res) => {
-              this.orders = [...this.orders, ...res.data.orders];
-            });
-          }
+          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
         });
+    },
+    fetchOrdersOfOtherPages(total_pages) {
+      this.orderPage = this.orderPage + 1;
+      if (this.orderPage <= total_pages) {
+        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+        this.$http
+          .get(api)
+          .then((res) => {
+            this.orders = [...this.orders, ...res.data.orders];
+            this.fetchOrdersOfOtherPages(total_pages);
+            if (this.orderPage > total_pages) {
+              this.searchInputDisabled = false;
+            }
+          })
+          .catch((error) => {
+            this.$pushMsg.status404(error.response.data.message);
+          });
+      }
     },
     getCurrentWidth() {
       this.currentWidth = window.innerWidth;
@@ -302,7 +317,7 @@ export default {
   },
   created() {
     this.getCurrentWidth();
-    this.getOrders();
+    this.getOrdersOfPage1();
     this.getCart();
     this.getProducts();
     this.emitter.on("updateProductInCart", () => {

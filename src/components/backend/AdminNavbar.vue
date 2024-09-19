@@ -92,6 +92,7 @@
           <input
             v-if="$route.path === '/dashboard/order-list'"
             v-model="orderSearchText"
+            :disabled="searchInputDisabled"
             class="d-none d-sm-block form-control searchInput"
             type="search"
             placeholder="搜尋訂單者姓名"
@@ -121,6 +122,7 @@
             >
               <input
                 v-model="orderSearchText"
+                :disabled="searchInputDisabled"
                 class="form-control mobileInput"
                 type="search"
                 placeholder="搜尋訂單者姓名"
@@ -178,6 +180,7 @@ export default {
       orders: [],
       orderSearchResult: [],
       currentWidth: 1000,
+      searchInputDisabled: true,
     };
   },
   inject: ["emitter"],
@@ -236,12 +239,8 @@ export default {
       this.$http
         .post(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$router.push("/login");
-            this.$pushMsg.status200(res, "已登出");
-          } else {
-            this.$pushMsg.status200(res, "登出失敗");
-          }
+          this.$router.push("/login");
+          this.$pushMsg.status200(res, "已登出");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -262,27 +261,35 @@ export default {
           this.isLoading = false;
         });
     },
-    getOrders() {
+    getOrdersOfPage1() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
       this.$http
         .get(api)
         .then((res) => {
-          if (res.data.success) {
-            this.orders = res.data.orders;
-            this.orderPage = this.orderPage + 1;
-            if (this.orderPage <= res.data.pagination.total_pages) {
-              const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
-              this.$http.get(api).then((res) => {
-                this.orders = [...this.orders, ...res.data.orders];
-              });
-            }
-          } else {
-            this.$pushMsg.status404(res.data.message);
-          }
+          this.orders = res.data.orders;
+          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
         });
+    },
+    fetchOrdersOfOtherPages(total_pages) {
+      this.orderPage = this.orderPage + 1;
+      if (this.orderPage <= total_pages) {
+        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+        this.$http
+          .get(api)
+          .then((res) => {
+            this.orders = [...this.orders, ...res.data.orders];
+            this.fetchOrdersOfOtherPages(total_pages);
+            if (this.orderPage > total_pages) {
+              this.searchInputDisabled = false;
+            }
+          })
+          .catch((error) => {
+            this.$pushMsg.status404(error.response.data.message);
+          });
+      }
     },
     isCurrentWidth() {
       this.currentWidth = window.innerWidth;
@@ -298,8 +305,7 @@ export default {
     },
   },
   created() {
-    this.getOrders();
-
+    this.getOrdersOfPage1();
     this.getProducts();
     setTimeout(() => {
       this.isCurrentWidth();

@@ -1,5 +1,5 @@
 <template>
-  <nav class="mb-4 py-3" aria-label="Page navigation">
+  <nav class="pt-3" aria-label="Page navigation">
     <ul class="pagination my-3 justify-content-center">
       <li class="page-item">
         <a

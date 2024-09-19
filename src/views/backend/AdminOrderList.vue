@@ -2,19 +2,30 @@
   <LoadingView v-if="isLoading" />
   <main
     v-else
-    class="mx-auto containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
+    class="mx-auto mb-5 containerWrap d-flex flex-column col-12 col-xl-10"
   >
     <div>
       <header>
-        <h3 v-if="noResults">{{ noResultsContent }}</h3>
-        <div v-else class="p-1 mb-2 text-end">
-          <button
-            @click="openDelAllOrdersModal"
-            class="btn btn-danger"
-            type="button"
-          >
-            刪除全部訂單
-          </button>
+        <div v-if="noResults" class="mt-5 text-center">
+          <h3>共搜尋到 {{ orderList.length }} 筆訂單</h3>
+          <p class="fs-3 fw-bold">
+            {{ noResultsContent }}
+          </p>
+        </div>
+
+        <div v-else class="p-1 mb-2">
+          <h3 v-if="searchContent" class="text-center">
+            共搜尋到 {{ orderList.length }} 筆相符的訂單
+          </h3>
+          <div class="text-end">
+            <button
+              @click="openDelAllOrdersModal"
+              class="btn btn-danger"
+              type="button"
+            >
+              刪除全部訂單
+            </button>
+          </div>
         </div>
       </header>
 
@@ -130,13 +141,9 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.getOrders(page);
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "已刪除訂單");
-          } else {
-            this.$pushMsg.status200(res, "刪除訂單失敗");
-          }
+          this.getOrders(page);
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "已刪除訂單");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
@@ -150,12 +157,8 @@ export default {
       this.$http
         .delete(api)
         .then((res) => {
-          if (res.data.success) {
-            this.$refs.delModal.hideModal();
-            this.$pushMsg.status200(res, "成功刪除全部訂單");
-          } else {
-            this.$pushMsg.status200(res, "刪除全部訂單失敗");
-          }
+          this.$refs.delModal.hideModal();
+          this.$pushMsg.status200(res, "成功刪除全部訂單");
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
