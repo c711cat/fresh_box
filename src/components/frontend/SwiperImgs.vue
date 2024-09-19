@@ -114,20 +114,12 @@ export default {
         addLoadingItem: "",
         delLoadingItem: "",
       },
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
     };
   },
   components: {
     Swiper,
     SwiperSlide,
-  },
-  setup() {
-    const onSwiper = () => {};
-    const onSlideChange = () => {};
-    return {
-      onSwiper,
-      onSlideChange,
-      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
   },
   inject: ["emitter"],
   methods: {
@@ -167,6 +159,8 @@ export default {
         }, 500);
       }
     },
+    onSwiper() {},
+    onSlideChange() {},
   },
 
   created() {
@@ -213,8 +207,9 @@ a {
   height: 65px;
 }
 
-:root .swiper-button-next,
-.swiper-button-prev {
+// 使用深層選擇器覆蓋 swiper 內建樣式
+::v-deep .swiper-button-next,
+::v-deep .swiper-button-prev {
   --swiper-navigation-size: 20px;
 }
 
@@ -228,8 +223,9 @@ a {
   left: 0px;
 }
 
-:root .swiper-button-next:hover,
-.swiper-button-prev:hover {
+// 使用深層選擇器覆蓋 swiper 內建樣式
+::v-deep .swiper-button-next:hover,
+::v-deep .swiper-button-prev:hover {
   color: #ccaf3c !important;
 }
 </style>
