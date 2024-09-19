@@ -1,37 +1,57 @@
 <template>
-  <p ref="target" class="w-100 mb-0 text-center text-secondary">商品載入中 ⋯</p>
+  <p ref="targetElement" class="w-100 mb-0 text-center text-secondary">
+    商品載入中 ⋯
+  </p>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount, defineProps, defineEmits } from "vue";
-
-const observerOptions = defineProps(["observerOptions"]);
-const emit = defineEmits(["is-in-view", "is-outside-view"]);
-
-const target = ref(null);
-const observer = ref(null);
-
-const emitInView = () => {
-  emit("is-in-view");
+<script>
+export default {
+  data() {
+    return {
+      target_Element: null,
+      observer: null,
+    };
+  },
+  props: {
+    observerOptions: {
+      type: Object,
+      default() {
+        return;
+      },
+    },
+  },
+  methods: {
+    emitInView() {
+      this.$emit("is-in-view");
+    },
+    emitOutsideView() {
+      this.$emit("is-outside-view");
+    },
+    initObserver() {
+      this.observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          this.emitInView();
+        } else {
+          this.emitOutsideView();
+        }
+      }, this.observerOptions);
+      if (this.target_Element) {
+        this.observer.observe(this.target_Element);
+      }
+    },
+    removeObsever() {
+      if (this.obsever) {
+        this.observer.disconnect();
+      }
+    },
+  },
+  mounted() {
+    this.target_Element = this.$refs.targetElement;
+    this.initObserver();
+  },
+  beforeUnmount() {
+    this.removeObsever();
+  },
 };
-
-const emitOutsideView = () => {
-  emit("is-outside-view");
-};
-
-onMounted(() => {
-  observer.value = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      emitInView();
-    } else {
-      emitOutsideView();
-    }
-  }, observerOptions);
-
-  observer.value.observe(target.value);
-});
-
-onBeforeUnmount(() => {
-  observer.value.disconnect();
-});
 </script>
