@@ -90,7 +90,7 @@
             v-else
             @click="$emit('add-QA', tempQA)"
             type="button"
-            class="btn btn-yellow-200"
+            class="btn btn-primary"
           >
             新增問答
           </button>
