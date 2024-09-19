@@ -159,20 +159,12 @@ export default {
         delLoadingItem: "",
       },
       currentWidth: 1000,
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
     };
   },
   components: {
     Swiper,
     SwiperSlide,
-  },
-  setup() {
-    const onSwiper = () => {};
-    const onSlideChange = () => {};
-    return {
-      onSwiper,
-      onSlideChange,
-      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
   },
   inject: ["emitter"],
   methods: {
@@ -199,6 +191,8 @@ export default {
     getCurrentWidth() {
       this.currentWidth = window.innerWidth;
     },
+    onSwiper() {},
+    onSlideChange() {},
   },
   created() {
     this.getCurrentWidth();
@@ -210,6 +204,7 @@ export default {
 .productItem:hover {
   cursor: pointer;
 }
+
 .bestSellersImg {
   width: 100%;
   height: 300px;
@@ -234,8 +229,9 @@ export default {
   border: 1px solid #d1b750;
 }
 
-:root .swiper-button-next,
-.swiper-button-prev {
+// 使用深層選擇器覆蓋 swiper 內建樣式
+::v-deep .swiper-button-next,
+::v-deep .swiper-button-prev {
   --swiper-navigation-size: 20px;
 }
 
@@ -249,8 +245,9 @@ export default {
   left: 0px;
 }
 
-:root .swiper-button-next:hover,
-.swiper-button-prev:hover {
+// 使用深層選擇器覆蓋 swiper 內建樣式
+::v-deep .swiper-button-next:hover,
+::v-deep .swiper-button-prev:hover {
   color: #ccaf3c !important;
 }
 </style>

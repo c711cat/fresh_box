@@ -90,20 +90,16 @@ export default {
         { name: "水果", type: "fruit", img: fruitImg },
         { name: "辛香料", type: "spice", img: spiceImg },
       ],
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
     };
   },
   components: {
     Swiper,
     SwiperSlide,
   },
-  setup() {
-    const onSwiper = () => {};
-    const onSlideChange = () => {};
-    return {
-      onSwiper,
-      onSlideChange,
-      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
+  methods: {
+    onSwiper() {},
+    onSlideChange() {},
   },
 };
 </script>
