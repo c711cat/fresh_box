@@ -6,7 +6,7 @@
     data-aos-duration="2000"
   >
     <img
-      :src="`https://images.unsplash.com/photo-1628102491629-778571d893a3?q=80&w=${
+      :srcset="`https://images.unsplash.com/photo-1628102491629-778571d893a3?q=80&w=${
         currentWidth <= 576 ? 1000 : currentWidth
       }`"
       alt="banner_img"
