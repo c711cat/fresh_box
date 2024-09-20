@@ -126,7 +126,6 @@ export default {
             this.getCoupons();
           } else {
             // 會出現『必填』沒有填入到的品項訊息
-            console.log(res);
             this.$pushMsg.status200(res, "新增優惠券失敗");
           }
         })
