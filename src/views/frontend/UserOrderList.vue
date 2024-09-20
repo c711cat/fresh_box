@@ -6,7 +6,9 @@
   >
     <div>
       <div v-if="noResults" class="text-center">
-        <h3 class="pt-4">共搜尋到 {{ orderList.length }} 筆訂單</h3>
+        <h3 v-if="searchContent" class="pt-4">
+          共搜尋到 {{ orderList.length }} 筆訂單
+        </h3>
         <p class="fs-3 fw-bold">{{ noResultsContent }}</p>
       </div>
       <div v-else class="text-center mb-5">
@@ -172,6 +174,7 @@ export default {
 }
 
 .listContainer {
+  min-height: 70vh;
   margin-top: 120px;
   margin-bottom: 60px;
 }

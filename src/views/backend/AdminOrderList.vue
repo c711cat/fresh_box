@@ -2,12 +2,12 @@
   <LoadingView v-if="isLoading" />
   <main
     v-else
-    class="mx-auto mb-5 containerWrap d-flex flex-column col-12 col-xl-10"
+    class="mx-auto mb-5 containerWrap d-flex flex-column justify-content-between col-12 col-xl-10"
   >
     <div>
       <header>
         <div v-if="noResults" class="mt-5 text-center">
-          <h3>共搜尋到 {{ orderList.length }} 筆訂單</h3>
+          <h3 v-if="searchContent">共搜尋到 {{ orderList.length }} 筆訂單</h3>
           <p class="fs-3 fw-bold">
             {{ noResultsContent }}
           </p>
@@ -210,6 +210,7 @@ export default {
 
 <style lang="scss" scoped>
 .containerWrap {
+  min-height: 70vh;
   margin-top: 120px;
 }
 

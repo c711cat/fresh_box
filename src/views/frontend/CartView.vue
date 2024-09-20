@@ -43,7 +43,7 @@
             <router-link :to="`/product/${item.product.id}`" class="">
               <img
                 v-if="currentWidth >= 250"
-                :srcset="`${item.product.imageUrl}&w=500`"
+                :srcset="`${item.product.imageUrl}&w=300`"
                 alt="product_img"
               />
             </router-link>

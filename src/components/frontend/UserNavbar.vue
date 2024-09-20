@@ -84,7 +84,7 @@
           <input
             v-if="currentPath === '/order-list'"
             v-model="orderSearchText"
-            :disabled="searchInputDisabled"
+            :disabled="disabledSearchInput"
             type="search"
             class="d-none d-sm-block form-control searchText"
             placeholder="搜尋訂單者姓名"
@@ -119,7 +119,7 @@
             >
               <input
                 v-model="orderSearchText"
-                :disabled="searchInputDisabled"
+                :disabled="disabledSearchInput"
                 class="border-0 form-control mobileInput"
                 type="search"
                 placeholder="搜尋訂單者姓名"
@@ -184,10 +184,10 @@ export default {
       orderSearchResult: [],
       carts: [],
       orders: [],
+      pagination: {},
       orderPage: 1,
       open: false,
       currentWidth: "1000",
-      searchInputDisabled: true,
     };
   },
   inject: ["emitter"],
@@ -293,9 +293,6 @@ export default {
           .then((res) => {
             this.orders = [...this.orders, ...res.data.orders];
             this.fetchOrdersOfOtherPages(total_pages);
-            if (this.orderPage > total_pages) {
-              this.searchInputDisabled = false;
-            }
           })
           .catch((error) => {
             this.$pushMsg.status404(error.response.data.message);
@@ -312,6 +309,13 @@ export default {
         return "isMobileItem";
       } else {
         return "";
+      }
+    },
+    disabledSearchInput() {
+      if (this.pagination.current_page === this.pagination.total_pages) {
+        return false;
+      } else {
+        return true;
       }
     },
   },

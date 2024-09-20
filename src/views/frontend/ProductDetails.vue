@@ -4,7 +4,7 @@
       <section class="p-1 col-12 col-md-5 mb-5">
         <img
           class="imgBody col-12 mb-3"
-          :srcset="`${product.imageUrl}&w=${currentWidth}`"
+          :srcset="`${product.imageUrl}&w=750`"
           alt=""
         />
 
@@ -13,7 +13,7 @@
             v-for="img in product.images"
             :key="img"
             @click="changeImg(img)"
-            :srcset="`${img}&w=500`"
+            :srcset="`${img}&w=200`"
             class="imgItems col-3"
             alt="product-img"
           />

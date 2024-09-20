@@ -42,7 +42,7 @@
         <div @click="goToProductPage(item.id)" class="productItem rounded my-3">
           <img
             class="img-fluid carouselImg rounded-top"
-            :srcset="`${item.imageUrl}&w=280`"
+            :srcset="`${item.imageUrl}&w=330`"
             alt="carouselImg"
           />
           <div>
@@ -199,7 +199,7 @@ a {
 
 .carouselImg {
   width: 100%;
-  height: 150px;
+  height: 170px;
   object-fit: cover;
 }
 

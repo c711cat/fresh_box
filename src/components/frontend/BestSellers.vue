@@ -48,7 +48,7 @@
         >
           <img
             class="bestSellersImg"
-            :srcset="`${item.imgUrl}&w=350`"
+            :srcset="`${item.imgUrl}&w=400`"
             alt="bestSellerImg"
           />
           <div>

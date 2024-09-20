@@ -1,11 +1,15 @@
 <template>
   <main>
     <div
-      class="backendImg d-flex justify-content-center align-items-center"
+      class="position-relative d-flex justify-content-center align-items-center"
       data-aos="fade-zoom-in"
       data-aos-easing="ease-out-circ"
       data-aos-duration="2000"
     >
+      <img
+        :srcset="`https://images.unsplash.com/photo-1644292916478-bd7139c5d8a1?q=80&w=${currentWidth}&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`"
+        alt="banner-2_img"
+      />
       <router-link
         to="/user-products"
         class="rounded newsContent px-1 text-decoration-none text-black col-11 col-sm-9 col-lg-8 col-xl-6 d-flex flex-column justify-content-center align-items-center"
@@ -30,15 +34,30 @@
     </div>
   </main>
 </template>
+<script>
+export default {
+  data() {
+    return { currentWidth: 1000 };
+  },
+  methods: {
+    getCurrentWidth() {
+      this.currentWidth = window.innerWidth;
+    },
+  },
+  created() {
+    this.getCurrentWidth();
+  },
+};
+</script>
 <style lang="scss" scoped>
-.backendImg {
+img {
+  width: 100%;
   height: 300px;
-  background-image: url(@/assets/img/home_img2.jpg);
-  background-position: center;
-  background-size: cover;
+  object-fit: cover;
 }
 
 .newsContent {
+  position: absolute;
   height: 250px;
   background-color: rgba(252, 251, 251, 0.832);
 }

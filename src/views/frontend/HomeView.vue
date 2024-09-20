@@ -1,10 +1,16 @@
 <template>
   <section
-    class="bannerImg d-flex flex-column justify-content-end align-items-center"
+    class="position-relative d-flex flex-column align-items-center"
     data-aos="fade-in"
     data-aos-easing="ease-out-sine"
     data-aos-duration="2000"
   >
+    <img
+      :srcset="`https://images.unsplash.com/photo-1628102491629-778571d893a3?q=80&w=${
+        currentWidth <= 576 ? 1000 : currentWidth
+      }`"
+      alt="banner_img"
+    />
     <div
       class="fastGoBox rounded py-5 px-3 text-center col-11 col-sm-11 col-md-9"
     >
@@ -66,20 +72,24 @@ import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
 import DiscountNews from "@/components/frontend/DiscountNews.vue";
 export default {
   data() {
-    return {};
+    return {
+      currentWidth: 0,
+    };
   },
   components: { CategoryView, BestSellers, DiscountNews, SwiperImgs },
+  methods: {
+    getCurrentWidth() {
+      this.currentWidth = window.innerWidth;
+    },
+  },
+  created() {
+    this.getCurrentWidth();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.bannerImg {
-  background-image: url(@/assets/img/1.jpg);
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-}
-.homeImg {
+img {
   width: 100%;
   height: 100vh;
   object-fit: cover;
@@ -87,6 +97,8 @@ export default {
 
 .fastGoBox {
   background-color: #0000004d;
+  position: absolute;
+  top: 33%;
 }
 
 .fastGoBox:hover {
@@ -98,7 +110,7 @@ export default {
 }
 
 .scrollBox {
-  position: relative;
+  position: absolute;
   height: 30vh;
   bottom: 0px;
 }
