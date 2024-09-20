@@ -28,7 +28,7 @@
         >
           <img
             class="imgBody"
-            :srcset="`${item.product.imageUrl}&w=100`"
+            :srcset="`${item.product.imageUrl}&w=140`"
             alt="product-img"
           />
         </router-link>
@@ -288,7 +288,7 @@ export default {
 }
 
 .imgBody {
-  width: 60px;
+  width: 70px;
   height: 90px;
   object-fit: cover;
 }
