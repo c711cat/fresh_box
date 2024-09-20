@@ -295,6 +295,9 @@ export default {
     },
     getMyFavorite() {
       this.myFavoriteList = localStorageHelper.get("myFavorite") || [];
+      this.myFavoriteList.forEach((item) => {
+        item.buyQty = 0;
+      });
     },
     isMyFavorite(item) {
       let favorite = "";
