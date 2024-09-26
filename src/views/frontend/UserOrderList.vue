@@ -58,13 +58,12 @@
         </div>
       </section>
     </div>
-    <footer class="">
+    <footer>
       <PaginationView
         v-if="pageSwitch"
         :pages="pagination"
         @emit-pages="getOrders"
-      >
-      </PaginationView>
+      />
     </footer>
   </main>
 </template>

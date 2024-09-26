@@ -31,8 +31,7 @@
       </div>
     </section>
     <footer class="">
-      <PaginationView :pages="pagination" @emit-pages="getQAList">
-      </PaginationView>
+      <PaginationView :pages="pagination" @emit-pages="getQAList" />
     </footer>
   </main>
 </template>

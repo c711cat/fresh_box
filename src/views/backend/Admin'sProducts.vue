@@ -99,15 +99,13 @@
     @edit-product="editProduct"
     @add-product="addProduct"
     :pages="pagination"
-  >
-  </ProductModal>
+  />
   <DelModal
     ref="delModal"
     :product="tempProduct"
     @del-product="delProduct"
     :pages="pagination"
-  >
-  </DelModal>
+  />
 </template>
 
 <script>

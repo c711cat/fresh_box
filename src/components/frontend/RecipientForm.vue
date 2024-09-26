@@ -17,8 +17,8 @@
           name="姓名"
           type="text"
           rules="required"
-        ></Field>
-        <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
+        />
+        <ErrorMessage name="姓名" class="invalid-feedback" />
       </div>
       <div class="">
         <div class="d-inline text-danger">＊</div>
@@ -31,8 +31,8 @@
           name="email"
           type="email"
           rules="required|email"
-        ></Field>
-        <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
+        />
+        <ErrorMessage name="email" class="invalid-feedback" />
       </div>
       <div class="">
         <div class="d-inline text-danger">＊</div>
@@ -45,8 +45,8 @@
           name="電話"
           type="tel"
           rules="required"
-        ></Field>
-        <ErrorMessage name="電話" class="invalid-feedback"></ErrorMessage>
+        />
+        <ErrorMessage name="電話" class="invalid-feedback" />
       </div>
       <div class="">
         <div class="d-inline text-danger">＊</div>
@@ -59,8 +59,8 @@
           name="地址"
           type="text"
           rules="required"
-        ></Field>
-        <ErrorMessage name="地址" class="invalid-feedback"></ErrorMessage>
+        />
+        <ErrorMessage name="地址" class="invalid-feedback" />
       </div>
       <div class="">
         <label class="form-label" for="message">備註</label>

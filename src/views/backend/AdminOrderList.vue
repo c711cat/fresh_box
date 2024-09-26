@@ -53,7 +53,7 @@
             class="accordion-collapse collapse"
           >
             <div class="accordion-body">
-              <OrderView :oneOrder="item"></OrderView>
+              <OrderView :oneOrder="item" />
               <div class="text-end pe-5">
                 <button
                   @click="openDelModal(item)"
@@ -73,8 +73,7 @@
         v-if="pageSwitch"
         :pages="pagination"
         @emit-pages="getOrders"
-      >
-      </PaginationView>
+      />
     </footer>
   </main>
 
@@ -85,8 +84,7 @@
     :allOrders="allOrders"
     @del-all-orders="delAllOrders"
     :pages="pagination"
-  >
-  </delModal>
+  />
 </template>
 
 <script>
