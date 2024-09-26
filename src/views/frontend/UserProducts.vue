@@ -208,7 +208,6 @@
 <script>
 import ObserverView from "@/components/frontend/ObserverView.vue";
 import { throttle } from "lodash";
-import Dropdown from "bootstrap/js/dist/dropdown";
 import { localStorageHelper } from "@/utils/localStorage";
 export default {
   data() {
@@ -227,7 +226,6 @@ export default {
         delLoadingItem: "",
       },
       myFavoriteList: [],
-      dropdownList: {},
       categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
       forCategoryAllProducts: [],
       currentCategory: "選擇類別",
@@ -486,12 +484,6 @@ export default {
       this.getOtherPageProductsThrottled();
     });
   },
-  mounted() {
-    const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
-    this.dropdownList = [...dropdownElementList].map(
-      (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
-    );
-  },
   updated() {
     if (this.$route.path === "/favorite") {
       this.go_to_favorite();
@@ -567,22 +559,6 @@ img {
   cursor: pointer;
   color: #ccaf3c;
   border-bottom: 1px solid #ccaf3c;
-}
-
-.dropdown-item:hover {
-  cursor: pointer;
-  color: #ccaf3c;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-  background-color: #f8f9fa;
-  color: #ccaf3c;
-}
-
-.dropdown-item:focus-visible {
-  outline: 2px solid #ccaf3c;
-  border-radius: 3%;
 }
 
 .xs_title_text {
