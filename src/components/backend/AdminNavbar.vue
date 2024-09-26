@@ -107,7 +107,7 @@
             aria-label="Search"
           />
           <button
-            type="btn"
+            type="button"
             class="d-none d-sm-block btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
           ></button>
         </form>
@@ -143,7 +143,7 @@
           </div>
 
           <button
-            type="btn"
+            type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#mobile-admin"
             aria-controls="mobile-admin"

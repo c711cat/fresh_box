@@ -99,8 +99,8 @@
             aria-label="PCSearch"
           />
           <button
-            type="btn"
             class="d-none d-sm-block btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+            type="button"
           ></button>
         </section>
 
@@ -137,7 +137,7 @@
             </div>
           </div>
           <button
-            type="btn"
+            type="button"
             class="d-block d-sm-none btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
             data-bs-toggle="offcanvas"
             data-bs-target="#mobile"

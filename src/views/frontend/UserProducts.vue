@@ -18,6 +18,7 @@
           class="list-group-item list-group-item-action"
           :class="{ active: $route.path === '/user-products' }"
           :aria-current="$route.path === '/user-products'"
+          type="button"
         >
           所有類別
         </button>
@@ -28,6 +29,7 @@
           class="list-group-item list-group-item-action"
           :class="{ active: $route.params.currentCategory === item }"
           :aria-current="$route.params.currentCategory === item"
+          type="button"
         >
           {{ item }}
         </button>

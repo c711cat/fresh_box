@@ -112,6 +112,7 @@
                 <button
                   @click="addImg"
                   class="btn btn-outline-dark-primary btn-sm w-100"
+                  type="button"
                 >
                   新增其他圖片
                 </button>

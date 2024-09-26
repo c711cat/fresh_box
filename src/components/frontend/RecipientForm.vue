@@ -76,7 +76,9 @@
     </div>
 
     <div class="text-end">
-      <button class="btn btn-primary col-12 col-lg-auto px-5">送出訂單</button>
+      <button class="btn btn-primary col-12 col-lg-auto px-5" type="submit">
+        送出訂單
+      </button>
     </div>
   </Form>
 </template>
