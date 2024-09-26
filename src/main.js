@@ -9,9 +9,6 @@ import { currency, changeDateStyle } from "./methods/filters";
 import { status200, status404 } from "./methods/PushMsg";
 import vSelect from "vue-select";
 
-window.__VUE_PROD_DEVTOOLS__ = false;
-window.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
-
 const app = createApp(App);
 app.config.globalProperties.$filters = { currency, changeDateStyle };
 app.config.globalProperties.$pushMsg = { status200, status404 };
