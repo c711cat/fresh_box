@@ -28,7 +28,7 @@
         >
           <img
             class="imgBody"
-            :srcset="`${item.product.imageUrl}&w=140`"
+            :srcset="`${item.product.imageUrl}&w=260`"
             alt="product-img"
           />
         </router-link>
