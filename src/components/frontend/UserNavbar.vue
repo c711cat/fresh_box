@@ -146,7 +146,7 @@
         </section>
 
         <router-link to="/cart" class="nav-link px-2">
-          <div class="">
+          <div>
             <div class="h-auto position-relative">
               <i class="bi bi-cart2 fs-2 text-primary"></i>
               <span v-if="carts.length >= 1" class="badge rounded-5 numInCart">

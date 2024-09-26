@@ -31,7 +31,7 @@
             </button>
           </router-link>
         </div>
-        <div v-else class="">
+        <div v-else>
           <button
             @click="toPay"
             :disabled="isLoading"

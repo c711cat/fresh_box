@@ -30,7 +30,7 @@
         </div>
       </div>
     </section>
-    <footer class="">
+    <footer>
       <PaginationView :pages="pagination" @emit-pages="getQAList" />
     </footer>
   </main>

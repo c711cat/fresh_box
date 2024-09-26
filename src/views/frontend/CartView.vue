@@ -6,7 +6,7 @@
       class="emptyContainer d-flex flex-column align-items-center justify-content-center col-10 mx-auto text-center"
     >
       <h3 class="mb-4">購物車空了</h3>
-      <router-link to="/user-products" class="">
+      <router-link to="/user-products">
         <button type="button" class="btn btn-outline-primary">繼續逛逛</button>
       </router-link>
     </section>
@@ -40,7 +40,7 @@
               @click="delItem(item)"
               class="bi bi-x-lg px-3 py-2 position-absolute top-0 end-0"
             ></i>
-            <router-link :to="`/product/${item.product.id}`" class="">
+            <router-link :to="`/product/${item.product.id}`">
               <img
                 v-if="currentWidth >= 250"
                 :srcset="`${item.product.imageUrl}&w=300`"

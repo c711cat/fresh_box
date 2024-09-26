@@ -22,7 +22,7 @@
         </header>
         <section class="modal-body ms-3">
           <form class="row m-0 g-3">
-            <div class="">
+            <div>
               <div class="d-inline text-danger">＊</div>
               <label class="form-label" for="author">發布者</label>
               <input

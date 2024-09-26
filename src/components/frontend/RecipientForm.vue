@@ -6,7 +6,7 @@
   >
     <div class="d-flex flex-column gap-3 mb-3">
       <h3 class="my-0">收件人資訊</h3>
-      <div class="">
+      <div>
         <div class="d-inline text-danger">＊</div>
         <label class="form-label" for="name">收件人姓名</label>
         <Field
@@ -20,7 +20,7 @@
         />
         <ErrorMessage name="姓名" class="invalid-feedback" />
       </div>
-      <div class="">
+      <div>
         <div class="d-inline text-danger">＊</div>
         <label class="form-label" for="email">Email</label>
         <Field
@@ -34,7 +34,7 @@
         />
         <ErrorMessage name="email" class="invalid-feedback" />
       </div>
-      <div class="">
+      <div>
         <div class="d-inline text-danger">＊</div>
         <label class="form-label" for="tel">電話</label>
         <Field
@@ -48,7 +48,7 @@
         />
         <ErrorMessage name="電話" class="invalid-feedback" />
       </div>
-      <div class="">
+      <div>
         <div class="d-inline text-danger">＊</div>
         <label class="form-label" for="address">收件地址</label>
         <Field
@@ -62,7 +62,7 @@
         />
         <ErrorMessage name="地址" class="invalid-feedback" />
       </div>
-      <div class="">
+      <div>
         <label class="form-label" for="message">備註</label>
         <textarea
           v-model="form.message"

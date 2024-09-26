@@ -38,7 +38,7 @@
 
         <div v-if="product.description" class="productContent px-1 mb-2">
           <ul v-for="item in product.description" :key="item" class="ps-3 mb-0">
-            <li class="">{{ item }}</li>
+            <li>{{ item }}</li>
           </ul>
         </div>
         <p class="productContent p-1 mb-0">
