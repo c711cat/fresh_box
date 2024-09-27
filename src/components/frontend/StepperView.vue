@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-between align-items-center col-12">
     <p
-      class="col-3 col-sm-auto flex-wrap mb-0 text-primary border border-primary text-center rounded"
+      class="col-auto p-2 flex-wrap mb-0 text-primary border border-primary text-center rounded"
       :class="textFontSize"
     >
       建立訂單
@@ -13,7 +13,7 @@
     </div>
 
     <p
-      class="col-3 col-sm-auto mb-0 border text-center rounded"
+      class="col-auto p-2 mb-0 border text-center rounded"
       :class="[payingText, textFontSize]"
     >
       進行付款
@@ -25,7 +25,7 @@
     </div>
 
     <p
-      class="col-3 col-sm-auto mb-0 border text-center rounded"
+      class="col-auto p-2 mb-0 border text-center rounded"
       :class="[paidText, textFontSize]"
     >
       付款完成
@@ -88,9 +88,9 @@ export default {
     },
     textFontSize() {
       if (this.currentWidth <= 575) {
-        return "xsFontSize p-1";
+        return "fs-6";
       } else {
-        return "fs-5 p-2";
+        return "fs-5";
       }
     },
   },
@@ -115,9 +115,5 @@ export default {
 
 .right {
   transform: rotate(-45deg);
-}
-
-.xsFontSize {
-  font-size: 14px;
 }
 </style>
