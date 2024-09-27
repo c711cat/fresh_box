@@ -17,14 +17,17 @@
           v-if="order.is_paid"
           class="col-12 d-flex flex-wrap justify-content-between"
         >
+          <router-link to="/order-list" class="border-0 col p-1">
+            <button
+              type="button"
+              class="w-100 btnBody btn btn-outline-secondary"
+            >
+              查看訂單
+            </button>
+          </router-link>
           <router-link to="/user-products" class="border-0 col p-1">
             <button type="button" class="w-100 btnBody btn btn-outline-primary">
               繼續逛逛
-            </button>
-          </router-link>
-          <router-link to="/order-list" class="border-0 col p-1">
-            <button type="button" class="w-100 btnBody btn btn-outline-dark">
-              查看訂單
             </button>
           </router-link>
         </div>
