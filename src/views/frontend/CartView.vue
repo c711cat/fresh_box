@@ -14,12 +14,12 @@
       v-else
       class="p-3 cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light rounded"
     >
-      <div class="col-12 p-3">
+      <div class="col-12 p-4">
         <router-view />
       </div>
-      <div class="col-12 col-lg-6 my-3">
+      <div class="col-12 col-lg-6 my-3 px-4">
         <header
-          class="col-12 d-flex flex-wrap justify-content-between align-items-center ps-3 pe-3 mb-2"
+          class="col-12 d-flex flex-wrap justify-content-between align-items-center mb-2 pe-3"
         >
           <h3 class="m-0">購買清單</h3>
           <button
@@ -30,7 +30,7 @@
             清空購物車
           </button>
         </header>
-        <div class="col-12 ps-3">
+        <div class="col-12">
           <section
             v-for="item in carts"
             :key="item.id"
@@ -164,7 +164,7 @@
           </section>
         </div>
       </div>
-      <section class="col-12 col-lg-6 py-3 ps-3 pe-3">
+      <section class="col-12 col-lg-6 my-3 px-4">
         <RecipientForm class="h-100" />
       </section>
     </main>
