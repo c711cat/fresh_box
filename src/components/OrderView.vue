@@ -291,8 +291,10 @@ export default {
 
 <style lang="scss" scoped>
 img:hover {
-  filter: brightness(1.1);
+  border: 2px solid #fff;
+  cursor: pointer;
 }
+
 .orderTitle {
   margin-right: 40px;
 }
@@ -317,6 +319,7 @@ img:hover {
 
 .titleLink:hover {
   font-weight: bold;
+  color: #ccaf3c;
 }
 
 .space {

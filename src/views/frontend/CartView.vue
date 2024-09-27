@@ -422,9 +422,7 @@ img:hover {
 }
 
 .productTitle:hover {
-  font-size: 18px;
-  border: 1px solid #fff;
-  color: #887426;
+  color: #ccaf3c;
 }
 
 .bi-x-lg:hover {
