@@ -34,7 +34,7 @@
   <!-- 暢銷商品 -->
   <section class="mx-auto mb-5 col-11 col-xl-9">
     <h3
-      class="mb-3 border-bottom border-dark"
+      class="mb-3 border-bottom border-dark pb-2"
       data-aos="fade-in"
       data-aos-easing="ease-out-sine"
       data-aos-duration="1500"
@@ -50,7 +50,7 @@
   <!-- 精選商品 -->
   <section class="mx-auto mb-5 col-11 col-xl-9">
     <h3
-      class="mb-3 border-bottom border-dark"
+      class="mb-3 border-bottom border-dark pb-2"
       data-aos="fade-in"
       data-aos-easing="ease-out-sine"
       data-aos-duration="1500"
