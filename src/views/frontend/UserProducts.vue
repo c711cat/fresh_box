@@ -496,7 +496,7 @@ export default {
 
 <style lang="scss" scoped>
 img {
-  height: 20vh;
+  height: 23vh;
   object-fit: cover;
 }
 
