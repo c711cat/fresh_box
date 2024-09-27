@@ -111,7 +111,7 @@
                 :options="couponOption"
                 v-model="couponCode"
                 :disabled="used_coupon"
-                placeholder="使用優惠碼"
+                placeholder="套用優惠碼"
               ></v-select>
               <button
                 @click="useCoupon"
@@ -125,7 +125,7 @@
                 >
                   <span class="visually-hidden">Loading...</span>
                 </div>
-                <p v-else class="m-0">送出</p>
+                <p v-else class="m-0">套用</p>
               </button>
             </div>
 
