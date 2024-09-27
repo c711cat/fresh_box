@@ -1,9 +1,9 @@
 <template>
   <LoadingView v-if="isLoading" />
   <main v-else class="mt-5 pt-4 mb-5">
-    <div class="d-flex justify-content-center col-12 mt-4 mb-3 py-3 bg-light">
+    <div class="d-flex justify-content-center col-12 mt-4 mb-3 py-3">
       <div
-        class="col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 px-3"
+        class="col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11 px-4"
       >
         <router-view />
       </div>
@@ -12,7 +12,7 @@
       class="mx-2 mx-auto col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 col-xxl-11"
     >
       <OrderView class="pt-2 mb-3" :transOrder="order" />
-      <section class="col-12 col-lg-5 px-2 ms-auto">
+      <section class="col-12 col-lg-5 px-4 ms-auto">
         <div
           v-if="order.is_paid"
           class="col-12 d-flex flex-wrap justify-content-between"
