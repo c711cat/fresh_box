@@ -1,6 +1,6 @@
 <template>
   <div class="row m-0 p-0">
-    <div class="detailsText mb-4 col-lg-7">
+    <section class="px-4 detailsText mb-4 col-lg-7">
       <header
         class="d-flex align-items-center justify-content-between flex-wrap"
       >
@@ -147,8 +147,8 @@
           </strong>
         </div>
       </section>
-    </div>
-    <section class="col-lg-5">
+    </section>
+    <section class="px-4 col-lg-5">
       <h3 class="border-bottom pb-2">收件人資訊</h3>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">姓名</p>

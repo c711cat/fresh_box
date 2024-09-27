@@ -1,9 +1,10 @@
 <template>
   <div class="d-flex justify-content-between align-items-center col-12">
     <p
-      class="col-2 col-sm-auto flex-wrap mb-0 fs-5 text-primary border border-primary p-2 text-center rounded"
+      class="col-3 col-sm-auto flex-wrap mb-0 text-primary border border-primary text-center rounded"
+      :class="textFontSize"
     >
-      建立<br class="d-block d-sm-none" />訂單
+      建立訂單
     </p>
 
     <div class="position-relative w-100 mx-2 d-flex align-items-center">
@@ -12,10 +13,10 @@
     </div>
 
     <p
-      class="col-2 col-sm-auto mb-0 fs-5 border p-2 text-center rounded"
-      :class="payingText"
+      class="col-3 col-sm-auto mb-0 border text-center rounded"
+      :class="[payingText, textFontSize]"
     >
-      進行<br class="d-block d-sm-none" />付款
+      進行付款
     </p>
 
     <div class="position-relative w-100 mx-2 d-flex align-items-center">
@@ -24,10 +25,10 @@
     </div>
 
     <p
-      class="col-2 col-sm-auto mb-0 fs-5 border p-2 text-center rounded"
-      :class="paidText"
+      class="col-3 col-sm-auto mb-0 border text-center rounded"
+      :class="[paidText, textFontSize]"
     >
-      付款<br class="d-block d-sm-none" />完成
+      付款完成
     </p>
   </div>
 </template>
@@ -37,6 +38,7 @@ export default {
   data() {
     return {
       order: {},
+      currentWidth: 1000,
     };
   },
   methods: {
@@ -50,6 +52,9 @@ export default {
         .catch((error) => {
           this.$pushMsg.status404(error.response.data.message);
         });
+    },
+    getCurrentWidth() {
+      this.currentWidth = window.innerWidth;
     },
   },
   computed: {
@@ -81,8 +86,16 @@ export default {
         return "border-gray-light";
       }
     },
+    textFontSize() {
+      if (this.currentWidth <= 575) {
+        return "xsFontSize p-1";
+      } else {
+        return "fs-5 p-2";
+      }
+    },
   },
   created() {
+    this.getCurrentWidth();
     if (this.$route.params.orderId) {
       this.getOrder();
     }
@@ -102,5 +115,9 @@ export default {
 
 .right {
   transform: rotate(-45deg);
+}
+
+.xsFontSize {
+  font-size: 14px;
 }
 </style>
