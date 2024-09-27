@@ -12,7 +12,7 @@
     </section>
     <main
       v-else
-      class="cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light rounded"
+      class="p-3 cartWrap col-sm-11 col-md-9 col-lg-10 mx-auto d-flex flex-wrap bg-light rounded"
     >
       <div class="col-12 p-3">
         <router-view />
