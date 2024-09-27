@@ -114,7 +114,7 @@
             NT$ {{ order.shippingFee }}
           </div>
           <div
-            class="d-flex text-primary col-12 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9"
+            class="d-flex text-dark-primary col-12 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9"
           >
             <p class="mb-0 w-100 text-sm-end">
               <i class="bi bi-info-circle me-1"></i>滿 NT$ 1,000 免運
@@ -128,7 +128,7 @@
             付款金額
           </strong>
           <strong
-            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end text-primary"
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end text-dark-primary"
           >
             NT$ {{ $filters.currency(order.paymentAmount) }}
           </strong>
@@ -157,12 +157,22 @@
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">email</p>
         <p class="wrapText mb-0 py-1 col-sm-10 col-12">
-          {{ order.user.email }}
+          <a
+            :href="`mailto:${order.user.email}`"
+            class="text-decoration-none text-dark-primary"
+            >{{ order.user.email }}</a
+          >
         </p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">電話</p>
-        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.tel }}</p>
+        <p class="mb-0 py-1 col-sm-10 col-12">
+          <a
+            :href="`tel:${order.user.tel}`"
+            class="text-decoration-none text-dark-primary"
+            >{{ order.user.tel }}</a
+          >
+        </p>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">地址</p>
@@ -280,6 +290,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+img:hover {
+  filter: brightness(1.1);
+}
 .orderTitle {
   margin-right: 40px;
 }
@@ -313,5 +326,9 @@ export default {
 
 .wrapText {
   word-wrap: break-word;
+}
+
+a:hover {
+  color: #ccaf3c !important;
 }
 </style>
