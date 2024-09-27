@@ -114,7 +114,7 @@
             NT$ {{ order.shippingFee }}
           </div>
           <div
-            class="d-flex text-dark-primary col-12 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9"
+            class="d-flex text-primary col-12 col-sm-9 col-md-10 col-lg-9 col-xl-9 col-xxl-9"
           >
             <p class="mb-0 w-100 text-sm-end">
               <i class="bi bi-info-circle me-1"></i>滿 NT$ 1,000 免運
@@ -128,7 +128,7 @@
             付款金額
           </strong>
           <strong
-            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end text-dark-primary"
+            class="col-8 col-sm-3 col-md-2 col-lg-3 col-xl-3 col-xxl-3 text-end text-primary"
           >
             NT$ {{ $filters.currency(order.paymentAmount) }}
           </strong>
@@ -154,25 +154,30 @@
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">姓名</p>
         <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.name }}</p>
       </div>
-      <div class="px-4 mb-2 d-flex flex-wrap">
+      <div class="px-4 mb-2 d-flex flex-wrap align-items-center">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">email</p>
-        <p class="wrapText mb-0 py-1 col-sm-10 col-12">
+        <div
+          class="wrapText mb-0 py-1 col-sm-10 col-12 d-flex flex-wrap align-items-center"
+        >
+          <p class="mb-0 pe-3 overflow-hidden">{{ order.user.email }}</p>
+
           <a
             :href="`mailto:${order.user.email}`"
-            class="text-decoration-none text-dark-primary"
-            >{{ order.user.email }}</a
+            class="tel_and_mail_link text-decoration-none text-primary bi bi-envelope-arrow-up fs-5"
           >
-        </p>
+          </a>
+        </div>
       </div>
-      <div class="px-4 mb-2 d-flex flex-wrap">
+      <div class="px-4 mb-2 d-flex flex-wrap align-items-center">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">電話</p>
-        <p class="mb-0 py-1 col-sm-10 col-12">
+        <div class="py-1 col-sm-10 col-12 d-flex align-items-center">
+          <p class="mb-0 pe-3">{{ order.user.tel }}</p>
           <a
             :href="`tel:${order.user.tel}`"
-            class="text-decoration-none text-dark-primary"
-            >{{ order.user.tel }}</a
+            class="tel_and_mail_link text-decoration-none text-primary bi bi-telephone-forward fs-5"
           >
-        </p>
+          </a>
+        </div>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">地址</p>
@@ -331,7 +336,7 @@ img:hover {
   word-wrap: break-word;
 }
 
-a:hover {
-  color: #ccaf3c !important;
+.tel_and_mail_link:hover {
+  color: #887426 !important;
 }
 </style>
