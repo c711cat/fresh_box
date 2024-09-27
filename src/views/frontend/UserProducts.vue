@@ -620,7 +620,7 @@ img {
 }
 
 .sticky-top {
-  top: 75px;
+  top: 61px;
 }
 
 .btnXs {
