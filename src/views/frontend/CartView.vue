@@ -203,7 +203,7 @@ export default {
   components: { RecipientForm, delModal },
   methods: {
     getCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
       this.$http
         .get(api)
         .then((res) => {
@@ -218,38 +218,38 @@ export default {
           });
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得購物車資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
         });
     },
     delItem(item) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.$http
         .delete(api)
-        .then((res) => {
-          this.$pushMsg.status200(res, "刪除商品成功");
+        .then(() => {
+          this.$pushMsg.status200("刪除商品成功");
           this.getCart();
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "刪除失敗");
         });
     },
     addOneToCart(item) {
       const addItem = { product_id: item.product.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
       this.status.addLoadingItem = item.id;
       this.$http
         .post(api, { data: addItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
+        .then(() => {
+          this.$pushMsg.status200("已加入購物車");
           this.getCart();
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "加入購物車失敗");
         })
         .finally(() => {
           this.status.addLoadingItem = "";
@@ -260,17 +260,17 @@ export default {
     delOneQty(item) {
       const updateQty = item.qty - 1;
       const delItem = { product_id: item.product.id, qty: updateQty };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.status.delLoadingItem = item.id;
       this.$http
         .put(api, { data: delItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已刪除 1 個品項");
+        .then(() => {
+          this.$pushMsg.status200("已刪除 1 個品項");
           this.getCart();
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "刪除失敗");
         })
         .finally(() => {
           this.status.delLoadingItem = "";
@@ -281,40 +281,35 @@ export default {
         item.qty = 0;
       }
       const updateQty = Number(item.qty);
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart/${item.id}`;
       this.status.updateLoadingItem = item.id;
       this.$http
         .put(api, { data: { product_id: item.product.id, qty: updateQty } })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已更新數量");
+        .then(() => {
+          this.$pushMsg.status200("已更新數量");
           this.getCart();
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "更新數量失敗");
         })
         .finally(() => {
           this.status.updateLoadingItem = "";
         });
     },
     useCoupon() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/coupon`;
       this.status.submit = true;
       this.$http
         .post(api, { data: { code: this.couponCode } })
         .then((res) => {
-          if (res.data.success) {
-            this.used_coupon = true;
-            this.$pushMsg.status200(res, res.data.message);
-            this.getCart();
-            this.emitter.emit("updateProductInCart");
-          } else {
-            // 會出現『失敗』的訊息回饋（找不到優惠券! 或 優惠券無法使用或已過期）
-            this.$pushMsg.status200(res, `套用優惠券失敗:${res.data.message}`);
-          }
+          this.used_coupon = true;
+          this.$pushMsg.status200(res.data.message);
+          this.getCart();
+          this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "套用優惠券失敗");
         })
         .finally(() => {
           this.status.submit = false;
@@ -339,18 +334,18 @@ export default {
       this.$refs.delModal.showModal();
     },
     cleanCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/carts`;
       this.$http
         .delete(api)
-        .then((res) => {
+        .then(() => {
           this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "已清空購物車");
+          this.$pushMsg.status200("已清空購物車");
           this.getCart();
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
           this.allCartItems = false;
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "清空購物車失敗");
         });
     },
     getCurrentWidth() {

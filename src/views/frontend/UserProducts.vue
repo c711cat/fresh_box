@@ -251,7 +251,7 @@ export default {
       { leading: true, trailing: true }
     ),
     fetchProducts(page) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http
         .get(api)
         .then((res) => {
@@ -269,7 +269,7 @@ export default {
           });
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         });
     },
     whereComeFrom() {
@@ -321,7 +321,7 @@ export default {
       localStorageHelper.set("myFavorite", this.myFavoriteList);
     },
     getCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
       this.$http
         .get(api)
         .then((res) => {
@@ -329,7 +329,7 @@ export default {
           this.pushBuyQtyId();
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得購物車資料失敗");
         });
     },
     pushBuyQtyId() {
@@ -345,7 +345,7 @@ export default {
     getPage1Products(page = 1) {
       this.pagination.current_page = 1;
       this.currentCategory = "選擇類別";
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.$http
         .get(api)
         .then((res) => {
@@ -354,7 +354,7 @@ export default {
           this.pushBuyQtyId();
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
@@ -366,7 +366,7 @@ export default {
       this.getAllProducts();
     },
     getAllProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http
         .get(api)
         .then((res) => {
@@ -374,7 +374,7 @@ export default {
           this.showCategoryProducts();
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         });
     },
     showCategoryProducts() {
@@ -418,17 +418,17 @@ export default {
     },
     addCart(item) {
       const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
       this.status.addLoadingItem = item.id;
       this.$http
         .post(api, { data: addItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
+        .then(() => {
+          this.$pushMsg.status200("已加入購物車");
           this.getCart();
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "加入購物車失敗");
         })
         .finally(() => {
           this.status.addLoadingItem = "";

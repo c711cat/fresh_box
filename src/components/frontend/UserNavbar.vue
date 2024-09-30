@@ -247,25 +247,25 @@ export default {
       this.userNavbar.hide();
     },
     getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http
         .get(api)
         .then((res) => {
           this.products = res.data.products;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         });
     },
     getCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
       this.$http
         .get(api)
         .then((res) => {
           this.carts = res.data.data.carts;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得購物車資料失敗");
         });
     },
     goToUserProducts() {
@@ -273,7 +273,7 @@ export default {
       this.closeMenu();
     },
     getOrdersOfPage1() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
       this.$http
         .get(api)
         .then((res) => {
@@ -281,13 +281,13 @@ export default {
           this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
         });
     },
     fetchOrdersOfOtherPages(total_pages) {
       this.orderPage = this.orderPage + 1;
       if (this.orderPage <= total_pages) {
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+        const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
         this.$http
           .get(api)
           .then((res) => {
@@ -295,7 +295,7 @@ export default {
             this.fetchOrdersOfOtherPages(total_pages);
           })
           .catch((error) => {
-            this.$pushMsg.status404(error.response.data.message);
+            this.$pushMsg.status404(error.response, "取得訂單資料失敗");
           });
       }
     },

@@ -110,7 +110,7 @@ export default {
     getOrders(page = 1) {
       this.orderList = {};
       this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
       this.$http
         .get(api)
         .then((res) => {
@@ -118,7 +118,7 @@ export default {
           this.pagination = res.data.pagination;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
@@ -135,31 +135,31 @@ export default {
       this.$refs.delModal.showModal();
     },
     delOrder(order, page) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`;
       this.$http
         .delete(api)
-        .then((res) => {
+        .then(() => {
           this.getOrders(page);
           this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "已刪除訂單");
+          this.$pushMsg.status200("已刪除訂單");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "刪除失敗");
         });
     },
     turnDate(date) {
       return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
     },
     delAllOrders() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders/all`;
       this.$http
         .delete(api)
-        .then((res) => {
+        .then(() => {
           this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "成功刪除全部訂單");
+          this.$pushMsg.status200("成功刪除全部訂單");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "刪除失敗");
         })
         .finally(() => {
           this.allOrdersSwitch = false;

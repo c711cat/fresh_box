@@ -235,19 +235,19 @@ export default {
     },
     logOut() {
       this.closeMenu();
-      const api = `${process.env.VUE_APP_API}logout`;
+      const api = `${process.env.VUE_APP_API}v2/logout`;
       this.$http
         .post(api)
-        .then((res) => {
+        .then(() => {
           this.$router.push("/login");
-          this.$pushMsg.status200(res, "已登出");
+          this.$pushMsg.status200("已登出");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "登出失敗");
         });
     },
     getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/products/all`;
       this.isLoading = true;
       this.$http
         .get(api)
@@ -255,29 +255,30 @@ export default {
           this.products = res.data.products;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
         });
     },
     getOrdersOfPage1() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
       this.$http
         .get(api)
         .then((res) => {
+          console.log(res);
           this.orders = res.data.orders;
           this.pagination = res.data.pagination;
           this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, error.response.data.message);
         });
     },
     fetchOrdersOfOtherPages(total_pages) {
       this.orderPage = this.orderPage + 1;
       if (this.orderPage <= total_pages) {
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+        const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
         this.$http
           .get(api)
           .then((res) => {
@@ -286,7 +287,7 @@ export default {
             this.fetchOrdersOfOtherPages(total_pages);
           })
           .catch((error) => {
-            this.$pushMsg.status404(error.response.data.message);
+            this.$pushMsg.status404(error.response, "取得訂單資料失敗");
           });
       }
     },

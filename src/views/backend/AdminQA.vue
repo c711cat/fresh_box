@@ -92,7 +92,7 @@ export default {
   methods: {
     getQAList(page = 1) {
       this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`;
       this.$http
         .get(api)
         .then((res) => {
@@ -100,7 +100,7 @@ export default {
           this.QA_List = res.data.articles;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得問答資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
@@ -117,20 +117,15 @@ export default {
     addQA(QA) {
       QA.create_at = (new Date() * 1000) / 1000;
       QA.content = QA.description;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article`;
       this.$http
         .post(api, { data: QA })
-        .then((res) => {
-          if (res.data.success) {
-            this.$refs.QA_Modal.hideModal();
-            this.$pushMsg.status200(res, "新增問答成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "新增問答失敗");
-          }
+        .then(() => {
+          this.$refs.QA_Modal.hideModal();
+          this.$pushMsg.status200("新增問答成功");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "新增問答失敗");
         })
         .finally(() => {
           this.getQAList();
@@ -139,20 +134,15 @@ export default {
     editQA(QA) {
       QA.create_at = (new Date() * 1000) / 1000;
       QA.content = QA.description;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`;
       this.$http
         .put(api, { data: QA })
-        .then((res) => {
-          if (res.data.success) {
-            this.$refs.QA_Modal.hideModal();
-            this.$pushMsg.status200(res, "更新問答成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "更新問答失敗");
-          }
+        .then(() => {
+          this.$refs.QA_Modal.hideModal();
+          this.$pushMsg.status200("更新問答成功");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "更新問答失敗");
         })
         .finally(() => {
           this.getQAList();
@@ -163,15 +153,15 @@ export default {
       this.tempQA = { ...delItem };
     },
     delQA(QA) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`;
       this.$http
         .delete(api)
-        .then((res) => {
+        .then(() => {
           this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "刪除問答成功");
+          this.$pushMsg.status200("刪除問答成功");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "刪除失敗");
         })
         .finally(() => {
           this.getQAList();

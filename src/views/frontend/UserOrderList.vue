@@ -87,7 +87,7 @@ export default {
     getOrders(page = 1) {
       this.orderList = {};
       this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
       this.$http
         .get(api)
         .then((res) => {
@@ -95,23 +95,23 @@ export default {
           this.pagination = res.data.pagination;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
         });
     },
     toPay(orderId) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${orderId}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${orderId}`;
       this.isLoading = true;
       this.$http
         .post(api)
-        .then((res) => {
-          this.$pushMsg.status200(res, "付款成功");
+        .then(() => {
+          this.$pushMsg.status200("付款成功");
           this.getOrders();
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "付款失敗");
         })
         .finally(() => {
           this.isLoading = false;

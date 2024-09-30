@@ -43,14 +43,14 @@ export default {
   },
   methods: {
     getOrder() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.$route.params.orderId}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${this.$route.params.orderId}`;
       this.$http
         .get(api)
         .then((res) => {
           this.order = res.data.order;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
         });
     },
     getCurrentWidth() {

@@ -130,7 +130,7 @@ export default {
   inject: ["emitter"],
   methods: {
     getProducts(page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
       this.isLoading = true;
       this.$http
         .get(api)
@@ -140,7 +140,7 @@ export default {
           this.openPagination = true;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         })
         .finally(() => {
           this.isLoading = false;
@@ -175,22 +175,17 @@ export default {
     },
     editProduct(item, current_page) {
       this.tempProduct = item;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.isLoading = true;
       this.$http
         .put(api, { data: this.tempProduct })
-        .then((res) => {
-          if (res.data.success) {
-            this.getProducts(current_page);
-            this.$refs.productModal.hideModal();
-            this.$pushMsg.status200(res, "更新產品成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "更新產品失敗");
-          }
+        .then(() => {
+          this.getProducts(current_page);
+          this.$refs.productModal.hideModal();
+          this.$pushMsg.status200("更新產品成功");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "更新產品失敗");
         })
         .finally(() => {
           this.isLoading = false;
@@ -201,17 +196,17 @@ export default {
       this.tempProduct = { ...item };
     },
     delProduct(item, current_page) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
       this.isLoading = true;
       this.$http
         .delete(api)
-        .then((res) => {
+        .then(() => {
           this.getProducts(current_page);
           this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "已刪除產品");
+          this.$pushMsg.status200("已刪除產品");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "刪除失敗");
         })
         .finally(() => {
           this.isLoading = false;

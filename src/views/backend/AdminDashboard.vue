@@ -24,16 +24,13 @@ export default {
       this.checkSignIn();
     },
     checkSignIn() {
-      const api = `${process.env.VUE_APP_API}api/user/check`;
+      const api = `${process.env.VUE_APP_API}v2/api/user/check`;
       this.$http
         .post(api)
-        .then((res) => {
-          if (!res.data.success) {
-            this.$router.push("/login");
-          }
-        })
+        .then(() => {})
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, error.response.data.message);
+          this.$router.push("/login");
         });
     },
   },

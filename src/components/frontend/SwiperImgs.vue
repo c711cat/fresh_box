@@ -124,28 +124,28 @@ export default {
   inject: ["emitter"],
   methods: {
     getAllProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http
         .get(api)
         .then((res) => {
           this.allProducts = res.data.products;
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "取得產品資料失敗");
         });
     },
     addCart(item) {
       const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
       this.status.addLoadingItem = item.id;
       this.$http
         .post(api, { data: addItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
+        .then(() => {
+          this.$pushMsg.status200("已加入購物車");
           this.emitter.emit("updateProductInCart");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "加入購物車失敗");
         })
         .finally(() => {
           this.status.addLoadingItem = "";
