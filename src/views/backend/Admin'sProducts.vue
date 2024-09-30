@@ -157,22 +157,17 @@ export default {
     },
     addProduct(item) {
       this.tempProduct = item;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product`;
       this.isLoading = true;
       this.$http
         .post(api, { data: this.tempProduct })
-        .then((res) => {
-          if (res.data.success) {
-            this.getProducts();
-            this.$refs.productModal.hideModal();
-            this.$pushMsg.status200(res, "新增產品成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "新增產品失敗");
-          }
+        .then(() => {
+          this.getProducts();
+          this.$refs.productModal.hideModal();
+          this.$pushMsg.status200("新增產品成功");
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, "新增產品失敗");
         })
         .finally(() => {
           this.isLoading = false;
