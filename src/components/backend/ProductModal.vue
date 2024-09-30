@@ -139,7 +139,6 @@
                 ></v-select>
               </div>
               <div class="col-xl-5">
-                <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">保存方式</label>
                 <v-select
                   v-model="tempProduct.preservation_methods"
