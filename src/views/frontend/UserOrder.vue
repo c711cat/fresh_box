@@ -18,15 +18,12 @@
           class="col-12 d-flex flex-wrap justify-content-between"
         >
           <router-link to="/order-list" class="border-0 col p-1">
-            <button
-              type="button"
-              class="w-100 btnBody btn btn-outline-secondary"
-            >
+            <button type="button" class="w-100 btnBody btn btn-outline-primary">
               查看訂單
             </button>
           </router-link>
           <router-link to="/user-products" class="border-0 col p-1">
-            <button type="button" class="w-100 btnBody btn btn-outline-primary">
+            <button type="button" class="w-100 btnBody btn btn-primary">
               繼續逛逛
             </button>
           </router-link>
