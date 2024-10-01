@@ -266,7 +266,6 @@ export default {
       this.$http
         .get(api)
         .then((res) => {
-          console.log(res);
           this.orders = res.data.orders;
           this.pagination = res.data.pagination;
           this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
