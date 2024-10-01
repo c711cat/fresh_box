@@ -7,12 +7,12 @@
     <div
       class="mx-auto mb-3 col-11 col-sm-3 col-lg-2 col-xxl-2"
       :class="{
-        'sticky-top': currentWidth < 576,
+        'sticky-top stickyTopXs': currentWidth < 576,
         miniWidth: currentWidth < 306,
       }"
     >
       <!-- sm以上 -->
-      <section class="d-none d-sm-block list-group sticky-top">
+      <section class="d-none d-sm-block list-group sticky-top stickyTopSm">
         <button
           @click="goToAllProducts"
           class="list-group-item list-group-item-action"
@@ -597,8 +597,12 @@ img {
   font-weight: bolder;
 }
 
-.sticky-top {
+.stickyTopXs {
   top: 61px;
+}
+
+.stickyTopSm {
+  top: 75px;
 }
 
 .btnXs {
