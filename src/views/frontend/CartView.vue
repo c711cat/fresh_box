@@ -125,7 +125,7 @@
                 >
                   <span class="visually-hidden">Loading...</span>
                 </div>
-                <p v-else class="m-0">套用</p>
+                <p v-else class="m-0 text-nowrap">套用</p>
               </button>
             </div>
 
