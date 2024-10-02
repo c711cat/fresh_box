@@ -121,7 +121,6 @@ export default {
       this.$http
         .post(api, { data: this.form })
         .then((res) => {
-          console.log(res)
           this.emitter.emit('clearCart')
           this.$router.push(`/order/${res.data.orderId}`)
         })
