@@ -201,7 +201,7 @@ export default {
         if (this.productSearchText === '') {
           this.emitter.emit('productSearchNull')
         } else {
-          this.products.filter((item) => {
+          this.products.forEach((item) => {
             if (item.title.match(this.productSearchText)) {
               this.searchResult.push(item)
             }
@@ -219,7 +219,7 @@ export default {
       if (this.orderSearchText === '') {
         this.emitter.emit('orderSearchNull')
       } else {
-        this.orders.filter((item) => {
+        this.orders.forEach((item) => {
           if (item.user.name.match(this.orderSearchText)) {
             this.orderSearchResult.push(item)
           }

@@ -262,9 +262,9 @@ export default {
       localStorage.setItem('myFavorite', JSON.stringify(this.myFavoriteList))
     },
     delMyFavorite () {
-      this.myFavoriteList.filter((listItem, index) => {
+      this.myFavoriteList.forEach((listItem, index) => {
         if (this.product.id === listItem.id) {
-          return this.myFavoriteList.splice(index, 1)
+          this.myFavoriteList.splice(index, 1)
         }
       })
       localStorage.setItem('myFavorite', JSON.stringify(this.myFavoriteList))

@@ -313,7 +313,7 @@ export default {
       localStorageHelper.set('myFavorite', this.myFavoriteList)
     },
     delMyFavorite (delItem) {
-      this.myFavoriteList.filter((item, index) => {
+      this.myFavoriteList.forEach((item, index) => {
         if (delItem.id === item.id) {
           return this.myFavoriteList.splice(index, 1)
         }
@@ -379,7 +379,7 @@ export default {
     },
     showCategoryProducts () {
       const inCaterogy = []
-      this.forCategoryAllProducts.filter((item) => {
+      this.forCategoryAllProducts.forEach((item) => {
         if (item.category === this.currentCategory) {
           inCaterogy.push(item)
         }
