@@ -93,4 +93,10 @@ export default {
 .btnBody {
   min-width: 100px;
 }
+
+.btn-outline-primary:hover{
+  background-color: #fff;
+  border:1px solid #887426;
+  color:#887426;
+}
 </style>
