@@ -10,8 +10,8 @@ const routes = [
     component: () => import('@/views/backend/AdminDashboard.vue'),
     children: [
       {
-        path: "admin's-products",
-        component: () => import("@/views/backend/Admin'sProducts.vue")
+        path: 'admin-products',
+        component: () => import('@/views/backend/Admin\'sProducts.vue')
       },
       {
         path: 'coupons',

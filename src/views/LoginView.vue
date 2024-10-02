@@ -56,7 +56,7 @@ export default {
           const token = res.data.token
           const expired = new Date(res.data.expired)
           Cookies.set('freshBoxToken', token, { expires: expired })
-          this.$router.push("/dashboard/admin's-products")
+          this.$router.push('/dashboard/admin-products')
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response, '登入失敗')
@@ -68,7 +68,7 @@ export default {
       this.$http
         .post(api)
         .then(() => {
-          this.$router.push("/dashboard/admin's-products")
+          this.$router.push('/dashboard/admin-products')
         })
         .catch((error) => {
           this.$pushMsg.status404(error.response, error.response.data.message)

@@ -37,9 +37,9 @@
             <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
-                to="/dashboard/admin's-products"
+                to="/dashboard/admin-products"
                 class="nav-link px-3 rounded"
-                :class="isCurrentPage(`/dashboard/admin's-products`)"
+                :class="isCurrentPage(`/dashboard/admin-products`)"
               >
                 產品清單
               </router-link>

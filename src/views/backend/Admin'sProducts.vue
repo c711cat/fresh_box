@@ -214,7 +214,7 @@ export default {
     },
     isPath (item) {
       if (item.is_enabled === 0) {
-        return "/dashboard/admin's-products"
+        return '/dashboard/admin-products'
       } else {
         return `/product/${item.id}`
       }
