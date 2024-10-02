@@ -195,7 +195,7 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       order: {
         products: {},
@@ -204,94 +204,94 @@ export default {
         afterDiscount: 0,
         paymentAmount: 0,
         shippingFee: 290,
-        user: {},
-      },
-    };
+        user: {}
+      }
+    }
   },
   props: {
     oneOrder: {},
-    transOrder: {},
+    transOrder: {}
   },
   watch: {
-    transOrder() {
-      this.order = { ...this.transOrder };
-      this.getSubtotal();
+    transOrder () {
+      this.order = { ...this.transOrder }
+      this.getSubtotal()
     },
-    oneOrder() {
-      this.order = { ...this.oneOrder };
-      this.getSubtotal();
-    },
+    oneOrder () {
+      this.order = { ...this.oneOrder }
+      this.getSubtotal()
+    }
   },
   methods: {
-    getOrder() {
+    getOrder () {
       if (this.oneOrder) {
-        this.order = { ...this.oneOrder };
-        this.order.user = { ...this.oneOrder.user };
-        this.order.products = { ...this.oneOrder.products };
-        this.getSubtotal();
+        this.order = { ...this.oneOrder }
+        this.order.user = { ...this.oneOrder.user }
+        this.order.products = { ...this.oneOrder.products }
+        this.getSubtotal()
       }
     },
-    getSubtotal() {
-      let subtotal = 0;
+    getSubtotal () {
+      let subtotal = 0
       Object.values(this.order.products).forEach((item) => {
-        subtotal += item.total;
-      });
-      this.order.subtotal = subtotal;
-      this.getAfterDiscount();
+        subtotal += item.total
+      })
+      this.order.subtotal = subtotal
+      this.getAfterDiscount()
     },
-    getAfterDiscount() {
-      this.order.afterDiscount = Math.round(this.order.total);
-      this.getDiscount();
-      this.getShippingFee();
-      this.getPaymentAmount();
-      this.getShippingFee();
+    getAfterDiscount () {
+      this.order.afterDiscount = Math.round(this.order.total)
+      this.getDiscount()
+      this.getShippingFee()
+      this.getPaymentAmount()
+      this.getShippingFee()
     },
-    getDiscount() {
-      this.order.discount = this.order.subtotal - this.order.afterDiscount;
+    getDiscount () {
+      this.order.discount = this.order.subtotal - this.order.afterDiscount
     },
-    getShippingFee() {
+    getShippingFee () {
       if (this.order.total >= 1000) {
-        this.order.shippingFee = 0;
+        this.order.shippingFee = 0
       }
       if (this.order.total < 1000) {
-        this.order.shippingFee = 290;
+        this.order.shippingFee = 290
       }
     },
-    getPaymentAmount() {
+    getPaymentAmount () {
       this.order.paymentAmount =
-        this.order.afterDiscount + this.order.shippingFee;
+        this.order.afterDiscount + this.order.shippingFee
     },
-    turnDate(date) {
-      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+    turnDate (date) {
+      return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
-    showPrice(item) {
+    showPrice (item) {
       if (item.product.origin_price === item.product.price) {
-        return item.product.origin_price;
+        return item.product.origin_price
       } else {
-        return item.product.price;
+        return item.product.price
       }
-    },
+    }
   },
   computed: {
-    paymentStatus() {
+    paymentStatus () {
       if (this.order.is_paid === true) {
-        return "付款完成";
+        return '付款完成'
       } else {
-        return "未付款";
+        return '未付款'
       }
     },
-    paymentStatusColor() {
+    paymentStatusColor () {
       if (this.order.is_paid === true) {
-        return "text-success";
+        return 'text-success'
       } else {
-        return "text-danger";
+        return 'text-danger'
       }
-    },
+    }
   },
-  created() {
-    this.getOrder();
-  },
-};
+  created () {
+    this.getOrder()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

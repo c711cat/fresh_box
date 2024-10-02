@@ -12,15 +12,15 @@
 </template>
 
 <script>
-import UserNavbar from "@/components/frontend/UserNavbar.vue";
-import FooterView from "@/components/frontend/FooterView.vue";
+import UserNavbar from '@/components/frontend/UserNavbar.vue'
+import FooterView from '@/components/frontend/FooterView.vue'
 
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  components: { UserNavbar, FooterView },
-};
+  components: { UserNavbar, FooterView }
+}
 </script>
 
 <style lang="scss" scoped>

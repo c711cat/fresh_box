@@ -25,28 +25,28 @@
 </template>
 
 <script>
-import Toast from "bootstrap/js/dist/toast";
+import Toast from 'bootstrap/js/dist/toast'
 
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["msg"],
+  props: ['msg'],
   computed: {
-    iconStyle() {
-      if (this.msg.style === "success") {
-        return "bi bi-check-circle-fill text-success";
+    iconStyle () {
+      if (this.msg.style === 'success') {
+        return 'bi bi-check-circle-fill text-success'
       } else {
-        return "bi bi-x-circle-fill text-danger";
+        return 'bi bi-x-circle-fill text-danger'
       }
-    },
+    }
   },
-  mounted() {
-    const toastEl = this.$refs.toast;
+  mounted () {
+    const toastEl = this.$refs.toast
     const toast = new Toast(toastEl, {
-      delay: 3000,
-    });
-    toast.show();
-  },
-};
+      delay: 3000
+    })
+    toast.show()
+  }
+}
 </script>

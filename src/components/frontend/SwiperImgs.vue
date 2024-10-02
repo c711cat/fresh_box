@@ -99,74 +99,74 @@ import {
   Pagination,
   Scrollbar,
   A11y,
-  Autoplay,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
+  Autoplay
+} from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
 export default {
-  data() {
+  data () {
     return {
       allProducts: [],
       status: {
-        addLoadingItem: "",
-        delLoadingItem: "",
+        addLoadingItem: '',
+        delLoadingItem: ''
       },
-      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay]
+    }
   },
   components: {
     Swiper,
-    SwiperSlide,
+    SwiperSlide
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   methods: {
-    getAllProducts() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`;
+    getAllProducts () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
         .then((res) => {
-          this.allProducts = res.data.products;
+          this.allProducts = res.data.products
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "取得產品資料失敗");
-        });
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
+        })
     },
-    addCart(item) {
-      const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
-      this.status.addLoadingItem = item.id;
+    addCart (item) {
+      const addItem = { product_id: item.id, qty: 1 }
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
+      this.status.addLoadingItem = item.id
       this.$http
         .post(api, { data: addItem })
         .then(() => {
-          this.$pushMsg.status200("已加入購物車");
-          this.emitter.emit("updateProductInCart");
+          this.$pushMsg.status200('已加入購物車')
+          this.emitter.emit('updateProductInCart')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "加入購物車失敗");
+          this.$pushMsg.status404(error.response, '加入購物車失敗')
         })
         .finally(() => {
-          this.status.addLoadingItem = "";
-        });
+          this.status.addLoadingItem = ''
+        })
     },
-    goToProductPage(id) {
-      this.$router.push(`/product/${id}`);
-      if (this.$route.path !== "/") {
+    goToProductPage (id) {
+      this.$router.push(`/product/${id}`)
+      if (this.$route.path !== '/') {
         setTimeout(() => {
-          location.reload();
-        }, 500);
+          location.reload()
+        }, 500)
       }
     },
-    onSwiper() {},
-    onSlideChange() {},
+    onSwiper () {},
+    onSlideChange () {}
   },
 
-  created() {
-    this.getAllProducts();
-  },
-};
+  created () {
+    this.getAllProducts()
+  }
+}
 </script>
 <style lang="scss" scoped>
 a {

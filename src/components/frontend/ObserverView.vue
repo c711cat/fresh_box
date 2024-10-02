@@ -6,52 +6,52 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       target_Element: null,
-      observer: null,
-    };
+      observer: null
+    }
   },
   props: {
     observerOptions: {
       type: Object,
-      default() {
-        return;
-      },
-    },
+      default () {
+
+      }
+    }
   },
   methods: {
-    emitInView() {
-      this.$emit("is-in-view");
+    emitInView () {
+      this.$emit('is-in-view')
     },
-    emitOutsideView() {
-      this.$emit("is-outside-view");
+    emitOutsideView () {
+      this.$emit('is-outside-view')
     },
-    initObserver() {
+    initObserver () {
       this.observer = new IntersectionObserver((entries) => {
-        const entry = entries[0];
+        const entry = entries[0]
         if (entry.isIntersecting) {
-          this.emitInView();
+          this.emitInView()
         } else {
-          this.emitOutsideView();
+          this.emitOutsideView()
         }
-      }, this.observerOptions);
+      }, this.observerOptions)
       if (this.target_Element) {
-        this.observer.observe(this.target_Element);
+        this.observer.observe(this.target_Element)
       }
     },
-    removeObsever() {
+    removeObsever () {
       if (this.obsever) {
-        this.observer.disconnect();
+        this.observer.disconnect()
       }
-    },
+    }
   },
-  mounted() {
-    this.target_Element = this.$refs.targetElement;
-    this.initObserver();
+  mounted () {
+    this.target_Element = this.$refs.targetElement
+    this.initObserver()
   },
-  beforeUnmount() {
-    this.removeObsever();
-  },
-};
+  beforeUnmount () {
+    this.removeObsever()
+  }
+}
 </script>

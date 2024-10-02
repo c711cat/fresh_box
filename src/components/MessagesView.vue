@@ -5,23 +5,23 @@
 </template>
 
 <script>
-import ToastView from "@/components/ToastView.vue";
+import ToastView from '@/components/ToastView.vue'
 
 export default {
-  data() {
+  data () {
     return {
-      messages: [],
-    };
+      messages: []
+    }
   },
   components: { ToastView },
-  inject: ["emitter"],
-  mounted() {
-    this.emitter.on("push-message", (message) => {
-      const { style = "success", title, content } = message;
-      this.messages.push({ style, title, content });
-    });
-  },
-};
+  inject: ['emitter'],
+  mounted () {
+    this.emitter.on('push-message', (message) => {
+      const { style = 'success', title, content } = message
+      this.messages.push({ style, title, content })
+    })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

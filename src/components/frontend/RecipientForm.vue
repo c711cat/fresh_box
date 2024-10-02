@@ -83,52 +83,52 @@
   </Form>
 </template>
 <script>
-import { Field, Form, ErrorMessage, defineRule, configure } from "vee-validate";
-import { localize, setLocale } from "@vee-validate/i18n";
-import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
-import * as AllRules from "@vee-validate/rules";
+import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate'
+import { localize, setLocale } from '@vee-validate/i18n'
+import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json'
+import * as AllRules from '@vee-validate/rules'
 Object.keys(AllRules).forEach((rule) => {
-  if (rule !== "all") {
-    defineRule(rule, AllRules[rule]);
+  if (rule !== 'all') {
+    defineRule(rule, AllRules[rule])
   }
-});
+})
 
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
-  validateOnInput: true,
-});
-setLocale("zh_TW");
+  validateOnInput: true
+})
+setLocale('zh_TW')
 
 export default {
-  data() {
+  data () {
     return {
       form: {
         user: {
-          name: "",
-          email: "",
-          tel: "",
-          address: "",
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
         },
-        message: "",
-      },
-    };
+        message: ''
+      }
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   components: { Field, Form, ErrorMessage },
   methods: {
-    createOrder() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order`;
+    createOrder () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order`
       this.$http
         .post(api, { data: this.form })
         .then((res) => {
-          console.log(res);
-          this.emitter.emit("clearCart");
-          this.$router.push(`/order/${res.data.orderId}`);
+          console.log(res)
+          this.emitter.emit('clearCart')
+          this.$router.push(`/order/${res.data.orderId}`)
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "建立訂單失敗");
-        });
-    },
-  },
-};
+          this.$pushMsg.status404(error.response, '建立訂單失敗')
+        })
+    }
+  }
+}
 </script>

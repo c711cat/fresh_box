@@ -101,39 +101,39 @@
 </template>
 
 <script>
-import ModalMixin from "@/mixins/modalMixin";
+import ModalMixin from '@/mixins/modalMixin'
 export default {
-  data() {
+  data () {
     return {
       modal: {},
-      tempQA: {},
-    };
+      tempQA: {}
+    }
   },
   mixins: [ModalMixin],
   props: {
     QA: {
       type: Object,
-      default() {
-        return {};
-      },
-    },
+      default () {
+        return {}
+      }
+    }
   },
   watch: {
-    QA() {
-      this.tempQA = this.QA;
+    QA () {
+      this.tempQA = this.QA
       if (!this.QA.id) {
-        this.tempQA.isPublic = false;
+        this.tempQA.isPublic = false
       }
-    },
+    }
   },
   computed: {
-    headerText() {
+    headerText () {
       if (this.QA.id) {
-        return "更新問答";
+        return '更新問答'
       } else {
-        return "新增問答";
+        return '新增問答'
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

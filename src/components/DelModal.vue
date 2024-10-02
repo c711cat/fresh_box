@@ -42,124 +42,124 @@
   </div>
 </template>
 <script>
-import ModalMixin from "@/mixins/modalMixin";
+import ModalMixin from '@/mixins/modalMixin'
 
 export default {
-  data() {
+  data () {
     return {
       modal: {},
       tempProduct: {},
       tempCoupon: {},
       tempOrder: {},
-      tempQA: {},
-    };
+      tempQA: {}
+    }
   },
   props: {
     product: {
       type: Object,
-      default() {
-        return {};
-      },
+      default () {
+        return {}
+      }
     },
     coupon: {
       type: Object,
-      default() {
-        return {};
-      },
+      default () {
+        return {}
+      }
     },
     order: {
       type: Object,
-      default() {
-        return {};
-      },
+      default () {
+        return {}
+      }
     },
     QA: {
       type: Object,
-      default() {
-        return {};
-      },
+      default () {
+        return {}
+      }
     },
     allCartItems: {},
     allOrders: {},
-    pages: {},
+    pages: {}
   },
   methods: {
-    turnDate(date) {
-      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+    turnDate (date) {
+      return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
-    delItem() {
+    delItem () {
       if (this.coupon.id) {
-        this.$emit("del-coupon", this.tempCoupon);
+        this.$emit('del-coupon', this.tempCoupon)
       }
       if (this.tempProduct.id) {
-        this.$emit("del-product", this.tempProduct, this.pages.current_page);
+        this.$emit('del-product', this.tempProduct, this.pages.current_page)
       }
       if (this.tempOrder.id) {
-        this.$emit("del-order", this.tempOrder, this.pages.current_page);
+        this.$emit('del-order', this.tempOrder, this.pages.current_page)
       }
       if (this.allOrders) {
-        this.$emit("del-all-orders");
+        this.$emit('del-all-orders')
       }
       if (this.allCartItems) {
-        this.$emit("del-all-items-of-Cart");
+        this.$emit('del-all-items-of-Cart')
       }
       if (this.QA.id) {
-        this.$emit("del-QA", this.tempQA);
+        this.$emit('del-QA', this.tempQA)
       }
-    },
+    }
   },
   watch: {
-    product() {
-      this.tempProduct = this.product;
+    product () {
+      this.tempProduct = this.product
     },
-    coupon() {
-      this.tempCoupon = this.coupon;
+    coupon () {
+      this.tempCoupon = this.coupon
     },
-    order() {
-      this.tempOrder = this.order;
+    order () {
+      this.tempOrder = this.order
     },
-    QA() {
-      this.tempQA = this.QA;
-    },
+    QA () {
+      this.tempQA = this.QA
+    }
   },
   mixins: [ModalMixin],
   computed: {
-    delText() {
+    delText () {
       if (this.coupon.id) {
-        return `確定刪除『 ${this.coupon.title} 』這張優惠券？`;
+        return `確定刪除『 ${this.coupon.title} 』這張優惠券？`
       }
       if (this.tempOrder.id) {
-        return "確定刪除這張訂單？";
+        return '確定刪除這張訂單？'
       }
       if (this.allOrders) {
-        return "確定刪除全部訂單？";
+        return '確定刪除全部訂單？'
       }
       if (this.allCartItems) {
-        return "確定刪除購物車中全部的品項？";
+        return '確定刪除購物車中全部的品項？'
       }
       if (this.tempProduct.id) {
-        return `確定刪除『 ${this.tempProduct.title} 』這個產品？`;
+        return `確定刪除『 ${this.tempProduct.title} 』這個產品？`
       }
       if (this.tempQA.id) {
-        return `確定刪除『 ${this.tempQA.title} 』這個問答？`;
+        return `確定刪除『 ${this.tempQA.title} 』這個問答？`
       } else {
-        return "";
+        return ''
       }
     },
-    delItemId() {
+    delItemId () {
       if (this.tempOrder) {
-        return `訂單編號： ${this.tempOrder.id}`;
+        return `訂單編號： ${this.tempOrder.id}`
       } else {
-        return "";
+        return ''
       }
     },
-    delItemTime() {
+    delItemTime () {
       if (this.tempOrder) {
-        return `訂單時間： ${this.turnDate(this.tempOrder.create_at)}`;
+        return `訂單時間： ${this.turnDate(this.tempOrder.create_at)}`
       } else {
-        return "";
+        return ''
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

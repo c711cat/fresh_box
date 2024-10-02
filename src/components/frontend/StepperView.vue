@@ -35,72 +35,72 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       order: {},
-      currentWidth: 1000,
-    };
+      currentWidth: 1000
+    }
   },
   methods: {
-    getOrder() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${this.$route.params.orderId}`;
+    getOrder () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${this.$route.params.orderId}`
       this.$http
         .get(api)
         .then((res) => {
-          this.order = res.data.order;
+          this.order = res.data.order
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
-        });
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+        })
     },
-    getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
-    },
-  },
-  computed: {
-    payingText() {
-      if (this.$route.params.orderId) {
-        return "text-primary border-primary";
-      } else {
-        return "text-secondary border-gray-light";
-      }
-    },
-    payingArrow() {
-      if (this.$route.params.orderId) {
-        return "border-primary";
-      } else {
-        return "border-gray-light";
-      }
-    },
-    paidText() {
-      if (this.order.is_paid) {
-        return "text-primary border-primary";
-      } else {
-        return "text-secondary border-gray-light";
-      }
-    },
-    paidArrow() {
-      if (this.order.is_paid) {
-        return "border-primary";
-      } else {
-        return "border-gray-light";
-      }
-    },
-    textFontSize() {
-      if (this.currentWidth <= 575) {
-        return "fs-6";
-      } else {
-        return "fs-5";
-      }
-    },
-  },
-  created() {
-    this.getCurrentWidth();
-    if (this.$route.params.orderId) {
-      this.getOrder();
+    getCurrentWidth () {
+      this.currentWidth = window.innerWidth
     }
   },
-};
+  computed: {
+    payingText () {
+      if (this.$route.params.orderId) {
+        return 'text-primary border-primary'
+      } else {
+        return 'text-secondary border-gray-light'
+      }
+    },
+    payingArrow () {
+      if (this.$route.params.orderId) {
+        return 'border-primary'
+      } else {
+        return 'border-gray-light'
+      }
+    },
+    paidText () {
+      if (this.order.is_paid) {
+        return 'text-primary border-primary'
+      } else {
+        return 'text-secondary border-gray-light'
+      }
+    },
+    paidArrow () {
+      if (this.order.is_paid) {
+        return 'border-primary'
+      } else {
+        return 'border-gray-light'
+      }
+    },
+    textFontSize () {
+      if (this.currentWidth <= 575) {
+        return 'fs-6'
+      } else {
+        return 'fs-5'
+      }
+    }
+  },
+  created () {
+    this.getCurrentWidth()
+    if (this.$route.params.orderId) {
+      this.getOrder()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

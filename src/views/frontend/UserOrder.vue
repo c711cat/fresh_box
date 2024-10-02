@@ -44,49 +44,49 @@
 </template>
 
 <script>
-import OrderView from "@/components/OrderView.vue";
+import OrderView from '@/components/OrderView.vue'
 export default {
-  data() {
+  data () {
     return {
       order: {},
-      isLoading: false,
-    };
+      isLoading: false
+    }
   },
   components: { OrderView },
   methods: {
-    getOrder() {
-      const orderId = this.$route.params.orderId || this.OrderId;
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${orderId}`;
+    getOrder () {
+      const orderId = this.$route.params.orderId || this.OrderId
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${orderId}`
       this.$http
         .get(api)
         .then((res) => {
-          this.order = res.data.order;
+          this.order = res.data.order
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
-        });
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+        })
     },
-    toPay() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`;
-      this.isLoading = true;
+    toPay () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`
+      this.isLoading = true
       this.$http
         .post(api)
         .then(() => {
-          this.$pushMsg.status200("付款成功");
-          this.getOrder();
+          this.$pushMsg.status200('付款成功')
+          this.getOrder()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "付款失敗");
+          this.$pushMsg.status404(error.response, '付款失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
-    },
+          this.isLoading = false
+        })
+    }
   },
-  created() {
-    this.getOrder();
-  },
-};
+  created () {
+    this.getOrder()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

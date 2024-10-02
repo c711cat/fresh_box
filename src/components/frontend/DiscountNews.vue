@@ -36,18 +36,18 @@
 </template>
 <script>
 export default {
-  data() {
-    return { currentWidth: 1000 };
+  data () {
+    return { currentWidth: 1000 }
   },
   methods: {
-    getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
-    },
+    getCurrentWidth () {
+      this.currentWidth = window.innerWidth
+    }
   },
-  created() {
-    this.getCurrentWidth();
-  },
-};
+  created () {
+    this.getCurrentWidth()
+  }
+}
 </script>
 <style lang="scss" scoped>
 img {

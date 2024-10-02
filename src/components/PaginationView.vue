@@ -40,24 +40,24 @@
 
 <script>
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  props: ["pages"],
+  props: ['pages'],
   methods: {
-    updatePage(page) {
-      this.$emit("emit-pages", page);
+    updatePage (page) {
+      this.$emit('emit-pages', page)
     },
-    goToPrePage(currentPage) {
-      const page = currentPage - 1;
-      this.$emit("emit-pages", page);
+    goToPrePage (currentPage) {
+      const page = currentPage - 1
+      this.$emit('emit-pages', page)
     },
-    goToNextPage(currentPage) {
-      const page = currentPage + 1;
-      this.$emit("emit-pages", page);
-    },
-  },
-};
+    goToNextPage (currentPage) {
+      const page = currentPage + 1
+      this.$emit('emit-pages', page)
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

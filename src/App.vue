@@ -4,22 +4,22 @@
 </template>
 
 <script>
-import AOS from "aos";
-import "aos/dist/aos.css";
-import MessagesView from "@/components/MessagesView.vue";
-import emitter from "@/methods/emitter";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+import MessagesView from '@/components/MessagesView.vue'
+import emitter from '@/methods/emitter'
 
 export default {
   components: { MessagesView },
-  provide() {
+  provide () {
     return {
-      emitter,
-    };
+      emitter
+    }
   },
-  mounted() {
-    AOS.init();
-  },
-};
+  mounted () {
+    AOS.init()
+  }
+}
 </script>
 
 <style lang="scss">

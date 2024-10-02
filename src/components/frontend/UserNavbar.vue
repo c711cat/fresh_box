@@ -172,13 +172,13 @@
 </template>
 
 <script>
-import Offcanvas from "bootstrap/js/dist/offcanvas";
+import Offcanvas from 'bootstrap/js/dist/offcanvas'
 export default {
-  data() {
+  data () {
     return {
       userNavbar: {},
-      productSearchText: "",
-      orderSearchText: "",
+      productSearchText: '',
+      orderSearchText: '',
       products: [],
       searchResult: [],
       orderSearchResult: [],
@@ -187,154 +187,154 @@ export default {
       pagination: {},
       orderPage: 1,
       open: false,
-      currentWidth: "1000",
-    };
+      currentWidth: '1000'
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   props: {
-    currentPath: {},
+    currentPath: {}
   },
   watch: {
-    productSearchText() {
-      this.$router.push("/user-products");
+    productSearchText () {
+      this.$router.push('/user-products')
       setTimeout(() => {
-        if (this.productSearchText === "") {
-          this.emitter.emit("productSearchNull");
+        if (this.productSearchText === '') {
+          this.emitter.emit('productSearchNull')
         } else {
           this.products.filter((item) => {
             if (item.title.match(this.productSearchText)) {
-              this.searchResult.push(item);
+              this.searchResult.push(item)
             }
-          });
-          this.emitter.emit("productSearchResult", {
+          })
+          this.emitter.emit('productSearchResult', {
             data: this.searchResult,
-            ...this.productSearchText,
-          });
-          this.searchResult = [];
+            ...this.productSearchText
+          })
+          this.searchResult = []
         }
-      }, 1500);
+      }, 1500)
     },
-    orderSearchText() {
-      this.orderSearchResult = [];
-      if (this.orderSearchText === "") {
-        this.emitter.emit("orderSearchNull");
+    orderSearchText () {
+      this.orderSearchResult = []
+      if (this.orderSearchText === '') {
+        this.emitter.emit('orderSearchNull')
       } else {
         this.orders.filter((item) => {
           if (item.user.name.match(this.orderSearchText)) {
-            this.orderSearchResult.push(item);
+            this.orderSearchResult.push(item)
           }
-        });
-        this.emitter.emit("orderSearchResult", {
+        })
+        this.emitter.emit('orderSearchResult', {
           data: this.orderSearchResult,
-          ...this.orderSearchText,
-        });
-        this.orderSearchResult = [];
+          ...this.orderSearchText
+        })
+        this.orderSearchResult = []
       }
-    },
+    }
   },
   methods: {
-    isCurrentPage(path) {
-      let className = "";
+    isCurrentPage (path) {
+      let className = ''
       if (this.currentPath === path && this.currentWidth < 992) {
-        className = "isCurrentNavbarItem mobileBg";
+        className = 'isCurrentNavbarItem mobileBg'
       }
       if (this.currentPath === path && this.currentWidth >= 992) {
-        className = "isCurrentNavbarItem";
+        className = 'isCurrentNavbarItem'
       }
-      return className;
+      return className
     },
-    closeMenu() {
-      this.userNavbar.hide();
+    closeMenu () {
+      this.userNavbar.hide()
     },
-    getProducts() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`;
+    getProducts () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
         .then((res) => {
-          this.products = res.data.products;
+          this.products = res.data.products
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "取得產品資料失敗");
-        });
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
+        })
     },
-    getCart() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`;
+    getCart () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.$http
         .get(api)
         .then((res) => {
-          this.carts = res.data.data.carts;
+          this.carts = res.data.data.carts
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "取得購物車資料失敗");
-        });
+          this.$pushMsg.status404(error.response, '取得購物車資料失敗')
+        })
     },
-    goToUserProducts() {
-      this.emitter.emit("goToUserProducts");
-      this.closeMenu();
+    goToUserProducts () {
+      this.emitter.emit('goToUserProducts')
+      this.closeMenu()
     },
-    getOrdersOfPage1() {
-      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+    getOrdersOfPage1 () {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
       this.$http
         .get(api)
         .then((res) => {
-          this.orders = res.data.orders;
-          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
+          this.orders = res.data.orders
+          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages)
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "取得訂單資料失敗");
-        });
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+        })
     },
-    fetchOrdersOfOtherPages(total_pages) {
-      this.orderPage = this.orderPage + 1;
+    fetchOrdersOfOtherPages (total_pages) {
+      this.orderPage = this.orderPage + 1
       if (this.orderPage <= total_pages) {
-        const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+        const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
         this.$http
           .get(api)
           .then((res) => {
-            this.orders = [...this.orders, ...res.data.orders];
-            this.fetchOrdersOfOtherPages(total_pages);
+            this.orders = [...this.orders, ...res.data.orders]
+            this.fetchOrdersOfOtherPages(total_pages)
           })
           .catch((error) => {
-            this.$pushMsg.status404(error.response, "取得訂單資料失敗");
-          });
+            this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+          })
       }
     },
-    getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
-    },
+    getCurrentWidth () {
+      this.currentWidth = window.innerWidth
+    }
   },
   computed: {
-    isMoileOrPc() {
+    isMoileOrPc () {
       if (this.currentWidth < 992) {
-        return "isMobileItem";
+        return 'isMobileItem'
       } else {
-        return "";
+        return ''
       }
     },
-    disabledSearchInput() {
+    disabledSearchInput () {
       if (this.pagination.current_page === this.pagination.total_pages) {
-        return false;
+        return false
       } else {
-        return true;
+        return true
       }
-    },
+    }
   },
-  created() {
-    this.getCurrentWidth();
-    this.getOrdersOfPage1();
-    this.getCart();
-    this.getProducts();
-    this.emitter.on("updateProductInCart", () => {
-      this.getCart();
-    });
-    this.emitter.on("clearCart", () => {
-      this.getCart();
-    });
+  created () {
+    this.getCurrentWidth()
+    this.getOrdersOfPage1()
+    this.getCart()
+    this.getProducts()
+    this.emitter.on('updateProductInCart', () => {
+      this.getCart()
+    })
+    this.emitter.on('clearCart', () => {
+      this.getCart()
+    })
   },
-  mounted() {
-    this.userNavbar = new Offcanvas(this.$refs.menu, { toggle: false });
-  },
-};
+  mounted () {
+    this.userNavbar = new Offcanvas(this.$refs.menu, { toggle: false })
+  }
+}
 </script>
 
 <style lang="scss" scoped>

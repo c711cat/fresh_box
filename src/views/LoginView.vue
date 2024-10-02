@@ -33,55 +33,55 @@
 </template>
 
 <script>
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie'
 
 export default {
-  data() {
+  data () {
     return {
       isLoading: false,
       user: {
-        username: "",
-        password: "",
-      },
-    };
+        username: '',
+        password: ''
+      }
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   methods: {
-    signIn() {
-      const api = `${process.env.VUE_APP_API}v2/admin/signin`;
+    signIn () {
+      const api = `${process.env.VUE_APP_API}v2/admin/signin`
       this.$http
         .post(api, this.user)
         .then((res) => {
-          this.$pushMsg.status200("登入成功");
-          const token = res.data.token;
-          const expired = new Date(res.data.expired);
-          Cookies.set("freshBoxToken", token, { expires: expired });
-          this.$router.push("/dashboard/admin's-products");
+          this.$pushMsg.status200('登入成功')
+          const token = res.data.token
+          const expired = new Date(res.data.expired)
+          Cookies.set('freshBoxToken', token, { expires: expired })
+          this.$router.push("/dashboard/admin's-products")
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, "登入失敗");
-        });
+          this.$pushMsg.status404(error.response, '登入失敗')
+        })
     },
-    checkSignIn() {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}v2/api/user/check`;
+    checkSignIn () {
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_API}v2/api/user/check`
       this.$http
         .post(api)
         .then(() => {
-          this.$router.push("/dashboard/admin's-products");
+          this.$router.push("/dashboard/admin's-products")
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response, error.response.data.message);
+          this.$pushMsg.status404(error.response, error.response.data.message)
         })
         .finally(() => {
-          this.isLoading = false;
-        });
-    },
+          this.isLoading = false
+        })
+    }
   },
-  created() {
-    this.checkSignIn();
-  },
-};
+  created () {
+    this.checkSignIn()
+  }
+}
 </script>
 
 <style lang="scss" scoped>
