@@ -284,15 +284,15 @@ export default {
           this.$pushMsg.status404(error.response, '取得訂單資料失敗')
         })
     },
-    fetchOrdersOfOtherPages (total_pages) {
+    fetchOrdersOfOtherPages (totalPages) {
       this.orderPage = this.orderPage + 1
-      if (this.orderPage <= total_pages) {
+      if (this.orderPage <= totalPages) {
         const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
         this.$http
           .get(api)
           .then((res) => {
             this.orders = [...this.orders, ...res.data.orders]
-            this.fetchOrdersOfOtherPages(total_pages)
+            this.fetchOrdersOfOtherPages(totalPages)
           })
           .catch((error) => {
             this.$pushMsg.status404(error.response, '取得訂單資料失敗')

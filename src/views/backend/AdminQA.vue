@@ -70,12 +70,12 @@
       <PaginationView :pages="pagination" @emit-pages="getQAList" />
     </footer>
   </main>
-  <QA_Modal ref="QA_Modal" :QA="tempQA" @add-QA="addQA" @edit-QA="editQA" />
+  <QAModal ref="QA_Modal" :QA="tempQA" @add-QA="addQA" @edit-QA="editQA" />
   <DelModal ref="delModal" :QA="tempQA" @del-QA="delQA" />
 </template>
 <script>
 import Collapse from 'bootstrap/js/dist/collapse'
-import QA_Modal from '@/components/backend/QA_Modal.vue'
+import QAModal from '@/components/backend/QA_Modal.vue'
 import DelModal from '@/components/DelModal.vue'
 import PaginationView from '@/components/PaginationView.vue'
 export default {
@@ -88,7 +88,7 @@ export default {
       pagination: {}
     }
   },
-  components: { QA_Modal, DelModal, PaginationView },
+  components: { QAModal, DelModal, PaginationView },
   methods: {
     getQAList (page = 1) {
       this.isLoading = true

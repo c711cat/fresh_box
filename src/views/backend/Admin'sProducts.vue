@@ -173,14 +173,14 @@ export default {
           this.isLoading = false
         })
     },
-    editProduct (item, current_page) {
+    editProduct (item, currentPage) {
       this.tempProduct = item
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
       this.isLoading = true
       this.$http
         .put(api, { data: this.tempProduct })
         .then(() => {
-          this.getProducts(current_page)
+          this.getProducts(currentPage)
           this.$refs.productModal.hideModal()
           this.$pushMsg.status200('更新產品成功')
         })
@@ -195,13 +195,13 @@ export default {
       this.$refs.delModal.showModal()
       this.tempProduct = { ...item }
     },
-    delProduct (item, current_page) {
+    delProduct (item, currentPage) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
       this.isLoading = true
       this.$http
         .delete(api)
         .then(() => {
-          this.getProducts(current_page)
+          this.getProducts(currentPage)
           this.$refs.delModal.hideModal()
           this.$pushMsg.status200('已刪除產品')
         })

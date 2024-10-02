@@ -55,8 +55,8 @@
   </div>
 </template>
 <script>
-import leafy_vegetableImg from '@/assets/img/leafy_vegetable.png'
-import melon_root_bulbImg from '@/assets/img/melon_root_bulb.png'
+import leafyVegetableImg from '@/assets/img/leafy_vegetable.png'
+import melonRootBulbImg from '@/assets/img/melon_root_bulb.png'
 import mushroomImg from '@/assets/img/mushroom.png'
 import fruitImg from '@/assets/img/fruit.png'
 import spiceImg from '@/assets/img/spice.png'
@@ -79,12 +79,12 @@ export default {
         {
           name: '葉菜',
           type: 'leafy_vegetable',
-          img: leafy_vegetableImg
+          img: leafyVegetableImg
         },
         {
           name: '瓜果根球莖',
           type: 'melon_root_bulb',
-          img: melon_root_bulbImg
+          img: melonRootBulbImg
         },
         { name: '菇菌', type: 'mushroom', img: mushroomImg },
         { name: '水果', type: 'fruit', img: fruitImg },

@@ -241,9 +241,9 @@ export default {
   methods: {
     getOtherPageProductsThrottled: throttle(
       function (options = this.pagination) {
-        const { current_page, total_pages } = options
-        if (this.isInView && current_page < total_pages) {
-          const nextPage = current_page + 1
+        const { currentPage, totalPages } = options
+        if (this.isInView && currentPage < totalPages) {
+          const nextPage = currentPage + 1
           this.fetchProducts(nextPage)
         }
       },
