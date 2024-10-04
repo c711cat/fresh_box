@@ -169,7 +169,7 @@
 <script>
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
 export default {
-  data () {
+  data() {
     return {
       adminNavbar: {},
       productSearchText: '',
@@ -180,12 +180,12 @@ export default {
       orders: [],
       pagination: {},
       orderSearchResult: [],
-      currentWidth: 1000
+      currentWidth: 1000,
     }
   },
   inject: ['emitter'],
   watch: {
-    productSearchText () {
+    productSearchText() {
       if (this.productSearchText === '') {
         this.emitter.emit('adminSearchProductNull')
       } else {
@@ -195,13 +195,13 @@ export default {
           }
           this.emitter.emit('adminSearchProductResult', {
             data: this.searchResult,
-            data2: this.productSearchText
+            data2: this.productSearchText,
           })
         })
         this.searchResult = []
       }
     },
-    orderSearchText () {
+    orderSearchText() {
       this.orderSearchResult = []
       if (this.orderSearchText === '') {
         this.emitter.emit('adminOrderSearchNull')
@@ -213,14 +213,14 @@ export default {
         })
         this.emitter.emit('adminOrderSearchResult', {
           data: this.orderSearchResult,
-          ...this.orderSearchText
+          ...this.orderSearchText,
         })
         this.orderSearchResult = []
       }
-    }
+    },
   },
   methods: {
-    isCurrentPage (path) {
+    isCurrentPage(path) {
       let className = ''
       if (this.$route.path === path && this.currentWidth < 992) {
         className = 'isCurrentNavbarItem mobileBg'
@@ -230,10 +230,10 @@ export default {
       }
       return className
     },
-    closeMenu () {
+    closeMenu() {
       this.adminNavbar.hide()
     },
-    logOut () {
+    logOut() {
       this.closeMenu()
       const api = `${process.env.VUE_APP_API}v2/logout`
       this.$http
@@ -246,7 +246,7 @@ export default {
           this.$pushMsg.status404(error.response, '登出失敗')
         })
     },
-    getProducts () {
+    getProducts() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/products/all`
       this.isLoading = true
       this.$http
@@ -261,7 +261,7 @@ export default {
           this.isLoading = false
         })
     },
-    getOrdersOfPage1 () {
+    getOrdersOfPage1() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`
       this.$http
         .get(api)
@@ -274,7 +274,7 @@ export default {
           this.$pushMsg.status404(error.response, error.response.data.message)
         })
     },
-    fetchOrdersOfOtherPages (totalPages) {
+    fetchOrdersOfOtherPages(totalPages) {
       this.orderPage = this.orderPage + 1
       if (this.orderPage <= totalPages) {
         const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`
@@ -290,43 +290,43 @@ export default {
           })
       }
     },
-    isCurrentWidth () {
+    isCurrentWidth() {
       this.currentWidth = window.innerWidth
-    }
+    },
   },
   computed: {
-    isMoileOrPc () {
+    isMoileOrPc() {
       if (this.currentWidth < 992) {
         return 'isMobileItem'
       } else {
         return ''
       }
     },
-    disabledSearchInput () {
+    disabledSearchInput() {
       if (this.pagination.current_page === this.pagination.total_pages) {
         return false
       } else {
         return true
       }
-    }
+    },
   },
-  created () {
+  created() {
     this.getOrdersOfPage1()
     this.getProducts()
     setTimeout(() => {
       this.isCurrentWidth()
     }, 500)
   },
-  mounted () {
+  mounted() {
     this.adminNavbar = new Offcanvas(this.$refs.adminMenu, { toggle: false })
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .logoText {
   color: #000000a6;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .logoText:hover,

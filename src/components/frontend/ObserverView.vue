@@ -6,28 +6,26 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       target_Element: null,
-      observer: null
+      observer: null,
     }
   },
   props: {
     observerOptions: {
       type: Object,
-      default () {
-
-      }
-    }
+      default() {},
+    },
   },
   methods: {
-    emitInView () {
+    emitInView() {
       this.$emit('is-in-view')
     },
-    emitOutsideView () {
+    emitOutsideView() {
       this.$emit('is-outside-view')
     },
-    initObserver () {
+    initObserver() {
       this.observer = new IntersectionObserver((entries) => {
         const entry = entries[0]
         if (entry.isIntersecting) {
@@ -40,18 +38,18 @@ export default {
         this.observer.observe(this.target_Element)
       }
     },
-    removeObsever () {
+    removeObsever() {
       if (this.obsever) {
         this.observer.disconnect()
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.target_Element = this.$refs.targetElement
     this.initObserver()
   },
-  beforeUnmount () {
+  beforeUnmount() {
     this.removeObsever()
-  }
+  },
 }
 </script>

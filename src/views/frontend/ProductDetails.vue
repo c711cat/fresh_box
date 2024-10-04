@@ -187,7 +187,7 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import ExceptionSOP from '@/components/frontend/ExceptionSOP.vue'
 import ShoppingNotes from '@/components/frontend/ShoppingNotes.vue'
 export default {
-  data () {
+  data() {
     return {
       product: {},
       productQty: 1,
@@ -195,14 +195,14 @@ export default {
       details: {},
       status: {
         addLoadingItem: false,
-        delLoadingItem: false
-      }
+        delLoadingItem: false,
+      },
     }
   },
   inject: ['emitter'],
   components: { SwiperImgs, ExceptionSOP, ShoppingNotes },
   methods: {
-    getProduct () {
+    getProduct() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`
       this.$http
         .get(api)
@@ -222,18 +222,18 @@ export default {
           window.scrollTo(0, 0)
         })
     },
-    addQty () {
+    addQty() {
       this.productQty = this.productQty + 1
     },
-    delQty () {
+    delQty() {
       this.productQty = this.productQty - 1
     },
-    addToCart () {
+    addToCart() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.status.addLoadingItem = true
       this.$http
         .post(api, {
-          data: { product_id: this.product.id, qty: Number(this.productQty) }
+          data: { product_id: this.product.id, qty: Number(this.productQty) },
         })
         .then(() => {
           this.$pushMsg.status200('已加入購物車')
@@ -247,31 +247,30 @@ export default {
           this.status.addLoadingItem = false
         })
     },
-    changeImg (img) {
+    changeImg(img) {
       this.product.imageUrl = img
     },
-    pushImg () {
+    pushImg() {
       this.product.images.splice(0, 0, this.product.imageUrl)
     },
-    getMyFavorite () {
-      this.myFavoriteList =
-        JSON.parse(localStorage.getItem('myFavorite')) || []
+    getMyFavorite() {
+      this.myFavoriteList = JSON.parse(localStorage.getItem('myFavorite')) || []
     },
-    addMyFavorite () {
+    addMyFavorite() {
       this.myFavoriteList.push(this.product)
       localStorage.setItem('myFavorite', JSON.stringify(this.myFavoriteList))
     },
-    delMyFavorite () {
+    delMyFavorite() {
       this.myFavoriteList.forEach((listItem, index) => {
         if (this.product.id === listItem.id) {
           this.myFavoriteList.splice(index, 1)
         }
       })
       localStorage.setItem('myFavorite', JSON.stringify(this.myFavoriteList))
-    }
+    },
   },
   computed: {
-    isMyFavorite () {
+    isMyFavorite() {
       let favorite = ''
       this.myFavoriteList.forEach((listItem) => {
         if (this.product.id === listItem.id) {
@@ -280,27 +279,27 @@ export default {
       })
       return favorite
     },
-    currentWidth () {
+    currentWidth() {
       return window.innerWidth
-    }
+    },
   },
   watch: {
-    productQty () {
+    productQty() {
       if (this.productQty < 1) {
         this.productQty = 1
       }
       return this.productQty
-    }
+    },
   },
-  created () {
+  created() {
     this.getProduct()
   },
-  mounted () {
+  mounted() {
     const collapseElementList = document.querySelectorAll('.collapse')
     this.details = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     )
-  }
+  },
 }
 </script>
 

@@ -45,49 +45,49 @@
 import ModalMixin from '@/mixins/modalMixin'
 
 export default {
-  data () {
+  data() {
     return {
       modal: {},
       tempProduct: {},
       tempCoupon: {},
       tempOrder: {},
-      tempQA: {}
+      tempQA: {},
     }
   },
   props: {
     product: {
       type: Object,
-      default () {
+      default() {
         return {}
-      }
+      },
     },
     coupon: {
       type: Object,
-      default () {
+      default() {
         return {}
-      }
+      },
     },
     order: {
       type: Object,
-      default () {
+      default() {
         return {}
-      }
+      },
     },
     QA: {
       type: Object,
-      default () {
+      default() {
         return {}
-      }
+      },
     },
     allCartItems: {},
     allOrders: {},
-    pages: {}
+    pages: {},
   },
   methods: {
-    turnDate (date) {
+    turnDate(date) {
       return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
-    delItem () {
+    delItem() {
       if (this.coupon.id) {
         this.$emit('del-coupon', this.tempCoupon)
       }
@@ -106,25 +106,25 @@ export default {
       if (this.QA.id) {
         this.$emit('del-QA', this.tempQA)
       }
-    }
+    },
   },
   watch: {
-    product () {
+    product() {
       this.tempProduct = this.product
     },
-    coupon () {
+    coupon() {
       this.tempCoupon = this.coupon
     },
-    order () {
+    order() {
       this.tempOrder = this.order
     },
-    QA () {
+    QA() {
       this.tempQA = this.QA
-    }
+    },
   },
   mixins: [ModalMixin],
   computed: {
-    delText () {
+    delText() {
       if (this.coupon.id) {
         return `確定刪除『 ${this.coupon.title} 』這張優惠券？`
       }
@@ -146,20 +146,20 @@ export default {
         return ''
       }
     },
-    delItemId () {
+    delItemId() {
       if (this.tempOrder) {
         return `訂單編號： ${this.tempOrder.id}`
       } else {
         return ''
       }
     },
-    delItemTime () {
+    delItemTime() {
       if (this.tempOrder) {
         return `訂單時間： ${this.turnDate(this.tempOrder.create_at)}`
       } else {
         return ''
       }
-    }
-  }
+    },
+  },
 }
 </script>

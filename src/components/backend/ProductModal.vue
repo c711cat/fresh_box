@@ -332,40 +332,40 @@ import ModalMixin from '@/mixins/modalMixin'
 import 'vue-select/dist/vue-select.css'
 
 export default {
-  data () {
+  data() {
     return {
       modal: {},
       tempProduct: {
         description: [''],
-        notes: ['']
+        notes: [''],
       },
       options: ['水果', '葉菜', '菇菌', '辛香料', '瓜果根球莖'],
       preservationMethods: [
         '冷藏',
         '室溫陰涼乾燥處',
         '冷藏或冷凍',
-        '室溫陰涼乾燥處、冷藏或冷凍'
-      ]
+        '室溫陰涼乾燥處、冷藏或冷凍',
+      ],
     }
   },
   props: {
     product: {
       type: Object,
-      default () {
+      default() {
         return {}
-      }
+      },
     },
-    pages: {}
+    pages: {},
   },
 
   watch: {
-    product () {
+    product() {
       this.tempProduct = this.product
-    }
+    },
   },
 
   methods: {
-    uploadFile () {
+    uploadFile() {
       const uploadFile = this.$refs.fileInput.files[0]
       const formData = new FormData()
       formData.append('file-to-upload', uploadFile)
@@ -379,7 +379,7 @@ export default {
           this.$pushMsg.status404(error.response.data.message)
         })
     },
-    uploadMultipleImgs () {
+    uploadMultipleImgs() {
       const imgOfIndex = this.tempProduct.images.length - 1
       const multipleFile = this.$refs[imgOfIndex][0].files[0]
       const formData = new FormData()
@@ -394,39 +394,39 @@ export default {
           this.$pushMsg.status404(error.response.data.message)
         })
     },
-    delCoverImg () {
+    delCoverImg() {
       this.tempProduct.imageUrl = ''
       this.$refs.fileInput.value = ''
     },
-    delImg (index) {
+    delImg(index) {
       this.tempProduct.images.splice(index, 1)
     },
-    addImg () {
+    addImg() {
       if (!this.tempProduct.images) {
         this.tempProduct.images = []
       }
       this.tempProduct.images.push('')
     },
-    addNotes () {
+    addNotes() {
       if (!this.tempProduct.notes) {
         this.tempProduct.notes = []
       }
       this.tempProduct.notes.push('')
     },
-    addDescriptions () {
+    addDescriptions() {
       if (!this.tempProduct.description) {
         this.tempProduct.description = []
       }
       this.tempProduct.description.push('')
     },
-    delDescriptionItem (index) {
+    delDescriptionItem(index) {
       this.tempProduct.description.splice(index, 1)
     },
-    delNotesItem (index) {
+    delNotesItem(index) {
       this.tempProduct.notes.splice(index, 1)
-    }
+    },
   },
-  mixins: [ModalMixin]
+  mixins: [ModalMixin],
 }
 </script>
 

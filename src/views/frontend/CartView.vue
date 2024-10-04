@@ -181,7 +181,7 @@ import '@/assets/styles/v-select.css'
 import RecipientForm from '@/components/frontend/RecipientForm.vue'
 import delModal from '@/components/DelModal.vue'
 export default {
-  data () {
+  data() {
     return {
       isLoading: false,
       carts: [],
@@ -189,20 +189,20 @@ export default {
         addLoadingItem: '',
         delLoadingItem: '',
         updateLoadingItem: '',
-        submit: false
+        submit: false,
       },
       couponOption: ['10%off'],
       couponCode: '',
       shippingFee: 290,
       used_coupon: false,
       allCartItems: false,
-      currentWidth: 300
+      currentWidth: 300,
     }
   },
   inject: ['emitter'],
   components: { RecipientForm, delModal },
   methods: {
-    getCart () {
+    getCart() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.$http
         .get(api)
@@ -222,7 +222,7 @@ export default {
           this.isLoading = false
         })
     },
-    delItem (item) {
+    delItem(item) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart/${item.id}`
       this.$http
         .delete(api)
@@ -235,7 +235,7 @@ export default {
           this.$pushMsg.status404(error.response, '刪除失敗')
         })
     },
-    addOneToCart (item) {
+    addOneToCart(item) {
       const addItem = { product_id: item.product.id, qty: 1 }
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.status.addLoadingItem = item.id
@@ -255,7 +255,7 @@ export default {
           this.used_coupon = false
         })
     },
-    delOneQty (item) {
+    delOneQty(item) {
       const updateQty = item.qty - 1
       const delItem = { product_id: item.product.id, qty: updateQty }
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart/${item.id}`
@@ -274,7 +274,7 @@ export default {
           this.status.delLoadingItem = ''
         })
     },
-    updateQtyOfInput (item) {
+    updateQtyOfInput(item) {
       if (item.qty < 0) {
         item.qty = 0
       }
@@ -295,7 +295,7 @@ export default {
           this.status.updateLoadingItem = ''
         })
     },
-    useCoupon () {
+    useCoupon() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/coupon`
       this.status.submit = true
       this.$http
@@ -313,7 +313,7 @@ export default {
           this.status.submit = false
         })
     },
-    getshippingFee () {
+    getshippingFee() {
       if (!this.couponCode && this.subtotal >= 1000) {
         this.shippingFee = 0
       }
@@ -327,11 +327,11 @@ export default {
         this.shippingFee = 290
       }
     },
-    openDelModal () {
+    openDelModal() {
       this.allCartItems = true
       this.$refs.delModal.showModal()
     },
-    cleanCart () {
+    cleanCart() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/carts`
       this.$http
         .delete(api)
@@ -346,36 +346,36 @@ export default {
           this.$pushMsg.status404(error.response, '清空購物車失敗')
         })
     },
-    getCurrentWidth () {
+    getCurrentWidth() {
       this.currentWidth = window.outerWidth
     },
-    showPrice (item) {
+    showPrice(item) {
       if (item.product.origin_price === item.product.price) {
         return item.product.origin_price
       } else {
         return item.product.price
       }
-    }
+    },
   },
   computed: {
-    subtotal () {
+    subtotal() {
       let total = 0
       this.carts.forEach((item) => {
         total += item.total
       })
       return total
     },
-    discount () {
+    discount() {
       return this.subtotal - this.afterDiscount
     },
-    afterDiscount () {
+    afterDiscount() {
       let afterDiscount = 0
       this.carts.forEach((item) => {
         afterDiscount += item.final_total
       })
       return Math.round(afterDiscount)
     },
-    paymentAmount () {
+    paymentAmount() {
       let total = 0
       if (this.couponCode) {
         total = this.afterDiscount + this.shippingFee
@@ -383,13 +383,13 @@ export default {
         total = this.subtotal + this.shippingFee
       }
       return total
-    }
+    },
   },
-  created () {
+  created() {
     this.isLoading = true
     this.getCart()
     this.getCurrentWidth()
-  }
+  },
 }
 </script>
 

@@ -73,18 +73,18 @@ import OrderView from '@/components/OrderView.vue'
 import PaginationView from '@/components/PaginationView.vue'
 
 export default {
-  data () {
+  data() {
     return {
       isLoading: false,
       orderList: {},
       pagination: {},
-      searchContent: null
+      searchContent: null,
     }
   },
   inject: ['emitter'],
   components: { OrderView, PaginationView },
   methods: {
-    getOrders (page = 1) {
+    getOrders(page = 1) {
       this.orderList = {}
       this.isLoading = true
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${page}`
@@ -101,7 +101,7 @@ export default {
           this.isLoading = false
         })
     },
-    toPay (orderId) {
+    toPay(orderId) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${orderId}`
       this.isLoading = true
       this.$http
@@ -117,15 +117,15 @@ export default {
           this.isLoading = false
         })
     },
-    turnDate (date) {
+    turnDate(date) {
       return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
-    }
+    },
   },
   computed: {
-    noResults () {
+    noResults() {
       return Object.values(this.orderList).length === 0
     },
-    noResultsContent () {
+    noResultsContent() {
       let text = ''
       if (this.searchContent) {
         text = '查無此收件人姓名'
@@ -135,12 +135,12 @@ export default {
       }
       return text
     },
-    pageSwitch () {
+    pageSwitch() {
       return this.searchContent === null
-    }
+    },
   },
 
-  created () {
+  created() {
     this.getOrders()
     this.emitter.on('orderSearchResult', (SearchResult) => {
       this.searchContent = SearchResult[0]
@@ -152,12 +152,12 @@ export default {
       this.searchContent = null
     })
   },
-  mounted () {
+  mounted() {
     const collapseElementList = document.querySelectorAll('.collapse')
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     )
-  }
+  },
 }
 </script>
 

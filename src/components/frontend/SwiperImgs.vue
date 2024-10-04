@@ -99,7 +99,7 @@ import {
   Pagination,
   Scrollbar,
   A11y,
-  Autoplay
+  Autoplay,
 } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -107,23 +107,23 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 export default {
-  data () {
+  data() {
     return {
       allProducts: [],
       status: {
         addLoadingItem: '',
-        delLoadingItem: ''
+        delLoadingItem: '',
       },
-      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay]
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
     }
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   inject: ['emitter'],
   methods: {
-    getAllProducts () {
+    getAllProducts() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
@@ -134,7 +134,7 @@ export default {
           this.$pushMsg.status404(error.response, '取得產品資料失敗')
         })
     },
-    addCart (item) {
+    addCart(item) {
       const addItem = { product_id: item.id, qty: 1 }
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.status.addLoadingItem = item.id
@@ -151,7 +151,7 @@ export default {
           this.status.addLoadingItem = ''
         })
     },
-    goToProductPage (id) {
+    goToProductPage(id) {
       this.$router.push(`/product/${id}`)
       if (this.$route.path !== '/') {
         setTimeout(() => {
@@ -159,13 +159,13 @@ export default {
         }, 500)
       }
     },
-    onSwiper () {},
-    onSlideChange () {}
+    onSwiper() {},
+    onSlideChange() {},
   },
 
-  created () {
+  created() {
     this.getAllProducts()
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>

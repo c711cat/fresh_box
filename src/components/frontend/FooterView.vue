@@ -55,7 +55,7 @@ a {
 }
 
 .textStyle {
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .backendLink:hover {

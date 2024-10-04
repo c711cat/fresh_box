@@ -46,15 +46,15 @@
 <script>
 import OrderView from '@/components/OrderView.vue'
 export default {
-  data () {
+  data() {
     return {
       order: {},
-      isLoading: false
+      isLoading: false,
     }
   },
   components: { OrderView },
   methods: {
-    getOrder () {
+    getOrder() {
       const orderId = this.$route.params.orderId || this.OrderId
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${orderId}`
       this.$http
@@ -66,7 +66,7 @@ export default {
           this.$pushMsg.status404(error.response, '取得訂單資料失敗')
         })
     },
-    toPay () {
+    toPay() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`
       this.isLoading = true
       this.$http
@@ -81,11 +81,11 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    }
+    },
   },
-  created () {
+  created() {
     this.getOrder()
-  }
+  },
 }
 </script>
 
@@ -94,9 +94,9 @@ export default {
   min-width: 100px;
 }
 
-.btn-outline-primary:hover{
+.btn-outline-primary:hover {
   background-color: #fff;
-  border:1px solid #887426;
-  color:#887426;
+  border: 1px solid #887426;
+  color: #887426;
 }
 </style>

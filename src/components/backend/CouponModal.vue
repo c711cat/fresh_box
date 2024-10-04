@@ -119,24 +119,24 @@ import ModalMixin from '@/mixins/modalMixin'
 import 'vue-select/dist/vue-select.css'
 
 export default {
-  data () {
+  data() {
     return {
       modal: {},
       tempCoupon: {},
-      due_date: ''
+      due_date: '',
     }
   },
   props: {
     coupon: {
       type: Object,
-      default () {
+      default() {
         return {}
-      }
-    }
+      },
+    },
   },
 
   watch: {
-    coupon () {
+    coupon() {
       this.tempCoupon = this.coupon
       if (this.tempCoupon.id) {
         const date = new Date(this.tempCoupon.due_date * 1000)
@@ -152,19 +152,19 @@ export default {
         this.tempCoupon.is_enabled = 0
       }
     },
-    due_date () {
+    due_date() {
       this.tempCoupon.due_date = Math.floor(new Date(this.due_date)) / 1000
-    }
+    },
   },
   mixins: [ModalMixin],
   computed: {
-    minDate () {
+    minDate() {
       let min = ''
       const date = new Date().toISOString().split('T')
       min = date[0]
       return min
-    }
-  }
+    },
+  },
 }
 </script>
 

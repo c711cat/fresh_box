@@ -1,13 +1,13 @@
 import emitter from '@/methods/emitter'
 
-export function status200 (title) {
+export function status200(title) {
   emitter.emit('push-message', {
     style: 'success',
-    title: title
+    title: title,
   })
 }
 
-export function status404 (res, title) {
+export function status404(res, title) {
   const messages = []
   Object.values(res.data.message).forEach((item) => {
     if (item === ' title 欄位為必填') {
@@ -106,6 +106,6 @@ export function status404 (res, title) {
   emitter.emit('push-message', {
     style: 'failure',
     title: title,
-    content: messages.join('、')
+    content: messages.join('、'),
   })
 }

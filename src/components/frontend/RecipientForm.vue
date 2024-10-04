@@ -95,28 +95,28 @@ Object.keys(AllRules).forEach((rule) => {
 
 configure({
   generateMessage: localize({ zh_TW: zhTW }),
-  validateOnInput: true
+  validateOnInput: true,
 })
 setLocale('zh_TW')
 
 export default {
-  data () {
+  data() {
     return {
       form: {
         user: {
           name: '',
           email: '',
           tel: '',
-          address: ''
+          address: '',
         },
-        message: ''
-      }
+        message: '',
+      },
     }
   },
   inject: ['emitter'],
   components: { Field, Form, ErrorMessage },
   methods: {
-    createOrder () {
+    createOrder() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order`
       this.$http
         .post(api, { data: this.form })
@@ -127,7 +127,7 @@ export default {
         .catch((error) => {
           this.$pushMsg.status404(error.response, '建立訂單失敗')
         })
-    }
-  }
+    },
+  },
 }
 </script>

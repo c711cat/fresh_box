@@ -65,7 +65,7 @@ import {
   Pagination,
   Scrollbar,
   A11y,
-  Autoplay
+  Autoplay,
 } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
@@ -73,34 +73,34 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 export default {
-  data () {
+  data() {
     return {
       categoryList: [
         {
           name: '葉菜',
           type: 'leafy_vegetable',
-          img: leafyVegetableImg
+          img: leafyVegetableImg,
         },
         {
           name: '瓜果根球莖',
           type: 'melon_root_bulb',
-          img: melonRootBulbImg
+          img: melonRootBulbImg,
         },
         { name: '菇菌', type: 'mushroom', img: mushroomImg },
         { name: '水果', type: 'fruit', img: fruitImg },
-        { name: '辛香料', type: 'spice', img: spiceImg }
+        { name: '辛香料', type: 'spice', img: spiceImg },
       ],
-      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay]
+      modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
     }
   },
   components: {
     Swiper,
-    SwiperSlide
+    SwiperSlide,
   },
   methods: {
-    onSwiper () {},
-    onSlideChange () {}
-  }
+    onSwiper() {},
+    onSlideChange() {},
+  },
 }
 </script>
 <style lang="scss" scoped>

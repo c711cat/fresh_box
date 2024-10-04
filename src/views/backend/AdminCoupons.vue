@@ -95,17 +95,17 @@
 import CouponModal from '@/components/backend/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
 export default {
-  data () {
+  data() {
     return {
       coupons: [],
       tempCoupon: {},
       isNew: false,
-      isLoading: false
+      isLoading: false,
     }
   },
   components: { CouponModal, DelModal },
   methods: {
-    getCoupons () {
+    getCoupons() {
       const page = 1
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`
       this.isLoading = true
@@ -114,7 +114,7 @@ export default {
         this.isLoading = false
       })
     },
-    addCoupon (coupon) {
+    addCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupon`
       this.isLoading = true
       this.$http
@@ -131,7 +131,7 @@ export default {
           this.isLoading = false
         })
     },
-    openCouponModal (isNew, coupon) {
+    openCouponModal(isNew, coupon) {
       this.$refs.couponModal.showModal()
       if (isNew) {
         this.tempCoupon = { is_enabled: 0 }
@@ -139,7 +139,7 @@ export default {
         this.tempCoupon = { ...coupon }
       }
     },
-    updateCoupon (coupon) {
+    updateCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`
       this.isLoading = true
 
@@ -157,11 +157,11 @@ export default {
           this.isLoading = false
         })
     },
-    openDelModal (coupon) {
+    openDelModal(coupon) {
       this.$refs.delModal.showModal()
       this.tempCoupon = { ...coupon }
     },
-    delCoupon (coupon) {
+    delCoupon(coupon) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`
       this.isLoading = true
       this.$http
@@ -177,11 +177,11 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    }
+    },
   },
-  created () {
+  created() {
     this.getCoupons()
-  }
+  },
 }
 </script>
 

@@ -79,18 +79,18 @@ import QAModal from '@/components/backend/QA_Modal.vue'
 import DelModal from '@/components/DelModal.vue'
 import PaginationView from '@/components/PaginationView.vue'
 export default {
-  data () {
+  data() {
     return {
       QA_List: {},
       tempQA: {},
       isNew: false,
       isLoading: false,
-      pagination: {}
+      pagination: {},
     }
   },
   components: { QAModal, DelModal, PaginationView },
   methods: {
-    getQAList (page = 1) {
+    getQAList(page = 1) {
       this.isLoading = true
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`
       this.$http
@@ -106,7 +106,7 @@ export default {
           this.isLoading = false
         })
     },
-    openQA_Modal (isNew, QAItem) {
+    openQA_Modal(isNew, QAItem) {
       this.$refs.QA_Modal.showModal()
       if (isNew) {
         this.tempQA = {}
@@ -114,7 +114,7 @@ export default {
         this.tempQA = { ...QAItem }
       }
     },
-    addQA (QA) {
+    addQA(QA) {
       QA.create_at = (new Date() * 1000) / 1000
       QA.content = QA.description
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article`
@@ -131,7 +131,7 @@ export default {
           this.getQAList()
         })
     },
-    editQA (QA) {
+    editQA(QA) {
       QA.create_at = (new Date() * 1000) / 1000
       QA.content = QA.description
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`
@@ -148,11 +148,11 @@ export default {
           this.getQAList()
         })
     },
-    openDelModal (delItem) {
+    openDelModal(delItem) {
       this.$refs.delModal.showModal()
       this.tempQA = { ...delItem }
     },
-    delQA (QA) {
+    delQA(QA) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`
       this.$http
         .delete(api)
@@ -166,17 +166,17 @@ export default {
         .finally(() => {
           this.getQAList()
         })
-    }
+    },
   },
-  created () {
+  created() {
     this.getQAList()
   },
-  mounted () {
+  mounted() {
     const collapseElementList = document.querySelectorAll('.collapse')
     this.QA_List = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     )
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>

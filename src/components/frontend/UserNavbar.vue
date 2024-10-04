@@ -174,7 +174,7 @@
 <script>
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
 export default {
-  data () {
+  data() {
     return {
       userNavbar: {},
       productSearchText: '',
@@ -187,15 +187,15 @@ export default {
       pagination: {},
       orderPage: 1,
       open: false,
-      currentWidth: '1000'
+      currentWidth: '1000',
     }
   },
   inject: ['emitter'],
   props: {
-    currentPath: {}
+    currentPath: {},
   },
   watch: {
-    productSearchText () {
+    productSearchText() {
       this.$router.push('/user-products')
       setTimeout(() => {
         if (this.productSearchText === '') {
@@ -208,13 +208,13 @@ export default {
           })
           this.emitter.emit('productSearchResult', {
             data: this.searchResult,
-            ...this.productSearchText
+            ...this.productSearchText,
           })
           this.searchResult = []
         }
       }, 1500)
     },
-    orderSearchText () {
+    orderSearchText() {
       this.orderSearchResult = []
       if (this.orderSearchText === '') {
         this.emitter.emit('orderSearchNull')
@@ -226,14 +226,14 @@ export default {
         })
         this.emitter.emit('orderSearchResult', {
           data: this.orderSearchResult,
-          ...this.orderSearchText
+          ...this.orderSearchText,
         })
         this.orderSearchResult = []
       }
-    }
+    },
   },
   methods: {
-    isCurrentPage (path) {
+    isCurrentPage(path) {
       let className = ''
       if (this.currentPath === path && this.currentWidth < 992) {
         className = 'isCurrentNavbarItem mobileBg'
@@ -243,10 +243,10 @@ export default {
       }
       return className
     },
-    closeMenu () {
+    closeMenu() {
       this.userNavbar.hide()
     },
-    getProducts () {
+    getProducts() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
@@ -257,7 +257,7 @@ export default {
           this.$pushMsg.status404(error.response, '取得產品資料失敗')
         })
     },
-    getCart () {
+    getCart() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.$http
         .get(api)
@@ -268,11 +268,11 @@ export default {
           this.$pushMsg.status404(error.response, '取得購物車資料失敗')
         })
     },
-    goToUserProducts () {
+    goToUserProducts() {
       this.emitter.emit('goToUserProducts')
       this.closeMenu()
     },
-    getOrdersOfPage1 () {
+    getOrdersOfPage1() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
       this.$http
         .get(api)
@@ -284,7 +284,7 @@ export default {
           this.$pushMsg.status404(error.response, '取得訂單資料失敗')
         })
     },
-    fetchOrdersOfOtherPages (totalPages) {
+    fetchOrdersOfOtherPages(totalPages) {
       this.orderPage = this.orderPage + 1
       if (this.orderPage <= totalPages) {
         const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
@@ -299,27 +299,27 @@ export default {
           })
       }
     },
-    getCurrentWidth () {
+    getCurrentWidth() {
       this.currentWidth = window.innerWidth
-    }
+    },
   },
   computed: {
-    isMoileOrPc () {
+    isMoileOrPc() {
       if (this.currentWidth < 992) {
         return 'isMobileItem'
       } else {
         return ''
       }
     },
-    disabledSearchInput () {
+    disabledSearchInput() {
       if (this.pagination.current_page === this.pagination.total_pages) {
         return false
       } else {
         return true
       }
-    }
+    },
   },
-  created () {
+  created() {
     this.getCurrentWidth()
     this.getOrdersOfPage1()
     this.getCart()
@@ -331,16 +331,16 @@ export default {
       this.getCart()
     })
   },
-  mounted () {
+  mounted() {
     this.userNavbar = new Offcanvas(this.$refs.menu, { toggle: false })
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .logoText {
   width: fit-content;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .numInCart {

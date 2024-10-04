@@ -16,10 +16,10 @@ import UserNavbar from '@/components/frontend/UserNavbar.vue'
 import FooterView from '@/components/frontend/FooterView.vue'
 
 export default {
-  data () {
+  data() {
     return {}
   },
-  components: { UserNavbar, FooterView }
+  components: { UserNavbar, FooterView },
 }
 </script>
 

@@ -94,20 +94,20 @@ import delModal from '@/components/DelModal.vue'
 import PaginationView from '@/components/PaginationView.vue'
 
 export default {
-  data () {
+  data() {
     return {
       isLoading: false,
       orderList: {},
       tempOrder: {},
       pagination: {},
       allOrders: false,
-      searchContent: null
+      searchContent: null,
     }
   },
   inject: ['emitter'],
   components: { OrderView, delModal, PaginationView },
   methods: {
-    getOrders (page = 1) {
+    getOrders(page = 1) {
       this.orderList = {}
       this.isLoading = true
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`
@@ -124,17 +124,17 @@ export default {
           this.isLoading = false
         })
     },
-    openDelModal (item) {
+    openDelModal(item) {
       this.allOrders = false
       this.tempOrder = { ...item }
       this.$refs.delModal.showModal()
     },
-    openDelAllOrdersModal () {
+    openDelAllOrdersModal() {
       this.allOrders = true
       this.tempOrder = {}
       this.$refs.delModal.showModal()
     },
-    delOrder (order, page) {
+    delOrder(order, page) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`
       this.$http
         .delete(api)
@@ -147,10 +147,10 @@ export default {
           this.$pushMsg.status404(error.response, '刪除失敗')
         })
     },
-    turnDate (date) {
+    turnDate(date) {
       return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
-    delAllOrders () {
+    delAllOrders() {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders/all`
       this.$http
         .delete(api)
@@ -165,13 +165,13 @@ export default {
           this.allOrdersSwitch = false
           this.getOrders()
         })
-    }
+    },
   },
   computed: {
-    noResults () {
+    noResults() {
       return this.orderList.length === 0
     },
-    noResultsContent () {
+    noResultsContent() {
       let text = ''
       if (this.searchContent) {
         text = '查無此收件人姓名'
@@ -181,11 +181,11 @@ export default {
       }
       return text
     },
-    pageSwitch () {
+    pageSwitch() {
       return this.searchContent === null
-    }
+    },
   },
-  created () {
+  created() {
     this.getOrders()
     this.emitter.on('adminOrderSearchResult', (searchResult) => {
       this.searchContent = searchResult[0]
@@ -197,12 +197,12 @@ export default {
       this.searchContent = null
     })
   },
-  mounted () {
+  mounted() {
     const collapseElementList = document.querySelectorAll('.collapse')
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
     )
-  }
+  },
 }
 </script>
 

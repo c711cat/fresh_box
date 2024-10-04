@@ -36,17 +36,17 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return { currentWidth: 1000 }
   },
   methods: {
-    getCurrentWidth () {
+    getCurrentWidth() {
       this.currentWidth = window.innerWidth
-    }
+    },
   },
-  created () {
+  created() {
     this.getCurrentWidth()
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>

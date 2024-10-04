@@ -114,7 +114,7 @@ import DelModal from '@/components/DelModal.vue'
 import PaginationView from '@/components/PaginationView.vue'
 
 export default {
-  data () {
+  data() {
     return {
       products: [],
       tempProduct: { is_enabled: 0 },
@@ -123,13 +123,13 @@ export default {
       pagination: {},
       openPagination: true,
       searchText: null,
-      currentWidth: 1000
+      currentWidth: 1000,
     }
   },
   components: { ProductModal, DelModal, PaginationView },
   inject: ['emitter'],
   methods: {
-    getProducts (page = 1) {
+    getProducts(page = 1) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`
       this.isLoading = true
       this.$http
@@ -146,7 +146,7 @@ export default {
           this.isLoading = false
         })
     },
-    openModal (isNew, item) {
+    openModal(isNew, item) {
       if (isNew) {
         this.tempProduct = { description: [''], notes: [''], is_enabled: 0 }
       } else {
@@ -155,7 +155,7 @@ export default {
       this.isNew = isNew
       this.$refs.productModal.showModal()
     },
-    addProduct (item) {
+    addProduct(item) {
       this.tempProduct = item
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product`
       this.isLoading = true
@@ -173,7 +173,7 @@ export default {
           this.isLoading = false
         })
     },
-    editProduct (item, currentPage) {
+    editProduct(item, currentPage) {
       this.tempProduct = item
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
       this.isLoading = true
@@ -191,11 +191,11 @@ export default {
           this.isLoading = false
         })
     },
-    openDelModal (item) {
+    openDelModal(item) {
       this.$refs.delModal.showModal()
       this.tempProduct = { ...item }
     },
-    delProduct (item, currentPage) {
+    delProduct(item, currentPage) {
       const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
       this.isLoading = true
       this.$http
@@ -212,30 +212,30 @@ export default {
           this.isLoading = false
         })
     },
-    isPath (item) {
+    isPath(item) {
       if (item.is_enabled === 0) {
         return '/dashboard/admin-products'
       } else {
         return `/product/${item.id}`
       }
     },
-    getCurrentWidth () {
+    getCurrentWidth() {
       this.currentWidth = window.outerWidth
-    }
+    },
   },
   computed: {
-    noResults () {
+    noResults() {
       if (this.searchText !== null && this.products.length === 0) {
         return true
       } else {
         return false
       }
     },
-    itemsInProducts () {
+    itemsInProducts() {
       return this.products.length >= 1
-    }
+    },
   },
-  created () {
+  created() {
     this.getCurrentWidth()
     this.getProducts()
     this.emitter.on('adminSearchProductNull', () => {
@@ -247,7 +247,7 @@ export default {
       this.searchText = searchResult.data2
       this.openPagination = false
     })
-  }
+  },
 }
 </script>
 

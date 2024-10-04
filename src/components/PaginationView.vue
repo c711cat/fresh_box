@@ -40,23 +40,23 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {}
   },
   props: ['pages'],
   methods: {
-    updatePage (page) {
+    updatePage(page) {
       this.$emit('emit-pages', page)
     },
-    goToPrePage (currentPage) {
+    goToPrePage(currentPage) {
       const page = currentPage - 1
       this.$emit('emit-pages', page)
     },
-    goToNextPage (currentPage) {
+    goToNextPage(currentPage) {
       const page = currentPage + 1
       this.$emit('emit-pages', page)
-    }
-  }
+    },
+  },
 }
 </script>
 

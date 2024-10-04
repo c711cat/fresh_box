@@ -36,18 +36,18 @@
 import Cookies from 'js-cookie'
 
 export default {
-  data () {
+  data() {
     return {
       isLoading: false,
       user: {
         username: '',
-        password: ''
-      }
+        password: '',
+      },
     }
   },
   inject: ['emitter'],
   methods: {
-    signIn () {
+    signIn() {
       const api = `${process.env.VUE_APP_API}v2/admin/signin`
       this.$http
         .post(api, this.user)
@@ -62,7 +62,7 @@ export default {
           this.$pushMsg.status404(error.response, '登入失敗')
         })
     },
-    checkSignIn () {
+    checkSignIn() {
       this.isLoading = true
       const api = `${process.env.VUE_APP_API}v2/api/user/check`
       this.$http
@@ -76,11 +76,11 @@ export default {
         .finally(() => {
           this.isLoading = false
         })
-    }
+    },
   },
-  created () {
+  created() {
     this.checkSignIn()
-  }
+  },
 }
 </script>
 

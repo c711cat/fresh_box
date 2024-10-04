@@ -71,20 +71,20 @@ import BestSellers from '@/components/frontend/BestSellers.vue'
 import SwiperImgs from '@/components/frontend/SwiperImgs.vue'
 import DiscountNews from '@/components/frontend/DiscountNews.vue'
 export default {
-  data () {
+  data() {
     return {
-      currentWidth: 0
+      currentWidth: 0,
     }
   },
   components: { CategoryView, BestSellers, DiscountNews, SwiperImgs },
   methods: {
-    getCurrentWidth () {
+    getCurrentWidth() {
       this.currentWidth = window.innerWidth
-    }
+    },
   },
-  created () {
+  created() {
     this.getCurrentWidth()
-  }
+  },
 }
 </script>
 

@@ -11,17 +11,17 @@ import emitter from '@/methods/emitter'
 
 export default {
   components: { MessagesView },
-  provide () {
+  provide() {
     return {
-      emitter
+      emitter,
     }
   },
-  mounted () {
+  mounted() {
     AOS.init()
-  }
+  },
 }
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/all.scss";
+@import '@/assets/scss/all.scss';
 </style>

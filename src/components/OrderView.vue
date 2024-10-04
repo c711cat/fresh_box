@@ -195,7 +195,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       order: {
         products: {},
@@ -204,26 +204,26 @@ export default {
         afterDiscount: 0,
         paymentAmount: 0,
         shippingFee: 290,
-        user: {}
-      }
+        user: {},
+      },
     }
   },
   props: {
     oneOrder: {},
-    transOrder: {}
+    transOrder: {},
   },
   watch: {
-    transOrder () {
+    transOrder() {
       this.order = { ...this.transOrder }
       this.getSubtotal()
     },
-    oneOrder () {
+    oneOrder() {
       this.order = { ...this.oneOrder }
       this.getSubtotal()
-    }
+    },
   },
   methods: {
-    getOrder () {
+    getOrder() {
       if (this.oneOrder) {
         this.order = { ...this.oneOrder }
         this.order.user = { ...this.oneOrder.user }
@@ -231,7 +231,7 @@ export default {
         this.getSubtotal()
       }
     },
-    getSubtotal () {
+    getSubtotal() {
       let subtotal = 0
       Object.values(this.order.products).forEach((item) => {
         subtotal += item.total
@@ -239,17 +239,17 @@ export default {
       this.order.subtotal = subtotal
       this.getAfterDiscount()
     },
-    getAfterDiscount () {
+    getAfterDiscount() {
       this.order.afterDiscount = Math.round(this.order.total)
       this.getDiscount()
       this.getShippingFee()
       this.getPaymentAmount()
       this.getShippingFee()
     },
-    getDiscount () {
+    getDiscount() {
       this.order.discount = this.order.subtotal - this.order.afterDiscount
     },
-    getShippingFee () {
+    getShippingFee() {
       if (this.order.total >= 1000) {
         this.order.shippingFee = 0
       }
@@ -257,40 +257,40 @@ export default {
         this.order.shippingFee = 290
       }
     },
-    getPaymentAmount () {
+    getPaymentAmount() {
       this.order.paymentAmount =
         this.order.afterDiscount + this.order.shippingFee
     },
-    turnDate (date) {
+    turnDate(date) {
       return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
-    showPrice (item) {
+    showPrice(item) {
       if (item.product.origin_price === item.product.price) {
         return item.product.origin_price
       } else {
         return item.product.price
       }
-    }
+    },
   },
   computed: {
-    paymentStatus () {
+    paymentStatus() {
       if (this.order.is_paid === true) {
         return '付款完成'
       } else {
         return '未付款'
       }
     },
-    paymentStatusColor () {
+    paymentStatusColor() {
       if (this.order.is_paid === true) {
         return 'text-success'
       } else {
         return 'text-danger'
       }
-    }
+    },
   },
-  created () {
+  created() {
     this.getOrder()
-  }
+  },
 }
 </script>
 
