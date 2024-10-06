@@ -115,57 +115,57 @@
   </div>
 </template>
 <script>
-import ModalMixin from "@/mixins/modalMixin";
-import "vue-select/dist/vue-select.css";
+import ModalMixin from '@/mixins/modalMixin'
+import 'vue-select/dist/vue-select.css'
 
 export default {
   data() {
     return {
       modal: {},
       tempCoupon: {},
-      due_date: "",
-    };
+      due_date: '',
+    }
   },
   props: {
     coupon: {
       type: Object,
       default() {
-        return {};
+        return {}
       },
     },
   },
 
   watch: {
     coupon() {
-      this.tempCoupon = this.coupon;
+      this.tempCoupon = this.coupon
       if (this.tempCoupon.id) {
         const date = new Date(this.tempCoupon.due_date * 1000)
           .toISOString()
-          .split("T");
-        this.due_date = date[0];
+          .split('T')
+        this.due_date = date[0]
       } else {
-        return;
+        return
       }
       if (this.coupon.is_enabled) {
-        this.tempCoupon.is_enabled = this.coupon.is_enabled;
+        this.tempCoupon.is_enabled = this.coupon.is_enabled
       } else {
-        this.tempCoupon.is_enabled = 0;
+        this.tempCoupon.is_enabled = 0
       }
     },
     due_date() {
-      this.tempCoupon.due_date = Math.floor(new Date(this.due_date)) / 1000;
+      this.tempCoupon.due_date = Math.floor(new Date(this.due_date)) / 1000
     },
   },
   mixins: [ModalMixin],
   computed: {
     minDate() {
-      let min = "";
-      const date = new Date().toISOString().split("T");
-      min = date[0];
-      return min;
+      let min = ''
+      const date = new Date().toISOString().split('T')
+      min = date[0]
+      return min
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

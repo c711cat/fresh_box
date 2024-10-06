@@ -66,26 +66,26 @@
   </section>
 </template>
 <script>
-import CategoryView from "@/components/frontend/CategoryView.vue";
-import BestSellers from "@/components/frontend/BestSellers.vue";
-import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
-import DiscountNews from "@/components/frontend/DiscountNews.vue";
+import CategoryView from '@/components/frontend/CategoryView.vue'
+import BestSellers from '@/components/frontend/BestSellers.vue'
+import SwiperImgs from '@/components/frontend/SwiperImgs.vue'
+import DiscountNews from '@/components/frontend/DiscountNews.vue'
 export default {
   data() {
     return {
       currentWidth: 0,
-    };
+    }
   },
   components: { CategoryView, BestSellers, DiscountNews, SwiperImgs },
   methods: {
     getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
   },
   created() {
-    this.getCurrentWidth();
+    this.getCurrentWidth()
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

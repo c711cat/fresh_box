@@ -18,20 +18,17 @@
           class="col-12 d-flex flex-wrap justify-content-between"
         >
           <router-link to="/order-list" class="border-0 col p-1">
-            <button
-              type="button"
-              class="w-100 btnBody btn btn-outline-secondary"
-            >
+            <button type="button" class="w-100 btnBody btn btn-outline-primary">
               查看訂單
             </button>
           </router-link>
           <router-link to="/user-products" class="border-0 col p-1">
-            <button type="button" class="w-100 btnBody btn btn-outline-primary">
+            <button type="button" class="w-100 btnBody btn btn-primary">
               繼續逛逛
             </button>
           </router-link>
         </div>
-        <div v-else class="">
+        <div v-else>
           <button
             @click="toPay"
             :disabled="isLoading"
@@ -47,53 +44,59 @@
 </template>
 
 <script>
-import OrderView from "@/components/OrderView.vue";
+import OrderView from '@/components/OrderView.vue'
 export default {
   data() {
     return {
       order: {},
       isLoading: false,
-    };
+    }
   },
   components: { OrderView },
   methods: {
     getOrder() {
-      const orderId = this.$route.params.orderId || this.OrderId;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${orderId}`;
+      const orderId = this.$route.params.orderId || this.OrderId
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${orderId}`
       this.$http
         .get(api)
         .then((res) => {
-          this.order = res.data.order;
+          this.order = res.data.order
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+        })
     },
     toPay() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${this.order.id}`
+      this.isLoading = true
       this.$http
         .post(api)
-        .then((res) => {
-          this.$pushMsg.status200(res, "付款成功");
-          this.getOrder();
+        .then(() => {
+          this.$pushMsg.status200('付款成功')
+          this.getOrder()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '付款失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
   },
   created() {
-    this.getOrder();
+    this.getOrder()
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .btnBody {
   min-width: 100px;
+}
+
+.btn-outline-primary:hover {
+  background-color: #fff;
+  border: 1px solid #887426;
+  color: #887426;
 }
 </style>

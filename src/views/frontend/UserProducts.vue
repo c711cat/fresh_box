@@ -7,17 +7,18 @@
     <div
       class="mx-auto mb-3 col-11 col-sm-3 col-lg-2 col-xxl-2"
       :class="{
-        'sticky-top': currentWidth < 576,
+        'sticky-top stickyTopXs': currentWidth < 576,
         miniWidth: currentWidth < 306,
       }"
     >
       <!-- sm以上 -->
-      <section class="d-none d-sm-block list-group sticky-top">
+      <section class="d-none d-sm-block list-group sticky-top stickyTopSm">
         <button
           @click="goToAllProducts"
           class="list-group-item list-group-item-action"
           :class="{ active: $route.path === '/user-products' }"
           :aria-current="$route.path === '/user-products'"
+          type="button"
         >
           所有類別
         </button>
@@ -28,6 +29,7 @@
           class="list-group-item list-group-item-action"
           :class="{ active: $route.params.currentCategory === item }"
           :aria-current="$route.params.currentCategory === item"
+          type="button"
         >
           {{ item }}
         </button>
@@ -206,10 +208,9 @@
 </template>
 
 <script>
-import ObserverView from "@/components/frontend/ObserverView.vue";
-import { throttle } from "lodash";
-import Dropdown from "bootstrap/js/dist/dropdown";
-import { localStorageHelper } from "@/utils/localStorage";
+import ObserverView from '@/components/frontend/ObserverView.vue'
+import { throttle } from 'lodash'
+import { localStorageHelper } from '@/utils/localStorage'
 export default {
   data() {
     return {
@@ -223,286 +224,281 @@ export default {
       isInView: false,
       carts: [],
       status: {
-        addLoadingItem: "",
-        delLoadingItem: "",
+        addLoadingItem: '',
+        delLoadingItem: '',
       },
       myFavoriteList: [],
-      dropdownList: {},
-      categoryList: ["葉菜", "瓜果根球莖", "菇菌", "水果", "辛香料"],
+      categoryList: ['葉菜', '瓜果根球莖', '菇菌', '水果', '辛香料'],
       forCategoryAllProducts: [],
-      currentCategory: "選擇類別",
-      searchText: "",
+      currentCategory: '選擇類別',
+      searchText: '',
       searchResult: [],
       currentWidth: 1000,
-    };
+    }
   },
   components: { ObserverView },
-  inject: ["emitter"],
+  inject: ['emitter'],
   methods: {
     getOtherPageProductsThrottled: throttle(
-      function (options = this.pagination) {
-        const { current_page, total_pages } = options;
-        if (this.isInView && current_page < total_pages) {
-          const nextPage = current_page + 1;
-          this.fetchProducts(nextPage);
+      function () {
+        if (
+          this.isInView &&
+          this.pagination.current_page < this.pagination.total_pages
+        ) {
+          const nextPage = this.pagination.current_page + 1
+          this.fetchProducts(nextPage)
         }
       },
       500,
       { leading: true, trailing: true }
     ),
     fetchProducts(page) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/?page=${page}`
       this.$http
         .get(api)
         .then((res) => {
-          const { pagination, products } = res.data;
-          this.pagination = { ...pagination };
-          this.newPage = [...products];
-          this.allProducts = [...this.allProducts, ...this.newPage];
+          const { pagination, products } = res.data
+          this.pagination = { ...pagination }
+          this.newPage = [...products]
+          this.allProducts = [...this.allProducts, ...this.newPage]
           this.allProducts.forEach((item) => {
             this.carts.forEach((cartItem) => {
               if (item.id === cartItem.product_id) {
-                item.buyQty = cartItem.qty;
-                item.pushCartId = cartItem.id;
+                item.buyQty = cartItem.qty
+                item.pushCartId = cartItem.id
               }
-            });
-          });
+            })
+          })
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
+        })
     },
     whereComeFrom() {
       if (this.$route.params.currentCategory) {
-        this.chooseCategory(this.$route.params.currentCategory);
-        this.getCart();
+        this.chooseCategory(this.$route.params.currentCategory)
+        this.getCart()
       } else {
-        if (this.$route.path === "/favorite") {
-          this.getCart();
+        if (this.$route.path === '/favorite') {
+          this.getCart()
           setTimeout(() => {
-            this.allProducts = this.myFavoriteList;
-            this.pushBuyQtyId();
-            this.isLoading = false;
-          }, 3000);
+            this.allProducts = this.myFavoriteList
+            this.pushBuyQtyId()
+            this.isLoading = false
+          }, 3000)
         } else {
-          this.getCart();
+          this.getCart()
           setTimeout(() => {
-            this.getPage1Products();
-            this.getOtherPageProductsThrottled();
-          }, 600);
+            this.getPage1Products()
+            this.getOtherPageProductsThrottled()
+          }, 600)
         }
       }
     },
     getMyFavorite() {
-      this.myFavoriteList = localStorageHelper.get("myFavorite") || [];
+      this.myFavoriteList = localStorageHelper.get('myFavorite') || []
       this.myFavoriteList.forEach((item) => {
-        item.buyQty = 0;
-      });
+        item.buyQty = 0
+      })
     },
     isMyFavorite(item) {
-      let favorite = "";
+      let favorite = ''
       this.myFavoriteList.forEach((listItem) => {
         if (item.id === listItem.id) {
-          favorite = true;
+          favorite = true
         }
-      });
-      return favorite;
+      })
+      return favorite
     },
     addMyFavorite(addItem) {
-      this.myFavoriteList.push(addItem);
-      localStorageHelper.set("myFavorite", this.myFavoriteList);
+      this.myFavoriteList.push(addItem)
+      localStorageHelper.set('myFavorite', this.myFavoriteList)
     },
     delMyFavorite(delItem) {
-      this.myFavoriteList.filter((item, index) => {
+      this.myFavoriteList.forEach((item, index) => {
         if (delItem.id === item.id) {
-          return this.myFavoriteList.splice(index, 1);
+          return this.myFavoriteList.splice(index, 1)
         }
-      });
-      localStorageHelper.set("myFavorite", this.myFavoriteList);
+      })
+      localStorageHelper.set('myFavorite', this.myFavoriteList)
     },
     getCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.$http
         .get(api)
         .then((res) => {
-          this.carts = res.data.data.carts;
-          this.pushBuyQtyId();
+          this.carts = res.data.data.carts
+          this.pushBuyQtyId()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得購物車資料失敗')
+        })
     },
     pushBuyQtyId() {
       this.allProducts.forEach((item) => {
         this.carts.forEach((cartItem) => {
           if (item.id === cartItem.product_id) {
-            item.buyQty = cartItem.qty;
-            item.pushCartId = cartItem.id;
+            item.buyQty = cartItem.qty
+            item.pushCartId = cartItem.id
           }
-        });
-      });
+        })
+      })
     },
     getPage1Products(page = 1) {
-      this.pagination.current_page = 1;
-      this.currentCategory = "選擇類別";
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
+      this.pagination.current_page = 1
+      this.currentCategory = '選擇類別'
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/?page=${page}`
       this.$http
         .get(api)
         .then((res) => {
-          this.allProducts = res.data.products;
-          this.pagination = res.data.pagination;
-          this.pushBuyQtyId();
+          this.allProducts = res.data.products
+          this.pagination = res.data.pagination
+          this.pushBuyQtyId()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     chooseCategory(category) {
-      this.currentCategory = category;
-      this.pagination.total_pages = 0;
-      this.getAllProducts();
+      this.currentCategory = category
+      this.pagination.total_pages = 0
+      this.getAllProducts()
     },
     getAllProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
         .then((res) => {
-          this.forCategoryAllProducts = res.data.products;
-          this.showCategoryProducts();
+          this.forCategoryAllProducts = res.data.products
+          this.showCategoryProducts()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
+        })
     },
     showCategoryProducts() {
-      let inCaterogy = [];
-      this.forCategoryAllProducts.filter((item) => {
+      const inCaterogy = []
+      this.forCategoryAllProducts.forEach((item) => {
         if (item.category === this.currentCategory) {
-          inCaterogy.push(item);
+          inCaterogy.push(item)
         }
-      });
-      this.allProducts = inCaterogy;
-      this.pushBuyQtyId();
-      this.isLoading = false;
+      })
+      this.allProducts = inCaterogy
+      this.pushBuyQtyId()
+      this.isLoading = false
     },
     goToAllProducts() {
-      this.isLoading = true;
-      if (this.$route.path === "/user-products") {
-        location.reload();
+      this.isLoading = true
+      if (this.$route.path === '/user-products') {
+        location.reload()
       } else {
-        this.$router.push("/user-products");
-        this.getCart();
-        this.getPage1Products();
+        this.$router.push('/user-products')
+        this.getCart()
+        this.getPage1Products()
       }
     },
     goToTheCategory(category) {
-      if (category === "所有類別") {
-        this.goToAllProducts();
+      if (category === '所有類別') {
+        this.goToAllProducts()
       } else {
-        this.$router.push(`/user-products/${category}`);
-        this.chooseCategory(category);
+        this.$router.push(`/user-products/${category}`)
+        this.chooseCategory(category)
       }
     },
     handleIsInView() {
-      this.isInView = true;
-      this.handleLoadmore();
+      this.isInView = true
+      this.handleLoadmore()
     },
     handleLoadmore() {
-      this.getOtherPageProductsThrottled();
+      this.getOtherPageProductsThrottled()
     },
     handleIsOutsideView() {
-      this.isInView = false;
+      this.isInView = false
     },
     addCart(item) {
-      const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.status.addLoadingItem = item.id;
+      const addItem = { product_id: item.id, qty: 1 }
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
+      this.status.addLoadingItem = item.id
       this.$http
         .post(api, { data: addItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
-          this.getCart();
-          this.emitter.emit("updateProductInCart");
+        .then(() => {
+          this.$pushMsg.status200('已加入購物車')
+          this.getCart()
+          this.emitter.emit('updateProductInCart')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '加入購物車失敗')
         })
         .finally(() => {
-          this.status.addLoadingItem = "";
-        });
+          this.status.addLoadingItem = ''
+        })
     },
     goToProduct(item) {
-      this.$router.push(`/product/${item.id}`);
+      this.$router.push(`/product/${item.id}`)
     },
     go_to_favorite() {
-      if (this.searchText && this.$route.path !== "/favorite") {
-        this.allProducts = this.searchResult;
-        this.getCart();
-        this.pushBuyQtyId();
+      if (this.searchText && this.$route.path !== '/favorite') {
+        this.allProducts = this.searchResult
+        this.getCart()
+        this.pushBuyQtyId()
       } else {
-        this.allProducts = this.myFavoriteList;
-        this.getCart();
-        this.pushBuyQtyId();
+        this.allProducts = this.myFavoriteList
+        this.getCart()
+        this.pushBuyQtyId()
       }
     },
     getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
   },
   computed: {
     noResults() {
-      return this.allProducts.length === 0 && this.searchText !== "";
+      return this.allProducts.length === 0 && this.searchText !== ''
     },
     noFavorites() {
       return (
         this.myFavoriteList.length === 0 &&
         this.allProducts.length === 0 &&
-        this.searchText === ""
-      );
+        this.searchText === ''
+      )
     },
   },
   created() {
-    this.getCurrentWidth();
-    this.isLoading = true;
-    this.whereComeFrom();
-    this.getMyFavorite();
-    this.emitter.on("productSearchResult", (searchResult) => {
-      this.getCart();
-      this.searchText = searchResult[0];
-      this.pagination.total_pages = 0;
-      this.searchResult = searchResult.data;
-      this.allProducts = searchResult.data;
-      this.pushBuyQtyId();
-    });
-    this.emitter.on("productSearchNull", () => {
-      this.searchText = "";
-      this.getPage1Products();
-    });
-    this.emitter.on("goToUserProducts", () => {
-      this.getPage1Products();
-      this.getOtherPageProductsThrottled();
-    });
-  },
-  mounted() {
-    const dropdownElementList = document.querySelectorAll(".dropdown-toggle");
-    this.dropdownList = [...dropdownElementList].map(
-      (dropdownToggleEl) => new Dropdown(dropdownToggleEl)
-    );
+    this.getCurrentWidth()
+    this.isLoading = true
+    this.whereComeFrom()
+    this.getMyFavorite()
+    this.emitter.on('productSearchResult', (searchResult) => {
+      this.getCart()
+      this.searchText = searchResult[0]
+      this.pagination.total_pages = 0
+      this.searchResult = searchResult.data
+      this.allProducts = searchResult.data
+      this.pushBuyQtyId()
+    })
+    this.emitter.on('productSearchNull', () => {
+      this.searchText = ''
+      this.getPage1Products()
+    })
+    this.emitter.on('goToUserProducts', () => {
+      this.getPage1Products()
+      this.getOtherPageProductsThrottled()
+    })
   },
   updated() {
-    if (this.$route.path === "/favorite") {
-      this.go_to_favorite();
+    if (this.$route.path === '/favorite') {
+      this.go_to_favorite()
     }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
 img {
-  height: 20vh;
+  height: 23vh;
   object-fit: cover;
 }
 
@@ -569,22 +565,6 @@ img {
   border-bottom: 1px solid #ccaf3c;
 }
 
-.dropdown-item:hover {
-  cursor: pointer;
-  color: #ccaf3c;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-  background-color: #f8f9fa;
-  color: #ccaf3c;
-}
-
-.dropdown-item:focus-visible {
-  outline: 2px solid #ccaf3c;
-  border-radius: 3%;
-}
-
 .xs_title_text {
   font-size: 16px;
 }
@@ -619,8 +599,12 @@ img {
   font-weight: bolder;
 }
 
-.sticky-top {
+.stickyTopXs {
   top: 61px;
+}
+
+.stickyTopSm {
+  top: 75px;
 }
 
 .btnXs {

@@ -107,97 +107,97 @@ import {
   Scrollbar,
   A11y,
   Autoplay,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
+} from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
 export default {
   data() {
     return {
       bestSellerProducts: [
         {
-          title: "台灣水蜜桃",
+          title: '台灣水蜜桃',
           imgUrl:
-            "https://images.unsplash.com/photo-1595124245030-41448b199d6d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          content: "600g±10% / 盒",
+            'https://images.unsplash.com/photo-1595124245030-41448b199d6d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          content: '600g±10% / 盒',
           origin_price: 600,
           price: 500,
-          id: "-NsfVCnYqjTKonXqR4cO",
+          id: '-NsfVCnYqjTKonXqR4cO',
         },
         {
-          title: "無籽黑葡萄",
+          title: '無籽黑葡萄',
           imgUrl:
-            "https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          content: "1.8kg±10% / 盒",
+            'https://images.unsplash.com/photo-1601275868399-45bec4f4cd9d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          content: '1.8kg±10% / 盒',
           origin_price: 699,
           price: 569,
-          id: "-Nsg6Th1g1I7OzbPJF1g",
+          id: '-Nsg6Th1g1I7OzbPJF1g',
         },
         {
-          title: "空運櫻桃",
+          title: '空運櫻桃',
           imgUrl:
-            "https://images.unsplash.com/photo-1595657241488-468423581c23?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          content: "1kg±10% / 盒",
+            'https://images.unsplash.com/photo-1595657241488-468423581c23?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          content: '1kg±10% / 盒',
           origin_price: 1200,
           price: 1000,
-          id: "-NsfbLG9v4NLUQwba1YJ",
+          id: '-NsfbLG9v4NLUQwba1YJ',
         },
         {
-          title: "蘆筍",
+          title: '蘆筍',
           imgUrl:
-            "https://images.unsplash.com/photo-1626132661889-4058c6f9508f?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          content: "200g±10% / 盒",
+            'https://images.unsplash.com/photo-1626132661889-4058c6f9508f?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          content: '200g±10% / 盒',
           origin_price: 150,
           price: 120,
-          id: "-Ntoe6-WbDJY9ChStYOs",
+          id: '-Ntoe6-WbDJY9ChStYOs',
         },
       ],
       status: {
-        addLoadingItem: "",
-        delLoadingItem: "",
+        addLoadingItem: '',
+        delLoadingItem: '',
       },
       currentWidth: 1000,
       modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
+    }
   },
   components: {
     Swiper,
     SwiperSlide,
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   methods: {
     goToProductPage(id) {
-      this.$router.push(`/product/${id}`);
+      this.$router.push(`/product/${id}`)
     },
     addCart(item) {
-      const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.status.addLoadingItem = item.id;
+      const addItem = { product_id: item.id, qty: 1 }
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
+      this.status.addLoadingItem = item.id
       this.$http
         .post(api, { data: addItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
-          this.emitter.emit("updateProductInCart");
+        .then(() => {
+          this.$pushMsg.status200('已加入購物車')
+          this.emitter.emit('updateProductInCart')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '加入購物車失敗')
         })
         .finally(() => {
-          this.status.addLoadingItem = "";
-        });
+          this.status.addLoadingItem = ''
+        })
     },
     getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
     onSwiper() {},
     onSlideChange() {},
   },
   created() {
-    this.getCurrentWidth();
+    this.getCurrentWidth()
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

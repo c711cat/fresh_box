@@ -37,9 +37,9 @@
             <li class="nav-item rounded" :class="isMoileOrPc">
               <router-link
                 @click="() => closeMenu()"
-                to="/dashboard/admin's-products"
+                to="/dashboard/admin-products"
                 class="nav-link px-3 rounded"
-                :class="isCurrentPage(`/dashboard/admin's-products`)"
+                :class="isCurrentPage(`/dashboard/admin-products`)"
               >
                 產品清單
               </router-link>
@@ -107,7 +107,7 @@
             aria-label="Search"
           />
           <button
-            type="btn"
+            type="button"
             class="d-none d-sm-block btn btn-outline-light bi bi-search fs-4 searchBtn border border-0"
           ></button>
         </form>
@@ -143,7 +143,7 @@
           </div>
 
           <button
-            type="btn"
+            type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#mobile-admin"
             aria-controls="mobile-admin"
@@ -167,13 +167,13 @@
 </template>
 
 <script>
-import Offcanvas from "bootstrap/js/dist/offcanvas";
+import Offcanvas from 'bootstrap/js/dist/offcanvas'
 export default {
   data() {
     return {
       adminNavbar: {},
-      productSearchText: "",
-      orderSearchText: "",
+      productSearchText: '',
+      orderSearchText: '',
       searchResult: [],
       products: [],
       orderPage: 1,
@@ -181,152 +181,152 @@ export default {
       pagination: {},
       orderSearchResult: [],
       currentWidth: 1000,
-    };
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   watch: {
     productSearchText() {
-      if (this.productSearchText === "") {
-        this.emitter.emit("adminSearchProductNull");
+      if (this.productSearchText === '') {
+        this.emitter.emit('adminSearchProductNull')
       } else {
-        Object.values(this.products).filter((item) => {
+        Object.values(this.products).forEach((item) => {
           if (item.title.match(this.productSearchText)) {
-            this.searchResult.push(item);
+            this.searchResult.push(item)
           }
-          this.emitter.emit("adminSearchProductResult", {
+          this.emitter.emit('adminSearchProductResult', {
             data: this.searchResult,
             data2: this.productSearchText,
-          });
-        });
-        this.searchResult = [];
+          })
+        })
+        this.searchResult = []
       }
     },
     orderSearchText() {
-      this.orderSearchResult = [];
-      if (this.orderSearchText === "") {
-        this.emitter.emit("adminOrderSearchNull");
+      this.orderSearchResult = []
+      if (this.orderSearchText === '') {
+        this.emitter.emit('adminOrderSearchNull')
       } else {
-        this.orders.filter((item) => {
+        this.orders.forEach((item) => {
           if (item.user.name.match(this.orderSearchText)) {
-            this.orderSearchResult.push(item);
+            this.orderSearchResult.push(item)
           }
-        });
-        this.emitter.emit("adminOrderSearchResult", {
+        })
+        this.emitter.emit('adminOrderSearchResult', {
           data: this.orderSearchResult,
           ...this.orderSearchText,
-        });
-        this.orderSearchResult = [];
+        })
+        this.orderSearchResult = []
       }
     },
   },
   methods: {
     isCurrentPage(path) {
-      let className = "";
+      let className = ''
       if (this.$route.path === path && this.currentWidth < 992) {
-        className = "isCurrentNavbarItem mobileBg";
+        className = 'isCurrentNavbarItem mobileBg'
       }
       if (this.$route.path === path && this.currentWidth >= 992) {
-        className = "isCurrentNavbarItem";
+        className = 'isCurrentNavbarItem'
       }
-      return className;
+      return className
     },
     closeMenu() {
-      this.adminNavbar.hide();
+      this.adminNavbar.hide()
     },
     logOut() {
-      this.closeMenu();
-      const api = `${process.env.VUE_APP_API}logout`;
+      this.closeMenu()
+      const api = `${process.env.VUE_APP_API}v2/logout`
       this.$http
         .post(api)
-        .then((res) => {
-          this.$router.push("/login");
-          this.$pushMsg.status200(res, "已登出");
+        .then(() => {
+          this.$router.push('/login')
+          this.$pushMsg.status200('已登出')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '登出失敗')
+        })
     },
     getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/products/all`
+      this.isLoading = true
       this.$http
         .get(api)
         .then((res) => {
-          this.products = res.data.products;
+          this.products = res.data.products
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     getOrdersOfPage1() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`
       this.$http
         .get(api)
         .then((res) => {
-          this.orders = res.data.orders;
-          this.pagination = res.data.pagination;
-          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
+          this.orders = res.data.orders
+          this.pagination = res.data.pagination
+          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages)
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, error.response.data.message)
+        })
     },
-    fetchOrdersOfOtherPages(total_pages) {
-      this.orderPage = this.orderPage + 1;
-      if (this.orderPage <= total_pages) {
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`;
+    fetchOrdersOfOtherPages(totalPages) {
+      this.orderPage = this.orderPage + 1
+      if (this.orderPage <= totalPages) {
+        const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${this.orderPage}`
         this.$http
           .get(api)
           .then((res) => {
-            this.pagination = res.data.pagination;
-            this.orders = [...this.orders, ...res.data.orders];
-            this.fetchOrdersOfOtherPages(total_pages);
+            this.pagination = res.data.pagination
+            this.orders = [...this.orders, ...res.data.orders]
+            this.fetchOrdersOfOtherPages(totalPages)
           })
           .catch((error) => {
-            this.$pushMsg.status404(error.response.data.message);
-          });
+            this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+          })
       }
     },
     isCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
   },
   computed: {
     isMoileOrPc() {
       if (this.currentWidth < 992) {
-        return "isMobileItem";
+        return 'isMobileItem'
       } else {
-        return "";
+        return ''
       }
     },
     disabledSearchInput() {
       if (this.pagination.current_page === this.pagination.total_pages) {
-        return false;
+        return false
       } else {
-        return true;
+        return true
       }
     },
   },
   created() {
-    this.getOrdersOfPage1();
-    this.getProducts();
+    this.getOrdersOfPage1()
+    this.getProducts()
     setTimeout(() => {
-      this.isCurrentWidth();
-    }, 500);
+      this.isCurrentWidth()
+    }, 500)
   },
   mounted() {
-    this.adminNavbar = new Offcanvas(this.$refs.adminMenu, { toggle: false });
+    this.adminNavbar = new Offcanvas(this.$refs.adminMenu, { toggle: false })
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .logoText {
   color: #000000a6;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .logoText:hover,

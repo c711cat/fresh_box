@@ -112,6 +112,7 @@
                 <button
                   @click="addImg"
                   class="btn btn-outline-dark-primary btn-sm w-100"
+                  type="button"
                 >
                   新增其他圖片
                 </button>
@@ -138,7 +139,6 @@
                 ></v-select>
               </div>
               <div class="col-xl-5">
-                <div class="d-inline text-danger">＊</div>
                 <label for="category" class="form-label">保存方式</label>
                 <v-select
                   v-model="tempProduct.preservation_methods"
@@ -328,31 +328,31 @@
 </template>
 
 <script>
-import ModalMixin from "@/mixins/modalMixin";
-import "vue-select/dist/vue-select.css";
+import ModalMixin from '@/mixins/modalMixin'
+import 'vue-select/dist/vue-select.css'
 
 export default {
   data() {
     return {
       modal: {},
       tempProduct: {
-        description: [""],
-        notes: [""],
+        description: [''],
+        notes: [''],
       },
-      options: ["水果", "葉菜", "菇菌", "辛香料", "瓜果根球莖"],
+      options: ['水果', '葉菜', '菇菌', '辛香料', '瓜果根球莖'],
       preservationMethods: [
-        "冷藏",
-        "室溫陰涼乾燥處",
-        "冷藏或冷凍",
-        "室溫陰涼乾燥處、冷藏或冷凍",
+        '冷藏',
+        '室溫陰涼乾燥處',
+        '冷藏或冷凍',
+        '室溫陰涼乾燥處、冷藏或冷凍',
       ],
-    };
+    }
   },
   props: {
     product: {
       type: Object,
       default() {
-        return {};
+        return {}
       },
     },
     pages: {},
@@ -360,74 +360,74 @@ export default {
 
   watch: {
     product() {
-      this.tempProduct = this.product;
+      this.tempProduct = this.product
     },
   },
 
   methods: {
     uploadFile() {
-      const uploadFile = this.$refs.fileInput.files[0];
-      const formData = new FormData();
-      formData.append("file-to-upload", uploadFile);
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
+      const uploadFile = this.$refs.fileInput.files[0]
+      const formData = new FormData()
+      formData.append('file-to-upload', uploadFile)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http
         .post(url, formData)
         .then((res) => {
-          this.tempProduct.imageUrl = res.data.imageUrl;
+          this.tempProduct.imageUrl = res.data.imageUrl
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response.data.message)
+        })
     },
     uploadMultipleImgs() {
-      const imgOfIndex = this.tempProduct.images.length - 1;
-      const multipleFile = this.$refs[imgOfIndex][0].files[0];
-      const formData = new FormData();
-      formData.append("file-to-upload", multipleFile);
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
+      const imgOfIndex = this.tempProduct.images.length - 1
+      const multipleFile = this.$refs[imgOfIndex][0].files[0]
+      const formData = new FormData()
+      formData.append('file-to-upload', multipleFile)
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http
         .post(url, formData)
         .then((res) => {
-          this.tempProduct.images[imgOfIndex] = res.data.imageUrl;
+          this.tempProduct.images[imgOfIndex] = res.data.imageUrl
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response.data.message)
+        })
     },
     delCoverImg() {
-      this.tempProduct.imageUrl = "";
-      this.$refs.fileInput.value = "";
+      this.tempProduct.imageUrl = ''
+      this.$refs.fileInput.value = ''
     },
     delImg(index) {
-      this.tempProduct.images.splice(index, 1);
+      this.tempProduct.images.splice(index, 1)
     },
     addImg() {
       if (!this.tempProduct.images) {
-        this.tempProduct.images = [];
+        this.tempProduct.images = []
       }
-      this.tempProduct.images.push("");
+      this.tempProduct.images.push('')
     },
     addNotes() {
       if (!this.tempProduct.notes) {
-        this.tempProduct.notes = [];
+        this.tempProduct.notes = []
       }
-      this.tempProduct.notes.push("");
+      this.tempProduct.notes.push('')
     },
     addDescriptions() {
       if (!this.tempProduct.description) {
-        this.tempProduct.description = [];
+        this.tempProduct.description = []
       }
-      this.tempProduct.description.push("");
+      this.tempProduct.description.push('')
     },
     delDescriptionItem(index) {
-      this.tempProduct.description.splice(index, 1);
+      this.tempProduct.description.splice(index, 1)
     },
     delNotesItem(index) {
-      this.tempProduct.notes.splice(index, 1);
+      this.tempProduct.notes.splice(index, 1)
     },
   },
   mixins: [ModalMixin],
-};
+}
 </script>
 
 <style lang="scss" scoped>

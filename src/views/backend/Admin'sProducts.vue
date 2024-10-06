@@ -99,21 +99,19 @@
     @edit-product="editProduct"
     @add-product="addProduct"
     :pages="pagination"
-  >
-  </ProductModal>
+  />
   <DelModal
     ref="delModal"
     :product="tempProduct"
     @del-product="delProduct"
     :pages="pagination"
-  >
-  </DelModal>
+  />
 </template>
 
 <script>
-import ProductModal from "@/components/backend/ProductModal.vue";
-import DelModal from "@/components/DelModal.vue";
-import PaginationView from "@/components/PaginationView.vue";
+import ProductModal from '@/components/backend/ProductModal.vue'
+import DelModal from '@/components/DelModal.vue'
+import PaginationView from '@/components/PaginationView.vue'
 
 export default {
   data() {
@@ -126,141 +124,131 @@ export default {
       openPagination: true,
       searchText: null,
       currentWidth: 1000,
-    };
+    }
   },
   components: { ProductModal, DelModal, PaginationView },
-  inject: ["emitter"],
+  inject: ['emitter'],
   methods: {
     getProducts(page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`
+      this.isLoading = true
       this.$http
         .get(api)
         .then((res) => {
-          this.pagination = res.data.pagination;
-          this.products = res.data.products;
-          this.openPagination = true;
+          this.pagination = res.data.pagination
+          this.products = res.data.products
+          this.openPagination = true
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     openModal(isNew, item) {
       if (isNew) {
-        this.tempProduct = { description: [""], notes: [""], is_enabled: 0 };
+        this.tempProduct = { description: [''], notes: [''], is_enabled: 0 }
       } else {
-        this.tempProduct = { ...item };
+        this.tempProduct = { ...item }
       }
-      this.isNew = isNew;
-      this.$refs.productModal.showModal();
+      this.isNew = isNew
+      this.$refs.productModal.showModal()
     },
     addProduct(item) {
-      this.tempProduct = item;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
-      this.isLoading = true;
+      this.tempProduct = item
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product`
+      this.isLoading = true
       this.$http
         .post(api, { data: this.tempProduct })
-        .then((res) => {
-          if (res.data.success) {
-            this.getProducts();
-            this.$refs.productModal.hideModal();
-            this.$pushMsg.status200(res, "新增產品成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "新增產品失敗");
-          }
+        .then(() => {
+          this.getProducts()
+          this.$refs.productModal.hideModal()
+          this.$pushMsg.status200('新增產品成功')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '新增產品失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
-    editProduct(item, current_page) {
-      this.tempProduct = item;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
-      this.isLoading = true;
+    editProduct(item, currentPage) {
+      this.tempProduct = item
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
+      this.isLoading = true
       this.$http
         .put(api, { data: this.tempProduct })
-        .then((res) => {
-          if (res.data.success) {
-            this.getProducts(current_page);
-            this.$refs.productModal.hideModal();
-            this.$pushMsg.status200(res, "更新產品成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "更新產品失敗");
-          }
+        .then(() => {
+          this.getProducts(currentPage)
+          this.$refs.productModal.hideModal()
+          this.$pushMsg.status200('更新產品成功')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '更新產品失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     openDelModal(item) {
-      this.$refs.delModal.showModal();
-      this.tempProduct = { ...item };
+      this.$refs.delModal.showModal()
+      this.tempProduct = { ...item }
     },
-    delProduct(item, current_page) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`;
-      this.isLoading = true;
+    delProduct(item, currentPage) {
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/product/${item.id}`
+      this.isLoading = true
       this.$http
         .delete(api)
-        .then((res) => {
-          this.getProducts(current_page);
-          this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "已刪除產品");
+        .then(() => {
+          this.getProducts(currentPage)
+          this.$refs.delModal.hideModal()
+          this.$pushMsg.status200('已刪除產品')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '刪除失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     isPath(item) {
       if (item.is_enabled === 0) {
-        return "/dashboard/admin's-products";
+        return '/dashboard/admin-products'
       } else {
-        return `/product/${item.id}`;
+        return `/product/${item.id}`
       }
     },
     getCurrentWidth() {
-      this.currentWidth = window.outerWidth;
+      this.currentWidth = window.outerWidth
     },
   },
   computed: {
     noResults() {
       if (this.searchText !== null && this.products.length === 0) {
-        return true;
+        return true
       } else {
-        return false;
+        return false
       }
     },
     itemsInProducts() {
-      return this.products.length >= 1;
+      return this.products.length >= 1
     },
   },
   created() {
-    this.getCurrentWidth();
-    this.getProducts();
-    this.emitter.on("adminSearchProductNull", () => {
-      this.searchText = null;
-      this.getProducts();
-    });
-    this.emitter.on("adminSearchProductResult", (searchResult) => {
-      this.products = searchResult.data;
-      this.searchText = searchResult.data2;
-      this.openPagination = false;
-    });
+    this.getCurrentWidth()
+    this.getProducts()
+    this.emitter.on('adminSearchProductNull', () => {
+      this.searchText = null
+      this.getProducts()
+    })
+    this.emitter.on('adminSearchProductResult', (searchResult) => {
+      this.products = searchResult.data
+      this.searchText = searchResult.data2
+      this.openPagination = false
+    })
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

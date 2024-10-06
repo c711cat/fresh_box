@@ -37,17 +37,17 @@
 <script>
 export default {
   data() {
-    return { currentWidth: 1000 };
+    return { currentWidth: 1000 }
   },
   methods: {
     getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
   },
   created() {
-    this.getCurrentWidth();
+    this.getCurrentWidth()
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 img {

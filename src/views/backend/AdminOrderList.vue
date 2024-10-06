@@ -53,7 +53,7 @@
             class="accordion-collapse collapse"
           >
             <div class="accordion-body">
-              <OrderView :oneOrder="item"></OrderView>
+              <OrderView :oneOrder="item" />
               <div class="text-end pe-5">
                 <button
                   @click="openDelModal(item)"
@@ -73,8 +73,7 @@
         v-if="pageSwitch"
         :pages="pagination"
         @emit-pages="getOrders"
-      >
-      </PaginationView>
+      />
     </footer>
   </main>
 
@@ -85,15 +84,14 @@
     :allOrders="allOrders"
     @del-all-orders="delAllOrders"
     :pages="pagination"
-  >
-  </delModal>
+  />
 </template>
 
 <script>
-import Collapse from "bootstrap/js/dist/collapse";
-import OrderView from "@/components/OrderView.vue";
-import delModal from "@/components/DelModal.vue";
-import PaginationView from "@/components/PaginationView.vue";
+import Collapse from 'bootstrap/js/dist/collapse'
+import OrderView from '@/components/OrderView.vue'
+import delModal from '@/components/DelModal.vue'
+import PaginationView from '@/components/PaginationView.vue'
 
 export default {
   data() {
@@ -104,108 +102,108 @@ export default {
       pagination: {},
       allOrders: false,
       searchContent: null,
-    };
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   components: { OrderView, delModal, PaginationView },
   methods: {
     getOrders(page = 1) {
-      this.orderList = {};
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`;
+      this.orderList = {}
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders?page=${page}`
       this.$http
         .get(api)
         .then((res) => {
-          this.orderList = res.data.orders;
-          this.pagination = res.data.pagination;
+          this.orderList = res.data.orders
+          this.pagination = res.data.pagination
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     openDelModal(item) {
-      this.allOrders = false;
-      this.tempOrder = { ...item };
-      this.$refs.delModal.showModal();
+      this.allOrders = false
+      this.tempOrder = { ...item }
+      this.$refs.delModal.showModal()
     },
     openDelAllOrdersModal() {
-      this.allOrders = true;
-      this.tempOrder = {};
-      this.$refs.delModal.showModal();
+      this.allOrders = true
+      this.tempOrder = {}
+      this.$refs.delModal.showModal()
     },
     delOrder(order, page) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/order/${order.id}`
       this.$http
         .delete(api)
-        .then((res) => {
-          this.getOrders(page);
-          this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "已刪除訂單");
+        .then(() => {
+          this.getOrders(page)
+          this.$refs.delModal.hideModal()
+          this.$pushMsg.status200('已刪除訂單')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '刪除失敗')
+        })
     },
     turnDate(date) {
-      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+      return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
     delAllOrders() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/orders/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/orders/all`
       this.$http
         .delete(api)
-        .then((res) => {
-          this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "成功刪除全部訂單");
+        .then(() => {
+          this.$refs.delModal.hideModal()
+          this.$pushMsg.status200('成功刪除全部訂單')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '刪除失敗')
         })
         .finally(() => {
-          this.allOrdersSwitch = false;
-          this.getOrders();
-        });
+          this.allOrdersSwitch = false
+          this.getOrders()
+        })
     },
   },
   computed: {
     noResults() {
-      return this.orderList.length === 0;
+      return this.orderList.length === 0
     },
     noResultsContent() {
-      let text = "";
+      let text = ''
       if (this.searchContent) {
-        text = "查無此收件人姓名";
+        text = '查無此收件人姓名'
       }
       if (this.searchContent === null) {
-        text = "無訂單";
+        text = '無訂單'
       }
-      return text;
+      return text
     },
     pageSwitch() {
-      return this.searchContent === null;
+      return this.searchContent === null
     },
   },
   created() {
-    this.getOrders();
-    this.emitter.on("adminOrderSearchResult", (searchResult) => {
-      this.searchContent = searchResult[0];
-      this.orderList = [];
-      this.orderList = searchResult.data;
-    });
-    this.emitter.on("adminOrderSearchNull", () => {
-      this.getOrders();
-      this.searchContent = null;
-    });
+    this.getOrders()
+    this.emitter.on('adminOrderSearchResult', (searchResult) => {
+      this.searchContent = searchResult[0]
+      this.orderList = []
+      this.orderList = searchResult.data
+    })
+    this.emitter.on('adminOrderSearchNull', () => {
+      this.getOrders()
+      this.searchContent = null
+    })
   },
   mounted() {
-    const collapseElementList = document.querySelectorAll(".collapse");
+    const collapseElementList = document.querySelectorAll('.collapse')
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
-    );
+    )
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

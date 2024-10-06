@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex justify-content-between align-items-center col-12">
     <p
-      class="col-3 col-sm-auto flex-wrap mb-0 text-primary border border-primary text-center rounded"
+      class="col-auto p-2 flex-wrap mb-0 text-primary border border-primary text-center rounded"
       :class="textFontSize"
     >
       建立訂單
@@ -13,7 +13,7 @@
     </div>
 
     <p
-      class="col-3 col-sm-auto mb-0 border text-center rounded"
+      class="col-auto p-2 mb-0 border text-center rounded"
       :class="[payingText, textFontSize]"
     >
       進行付款
@@ -25,7 +25,7 @@
     </div>
 
     <p
-      class="col-3 col-sm-auto mb-0 border text-center rounded"
+      class="col-auto p-2 mb-0 border text-center rounded"
       :class="[paidText, textFontSize]"
     >
       付款完成
@@ -39,68 +39,68 @@ export default {
     return {
       order: {},
       currentWidth: 1000,
-    };
+    }
   },
   methods: {
     getOrder() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order/${this.$route.params.orderId}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/order/${this.$route.params.orderId}`
       this.$http
         .get(api)
         .then((res) => {
-          this.order = res.data.order;
+          this.order = res.data.order
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+        })
     },
     getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
   },
   computed: {
     payingText() {
       if (this.$route.params.orderId) {
-        return "text-primary border-primary";
+        return 'text-primary border-primary'
       } else {
-        return "text-secondary border-gray-light";
+        return 'text-secondary border-gray-light'
       }
     },
     payingArrow() {
       if (this.$route.params.orderId) {
-        return "border-primary";
+        return 'border-primary'
       } else {
-        return "border-gray-light";
+        return 'border-gray-light'
       }
     },
     paidText() {
       if (this.order.is_paid) {
-        return "text-primary border-primary";
+        return 'text-primary border-primary'
       } else {
-        return "text-secondary border-gray-light";
+        return 'text-secondary border-gray-light'
       }
     },
     paidArrow() {
       if (this.order.is_paid) {
-        return "border-primary";
+        return 'border-primary'
       } else {
-        return "border-gray-light";
+        return 'border-gray-light'
       }
     },
     textFontSize() {
       if (this.currentWidth <= 575) {
-        return "xsFontSize p-1";
+        return 'fs-6'
       } else {
-        return "fs-5 p-2";
+        return 'fs-5'
       }
     },
   },
   created() {
-    this.getCurrentWidth();
+    this.getCurrentWidth()
     if (this.$route.params.orderId) {
-      this.getOrder();
+      this.getOrder()
     }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -115,9 +115,5 @@ export default {
 
 .right {
   transform: rotate(-45deg);
-}
-
-.xsFontSize {
-  font-size: 14px;
 }
 </style>

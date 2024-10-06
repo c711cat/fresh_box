@@ -30,52 +30,51 @@
         </div>
       </div>
     </section>
-    <footer class="">
-      <PaginationView :pages="pagination" @emit-pages="getQAList">
-      </PaginationView>
+    <footer>
+      <PaginationView :pages="pagination" @emit-pages="getQAList" />
     </footer>
   </main>
 </template>
 <script>
-import Collapse from "bootstrap/js/dist/collapse";
-import PaginationView from "@/components/PaginationView.vue";
+import Collapse from 'bootstrap/js/dist/collapse'
+import PaginationView from '@/components/PaginationView.vue'
 export default {
   data() {
     return {
       QA_List: {},
       isLoading: false,
       pagination: {},
-    };
+    }
   },
   components: { PaginationView },
   methods: {
     getQAList(page = 1) {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles?page=${page}`;
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/articles?page=${page}`
       this.$http
         .get(api)
         .then((res) => {
-          this.pagination = res.data.pagination;
-          this.QA_List = res.data.articles;
+          this.pagination = res.data.pagination
+          this.QA_List = res.data.articles
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得問答資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
   },
   created() {
-    this.getQAList();
+    this.getQAList()
   },
   mounted() {
-    const collapseElementList = document.querySelectorAll(".collapse");
+    const collapseElementList = document.querySelectorAll('.collapse')
     this.QA_List = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
-    );
+    )
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .userQAWrap {

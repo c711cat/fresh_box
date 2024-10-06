@@ -38,7 +38,7 @@
 
         <div v-if="product.description" class="productContent px-1 mb-2">
           <ul v-for="item in product.description" :key="item" class="ps-3 mb-0">
-            <li class="">{{ item }}</li>
+            <li>{{ item }}</li>
           </ul>
         </div>
         <p class="productContent p-1 mb-0">
@@ -182,10 +182,10 @@
 </template>
 
 <script>
-import SwiperImgs from "@/components/frontend/SwiperImgs.vue";
-import Collapse from "bootstrap/js/dist/collapse";
-import ExceptionSOP from "@/components/frontend/ExceptionSOP.vue";
-import ShoppingNotes from "@/components/frontend/ShoppingNotes.vue";
+import SwiperImgs from '@/components/frontend/SwiperImgs.vue'
+import Collapse from 'bootstrap/js/dist/collapse'
+import ExceptionSOP from '@/components/frontend/ExceptionSOP.vue'
+import ShoppingNotes from '@/components/frontend/ShoppingNotes.vue'
 export default {
   data() {
     return {
@@ -197,111 +197,110 @@ export default {
         addLoadingItem: false,
         delLoadingItem: false,
       },
-    };
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   components: { SwiperImgs, ExceptionSOP, ShoppingNotes },
   methods: {
     getProduct() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/product/${this.$route.params.id}`
       this.$http
         .get(api)
         .then((res) => {
-          this.product = res.data.product;
+          this.product = res.data.product
           this.product.origin_price = this.$filters.currency(
             this.product.origin_price
-          );
-          this.product.price = this.$filters.currency(this.product.price);
-          this.pushImg();
-          this.getMyFavorite();
+          )
+          this.product.price = this.$filters.currency(this.product.price)
+          this.pushImg()
+          this.getMyFavorite()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
         })
         .finally(() => {
-          window.scrollTo(0, 0);
-        });
+          window.scrollTo(0, 0)
+        })
     },
     addQty() {
-      this.productQty = this.productQty + 1;
+      this.productQty = this.productQty + 1
     },
     delQty() {
-      this.productQty = this.productQty - 1;
+      this.productQty = this.productQty - 1
     },
     addToCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.status.addLoadingItem = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
+      this.status.addLoadingItem = true
       this.$http
         .post(api, {
           data: { product_id: this.product.id, qty: Number(this.productQty) },
         })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
-          this.productQty = 1;
-          this.emitter.emit("updateProductInCart");
+        .then(() => {
+          this.$pushMsg.status200('已加入購物車')
+          this.productQty = 1
+          this.emitter.emit('updateProductInCart')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '加入購物車失敗')
         })
         .finally(() => {
-          this.status.addLoadingItem = false;
-        });
+          this.status.addLoadingItem = false
+        })
     },
     changeImg(img) {
-      this.product.imageUrl = img;
+      this.product.imageUrl = img
     },
     pushImg() {
-      this.product.images.splice(0, 0, this.product.imageUrl);
+      this.product.images.splice(0, 0, this.product.imageUrl)
     },
     getMyFavorite() {
-      this.myFavoriteList =
-        JSON.parse(localStorage.getItem("myFavorite")) || [];
+      this.myFavoriteList = JSON.parse(localStorage.getItem('myFavorite')) || []
     },
     addMyFavorite() {
-      this.myFavoriteList.push(this.product);
-      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+      this.myFavoriteList.push(this.product)
+      localStorage.setItem('myFavorite', JSON.stringify(this.myFavoriteList))
     },
     delMyFavorite() {
-      this.myFavoriteList.filter((listItem, index) => {
+      this.myFavoriteList.forEach((listItem, index) => {
         if (this.product.id === listItem.id) {
-          return this.myFavoriteList.splice(index, 1);
+          this.myFavoriteList.splice(index, 1)
         }
-      });
-      localStorage.setItem("myFavorite", JSON.stringify(this.myFavoriteList));
+      })
+      localStorage.setItem('myFavorite', JSON.stringify(this.myFavoriteList))
     },
   },
   computed: {
     isMyFavorite() {
-      let favorite = "";
+      let favorite = ''
       this.myFavoriteList.forEach((listItem) => {
         if (this.product.id === listItem.id) {
-          favorite = true;
+          favorite = true
         }
-      });
-      return favorite;
+      })
+      return favorite
     },
     currentWidth() {
-      return window.innerWidth;
+      return window.innerWidth
     },
   },
   watch: {
     productQty() {
       if (this.productQty < 1) {
-        this.productQty = 1;
+        this.productQty = 1
       }
-      return this.productQty;
+      return this.productQty
     },
   },
   created() {
-    this.getProduct();
+    this.getProduct()
   },
   mounted() {
-    const collapseElementList = document.querySelectorAll(".collapse");
+    const collapseElementList = document.querySelectorAll('.collapse')
     this.details = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
-    );
+    )
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

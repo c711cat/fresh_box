@@ -100,63 +100,63 @@ import {
   Scrollbar,
   A11y,
   Autoplay,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
+} from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
 export default {
   data() {
     return {
       allProducts: [],
       status: {
-        addLoadingItem: "",
-        delLoadingItem: "",
+        addLoadingItem: '',
+        delLoadingItem: '',
       },
       modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
+    }
   },
   components: {
     Swiper,
     SwiperSlide,
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   methods: {
     getAllProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
         .then((res) => {
-          this.allProducts = res.data.products;
+          this.allProducts = res.data.products
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
+        })
     },
     addCart(item) {
-      const addItem = { product_id: item.id, qty: 1 };
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
-      this.status.addLoadingItem = item.id;
+      const addItem = { product_id: item.id, qty: 1 }
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
+      this.status.addLoadingItem = item.id
       this.$http
         .post(api, { data: addItem })
-        .then((res) => {
-          this.$pushMsg.status200(res, "已加入購物車");
-          this.emitter.emit("updateProductInCart");
+        .then(() => {
+          this.$pushMsg.status200('已加入購物車')
+          this.emitter.emit('updateProductInCart')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '加入購物車失敗')
         })
         .finally(() => {
-          this.status.addLoadingItem = "";
-        });
+          this.status.addLoadingItem = ''
+        })
     },
     goToProductPage(id) {
-      this.$router.push(`/product/${id}`);
-      if (this.$route.path !== "/") {
+      this.$router.push(`/product/${id}`)
+      if (this.$route.path !== '/') {
         setTimeout(() => {
-          location.reload();
-        }, 500);
+          location.reload()
+        }, 500)
       }
     },
     onSwiper() {},
@@ -164,9 +164,9 @@ export default {
   },
 
   created() {
-    this.getAllProducts();
+    this.getAllProducts()
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 a {

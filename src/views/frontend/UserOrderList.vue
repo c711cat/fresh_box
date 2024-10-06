@@ -58,20 +58,19 @@
         </div>
       </section>
     </div>
-    <footer class="">
+    <footer>
       <PaginationView
         v-if="pageSwitch"
         :pages="pagination"
         @emit-pages="getOrders"
-      >
-      </PaginationView>
+      />
     </footer>
   </main>
 </template>
 <script>
-import Collapse from "bootstrap/js/dist/collapse";
-import OrderView from "@/components/OrderView.vue";
-import PaginationView from "@/components/PaginationView.vue";
+import Collapse from 'bootstrap/js/dist/collapse'
+import OrderView from '@/components/OrderView.vue'
+import PaginationView from '@/components/PaginationView.vue'
 
 export default {
   data() {
@@ -80,86 +79,86 @@ export default {
       orderList: {},
       pagination: {},
       searchContent: null,
-    };
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   components: { OrderView, PaginationView },
   methods: {
     getOrders(page = 1) {
-      this.orderList = {};
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${page}`;
+      this.orderList = {}
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${page}`
       this.$http
         .get(api)
         .then((res) => {
-          this.orderList = { ...res.data.orders };
-          this.pagination = res.data.pagination;
+          this.orderList = { ...res.data.orders }
+          this.pagination = res.data.pagination
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     toPay(orderId) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${orderId}`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/pay/${orderId}`
+      this.isLoading = true
       this.$http
         .post(api)
-        .then((res) => {
-          this.$pushMsg.status200(res, "付款成功");
-          this.getOrders();
+        .then(() => {
+          this.$pushMsg.status200('付款成功')
+          this.getOrders()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '付款失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     turnDate(date) {
-      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+      return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
   },
   computed: {
     noResults() {
-      return Object.values(this.orderList).length === 0;
+      return Object.values(this.orderList).length === 0
     },
     noResultsContent() {
-      let text = "";
+      let text = ''
       if (this.searchContent) {
-        text = "查無此收件人姓名";
+        text = '查無此收件人姓名'
       }
       if (this.searchContent === null) {
-        text = "無訂單";
+        text = '無訂單'
       }
-      return text;
+      return text
     },
     pageSwitch() {
-      return this.searchContent === null;
+      return this.searchContent === null
     },
   },
 
   created() {
-    this.getOrders();
-    this.emitter.on("orderSearchResult", (SearchResult) => {
-      this.searchContent = SearchResult[0];
-      this.orderList = [];
-      this.orderList = SearchResult.data;
-    });
-    this.emitter.on("orderSearchNull", () => {
-      this.getOrders();
-      this.searchContent = null;
-    });
+    this.getOrders()
+    this.emitter.on('orderSearchResult', (SearchResult) => {
+      this.searchContent = SearchResult[0]
+      this.orderList = []
+      this.orderList = SearchResult.data
+    })
+    this.emitter.on('orderSearchNull', () => {
+      this.getOrders()
+      this.searchContent = null
+    })
   },
   mounted() {
-    const collapseElementList = document.querySelectorAll(".collapse");
+    const collapseElementList = document.querySelectorAll('.collapse')
     this.orderList = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
-    );
+    )
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

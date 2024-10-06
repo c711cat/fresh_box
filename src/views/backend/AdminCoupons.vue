@@ -92,8 +92,8 @@
 </template>
 
 <script>
-import CouponModal from "@/components/backend/CouponModal.vue";
-import DelModal from "@/components/DelModal.vue";
+import CouponModal from '@/components/backend/CouponModal.vue'
+import DelModal from '@/components/DelModal.vue'
 export default {
   data() {
     return {
@@ -101,97 +101,88 @@ export default {
       tempCoupon: {},
       isNew: false,
       isLoading: false,
-    };
+    }
   },
   components: { CouponModal, DelModal },
   methods: {
     getCoupons() {
-      const page = 1;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`;
-      this.isLoading = true;
+      const page = 1
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`
+      this.isLoading = true
       this.$http.get(api).then((res) => {
-        this.coupons = res.data.coupons;
-        this.isLoading = false;
-      });
+        this.coupons = res.data.coupons
+        this.isLoading = false
+      })
     },
     addCoupon(coupon) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupon`
+      this.isLoading = true
       this.$http
         .post(api, { data: coupon })
-        .then((res) => {
-          if (res.data.success) {
-            this.$refs.couponModal.hideModal();
-            this.$pushMsg.status200(res, "新增優惠券成功");
-            this.getCoupons();
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "新增優惠券失敗");
-          }
+        .then(() => {
+          this.$refs.couponModal.hideModal()
+          this.$pushMsg.status200('新增優惠券成功')
+          this.getCoupons()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '新增優惠券失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     openCouponModal(isNew, coupon) {
-      this.$refs.couponModal.showModal();
+      this.$refs.couponModal.showModal()
       if (isNew) {
-        this.tempCoupon = { is_enabled: 0 };
+        this.tempCoupon = { is_enabled: 0 }
       } else {
-        this.tempCoupon = { ...coupon };
+        this.tempCoupon = { ...coupon }
       }
     },
     updateCoupon(coupon) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`
+      this.isLoading = true
+
       this.$http
         .put(api, { data: coupon })
-        .then((res) => {
-          if (res.data.success) {
-            this.$refs.couponModal.hideModal();
-            this.$pushMsg.status200(res, "已更新優惠券");
-            this.getCoupons();
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "更新優惠券失敗");
-          }
+        .then(() => {
+          this.$refs.couponModal.hideModal()
+          this.$pushMsg.status200('已更新優惠券')
+          this.getCoupons()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '更新優惠券失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     openDelModal(coupon) {
-      this.$refs.delModal.showModal();
-      this.tempCoupon = { ...coupon };
+      this.$refs.delModal.showModal()
+      this.tempCoupon = { ...coupon }
     },
     delCoupon(coupon) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`;
-      this.isLoading = true;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/coupon/${coupon.id}`
+      this.isLoading = true
       this.$http
         .delete(api)
-        .then((res) => {
-          this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "已刪除優惠券");
-          this.getCoupons();
+        .then(() => {
+          this.$refs.delModal.hideModal()
+          this.$pushMsg.status200('已刪除優惠券')
+          this.getCoupons()
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '刪除失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
   },
   created() {
-    this.getCoupons();
+    this.getCoupons()
   },
-};
+}
 </script>
 
 <style>

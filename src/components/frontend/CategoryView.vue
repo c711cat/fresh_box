@@ -55,43 +55,43 @@
   </div>
 </template>
 <script>
-import leafy_vegetableImg from "@/assets/img/leafy_vegetable.png";
-import melon_root_bulbImg from "@/assets/img/melon_root_bulb.png";
-import mushroomImg from "@/assets/img/mushroom.png";
-import fruitImg from "@/assets/img/fruit.png";
-import spiceImg from "@/assets/img/spice.png";
+import leafyVegetableImg from '@/assets/img/leafy_vegetable.png'
+import melonRootBulbImg from '@/assets/img/melon_root_bulb.png'
+import mushroomImg from '@/assets/img/mushroom.png'
+import fruitImg from '@/assets/img/fruit.png'
+import spiceImg from '@/assets/img/spice.png'
 import {
   Navigation,
   Pagination,
   Scrollbar,
   A11y,
   Autoplay,
-} from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
+} from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
 export default {
   data() {
     return {
       categoryList: [
         {
-          name: "葉菜",
-          type: "leafy_vegetable",
-          img: leafy_vegetableImg,
+          name: '葉菜',
+          type: 'leafy_vegetable',
+          img: leafyVegetableImg,
         },
         {
-          name: "瓜果根球莖",
-          type: "melon_root_bulb",
-          img: melon_root_bulbImg,
+          name: '瓜果根球莖',
+          type: 'melon_root_bulb',
+          img: melonRootBulbImg,
         },
-        { name: "菇菌", type: "mushroom", img: mushroomImg },
-        { name: "水果", type: "fruit", img: fruitImg },
-        { name: "辛香料", type: "spice", img: spiceImg },
+        { name: '菇菌', type: 'mushroom', img: mushroomImg },
+        { name: '水果', type: 'fruit', img: fruitImg },
+        { name: '辛香料', type: 'spice', img: spiceImg },
       ],
       modules: [Navigation, Pagination, Scrollbar, A11y, Autoplay],
-    };
+    }
   },
   components: {
     Swiper,
@@ -101,7 +101,7 @@ export default {
     onSwiper() {},
     onSlideChange() {},
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .categoryImg {

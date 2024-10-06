@@ -22,7 +22,7 @@
         </header>
         <section class="modal-body ms-3">
           <form class="row m-0 g-3">
-            <div class="">
+            <div>
               <div class="d-inline text-danger">＊</div>
               <label class="form-label" for="author">發布者</label>
               <input
@@ -101,39 +101,39 @@
 </template>
 
 <script>
-import ModalMixin from "@/mixins/modalMixin";
+import ModalMixin from '@/mixins/modalMixin'
 export default {
   data() {
     return {
       modal: {},
       tempQA: {},
-    };
+    }
   },
   mixins: [ModalMixin],
   props: {
     QA: {
       type: Object,
       default() {
-        return {};
+        return {}
       },
     },
   },
   watch: {
     QA() {
-      this.tempQA = this.QA;
+      this.tempQA = this.QA
       if (!this.QA.id) {
-        this.tempQA.isPublic = false;
+        this.tempQA.isPublic = false
       }
     },
   },
   computed: {
     headerText() {
       if (this.QA.id) {
-        return "更新問答";
+        return '更新問答'
       } else {
-        return "新增問答";
+        return '新增問答'
       }
     },
   },
-};
+}
 </script>

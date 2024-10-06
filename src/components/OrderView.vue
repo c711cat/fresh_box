@@ -28,7 +28,7 @@
         >
           <img
             class="imgBody"
-            :srcset="`${item.product.imageUrl}&w=140`"
+            :srcset="`${item.product.imageUrl}&w=260`"
             alt="product-img"
           />
         </router-link>
@@ -154,15 +154,30 @@
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">姓名</p>
         <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.name }}</p>
       </div>
-      <div class="px-4 mb-2 d-flex flex-wrap">
+      <div class="px-4 mb-2 d-flex flex-wrap align-items-center">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">email</p>
-        <p class="wrapText mb-0 py-1 col-sm-10 col-12">
-          {{ order.user.email }}
-        </p>
+        <div
+          class="wrapText mb-0 py-1 col-sm-10 col-12 d-flex flex-wrap align-items-center"
+        >
+          <p class="mb-0 pe-3 overflow-hidden">{{ order.user.email }}</p>
+
+          <a
+            :href="`mailto:${order.user.email}`"
+            class="tel_and_mail_link text-decoration-none text-primary bi bi-envelope-arrow-up fs-5"
+          >
+          </a>
+        </div>
       </div>
-      <div class="px-4 mb-2 d-flex flex-wrap">
+      <div class="px-4 mb-2 d-flex flex-wrap align-items-center">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">電話</p>
-        <p class="mb-0 py-1 col-sm-10 col-12">{{ order.user.tel }}</p>
+        <div class="py-1 col-sm-10 col-12 d-flex align-items-center">
+          <p class="mb-0 pe-3">{{ order.user.tel }}</p>
+          <a
+            :href="`tel:${order.user.tel}`"
+            class="tel_and_mail_link text-decoration-none text-primary bi bi-telephone-forward fs-5"
+          >
+          </a>
+        </div>
       </div>
       <div class="px-4 mb-2 d-flex flex-wrap">
         <p class="mb-0 py-1 fw-bold col-sm-2 col-12">地址</p>
@@ -191,7 +206,7 @@ export default {
         shippingFee: 290,
         user: {},
       },
-    };
+    }
   },
   props: {
     oneOrder: {},
@@ -199,87 +214,92 @@ export default {
   },
   watch: {
     transOrder() {
-      this.order = { ...this.transOrder };
-      this.getSubtotal();
+      this.order = { ...this.transOrder }
+      this.getSubtotal()
     },
     oneOrder() {
-      this.order = { ...this.oneOrder };
-      this.getSubtotal();
+      this.order = { ...this.oneOrder }
+      this.getSubtotal()
     },
   },
   methods: {
     getOrder() {
       if (this.oneOrder) {
-        this.order = { ...this.oneOrder };
-        this.order.user = { ...this.oneOrder.user };
-        this.order.products = { ...this.oneOrder.products };
-        this.getSubtotal();
+        this.order = { ...this.oneOrder }
+        this.order.user = { ...this.oneOrder.user }
+        this.order.products = { ...this.oneOrder.products }
+        this.getSubtotal()
       }
     },
     getSubtotal() {
-      let subtotal = 0;
+      let subtotal = 0
       Object.values(this.order.products).forEach((item) => {
-        subtotal += item.total;
-      });
-      this.order.subtotal = subtotal;
-      this.getAfterDiscount();
+        subtotal += item.total
+      })
+      this.order.subtotal = subtotal
+      this.getAfterDiscount()
     },
     getAfterDiscount() {
-      this.order.afterDiscount = Math.round(this.order.total);
-      this.getDiscount();
-      this.getShippingFee();
-      this.getPaymentAmount();
-      this.getShippingFee();
+      this.order.afterDiscount = Math.round(this.order.total)
+      this.getDiscount()
+      this.getShippingFee()
+      this.getPaymentAmount()
+      this.getShippingFee()
     },
     getDiscount() {
-      this.order.discount = this.order.subtotal - this.order.afterDiscount;
+      this.order.discount = this.order.subtotal - this.order.afterDiscount
     },
     getShippingFee() {
       if (this.order.total >= 1000) {
-        this.order.shippingFee = 0;
+        this.order.shippingFee = 0
       }
       if (this.order.total < 1000) {
-        this.order.shippingFee = 290;
+        this.order.shippingFee = 290
       }
     },
     getPaymentAmount() {
       this.order.paymentAmount =
-        this.order.afterDiscount + this.order.shippingFee;
+        this.order.afterDiscount + this.order.shippingFee
     },
     turnDate(date) {
-      return new Date(date * 1000).toLocaleString("taiwan", { hour12: false });
+      return new Date(date * 1000).toLocaleString('taiwan', { hour12: false })
     },
     showPrice(item) {
       if (item.product.origin_price === item.product.price) {
-        return item.product.origin_price;
+        return item.product.origin_price
       } else {
-        return item.product.price;
+        return item.product.price
       }
     },
   },
   computed: {
     paymentStatus() {
       if (this.order.is_paid === true) {
-        return "付款完成";
+        return '付款完成'
       } else {
-        return "未付款";
+        return '未付款'
       }
     },
     paymentStatusColor() {
       if (this.order.is_paid === true) {
-        return "text-success";
+        return 'text-success'
       } else {
-        return "text-danger";
+        return 'text-danger'
       }
     },
   },
   created() {
-    this.getOrder();
+    this.getOrder()
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
+img:hover {
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
 .orderTitle {
   margin-right: 40px;
 }
@@ -304,6 +324,7 @@ export default {
 
 .titleLink:hover {
   font-weight: bold;
+  color: #ccaf3c;
 }
 
 .space {
@@ -313,5 +334,9 @@ export default {
 
 .wrapText {
   word-wrap: break-word;
+}
+
+.tel_and_mail_link:hover {
+  color: #887426 !important;
 }
 </style>

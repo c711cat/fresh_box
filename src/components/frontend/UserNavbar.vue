@@ -99,8 +99,8 @@
             aria-label="PCSearch"
           />
           <button
-            type="btn"
             class="d-none d-sm-block btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
+            type="button"
           ></button>
         </section>
 
@@ -137,7 +137,7 @@
             </div>
           </div>
           <button
-            type="btn"
+            type="button"
             class="d-block d-sm-none btn btn-outline-primary bi bi-search bg-black fs-4 searchBtn border border-0"
             data-bs-toggle="offcanvas"
             data-bs-target="#mobile"
@@ -146,7 +146,7 @@
         </section>
 
         <router-link to="/cart" class="nav-link px-2">
-          <div class="">
+          <div>
             <div class="h-auto position-relative">
               <i class="bi bi-cart2 fs-2 text-primary"></i>
               <span v-if="carts.length >= 1" class="badge rounded-5 numInCart">
@@ -172,13 +172,13 @@
 </template>
 
 <script>
-import Offcanvas from "bootstrap/js/dist/offcanvas";
+import Offcanvas from 'bootstrap/js/dist/offcanvas'
 export default {
   data() {
     return {
       userNavbar: {},
-      productSearchText: "",
-      orderSearchText: "",
+      productSearchText: '',
+      orderSearchText: '',
       products: [],
       searchResult: [],
       orderSearchResult: [],
@@ -187,160 +187,160 @@ export default {
       pagination: {},
       orderPage: 1,
       open: false,
-      currentWidth: "1000",
-    };
+      currentWidth: '1000',
+    }
   },
-  inject: ["emitter"],
+  inject: ['emitter'],
   props: {
     currentPath: {},
   },
   watch: {
     productSearchText() {
-      this.$router.push("/user-products");
+      this.$router.push('/user-products')
       setTimeout(() => {
-        if (this.productSearchText === "") {
-          this.emitter.emit("productSearchNull");
+        if (this.productSearchText === '') {
+          this.emitter.emit('productSearchNull')
         } else {
-          this.products.filter((item) => {
+          this.products.forEach((item) => {
             if (item.title.match(this.productSearchText)) {
-              this.searchResult.push(item);
+              this.searchResult.push(item)
             }
-          });
-          this.emitter.emit("productSearchResult", {
+          })
+          this.emitter.emit('productSearchResult', {
             data: this.searchResult,
             ...this.productSearchText,
-          });
-          this.searchResult = [];
+          })
+          this.searchResult = []
         }
-      }, 1500);
+      }, 1500)
     },
     orderSearchText() {
-      this.orderSearchResult = [];
-      if (this.orderSearchText === "") {
-        this.emitter.emit("orderSearchNull");
+      this.orderSearchResult = []
+      if (this.orderSearchText === '') {
+        this.emitter.emit('orderSearchNull')
       } else {
-        this.orders.filter((item) => {
+        this.orders.forEach((item) => {
           if (item.user.name.match(this.orderSearchText)) {
-            this.orderSearchResult.push(item);
+            this.orderSearchResult.push(item)
           }
-        });
-        this.emitter.emit("orderSearchResult", {
+        })
+        this.emitter.emit('orderSearchResult', {
           data: this.orderSearchResult,
           ...this.orderSearchText,
-        });
-        this.orderSearchResult = [];
+        })
+        this.orderSearchResult = []
       }
     },
   },
   methods: {
     isCurrentPage(path) {
-      let className = "";
+      let className = ''
       if (this.currentPath === path && this.currentWidth < 992) {
-        className = "isCurrentNavbarItem mobileBg";
+        className = 'isCurrentNavbarItem mobileBg'
       }
       if (this.currentPath === path && this.currentWidth >= 992) {
-        className = "isCurrentNavbarItem";
+        className = 'isCurrentNavbarItem'
       }
-      return className;
+      return className
     },
     closeMenu() {
-      this.userNavbar.hide();
+      this.userNavbar.hide()
     },
     getProducts() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/products/all`
       this.$http
         .get(api)
         .then((res) => {
-          this.products = res.data.products;
+          this.products = res.data.products
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得產品資料失敗')
+        })
     },
     getCart() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/cart`
       this.$http
         .get(api)
         .then((res) => {
-          this.carts = res.data.data.carts;
+          this.carts = res.data.data.carts
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得購物車資料失敗')
+        })
     },
     goToUserProducts() {
-      this.emitter.emit("goToUserProducts");
-      this.closeMenu();
+      this.emitter.emit('goToUserProducts')
+      this.closeMenu()
     },
     getOrdersOfPage1() {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
       this.$http
         .get(api)
         .then((res) => {
-          this.orders = res.data.orders;
-          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages);
+          this.orders = res.data.orders
+          this.fetchOrdersOfOtherPages(res.data.pagination.total_pages)
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
-        });
+          this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+        })
     },
-    fetchOrdersOfOtherPages(total_pages) {
-      this.orderPage = this.orderPage + 1;
-      if (this.orderPage <= total_pages) {
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`;
+    fetchOrdersOfOtherPages(totalPages) {
+      this.orderPage = this.orderPage + 1
+      if (this.orderPage <= totalPages) {
+        const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/orders?page=${this.orderPage}`
         this.$http
           .get(api)
           .then((res) => {
-            this.orders = [...this.orders, ...res.data.orders];
-            this.fetchOrdersOfOtherPages(total_pages);
+            this.orders = [...this.orders, ...res.data.orders]
+            this.fetchOrdersOfOtherPages(totalPages)
           })
           .catch((error) => {
-            this.$pushMsg.status404(error.response.data.message);
-          });
+            this.$pushMsg.status404(error.response, '取得訂單資料失敗')
+          })
       }
     },
     getCurrentWidth() {
-      this.currentWidth = window.innerWidth;
+      this.currentWidth = window.innerWidth
     },
   },
   computed: {
     isMoileOrPc() {
       if (this.currentWidth < 992) {
-        return "isMobileItem";
+        return 'isMobileItem'
       } else {
-        return "";
+        return ''
       }
     },
     disabledSearchInput() {
       if (this.pagination.current_page === this.pagination.total_pages) {
-        return false;
+        return false
       } else {
-        return true;
+        return true
       }
     },
   },
   created() {
-    this.getCurrentWidth();
-    this.getOrdersOfPage1();
-    this.getCart();
-    this.getProducts();
-    this.emitter.on("updateProductInCart", () => {
-      this.getCart();
-    });
-    this.emitter.on("clearCart", () => {
-      this.getCart();
-    });
+    this.getCurrentWidth()
+    this.getOrdersOfPage1()
+    this.getCart()
+    this.getProducts()
+    this.emitter.on('updateProductInCart', () => {
+      this.getCart()
+    })
+    this.emitter.on('clearCart', () => {
+      this.getCart()
+    })
   },
   mounted() {
-    this.userNavbar = new Offcanvas(this.$refs.menu, { toggle: false });
+    this.userNavbar = new Offcanvas(this.$refs.menu, { toggle: false })
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .logoText {
   width: fit-content;
-  font-family: "Times New Roman", Times, serif;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .numInCart {

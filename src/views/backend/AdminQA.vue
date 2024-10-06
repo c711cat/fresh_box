@@ -70,14 +70,14 @@
       <PaginationView :pages="pagination" @emit-pages="getQAList" />
     </footer>
   </main>
-  <QA_Modal ref="QA_Modal" :QA="tempQA" @add-QA="addQA" @edit-QA="editQA" />
+  <QAModal ref="QA_Modal" :QA="tempQA" @add-QA="addQA" @edit-QA="editQA" />
   <DelModal ref="delModal" :QA="tempQA" @del-QA="delQA" />
 </template>
 <script>
-import Collapse from "bootstrap/js/dist/collapse";
-import QA_Modal from "@/components/backend/QA_Modal.vue";
-import DelModal from "@/components/DelModal.vue";
-import PaginationView from "@/components/PaginationView.vue";
+import Collapse from 'bootstrap/js/dist/collapse'
+import QAModal from '@/components/backend/QA_Modal.vue'
+import DelModal from '@/components/DelModal.vue'
+import PaginationView from '@/components/PaginationView.vue'
 export default {
   data() {
     return {
@@ -86,108 +86,98 @@ export default {
       isNew: false,
       isLoading: false,
       pagination: {},
-    };
+    }
   },
-  components: { QA_Modal, DelModal, PaginationView },
+  components: { QAModal, DelModal, PaginationView },
   methods: {
     getQAList(page = 1) {
-      this.isLoading = true;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`;
+      this.isLoading = true
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/articles?page=${page}`
       this.$http
         .get(api)
         .then((res) => {
-          this.pagination = res.data.pagination;
-          this.QA_List = res.data.articles;
+          this.pagination = res.data.pagination
+          this.QA_List = res.data.articles
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '取得問答資料失敗')
         })
         .finally(() => {
-          this.isLoading = false;
-        });
+          this.isLoading = false
+        })
     },
     openQA_Modal(isNew, QAItem) {
-      this.$refs.QA_Modal.showModal();
+      this.$refs.QA_Modal.showModal()
       if (isNew) {
-        this.tempQA = {};
+        this.tempQA = {}
       } else {
-        this.tempQA = { ...QAItem };
+        this.tempQA = { ...QAItem }
       }
     },
     addQA(QA) {
-      QA.create_at = (new Date() * 1000) / 1000;
-      QA.content = QA.description;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article`;
+      QA.create_at = (new Date() * 1000) / 1000
+      QA.content = QA.description
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article`
       this.$http
         .post(api, { data: QA })
-        .then((res) => {
-          if (res.data.success) {
-            this.$refs.QA_Modal.hideModal();
-            this.$pushMsg.status200(res, "新增問答成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "新增問答失敗");
-          }
+        .then(() => {
+          this.$refs.QA_Modal.hideModal()
+          this.$pushMsg.status200('新增問答成功')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '新增問答失敗')
         })
         .finally(() => {
-          this.getQAList();
-        });
+          this.getQAList()
+        })
     },
     editQA(QA) {
-      QA.create_at = (new Date() * 1000) / 1000;
-      QA.content = QA.description;
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`;
+      QA.create_at = (new Date() * 1000) / 1000
+      QA.content = QA.description
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`
       this.$http
         .put(api, { data: QA })
-        .then((res) => {
-          if (res.data.success) {
-            this.$refs.QA_Modal.hideModal();
-            this.$pushMsg.status200(res, "更新問答成功");
-          } else {
-            // 會出現『必填』沒有填入到的品項訊息
-            this.$pushMsg.status200(res, "更新問答失敗");
-          }
+        .then(() => {
+          this.$refs.QA_Modal.hideModal()
+          this.$pushMsg.status200('更新問答成功')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '更新問答失敗')
         })
         .finally(() => {
-          this.getQAList();
-        });
+          this.getQAList()
+        })
     },
     openDelModal(delItem) {
-      this.$refs.delModal.showModal();
-      this.tempQA = { ...delItem };
+      this.$refs.delModal.showModal()
+      this.tempQA = { ...delItem }
     },
     delQA(QA) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`;
+      const api = `${process.env.VUE_APP_API}v2/api/${process.env.VUE_APP_PATH}/admin/article/${QA.id}`
       this.$http
         .delete(api)
-        .then((res) => {
-          this.$refs.delModal.hideModal();
-          this.$pushMsg.status200(res, "刪除問答成功");
+        .then(() => {
+          this.$refs.delModal.hideModal()
+          this.$pushMsg.status200('刪除問答成功')
         })
         .catch((error) => {
-          this.$pushMsg.status404(error.response.data.message);
+          this.$pushMsg.status404(error.response, '刪除失敗')
         })
         .finally(() => {
-          this.getQAList();
-        });
+          this.getQAList()
+        })
     },
   },
   created() {
-    this.getQAList();
+    this.getQAList()
   },
   mounted() {
-    const collapseElementList = document.querySelectorAll(".collapse");
+    const collapseElementList = document.querySelectorAll('.collapse')
     this.QA_List = [...collapseElementList].map(
       (collapseEl) => new Collapse(collapseEl)
-    );
+    )
   },
-};
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
