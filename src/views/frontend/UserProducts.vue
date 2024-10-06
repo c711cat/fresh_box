@@ -600,7 +600,7 @@ img {
 }
 
 .stickyTopXs {
-  top: 61px;
+  top: 60px;
 }
 
 .stickyTopSm {
